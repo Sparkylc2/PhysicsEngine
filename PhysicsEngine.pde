@@ -1,17 +1,30 @@
 
-float[] cameraExtents;
 
 
 
 void setup() {
+/*--------------------- Timing Utilities ---------------------*/
+    lastFrameTime = millis();
+/*------------------------------------------------------------*/
 
-  lastFrameTime = millis();
-  size(1000, 1000);
-  windowMove(10, 4);
-  frameRate(240);
+
+/*--------------------- Camera Utilities ---------------------*/
+    //size(1000, 1000);
+    fullScreen();
+    windowMove(10, 4);
+    frameRate(240);
+    interactivityListener = new InteractivityListener();
+/*------------------------------------------------------------*/
+
+/*---------------------------- UI ----------------------------*/
+  userInterface = new ControlP5(this);
+  GUI gui = new GUI(userInterface);
+
+/*------------------------------------------------------------*/
+
 
   rigidbodyList = new ArrayList<Rigidbody>();
-  interactivityListener = new InteractivityListener();
+
 
 
   Rigidbody floor = RigidbodyGenerator.CreateBoxBody(100,
@@ -92,6 +105,7 @@ void draw() {
   displayTimings();
 
   lastFrameTime = currentFrameTime;
+  
 }
 
 

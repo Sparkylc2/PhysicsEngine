@@ -1,13 +1,32 @@
 
 
 public class InteractivityListener {
+
   public PVector position;
   public float zoom;
+
+/*
+====================================================================================================
+======================================= GUI Variables ==============================================
+====================================================================================================
+*/
+  private float width;
+  private float height;
+  private float radius;
+  private float density;
+  private ShapeType shapeType;
+
 
   public InteractivityListener() {
     position = new PVector(0, -50);
     zoom = 10f;
   }
+
+/*
+====================================================================================================
+======================================= GUI Methods ================================================
+====================================================================================================
+*/
 
   public void zoom(float amount, float mouseX, float mouseY) {
     PVector mouseBeforeZoom = screenToWorld(mouseX, mouseY);
@@ -62,7 +81,53 @@ public PVector[] getWorldBoundsWithPadding(float padding) {
 
   return new PVector[] {topLeft, topRight, bottomLeft, bottomRight};
 }
+/*
+====================================================================================================
+======================================= Getters & Setters ==========================================
+====================================================================================================
+*/
+public void setWidth(float width) {
+  this.width = width;
 }
+
+public void setHeight(float height) {
+  this.height = height;
+}
+
+public void setRadius(float radius) {
+  this.radius = radius;
+}
+
+public void setDensity(float density) {
+  this.density = density;
+}
+
+public void setShapeType(ShapeType shapeType) {
+  this.shapeType = shapeType;
+}
+
+public float getWidth() {
+  return width;
+}
+
+public float getHeight() {
+  return height;
+}
+
+public float getRadius() {
+  return radius;
+}
+
+public float getDensity() {
+  return density;
+}
+
+public ShapeType getShapeType() {
+  return shapeType;
+}
+}
+
+
 
 public void mouseWheel(MouseEvent event) {
     float e = -event.getCount();
@@ -77,7 +142,7 @@ public void mouseClicked() {
   for(Rigidbody rigidbody : rigidbodyList) {
     rigidbody.mouseInteraction();
   }
-    if(mouseButton == LEFT) {
+    if(interactivityListener.getShapeType() == ShapeType.BOX) {
 
     float width = random(0.1, 3); //0.1m to 3m
     float height = random(0.1, 3);
@@ -98,7 +163,7 @@ public void mouseClicked() {
     AddBodyToBodyEntityList(rigidbody);
   
   }
-  if(mouseButton == RIGHT) {
+  if(interactivityListener.getShapeType() == ShapeType.CIRCLE) {
 
     float radius = random(0.1, 2); //0.1m to 2m
 
