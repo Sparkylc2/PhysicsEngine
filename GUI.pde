@@ -113,13 +113,13 @@
                                                             userInterface.getController("Density").setVisible(false);
                                                             userInterface.getController("Restitution").setVisible(false);
 
-                                                            userInterface.getController("RedFill").setVisible(true);
-                                                            userInterface.getController("GreenFill").setVisible(true);
-                                                            userInterface.getController("BlueFill").setVisible(true);
+                                                            userInterface.getController("RedFill").setVisible(false);
+                                                            userInterface.getController("GreenFill").setVisible(false);
+                                                            userInterface.getController("BlueFill").setVisible(false);
 
-                                                            userInterface.getController("RedStroke").setVisible(true);
-                                                            userInterface.getController("GreenStroke").setVisible(true);
-                                                            userInterface.getController("BlueStroke").setVisible(true);
+                                                            userInterface.getController("RedStroke").setVisible(false);
+                                                            userInterface.getController("GreenStroke").setVisible(false);
+                                                            userInterface.getController("BlueStroke").setVisible(false);
 
                                                             userInterface.getController("ColorBox").setVisible(false);
 
@@ -144,22 +144,33 @@
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         if(userInterface.getController("Box").getValue() == 1){
+
                                                             userInterface.getController("Circle").setValue(0);
                                                             userInterface.getController("Polygon").setValue(0);
 
-                                                            userInterface.getController("RectangleWidth").setVisible(true);
-                                                            userInterface.getController("RectangleHeight").setVisible(true);
                                                             userInterface.getController("CircleRadius").setVisible(false);
 
+                                                            userInterface.getController("RectangleWidth").setVisible(true);
+                                                            userInterface.getController("RectangleHeight").setVisible(true);
+                                                            
                                                             userInterface.getController("Density").setVisible(true);
                                                             userInterface.getController("Restitution").setVisible(true);
-                                                            userInterface.getController("StrokeWeight").setVisible(true);
-                                                            userInterface.getController("Red").setVisible(true);
-                                                            userInterface.getController("Green").setVisible(true);
-                                                            userInterface.getController("Blue").setVisible(true);
+                                                        
+
+                                                            userInterface.getController("RedFill").setVisible(true);
+                                                            userInterface.getController("GreenFill").setVisible(true);
+                                                            userInterface.getController("BlueFill").setVisible(true);
+
+                                                            userInterface.getController("RedStroke").setVisible(true);
+                                                            userInterface.getController("GreenStroke").setVisible(true);
+                                                            userInterface.getController("BlueStroke").setVisible(true);
+
                                                             userInterface.getController("ColorBox").setVisible(true);
+
                                                             userInterface.getController("FillColour").setVisible(true);
                                                             userInterface.getController("StrokeColour").setVisible(true);
+                                                            userInterface.getController("StrokeWeight").setVisible(true);
+                                                            
                                                             userInterface.getController("isStatic").setVisible(true);
                                                             userInterface.getController("transStatic").setVisible(true);
                                                             userInterface.getController("rotStatic").setVisible(true);
@@ -174,16 +185,26 @@
 
                                                             userInterface.getController("RectangleWidth").setVisible(false);
                                                             userInterface.getController("RectangleHeight").setVisible(false);
+
                                                             userInterface.getController("CircleRadius").setVisible(false);
+
                                                             userInterface.getController("Density").setVisible(false);
                                                             userInterface.getController("Restitution").setVisible(false);
-                                                            userInterface.getController("StrokeWeight").setVisible(false);
-                                                            userInterface.getController("Red").setVisible(false);
-                                                            userInterface.getController("Green").setVisible(false);
-                                                            userInterface.getController("Blue").setVisible(false);
+
+                                                            userInterface.getController("RedFill").setVisible(false);
+                                                            userInterface.getController("GreenFill").setVisible(false);
+                                                            userInterface.getController("BlueFill").setVisible(false);
+
+                                                            userInterface.getController("RedStroke").setVisible(true);
+                                                            userInterface.getController("GreenStroke").setVisible(true);
+                                                            userInterface.getController("BlueStroke").setVisible(true);
+
                                                             userInterface.getController("ColorBox").setVisible(false);
+
+                                                            userInterface.getController("StrokeWeight").setVisible(false);
                                                             userInterface.getController("FillColour").setVisible(false);
                                                             userInterface.getController("StrokeColour").setVisible(false);
+
                                                             userInterface.getController("isStatic").setVisible(false);
                                                             userInterface.getController("transStatic").setVisible(false);
                                                             userInterface.getController("rotStatic").setVisible(false);
@@ -397,8 +418,8 @@
                                                             userInterface.getController("BlueStroke").setVisible(true);
 
                                                             userInterface.getController("RedFill").setVisible(false);
-                                                            userInterface.getController("Green").setVisible(false);
-                                                            userInterface.getController("Blue").setVisible(false);
+                                                            userInterface.getController("GreenFill").setVisible(false);
+                                                            userInterface.getController("BlueFill").setVisible(false);
                                                             userInterface.getController("ColorBox").setVisible(true);
 
         
@@ -434,9 +455,9 @@
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        int red = (int)userInterface.getController("Red").getValue();
-                                                        int green = (int)userInterface.getController("Green").getValue();
-                                                        int blue = (int)userInterface.getController("Blue").getValue();
+                                                        int red = (int)userInterface.getController("RedFill").getValue();
+                                                        int green = (int)userInterface.getController("GreenFill").getValue();
+                                                        int blue = (int)userInterface.getController("BlueFill").getValue();
 
                                                         userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
                                                         userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
@@ -457,9 +478,9 @@
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        int red = (int)userInterface.getController("Red").getValue();
-                                                        int green = (int)userInterface.getController("Green").getValue();
-                                                        int blue = (int)userInterface.getController("Blue").getValue();
+                                                        int red = (int)userInterface.getController("RedFill").getValue();
+                                                        int green = (int)userInterface.getController("GreenFill").getValue();
+                                                        int blue = (int)userInterface.getController("BlueFill").getValue();
                                     
                                                         userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
                                                         userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
@@ -479,9 +500,9 @@
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        int red = (int)userInterface.getController("Red").getValue();
-                                                        int green = (int)userInterface.getController("Green").getValue();
-                                                        int blue = (int)userInterface.getController("Blue").getValue();
+                                                        int red = (int)userInterface.getController("RedFill").getValue();
+                                                        int green = (int)userInterface.getController("GreenFill").getValue();
+                                                        int blue = (int)userInterface.getController("BlueFill").getValue();
 
                                                         userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
                                                         userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
@@ -521,9 +542,9 @@
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        int red = (int)userInterface.getController("Red").getValue();
-                                                        int green = (int)userInterface.getController("Green").getValue();
-                                                        int blue = (int)userInterface.getController("Blue").getValue();
+                                                        int red = (int)userInterface.getController("RedStroke").getValue();
+                                                        int green = (int)userInterface.getController("GreenStroke").getValue();
+                                                        int blue = (int)userInterface.getController("BlueStroke").getValue();
                                     
                                                         userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
                                                         userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
@@ -543,9 +564,9 @@
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        int red = (int)userInterface.getController("Red").getValue();
-                                                        int green = (int)userInterface.getController("Green").getValue();
-                                                        int blue = (int)userInterface.getController("Blue").getValue();
+                                                        int red = (int)userInterface.getController("RedStroke").getValue();
+                                                        int green = (int)userInterface.getController("GreenStroke").getValue();
+                                                        int blue = (int)userInterface.getController("BlueStroke").getValue();
 
                                                         userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
                                                         userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
@@ -680,7 +701,7 @@ userInterface.getTab("default").hide();
 
 
 
-       // TODO: IMPLEMENT A STARTING ANGLE FOR THE RIGIDRODS, SO OBJECTS CAN BE JOINTED AT 
+       // TODO: IMPLEMENT A STARTING ANGLE FOR THE RIGIDRODS, SO OBJECTS CAN BE JOINTED AT
        //ANGLES AND STAY FIXED
 
         }
