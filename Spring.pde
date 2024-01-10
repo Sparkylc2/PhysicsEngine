@@ -25,7 +25,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     this.localAnchorA = localAnchorA;
     this.anchorPoint = anchorPoint;
     this.isTwoBodySpring = false;
-    this.isHingeable = false;
+    this.isHingeable = true;
 }
 
  public Spring(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {

@@ -10,12 +10,27 @@ public class InteractivityListener {
 ======================================= GUI Variables ==============================================
 ====================================================================================================
 */
-  private float width;
-  private float height;
-  private float radius;
-  private float density;
-  private ShapeType shapeType;
+  private float width = 2f;
+  private float height = 2f;
 
+  private float radius = 2f;
+
+  private float density = 1f;
+  private float restitution = 1f;
+
+  private boolean generateRigidbodies = true;
+  private boolean generateForces = false;
+
+  private boolean isStatic = false;
+  private boolean isTranslationallyStatic = false;
+  private boolean isRotationallyStatic = false;
+  private boolean isCollidable = false;
+
+  private float strokeWeight = 0.05f;
+  private PVector strokeColour = new PVector(0,0,0);
+  private PVector fillColour = new PVector(255, 255, 255);
+
+  private ShapeType shapeType;
 
   public InteractivityListener() {
     position = new PVector(0, -50);
@@ -35,6 +50,7 @@ public class InteractivityListener {
     PVector shift = PVector.sub(mouseBeforeZoom, mouseAfterZoom);
     position.add(shift);
 }
+
 
   public void applyTransform() {
     translate(width/2, height/2);
@@ -86,6 +102,8 @@ public PVector[] getWorldBoundsWithPadding(float padding) {
 ======================================= Getters & Setters ==========================================
 ====================================================================================================
 */
+
+
 public void setWidth(float width) {
   this.width = width;
 }
@@ -102,83 +120,169 @@ public void setDensity(float density) {
   this.density = density;
 }
 
+public void setRestitution(float restitution) {
+  this.restitution = restitution;
+}
+
+public void setIsStatic(boolean isStatic) {
+  this.isStatic = isStatic;
+}
+
+public void setCollidable(boolean isCollidable) {
+  this.isCollidable = isCollidable;
+}
+
+public void setStrokeWeight(float strokeWeight) {
+  this.strokeWeight = strokeWeight;
+}
+
+public void setStrokeColour(PVector strokeColour) {
+  this.strokeColour = strokeColour;
+}
+
+public void setFillColour(PVector fillColour) {
+  this.fillColour = fillColour;
+}
+
 public void setShapeType(ShapeType shapeType) {
   this.shapeType = shapeType;
 }
 
+public void setIsTranslationallyStatic(boolean isTranslationallyStatic) {
+  this.isTranslationallyStatic = isTranslationallyStatic;
+}
+
+public void setIsRotationallyStatic(boolean isRotationallyStatic) {
+  this.isRotationallyStatic = isRotationallyStatic;
+}
+
+public void setGenerateRigidbodies(boolean generateRigidbodies) {
+  this.generateRigidbodies = generateRigidbodies;
+}
+
+public void setGenerateForces(boolean generateForces) {
+  this.generateForces = generateForces;
+}
+
+
 public float getWidth() {
-  return width;
+  return this.width;
 }
 
 public float getHeight() {
-  return height;
+  return this.height;
 }
 
 public float getRadius() {
-  return radius;
+  return this.radius;
 }
 
 public float getDensity() {
-  return density;
+  return this.density;
+}
+
+public float getRestitution() {
+  return this.restitution;
+}
+
+public boolean getIsStatic() {
+  return this.isStatic;
+}
+
+public boolean getCollidable() {
+  return this.isCollidable;
+}
+
+public float getStrokeWeight() {
+  return this.strokeWeight;
+}
+
+public PVector getStrokeColour() {
+  return this.strokeColour;
+}
+
+public PVector getFillColour() {
+  return this.fillColour;
 }
 
 public ShapeType getShapeType() {
-  return shapeType;
+  return this.shapeType;
 }
+
+public boolean getIsTranslationallyStatic() {
+  return this.isTranslationallyStatic;
+}
+
+public boolean getIsRotationallyStatic() {
+  return this.isRotationallyStatic;
+}
+
+public boolean getGenerateRigidbodies() {
+  return this.generateRigidbodies;
+}
+
+public boolean getGenerateForces() {
+  return this.generateForces;
+}
+
+
 }
 
 
 
 public void mouseWheel(MouseEvent event) {
-    float e = -event.getCount();
-    interactivityListener.zoom(pow(1.1f, e), mouseX, mouseY);
+    if(!userInterface.isMouseOver()) {
+        float e = -event.getCount();
+        interactivityListener.zoom(pow(1.1f, e), mouseX, mouseY);
+    }
 }
 
 public void mouseDragged() {
-  interactivityListener.move(pmouseX - mouseX, pmouseY - mouseY);
+  if(!userInterface.isMouseOver()){
+    interactivityListener.move(pmouseX - mouseX, pmouseY - mouseY);
+  }
 }
 
 public void mouseClicked() {
-  for(Rigidbody rigidbody : rigidbodyList) {
-    rigidbody.mouseInteraction();
-  }
+    if(!userInterface.isMouseOver()) {
     if(interactivityListener.getShapeType() == ShapeType.BOX) {
+        Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody( interactivityListener.getWidth(),
+                                                                interactivityListener.getHeight(),
+                                                                interactivityListener.getDensity(),
+                                                                interactivityListener.getRestitution(),
+                                                                interactivityListener.getIsStatic(),
+                                                                interactivityListener.getCollidable(),
+                                                                interactivityListener.getStrokeWeight(),
+                                                                interactivityListener.getStrokeColour(),
+                                                                interactivityListener.getFillColour());
 
-    float width = random(0.1, 3); //0.1m to 3m
-    float height = random(0.1, 3);
-    float rotation = random(0, 3);
-
-    Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody(width, height,
-                                                           0.1f, 0.1f,
-                                                           false, true,
-                                                           true, 0.05,
-                                                           new PVector(0, 0, 0),
-                                                           new PVector(255, 255, 255));
-
-
-    rigidbody.SetInitialPosition(interactivityListener.screenToWorld(mouseX, mouseY));
-
-    //rigidbody.Rotate(rotation);
-    rigidbody.addForceToForceRegistry(new Gravity());
-    AddBodyToBodyEntityList(rigidbody);
+        rigidbody.SetInitialPosition(interactivityListener.screenToWorld(mouseX, mouseY));
+        rigidbody.setIsTranslationallyStatic(interactivityListener.getIsTranslationallyStatic());
+        rigidbody.setIsRotationallyStatic(interactivityListener.getIsRotationallyStatic());
+        
+        rigidbody.addForceToForceRegistry(new Gravity());
+        AddBodyToBodyEntityList(rigidbody);
   
   }
   if(interactivityListener.getShapeType() == ShapeType.CIRCLE) {
-
-    float radius = random(0.1, 2); //0.1m to 2m
-
-    Rigidbody rigidbody = RigidbodyGenerator.CreateCircleBody(radius, 0.5f, 0.5f,
-                                                              false, true, true,
-                                                              0.05, new PVector(0, 0, 0),
-                                                              new PVector(255, 255, 255));
-    rigidbody.SetInitialPosition(interactivityListener.screenToWorld(mouseX, mouseY));
-    //rigidbody.setAngularVelocity(random(-0.5f, 0.5f));
-
+    Rigidbody rigidbody = RigidbodyGenerator.CreateCircleBody(interactivityListener.getRadius(),
+                                                                interactivityListener.getDensity(),
+                                                                interactivityListener.getRestitution(),
+                                                                interactivityListener.getIsStatic(),
+                                                                interactivityListener.getCollidable(),
+                                                                interactivityListener.getStrokeWeight(),
+                                                                interactivityListener.getStrokeColour(),
+                                                                interactivityListener.getFillColour());
     
+    rigidbody.SetInitialPosition(interactivityListener.screenToWorld(mouseX, mouseY));
+    rigidbody.setIsTranslationallyStatic(interactivityListener.getIsTranslationallyStatic());
+    rigidbody.setIsRotationallyStatic(interactivityListener.getIsRotationallyStatic());
+
     rigidbody.addForceToForceRegistry(new Gravity());
     AddBodyToBodyEntityList(rigidbody);
 
   }
+    }
 }
 
 

@@ -38,6 +38,8 @@ public class Rigidbody {
   private boolean aabbUpdateRequired;
   
   private boolean isStatic;
+  private boolean isTranslationallyStatic;
+  private boolean isRotationallyStatic;
   private boolean isVisible;
   private boolean isCollidable;
   private boolean isMouseInteractive;
@@ -69,9 +71,9 @@ public class Rigidbody {
   
   private Rigidbody(float density, float mass, float rotationalIntertia, float restitution,
     float area, float radius, float width, float height, PVector[] vertices, boolean isStatic,
-    boolean isCollidable, boolean isMouseInteractive, float strokeWeight,
-    PVector strokeColour, PVector fillColour, ShapeType shapeType)
+    boolean isCollidable, float strokeWeight, PVector strokeColour, PVector fillColour, ShapeType shapeType)
   {
+    
     this.Mass = mass;
     this.RotationalInertia = rotationalIntertia;
     this.InvMass = mass > 0 ? 1 / mass : 0;
@@ -173,8 +175,7 @@ public class Rigidbody {
   
   
   public Rigidbody CreateCircleBody(float radius, float density,
-    float restitution, boolean isStatic, boolean isCollidable,
-    boolean isMouseInteractive, float strokeWeight,
+    float restitution, boolean isStatic, boolean isCollidable, float strokeWeight,
     PVector strokeColour, PVector fillColour) {
 
     Rigidbody rigidbody;
@@ -217,7 +218,7 @@ public class Rigidbody {
 
 
     rigidbody = new Rigidbody(density, mass, rotationalIntertia, restitution, area, radius, 0, 0,
-                              null, isStatic, isCollidable, isMouseInteractive, strokeWeight,
+                              null, isStatic, isCollidable, strokeWeight,
                               strokeColour, fillColour, ShapeType.CIRCLE);
     
     System.out.println("Rigidbody created with mass: " + mass + " and area: " + area);
@@ -225,8 +226,7 @@ public class Rigidbody {
   }
   
   public Rigidbody CreateBoxBody(float width, float height, float density,
-    float restitution, boolean isStatic, boolean isCollidable,
-    boolean isMouseInteractive, float strokeWeight,
+    float restitution, boolean isStatic, boolean isCollidable, float strokeWeight,
     PVector strokeColour, PVector fillColour) {
     Rigidbody rigidbody;
     
@@ -265,8 +265,8 @@ public class Rigidbody {
     PVector[] vertices = CreateBoxVertices(width, height);
     
     rigidbody = new Rigidbody(density, mass, rotationalIntertia, restitution, area, 0, width,
-                              height, vertices, isStatic, isCollidable, isMouseInteractive,
-                              strokeWeight, strokeColour, fillColour, ShapeType.BOX);
+                              height, vertices, isStatic, isCollidable, strokeWeight, strokeColour, 
+                              fillColour, ShapeType.BOX);
     
     System.out.println("Rigidbody created with mass: " + mass + " and area: " + area);
     
@@ -275,8 +275,10 @@ public class Rigidbody {
 
   public AABB GetAABB() {
     if(this.aabbUpdateRequired) {
+
     float minX = Float.MAX_VALUE;
     float minY = Float.MAX_VALUE;
+
     float maxX = -Float.MAX_VALUE;
     float maxY = -Float.MAX_VALUE;
     
@@ -351,27 +353,7 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
     this.aabbUpdateRequired = true;
   }
   
-  public void mouseInteraction() {
-    if (this.isMouseInteractive) {
-      if (PVector.sub(interactivityListener.screenToWorld(mouseX, mouseY), this.position).magSq() <= this.Radius * this.Radius) {
-        this.isSelected = !this.isSelected;
 
-        this.transformUpdateRequired = true;
-        this.aabbUpdateRequired = true;
-      } else {
-        this.isSelected = false;
-      }
-    }
-  }
-  public void updateMouseInteraction() {
-    if (this.isSelected) {
-
-      this.position = interactivityListener.screenToWorld(mouseX, mouseY);
-
-      this.transformUpdateRequired = true;
-      this.aabbUpdateRequired = true;
-    }
-  }
   
 
   /*
@@ -384,6 +366,16 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
     if(this.isStatic) {
       this.aabbUpdateRequired = false;
       return;
+    } else if (this.isTranslationallyStatic) {
+      this.aabbUpdateRequired = true;
+      this.transformUpdateRequired = true;
+      dt /= (float)iterations;
+      this.angularIntegration(dt);
+    } else if (this.isRotationallyStatic) {
+      this.aabbUpdateRequired = true;
+      this.transformUpdateRequired = true;
+      dt /= (float)iterations;
+      this.RK4Position(dt);
     } else {
       this.aabbUpdateRequired = true;
       this.transformUpdateRequired = true;
@@ -685,5 +677,21 @@ public void AddRigidbodyToCollisionExclusionList(Rigidbody rigidbody) {
 
 public Rigidbody getRigidbodyInCollisionExclusionList(int index) {
     return this.collisionExclusionList.get(index);
+}
+
+public boolean getIsTranslationallyStatic() {
+    return this.isTranslationallyStatic;
+}
+
+public void setIsTranslationallyStatic(boolean isTranslationallyStatic) {
+    this.isTranslationallyStatic = isTranslationallyStatic;
+}
+
+public boolean getIsRotationallyStatic() {
+    return this.isRotationallyStatic;
+}
+
+public void setIsRotationallyStatic(boolean isRotationallyStatic) {
+    this.isRotationallyStatic = isRotationallyStatic;
 }
 }

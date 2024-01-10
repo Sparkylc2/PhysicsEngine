@@ -50,11 +50,20 @@ public float[] jList = new float[2];
    
 
 
-public final float MIN_BODY_AREA = 0.01f * 0.01f; // m^2
+public final float MIN_BODY_AREA = 0.001f * 0.001f; // m^2
 public final float MAX_BODY_AREA = 300f * 300f; // m^2
 
-public final float MIN_BODY_DENSITY = 0.1f; //g/cm^3
+public final float MIN_BODY_DENSITY = 0.01f; //g/cm^3
 public final float MAX_BODY_DENSITY = 30.0f; //g/cm^3
+
+public final float MIN_BODY_WIDTH = 0.01f; // m
+public final float MAX_BODY_WIDTH = 10.0f; // m
+
+public final float MIN_BODY_HEIGHT = 0.01f; // m
+public final float MAX_BODY_HEIGHT = 10.0f; // m
+
+public final float MIN_BODY_RADIUS = 0.01f;
+public final float MAX_BODY_RADIUS = 10.0f;
 
 public final int MIN_ITERATIONS = 1;
 public final int MAX_ITERATIONS = 128;
@@ -65,6 +74,12 @@ public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
 public final float GRAVITY_MAG = 9.81f;
 
+
+/*
+====================================================================================================
+===================================  PHYSICS ENGINE METHODS  =======================================
+====================================================================================================
+*/
 
 
 //Iterations for substeps for each frame
@@ -115,11 +130,11 @@ public void Step(float dt, int totalIterations) {
 
 public void SeperateBodies(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector minimumTranslationVector) {
     
-    if (rigidbodyA.getIsStatic()) {
+    if (rigidbodyA.getIsStatic() || rigidbodyA.getIsTranslationallyStatic()) {
         
         rigidbodyB.Move(minimumTranslationVector);
         
-    } else if (rigidbodyB.getIsStatic()) {
+    } else if (rigidbodyB.getIsStatic() || rigidbodyB.getIsTranslationallyStatic()) {
         
         rigidbodyA.Move(PVector.mult(minimumTranslationVector, -1.0f));
         
