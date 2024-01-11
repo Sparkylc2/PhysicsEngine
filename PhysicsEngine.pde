@@ -88,9 +88,9 @@ void setup() {
     */
 
 
-    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true,
-                                                            0.05f, new PVector(0, 0, 0),
-                                                            new PVector(255, 255, 255));
+    //Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true,
+   //                                                         0.05f, new PVector(0, 0, 0),
+    //                                                        new PVector(255, 255, 255));
     Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
                                                             0.05f, new PVector(0, 0, 0),
                                                             new PVector(255, 255, 255));
@@ -99,7 +99,7 @@ void setup() {
                                                             0.05f, new PVector(0, 0, 0),
                                                             new PVector(255, 255, 255));
     
-    spinningBody.SetInitialPosition(new PVector(0, -30));
+    spinningBody.SetInitialPosition(new PVector(0, -5));
     Motor motor = new Motor(spinningBody, 0.5);
 
     spinningBody.addForceToForceRegistry(motor);
@@ -107,38 +107,37 @@ void setup() {
 
     test.SetInitialPosition(new PVector(-10, -5.1));
 
-    springBody.SetInitialPosition(new PVector(-10, -5));
-    springBody.setIsRotationallyStatic(false);
+    //springBody.SetInitialPosition(new PVector(-10, -5));
+    //springBody.setIsRotationallyStatic(false);
 
-    Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
-    Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
-    Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
+    //Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
+    //Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
+    //Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
 
-    springLeft.setSpringLength(10);
-    springLeft.setSpringConstant(100);
-    springLeft.setLockTranslationToYAxis(true);
+    //springLeft.setSpringLength(10);
+    //springLeft.setSpringConstant(100);
+    //springLeft.setLockTranslationToYAxis(true);
 
 
-    springRight.setSpringLength(10);
-    springRight.setSpringConstant(100);
-    springRight.setLockTranslationToYAxis(true);
+    //springRight.setSpringLength(10);
+    //springRight.setSpringConstant(100);
+    //springRight.setLockTranslationToYAxis(true);
     
 
     
-    springBody.addForceToForceRegistry(springLeft);
-    springBody.addForceToForceRegistry(springRight);
+    //springBody.addForceToForceRegistry(springLeft);
+    //springBody.addForceToForceRegistry(springRight);
 
-    test.addForceToForceRegistry(connectingRod);
+    //test.addForceToForceRegistry(connectingRod);
 
     test.addForceToForceRegistry(new Gravity(test));
-    springBody.addForceToForceRegistry(new Gravity(springBody));
+    //springBody.addForceToForceRegistry(new Gravity(springBody));
 
 
-    AddBodyToBodyEntityList(springBody);
+    //AddBodyToBodyEntityList(springBody);
     AddBodyToBodyEntityList(test);
     AddBodyToBodyEntityList(spinningBody);
 
-    Rope rope = new Rope(test, springBody, new PVector(0,0), new PVector(0,0), 100, 1, 5, 500);
 
 }
 

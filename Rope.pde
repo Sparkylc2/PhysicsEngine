@@ -1,7 +1,7 @@
 
 public class Rope {
     
-    private ArrayList<Rigidbody> ropeBodies;
+    private ArrayList<Rigidbody> ropeBodies = new ArrayList<Rigidbody>();
 
     private Rigidbody rigidbodyA;
     private Rigidbody rigidbodyB;
@@ -16,8 +16,8 @@ public class Rope {
     private float ropeMass;
     private float ropeLength;
 
-    private PVector initialPosition;
-    private PVector endPosition;
+    private PVector initialPosition = new PVector(0, 0);
+    private PVector endPosition = new PVector(0, 0);
 
     private float stiffness;
     private float precision;
@@ -39,7 +39,6 @@ public class Rope {
 
         this.type = 1;
 
-        GenerateRope();
     }
 
     public Rope(PVector initialPosition, PVector endPosition, float stiffness, float ropeLength, float damping, float precision, float ropeMass) {
@@ -57,8 +56,6 @@ public class Rope {
         this.ropeMass = ropeMass;
 
         this.type = 2;
-
-        GenerateRope();
     }
 
     public Rope(Rigidbody rigidbodyA, PVector localAnchorA, PVector anchor, float stiffness, float ropeLength, float damping, float precision, float ropeMass) {
@@ -80,7 +77,6 @@ public class Rope {
 
         this.type = 3;
 
-        GenerateRope();
     }
 
     public Rope(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB, float stiffness, float damping, float precision, float ropeMass) {
@@ -103,15 +99,14 @@ public class Rope {
 
         this.type = 4;
 
-        GenerateRope();
     }
 
-    private void GenerateRope() {
+    public void GenerateRope() {
 
-        float radius = 1; //ropeLength / precision * 0.25f;
-        density = 1;//ropeMass / (precision * (float)Math.PI * radius * radius);
+        float radius = 2; //ropeLength / precision * 0.25f;
+        float density = ropeMass / (precision * (float)Math.PI * radius * radius);
 
-        float spacing = ropeLength / precision;
+        float spacing = 10;
         float damping = 1.5f;
 
         float springLength = spacing - 2*radius;
@@ -124,17 +119,16 @@ public class Rope {
         for(int i = 0; i < precision; i++) {
 
             //A NULL POINTER EXCEPTION IS THROWN HERE
-            Rigidbody body = RigidbodyGenerator.CreateCircleBody(1, 0, 1, false, true, 0.05f,
+            Rigidbody body = RigidbodyGenerator.CreateCircleBody(radius, 3, 1, false, true, 0.05f,
                                                             new PVector(0, 0, 0), new PVector(255, 255, 255));
-            body.SetInitialPosition(new PVector(initialPosition.x, initialPosition.y  + (i + 1) * spacing));
-            body.setIsVisible(true);
-            ropeBodies.add(body);
 
-        }
+                body.setPosition(new PVector(initialPosition.x, initialPosition.y  + (i + 1) * spacing));
+                ropeBodies.add(body);
+}
+
 
         for(int i = 0; i < precision; i++) {
             if(i != 0) {
-                
                 float springConstant = stiffness*(precision - i);
 
                 Rigidbody previousBody = ropeBodies.get(i - 1);

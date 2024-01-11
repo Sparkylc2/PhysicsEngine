@@ -54,7 +54,7 @@ public final float MIN_BODY_AREA = 0.001f * 0.001f; // m^2
 public final float MAX_BODY_AREA = 300f * 300f; // m^2
 
 public final float MIN_BODY_DENSITY = 0.01f; //g/cm^3
-public final float MAX_BODY_DENSITY = 30.0f; //g/cm^3
+public final float MAX_BODY_DENSITY = 300.0f; //g/cm^3
 
 public final float MIN_BODY_WIDTH = 0.01f; // m
 public final float MAX_BODY_WIDTH = 10.0f; // m
