@@ -1,7 +1,7 @@
     public class GUI {
         
         //The size of the group
-        private int globalGroupHeight = 200;
+        private int globalGroupHeight = 225;
         private int globalGroupWidth = 230;
         private int globalGroupBarHeight = 20;
 
@@ -23,19 +23,48 @@
         //the group background color
         private int globalGroupColor = color(250, 50);
 
-        private int rowCount = 8;
+        private int rowCount = 9;
      
-        /*--------------------------*/
-        /*----- Stroke and Fill ----*/
-        /*--------------------------*/
-        private PVector lastFillColour = new PVector(255, 255, 255);
-        private PVector lastStrokeColour = new PVector(255, 255, 255);
+        /*---------------------------- Default Values Initialization ------------------------*/
+        private float defaultRectangleWidth = 2f;
+        private float defaultRectangleHeight = 2f;
+        private float defaultCircleRadius = 1f;
+
+        private float defaultDensity = 10f;
+        private float defaultRestitution = 0.5f;
+
+        private PVector defaultFillColour = new PVector(255, 255, 255);
+        private PVector defaultStrokeColour = new PVector(0, 0, 0);
+        private float defaultStrokeWeight = 0.05;
+
+        private boolean defaultIsStatic = false;
+        private boolean defaultIsTransStatic = false;
+        private boolean defaultIsRotStatic = false;
+
+
 /*
 ====================================================================================================
 ========================================= User Interface ===========================================
 ====================================================================================================
 */
         public GUI(ControlP5 userInterface) {
+    /*---------------------- Interactivity Listener Initialization -----------------*/
+
+        interactivityListener.setWidth(defaultRectangleWidth);
+        interactivityListener.setHeight(defaultRectangleHeight);
+        interactivityListener.setRadius(defaultCircleRadius);
+        interactivityListener.setDensity(defaultDensity);
+        interactivityListener.setRestitution(defaultRestitution);
+        interactivityListener.setFillColour(defaultFillColour);
+        interactivityListener.setStrokeColour(defaultStrokeColour);
+        interactivityListener.setStrokeWeight(defaultStrokeWeight);
+
+        interactivityListener.setIsStatic(defaultIsStatic);
+        interactivityListener.setIsTranslationallyStatic(defaultIsTransStatic);
+        interactivityListener.setIsRotationallyStatic(defaultIsRotStatic);
+
+    /*----------------------------------------------------------------------------*/
+
                 Tab Rigidbodies = userInterface.addTab("Rigidbodies")
                                 .setLabel("Rigidbodies")
                                 .setId(0);
@@ -45,7 +74,7 @@
                                 .setId(1);
 
                     
-                Group RigidbodyGeneration = userInterface.addGroup("RigidbodyGeneration")
+                Group RigidbodyGeneration = userInterface.addGroup("Rigidbody")
                                 .setPosition(calculateGroupPositionX(), calculateGroupPositionY())
                                 .setBackgroundHeight(globalGroupHeight)
                                 .setBarHeight(globalGroupBarHeight)
@@ -54,8 +83,6 @@
                                  //.disableCollapse()
                                 .setTab("Rigidbodies")
                                 ;
-
-
                         Toggle Circle = userInterface.addToggle("Circle")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3), calculateButtonHeight(rowCount))
@@ -82,9 +109,9 @@
                                                             userInterface.getController("GreenFill").setVisible(true);
                                                             userInterface.getController("BlueFill").setVisible(true);
 
-                                                            userInterface.getController("RedStroke").setVisible(true);
-                                                            userInterface.getController("GreenStroke").setVisible(true);
-                                                            userInterface.getController("BlueStroke").setVisible(true);
+                                                            userInterface.getController("RedStroke").setVisible(false);
+                                                            userInterface.getController("GreenStroke").setVisible(false);
+                                                            userInterface.getController("BlueStroke").setVisible(false);
 
                                                             userInterface.getController("ColorBox").setVisible(true);
 
@@ -96,10 +123,19 @@
                                                             userInterface.getController("transStatic").setVisible(true);
                                                             userInterface.getController("rotStatic").setVisible(true);
 
+                                                            userInterface.getController("Angle").setVisible(true);
+                                                            userInterface.getController("AngularVelocity").setVisible(true);
 
-                        
+                                                            //Default enabled color selector
+                                                            userInterface.getController("FillColour").setValue(1);
+
+
+                                                            /*-------------- Interactivity Listener--------------*/
                                                             ShapeType shapeType = ShapeType.CIRCLE;
+
                                                             interactivityListener.setShapeType(shapeType);
+                                                            /*--------------------------------------------------*/
+
                                                         }
                                                         if(userInterface.getController("Circle").getValue() == 0
                                                             && userInterface.getController("Box").getValue() == 0
@@ -130,6 +166,9 @@
                                                             userInterface.getController("isStatic").setVisible(false);
                                                             userInterface.getController("transStatic").setVisible(false);
                                                             userInterface.getController("rotStatic").setVisible(false);
+
+                                                            userInterface.getController("Angle").setVisible(false);
+                                                            userInterface.getController("AngularVelocity").setVisible(false);
                                                             
                                                         }
                                                     }
@@ -161,9 +200,9 @@
                                                             userInterface.getController("GreenFill").setVisible(true);
                                                             userInterface.getController("BlueFill").setVisible(true);
 
-                                                            userInterface.getController("RedStroke").setVisible(true);
-                                                            userInterface.getController("GreenStroke").setVisible(true);
-                                                            userInterface.getController("BlueStroke").setVisible(true);
+                                                            userInterface.getController("RedStroke").setVisible(false);
+                                                            userInterface.getController("GreenStroke").setVisible(false);
+                                                            userInterface.getController("BlueStroke").setVisible(false);
 
                                                             userInterface.getController("ColorBox").setVisible(true);
 
@@ -175,9 +214,18 @@
                                                             userInterface.getController("transStatic").setVisible(true);
                                                             userInterface.getController("rotStatic").setVisible(true);
 
+                                                            userInterface.getController("Angle").setVisible(true);
+                                                            userInterface.getController("AngularVelocity").setVisible(true);
+                                                            
+                                                            //Default enabled colour selector
+                                                            userInterface.getController("FillColour").setValue(1);
+
+                                                            /*-------------- Interactivity Listener--------------*/
 
                                                             ShapeType shapeType = ShapeType.BOX;
+
                                                             interactivityListener.setShapeType(shapeType);
+                                                            /*--------------------------------------------------*/
                                                         }
                                                         if(userInterface.getController("Circle").getValue() == 0
                                                             && userInterface.getController("Box").getValue() == 0
@@ -195,9 +243,9 @@
                                                             userInterface.getController("GreenFill").setVisible(false);
                                                             userInterface.getController("BlueFill").setVisible(false);
 
-                                                            userInterface.getController("RedStroke").setVisible(true);
-                                                            userInterface.getController("GreenStroke").setVisible(true);
-                                                            userInterface.getController("BlueStroke").setVisible(true);
+                                                            userInterface.getController("RedStroke").setVisible(false);
+                                                            userInterface.getController("GreenStroke").setVisible(false);
+                                                            userInterface.getController("BlueStroke").setVisible(false);
 
                                                             userInterface.getController("ColorBox").setVisible(false);
 
@@ -208,6 +256,9 @@
                                                             userInterface.getController("isStatic").setVisible(false);
                                                             userInterface.getController("transStatic").setVisible(false);
                                                             userInterface.getController("rotStatic").setVisible(false);
+
+                                                            userInterface.getController("Angle").setVisible(false);
+                                                            userInterface.getController("AngularVelocity").setVisible(false);
                                                         }
                                                     }
                                                 })
@@ -225,23 +276,7 @@
                                                             userInterface.getController("Box").setValue(0);
                                                             userInterface.getController("Circle").setValue(0);
 
-                                                            userInterface.getController("RectangleWidth").setVisible(false);
-                                                            userInterface.getController("RectangleHeight").setVisible(false);
-                                                            userInterface.getController("CircleRadius").setVisible(false);
-
-                                                            userInterface.getController("Density").setVisible(true);
-                                                            userInterface.getController("Restitution").setVisible(true);
-                                                            userInterface.getController("StrokeWeight").setVisible(true);
-                                                            userInterface.getController("Red").setVisible(true);
-                                                            userInterface.getController("Green").setVisible(true);
-                                                            userInterface.getController("Blue").setVisible(true);
-                                                            userInterface.getController("ColorBox").setVisible(true);
-                                                            userInterface.getController("FillColour").setVisible(true);
-                                                            userInterface.getController("StrokeColour").setVisible(true);
-                                                            userInterface.getController("isStatic").setVisible(true);
-                                                            userInterface.getController("transStatic").setVisible(true);
-                                                            userInterface.getController("rotStatic").setVisible(true);
-                                                            
+                                                            //COPY AND PASTE THE REST OF THE STUFF FROM THE OTHER ONE HERE
                                                             ShapeType shapeType = ShapeType.POLYGON;
                                                             interactivityListener.setShapeType(shapeType);
                                                         }
@@ -250,21 +285,9 @@
                                                             && userInterface.getController("Box").getValue() == 0
                                                             && userInterface.getController("Polygon").getValue() == 0){
 
-                                                            userInterface.getController("RectangleWidth").setVisible(false);
-                                                            userInterface.getController("RectangleHeight").setVisible(false);
-                                                            userInterface.getController("CircleRadius").setVisible(false);
-                                                            userInterface.getController("Density").setVisible(false);
-                                                            userInterface.getController("Restitution").setVisible(false);
-                                                            userInterface.getController("StrokeWeight").setVisible(false);
-                                                            userInterface.getController("Red").setVisible(false);
-                                                            userInterface.getController("Green").setVisible(false);
-                                                            userInterface.getController("Blue").setVisible(false);
-                                                            userInterface.getController("ColorBox").setVisible(false);
-                                                            userInterface.getController("FillColour").setVisible(false);
-                                                            userInterface.getController("StrokeColour").setVisible(false);
-                                                            userInterface.getController("isStatic").setVisible(false);
-                                                            userInterface.getController("transStatic").setVisible(false);
-                                                            userInterface.getController("rotStatic").setVisible(false);
+                                                                //COPY AND PASTE THE REST OF THE STUFF FROM THE OTHER ONE HERE
+
+                                                   
                                                         }
                                                     }
                                                 })
@@ -276,7 +299,7 @@
                                         .setLabel("Density")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_DENSITY, MAX_BODY_DENSITY)
-                                        .setValue((MAX_BODY_DENSITY + MIN_BODY_DENSITY)*0.5f)
+                                        .setValue(defaultDensity)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -291,7 +314,7 @@
                                         .setLabel("Restitution")
                                         .setVisible(false)
                                         .setRange(0.01, 1)
-                                        .setValue(0.5f)
+                                        .setValue(defaultRestitution)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -306,7 +329,7 @@
                                         .setLabel("Width")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_WIDTH, MAX_BODY_WIDTH)
-                                        .setValue(2f)
+                                        .setValue(defaultRectangleWidth)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -323,7 +346,7 @@
                                         .setLabel("Height")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_HEIGHT, MAX_BODY_HEIGHT)
-                                        .setValue(2f)
+                                        .setValue(defaultRectangleHeight)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -340,7 +363,7 @@
                                         .setLabel("Radius")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_RADIUS, MAX_BODY_RADIUS)
-                                        .setValue(2f)
+                                        .setValue(defaultCircleRadius)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -451,7 +474,7 @@
                                         .setLabel("Red")
                                         .setVisible(false)
                                         .setRange(0, 255)
-                                        .setValue(255)
+                                        .setValue(defaultFillColour.x)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -474,7 +497,7 @@
                                         .setLabel("Green")
                                         .setVisible(false)
                                         .setRange(0, 255)
-                                        .setValue(255)
+                                        .setValue(defaultFillColour.y)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -496,7 +519,7 @@
                                         .setLabel("Blue")
                                         .setVisible(false)
                                         .setRange(0, 255)
-                                        .setValue(255)
+                                        .setValue(defaultFillColour.z)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -517,7 +540,7 @@
                                         .setLabel("Red")
                                         .setVisible(false)
                                         .setRange(0, 255)
-                                        .setValue(255)
+                                        .setValue(defaultStrokeColour.x)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -538,7 +561,7 @@
                                         .setLabel("Green")
                                         .setVisible(false)
                                         .setRange(0, 255)
-                                        .setValue(255)
+                                        .setValue(defaultStrokeColour.y)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -560,7 +583,7 @@
                                         .setLabel("Blue")
                                         .setVisible(false)
                                         .setRange(0, 255)
-                                        .setValue(255)
+                                        .setValue(defaultStrokeColour.z)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -580,6 +603,8 @@
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(6, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Color")
+                                        .setColorForeground(color(defaultFillColour.x, defaultFillColour.y, defaultFillColour.z))
+                                        .setColorActive(color(defaultFillColour.x, defaultFillColour.y, defaultFillColour.z))
                                         .setVisible(false)
                                         .setLabelVisible(false)
                                         .setGroup(RigidbodyGeneration)
@@ -590,7 +615,7 @@
                                         .setLabel("Static")
                                         .setVisible(false)
                                         .setGroup(RigidbodyGeneration)
-                                        .setValue(false)
+                                        .setValue(defaultIsStatic)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         if(userInterface.getController("isStatic").getValue() == 1){
@@ -610,7 +635,7 @@
                                         .setLabel("TransStatic")
                                         .setVisible(false)
                                         .setGroup(RigidbodyGeneration)
-                                        .setValue(false)
+                                        .setValue(defaultIsTransStatic)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         if(userInterface.getController("transStatic").getValue() == 1){
@@ -632,7 +657,7 @@
                                         .setLabel("RotStatic")
                                         .setVisible(false)
                                         .setGroup(RigidbodyGeneration)
-                                        .setValue(false)
+                                        .setValue(defaultIsRotStatic)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         if(userInterface.getController("rotStatic").getValue() == 1){
@@ -648,26 +673,44 @@
                                                     }
                                                 })
                                                 ;
-
-
-
-                        
-                        
-
-                        /*
-                       
-                        
-                        Textfield controlPlanetMass = userInterface.addTextfield("controlTab Planet Mass")
-                                        .setPosition(globalGroupElementPaddingX, globalInitialPositionY + globalGroupElementSpacingY * elementNumber)
-                                        .setSize(50, 20)
-                                        .setText("")
-                                        .setGroup(controlsGroup)
-                                        .setColor(color(255,255,255))
-                                        .setVisible(true)
-                                        .setLabel("Mass")
+                        Slider angle = userInterface.addSlider("Angle")
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setLabel("Angle")
+                                        .setVisible(false)
+                                        .setRange(0, 360)
+                                        .setValue(0)
+                                        .setGroup(RigidbodyGeneration)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        float angle = userInterface.getController("Angle").getValue();
+                                                        interactivityListener.setAngle(radians(angle));
+                                                        }
+                                                })
+                                            ;
+                        Slider angularVelocity = userInterface.addSlider("AngularVelocity")
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setLabel("Angular Vel")
+                                        .setVisible(false)
+                                        .setRange(-10, 10)
+                                        .setValue(0)
+                                        .setGroup(RigidbodyGeneration)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        float angularVelocity = userInterface.getController("AngularVelocity").getValue();
+                                                        interactivityListener.setAngularVelocity(angularVelocity);
+                                                        }
+                                                })
                                         ;
                         
-*/
+
+                        
+
+
+
+                        
+                
 /*
 ====================================================================================================
 ======================================== Formatting ================================================
@@ -677,21 +720,34 @@
 userInterface.getController("Circle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("Box").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("Polygon").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("Density").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("Restitution").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
 userInterface.getController("RectangleWidth").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RectangleHeight").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("CircleRadius").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("RedStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("GreenStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("BlueStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("ColorBox").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+
+userInterface.getController("Density").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+userInterface.getController("Restitution").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
 userInterface.getController("StrokeWeight").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 userInterface.getController("FillColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("StrokeColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
+userInterface.getController("RedStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("GreenStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("BlueStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+
+userInterface.getController("RedFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("GreenFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("BlueFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+
+userInterface.getController("ColorBox").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+
 userInterface.getController("isStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("transStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("rotStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
+userInterface.getController("Angle").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("AngularVelocity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 
 
 

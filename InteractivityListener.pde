@@ -10,25 +10,30 @@ public class InteractivityListener {
 ======================================= GUI Variables ==============================================
 ====================================================================================================
 */
-  private float width = 2f;
-  private float height = 2f;
+  private float width;
+  private float height;
 
-  private float radius = 2f;
+  private float radius;
 
-  private float density = 1f;
-  private float restitution = 1f;
+  private float density;
+  private float restitution;
 
+  
+  private float angle;
+  private float angularVelocity;
+
+  //TODO: IMPLEMENT THIS IN THE GUI
   private boolean generateRigidbodies = true;
   private boolean generateForces = false;
 
-  private boolean isStatic = false;
-  private boolean isTranslationallyStatic = false;
-  private boolean isRotationallyStatic = false;
-  private boolean isCollidable = false;
+  private boolean isStatic;
+  private boolean isTranslationallyStatic;
+  private boolean isRotationallyStatic;
+  private boolean isCollidable;
 
-  private float strokeWeight = 0.05f;
-  private PVector strokeColour = new PVector(0,0,0);
-  private PVector fillColour = new PVector(255, 255, 255);
+  private float strokeWeight;
+  private PVector strokeColour;
+  private PVector fillColour;
 
   private ShapeType shapeType;
 
@@ -164,6 +169,14 @@ public void setGenerateForces(boolean generateForces) {
   this.generateForces = generateForces;
 }
 
+public void setAngle(float angle) {
+  this.angle = angle;
+}
+
+public void setAngularVelocity(float angularVelocity) {
+  this.angularVelocity = angularVelocity;
+}
+
 
 public float getWidth() {
   return this.width;
@@ -225,6 +238,14 @@ public boolean getGenerateForces() {
   return this.generateForces;
 }
 
+public float getAngle() {
+  return this.angle;
+}
+
+public float getAngularVelocity() {
+  return this.angularVelocity;
+}
+
 
 }
 
@@ -244,7 +265,7 @@ public void mouseDragged() {
 }
 
 public void mouseClicked() {
-    if(!userInterface.isMouseOver()) {
+    if(!userInterface.isMouseOver() && interactivityListener.getGenerateRigidbodies()) {
     if(interactivityListener.getShapeType() == ShapeType.BOX) {
         Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody( interactivityListener.getWidth(),
                                                                 interactivityListener.getHeight(),
@@ -259,6 +280,8 @@ public void mouseClicked() {
         rigidbody.SetInitialPosition(interactivityListener.screenToWorld(mouseX, mouseY));
         rigidbody.setIsTranslationallyStatic(interactivityListener.getIsTranslationallyStatic());
         rigidbody.setIsRotationallyStatic(interactivityListener.getIsRotationallyStatic());
+        rigidbody.RotateTo(interactivityListener.getAngle());
+        rigidbody.setAngularVelocity(interactivityListener.getAngularVelocity());
         
         rigidbody.addForceToForceRegistry(new Gravity());
         AddBodyToBodyEntityList(rigidbody);
@@ -277,6 +300,8 @@ public void mouseClicked() {
     rigidbody.SetInitialPosition(interactivityListener.screenToWorld(mouseX, mouseY));
     rigidbody.setIsTranslationallyStatic(interactivityListener.getIsTranslationallyStatic());
     rigidbody.setIsRotationallyStatic(interactivityListener.getIsRotationallyStatic());
+    rigidbody.RotateTo(interactivityListener.getAngle());
+    rigidbody.setAngularVelocity(interactivityListener.getAngularVelocity());
 
     rigidbody.addForceToForceRegistry(new Gravity());
     AddBodyToBodyEntityList(rigidbody);

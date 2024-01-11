@@ -26,9 +26,9 @@ void setup() {
   rigidbodyList = new ArrayList<Rigidbody>();
 
 
-
+/*
   Rigidbody floor = RigidbodyGenerator.CreateBoxBody(100,
-                                                   2f, 0.1f, 0.1f, true, true, 
+                                                   2f, 0.1f, 0.1f, true, true,
                                                    0.05, new PVector(0, 0, 0),
                                                    new PVector(255, 255, 255));
 
@@ -39,7 +39,7 @@ void setup() {
                                                    0.05, new PVector(0, 0, 0),
                                                    new PVector(255, 255, 255));
   slantedFloor1.SetInitialPosition(new PVector(-10, -10));
-
+    
    Rigidbody slantedFloor2 = RigidbodyGenerator.CreateBoxBody(30f,
                                                    2f, 0.1f, 0.1f, true, true,
                                                    0.05, new PVector(0, 0, 0),
@@ -69,7 +69,7 @@ void setup() {
 
 
     Rod rigidRodA = new Rod(rigidbodyA, rigidbodyB, new PVector(0, 0),
-                                            new PVector(0, 0));
+                                           new PVector(0, 0));
     Rod rigidRodB = new Rod(rigidbodyB, rigidbodyA, new PVector(0, 0),
                                             new PVector(0, 0));
 
@@ -77,14 +77,76 @@ void setup() {
     rigidbodyA.addForceToForceRegistry(new Gravity());
     rigidbodyA.addForceToForceRegistry(rigidRodA);
     rigidbodyB.addForceToForceRegistry(new Gravity());
-    rigidbodyB.addForceToForceRegistry(rigidRodB);
-
+    rigidbodyB.addForceToForceRegistry(rigidRodB)
+    
     AddBodyToBodyEntityList(rigidbodyA);
     AddBodyToBodyEntityList(rigidbodyB);
     AddBodyToBodyEntityList(slantedFloor1);
     AddBodyToBodyEntityList(slantedFloor2);
     AddBodyToBodyEntityList(floor);
     AddBodyToBodyEntityList(box);
+    */
+
+
+    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true,
+                                                            0.05f, new PVector(0, 0, 0),
+                                                            new PVector(255, 255, 255));
+    Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
+                                                            0.05f, new PVector(0, 0, 0),
+                                                            new PVector(255, 255, 255));
+
+    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(2f, 1f, 0.5f, false, true,
+                                                            0.05f, new PVector(0, 0, 0),
+                                                            new PVector(255, 255, 255));
+    
+    spinningBody.SetInitialPosition(new PVector(0, -5));
+    spinningBody.setAngularVelocity(2);
+    spinningBody.setIsTranslationallyStatic(true);
+
+    test.SetInitialPosition(new PVector(-10, -5.1));
+
+    springBody.SetInitialPosition(new PVector(-10, -5));
+    springBody.setIsRotationallyStatic(false);
+
+    Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
+    Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
+    //Spring springCross1 = new Spring(springBody, new PVector(-2,0), new PVector(-8, -10));
+    //Spring springCross2 = new Spring(springBody, new PVector(2,0), new PVector(-12, -10));
+
+    Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
+
+    springLeft.setSpringLength(10);
+    springLeft.setSpringConstant(100);
+
+    springRight.setSpringLength(10);
+    springRight.setSpringConstant(100);
+
+    //springCross1.setSpringLength(12.8);
+    //springCross1.setSpringConstant(50);
+
+    //springCross2.setSpringLength(12.8);
+    //springCross2.setSpringConstant(50);
+
+
+    
+    springBody.addForceToForceRegistry(springLeft);
+    springBody.addForceToForceRegistry(springRight);
+    //springBody.addForceToForceRegistry(springCross1);
+    //springBody.addForceToForceRegistry(springCross2);
+
+    test.addForceToForceRegistry(connectingRod);
+
+    test.addForceToForceRegistry(new Gravity());
+    springBody.addForceToForceRegistry(new Gravity());
+
+
+    AddBodyToBodyEntityList(springBody);
+    AddBodyToBodyEntityList(test);
+    AddBodyToBodyEntityList(spinningBody);
+
+
+
+
 }
 
 

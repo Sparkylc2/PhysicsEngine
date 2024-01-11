@@ -2,13 +2,13 @@ public class Spring implements ForceRegistry {
 
   private Rigidbody rigidbodyA;
   private Rigidbody rigidbodyB;
-
+  
   private PVector anchorPoint;
   private PVector localAnchorA;
   private PVector localAnchorB;
 
   private float equilibriumLength = 0.5f; //Equilibrium length is a percentage of the total magnitude of the length, which for now will be 0.5f percent
-  private float springLength = 1;
+  private float springLength = 5;
   private float springConstant = 5;
 
   private boolean isHingeable;
@@ -26,6 +26,8 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     this.anchorPoint = anchorPoint;
     this.isTwoBodySpring = false;
     this.isHingeable = true;
+
+    //TESTING THIS
 }
 
  public Spring(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {
@@ -38,6 +40,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
     this.isTwoBodySpring = true;
     this.isHingeable = false;
+
  }
 
   @Override
@@ -56,18 +59,20 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
         worldAnchorB = anchorPoint;
         direction = PVector.sub(worldAnchorB, worldAnchorA);
     }
-
+    
     if(!this.isHingeable) {
         float rodAngle = PApplet.atan2(direction.y, direction.x);
         float angleDifference = rigidbodyA.getAngle() - rodAngle;
         rigidbodyA.setAngle(rigidbodyA.getAngle() - angleDifference);
     }
 
+    
+
     float currentLength = direction.mag();
     direction.normalize();
 
     float equilibrium = springLength * equilibriumLength;
-    float displacement = currentLength - equilibriumLength;
+    float displacement = currentLength - equilibrium;
 
     return PVector.mult(direction, springConstant * displacement);
   }
@@ -163,6 +168,17 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
 public void setIsHingeable(boolean isHingeable) {
     this.isHingeable = isHingeable;
 }
+
+public void setSpringConstant(float springConstant) {
+    this.springConstant = springConstant;
  }
+
+public void setSpringLength(float springLength) {
+    this.springLength = springLength;
+}
+public void setEquilibriumLength(float equilibriumLength) {
+    this.equilibriumLength = equilibriumLength;
+}
+}
 
 

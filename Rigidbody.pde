@@ -371,16 +371,20 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
       this.transformUpdateRequired = true;
       dt /= (float)iterations;
       this.angularIntegration(dt);
+
     } else if (this.isRotationallyStatic) {
+
       this.aabbUpdateRequired = true;
       this.transformUpdateRequired = true;
       dt /= (float)iterations;
       this.RK4Position(dt);
     } else {
+        
       this.aabbUpdateRequired = true;
       this.transformUpdateRequired = true;
       dt /= (float)iterations;
       this.RK4Position(dt);
+
       this.angularIntegration(dt);
     }
   }
