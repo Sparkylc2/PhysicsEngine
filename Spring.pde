@@ -7,13 +7,22 @@ public class Spring implements ForceRegistry {
   private PVector localAnchorA;
   private PVector localAnchorB;
 
+  private boolean lockTranslationToXAxis = false;
+  private boolean lockTranslationToYAxis = false;
+  
+  private boolean isPerfectSpring = false;
+
   private float equilibriumLength = 0.5f; //Equilibrium length is a percentage of the total magnitude of the length, which for now will be 0.5f percent
   private float springLength = 5;
   private float springConstant = 5;
+  private float damping = 1f;
 
   private boolean isHingeable;
   private boolean isTwoBodySpring;
 
+
+
+  //TODO: IMPLEMENT THIS
   private float initialRotationA;
   private float initialRotationB;
 
@@ -27,7 +36,6 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     this.isTwoBodySpring = false;
     this.isHingeable = true;
 
-    //TESTING THIS
 }
 
  public Spring(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {
@@ -39,34 +47,69 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     this.localAnchorB = localAnchorB;
 
     this.isTwoBodySpring = true;
-    this.isHingeable = false;
+    this.isHingeable = true;
 
  }
 
   @Override
   public PVector getForce(Rigidbody rigidbody, PVector position) {
-
+    if(rigidbody != rigidbodyA) {
+        throw new IllegalArgumentException("The rigidbody passed in is not part of this spring");
+    }
+    
     PVector direction;
     PVector worldAnchorA;
     PVector worldAnchorB;
+    PVector dampingForce = new PVector();
+
+    if(lockTranslationToYAxis) {
+        rigidbodyA.setVelocity(new PVector(0, rigidbodyA.getVelocity().y));
+    } else if(lockTranslationToXAxis) {
+
+        rigidbodyA.setVelocity(new PVector(rigidbodyA.getVelocity().x, 0));
+    }
+
 
     if(isTwoBodySpring) {
+
         worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
         worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+        
         direction = PVector.sub(worldAnchorB, worldAnchorA);
+        
+        if(!isPerfectSpring) {
+        /*-------------------DAMPING-------------------*/
+            PVector relativeVelocity = PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity());
+
+            float rodVelocity = PVector.dot(relativeVelocity, direction);
+            float dampingForceMagnitude = rodVelocity * damping;
+
+            dampingForce = PVector.mult(direction, dampingForceMagnitude);
+        /*----------------------------------------------*/
+        }
     } else {
+
         worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
         worldAnchorB = anchorPoint;
+
         direction = PVector.sub(worldAnchorB, worldAnchorA);
+
+        if(!isPerfectSpring) {
+        /*-------------------DAMPING-------------------*/
+            PVector velocity = rigidbodyA.getVelocity();
+            
+            dampingForce = PVector.mult(velocity, -damping);
+        /*----------------------------------------------*/
+        }
     }
     
     if(!this.isHingeable) {
+
         float rodAngle = PApplet.atan2(direction.y, direction.x);
         float angleDifference = rigidbodyA.getAngle() - rodAngle;
+
         rigidbodyA.setAngle(rigidbodyA.getAngle() - angleDifference);
     }
-
-    
 
     float currentLength = direction.mag();
     direction.normalize();
@@ -74,7 +117,12 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     float equilibrium = springLength * equilibriumLength;
     float displacement = currentLength - equilibrium;
 
-    return PVector.mult(direction, springConstant * displacement);
+    PVector force = PVector.mult(direction, springConstant * displacement);
+    
+    force.add(dampingForce);
+
+    return force;
+
   }
   
 
@@ -162,8 +210,17 @@ for(int i = 0; i < segments; i++) {
 
 @Override
 public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    return PhysEngMath.Transform(localAnchorA, position, rigidbody.getAngle());
+    if(rigidbody != rigidbodyA) {
+        throw new IllegalArgumentException("The rigidbody passed in is not part of this spring");
     }
+    return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+}
+
+/*
+====================================================================================================
+================================== Getters & Setters ===============================================
+====================================================================================================
+*/
 
 public void setIsHingeable(boolean isHingeable) {
     this.isHingeable = isHingeable;
@@ -179,6 +236,104 @@ public void setSpringLength(float springLength) {
 public void setEquilibriumLength(float equilibriumLength) {
     this.equilibriumLength = equilibriumLength;
 }
+public void setDamping(float damping) {
+    this.damping = damping;
+}
+
+public void setLockTranslationToXAxis(boolean lockTranslationToXAxis) {
+    this.lockTranslationToXAxis = lockTranslationToXAxis;
+}
+
+public void setLockTranslationToYAxis(boolean lockTranslationToYAxis) {
+    this.lockTranslationToYAxis = lockTranslationToYAxis;
+}
+
+public void setPerfectSpring(boolean isPerfectSpring) {
+    this.isPerfectSpring = isPerfectSpring;
+}
+
+public void setAnchorPoint(PVector anchorPoint) {
+    this.anchorPoint = anchorPoint;
+}
+
+public void setLocalAnchorA(PVector localAnchorA) {
+    this.localAnchorA = localAnchorA;
+}
+
+public void setLocalAnchorB(PVector localAnchorB) {
+    this.localAnchorB = localAnchorB;
+}
+public void setInitialRotationA(float initialRotationA) {
+    this.initialRotationA = initialRotationA;
+}
+public void setInitialRotationB(float initialRotationB) {
+    this.initialRotationB = initialRotationB;
+}
+
+public boolean getIsHingeable() {
+    return this.isHingeable;
+}
+
+public float getSpringConstant() {
+    return this.springConstant;
+}
+
+public float getSpringLength() {
+    return this.springLength;
+}
+
+public float getEquilibriumLength() {
+    return this.equilibriumLength;
+}
+
+public float getDamping() {
+    return this.damping;
+}
+
+public boolean getLockTranslationToXAxis() {
+    return this.lockTranslationToXAxis;
+}
+
+public boolean getLockTranslationToYAxis() {
+    return this.lockTranslationToYAxis;
+}
+
+public boolean getPerfectSpring() {
+    return this.isPerfectSpring;
+}
+
+public PVector getAnchorPoint() {
+    return this.anchorPoint;
+}
+
+public PVector getLocalAnchorA() {
+    return this.localAnchorA;
+}
+
+public PVector getLocalAnchorB() {
+    return this.localAnchorB;
+}
+
+public float getInitialRotationA() {
+    return this.initialRotationA;
+}
+
+public float getInitialRotationB() {
+    return this.initialRotationB;
+}
+
+public Rigidbody getRigidbodyA() {
+    return this.rigidbodyA;
+}
+
+public Rigidbody getRigidbodyB() {
+    return this.rigidbodyB;
+}
+
+public boolean getIsTwoBodySpring() {
+    return this.isTwoBodySpring;
+}
+
 }
 
 

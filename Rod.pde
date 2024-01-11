@@ -11,12 +11,13 @@ public class Rod implements ForceRegistry {
     private boolean isHingeable = true;
     private boolean isTwoBodyRod;
 
-    private Rigidbody rigidbodyA;
-    private Rigidbody rigidbodyB;
+    private final Rigidbody rigidbodyA;
+    private final Rigidbody rigidbodyB;
 
     public Rod(Rigidbody rigidbodyA, PVector localAnchorA, PVector anchorPoint) {
 
         this.rigidbodyA = rigidbodyA;
+        this.rigidbodyB = null;
         this.anchorPoint = anchorPoint;
         this.localAnchorA = localAnchorA;
 
@@ -42,6 +43,11 @@ public class Rod implements ForceRegistry {
 
     @Override
 public PVector getForce(Rigidbody rigidbody, PVector position) {
+
+    if(this.rigidbodyA != rigidbody) {
+      throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+    }
+
     PVector direction;
     PVector worldAnchorA;
     PVector worldAnchorB;
@@ -113,12 +119,20 @@ public void draw() {
 
 @Override
 public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    
+    if(this.rigidbodyA != rigidbody) {
+      throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+    }
+
     PVector transformedAnchor = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
     
     return transformedAnchor;
     }
 
+/*
+====================================================================================================
+===================================GETTERS AND SETTERS==============================================
+====================================================================================================
+*/
 public void setLength(float length) {
     this.length = length;
   }
@@ -126,6 +140,72 @@ public void setLength(float length) {
 public void setIsHingable(boolean isHingeable) {
     this.isHingeable = isHingeable;
   }
+
+public void setAnchorPoint(PVector anchorPoint) {
+    this.anchorPoint = anchorPoint;
+  }
+
+public void setLocalAnchorA(PVector localAnchorA) {
+    this.localAnchorA = localAnchorA;
+  }
+
+public void setLocalAnchorB(PVector localAnchorB) {
+    this.localAnchorB = localAnchorB;
+  }
+
+public void setStiffness(float stiffness) {
+    this.stiffness = stiffness;
+  }
+
+public void setDamping(float damping) {
+    this.damping = damping;
+  }
+
+public void setTwoBodyRod(boolean isTwoBodyRod) {
+    this.isTwoBodyRod = isTwoBodyRod;
+  }
+
+public float getLength() {
+    return length;
+  }
+
+public boolean getIsHingeable() {
+    return isHingeable;
+  }
+
+public PVector getAnchorPoint() {
+    return anchorPoint;
+  }
+
+public PVector getLocalAnchorA() {
+    return localAnchorA;
+  }
+
+public PVector getLocalAnchorB() {
+    return localAnchorB;
+  }
+
+public float getStiffness() {
+    return stiffness;
+  }
+
+public float getDamping() {
+    return damping;
+  }
+
+public boolean getTwoBodyRod() {
+    return isTwoBodyRod;
+  }
+
+public Rigidbody getRigidbodyA() {
+    return rigidbodyA;
+  }
+
+public Rigidbody getRigidbodyB() {
+    return rigidbodyB;
+  }
+
+
 
 }
 

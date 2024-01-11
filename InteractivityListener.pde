@@ -283,7 +283,7 @@ public void mouseClicked() {
         rigidbody.RotateTo(interactivityListener.getAngle());
         rigidbody.setAngularVelocity(interactivityListener.getAngularVelocity());
         
-        rigidbody.addForceToForceRegistry(new Gravity());
+        rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
         AddBodyToBodyEntityList(rigidbody);
   
   }
@@ -303,7 +303,7 @@ public void mouseClicked() {
     rigidbody.RotateTo(interactivityListener.getAngle());
     rigidbody.setAngularVelocity(interactivityListener.getAngularVelocity());
 
-    rigidbody.addForceToForceRegistry(new Gravity());
+    rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
     AddBodyToBodyEntityList(rigidbody);
 
   }
