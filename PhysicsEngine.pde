@@ -99,7 +99,7 @@ void setup() {
                                                             0.05f, new PVector(0, 0, 0),
                                                             new PVector(255, 255, 255));
     
-    spinningBody.SetInitialPosition(new PVector(0, -5));
+    spinningBody.SetInitialPosition(new PVector(0, -30));
     Motor motor = new Motor(spinningBody, 0.5);
 
     spinningBody.addForceToForceRegistry(motor);
@@ -138,80 +138,8 @@ void setup() {
     AddBodyToBodyEntityList(test);
     AddBodyToBodyEntityList(spinningBody);
 
+    Rope rope = new Rope(test, springBody, new PVector(0,0), new PVector(0,0), 100, 1, 5, 500);
 
-ArrayList<Rigidbody> ropeBodies = new ArrayList<Rigidbody>();
-
-// Define the initial position for the first Rigidbody
-PVector initialPosition = new PVector(0, 0);
-
-// Define the distance between each Rigidbody
-float distanceBetweenBodies = 1f;
-float ropeLength = 2;
-
-// Create the Rigidbodies and Springs
-for (int i = 0; i < 25; i++) {
-    // Create a new Rigidbody at the current position
-    Rigidbody body = RigidbodyGenerator.CreateCircleBody(0.5, 1f, 20, false, true,
-                                                            0.05f, new PVector(0, 0, 0),
-                                                            new PVector(255, 255, 255));
-    body.setPosition(new PVector(initialPosition.x +  i * distanceBetweenBodies, initialPosition.y));
-    ropeBodies.add(body);
-
-    // If this isn't the first Rigidbody, create a Spring connecting it to the previous one
-    if (i > 0) {
-        Rigidbody previousBody = ropeBodies.get(i - 1);
-        PVector localAnchorA = new PVector(distanceBetweenBodies / 2, 0);
-        PVector localAnchorB = new PVector(-distanceBetweenBodies / 2, 0);
-        Spring spring = new Spring(previousBody, body, localAnchorA, localAnchorB);
-        Spring counterSpring = new Spring(body, previousBody, localAnchorB, localAnchorA);
-
-        // Set the rest length to the desired spacing
-        float desiredSpacing = 2; // Change this to your desired spacing
-        spring.setSpringLength(desiredSpacing);
-        counterSpring.setSpringLength(desiredSpacing);
-
-        // Set the spring constant based on the position in the rope
-        float springConstant = (25 - i) * 300; // Adjust this formula as needed
-        spring.setSpringConstant(springConstant);
-        counterSpring.setSpringConstant(springConstant);
-
-        spring.setDamping(1.5);
-        counterSpring.setDamping(1.5f);
-
-        previousBody.addForceToForceRegistry(spring);
-        previousBody.addForceToForceRegistry(new Gravity(previousBody));
-
-        body.addForceToForceRegistry(new Gravity(body));
-        body.addForceToForceRegistry(counterSpring);
-    }
-    if(i == 0) {
-        Spring initialSpring = new Spring(body, new PVector(0,0), new PVector(0, 0));
-        initialSpring.setSpringLength(2);
-        initialSpring.setDamping(1.5f);
-        initialSpring.setSpringConstant(100*24);
-
-        body.addForceToForceRegistry(initialSpring);
-    }
-}
-
-for(int i = 0; i < ropeBodies.size(); i++){
-    AddBodyToBodyEntityList(ropeBodies.get(i));
-    if(i == ropeBodies.size() - 1){
-        Rigidbody lastRopeBody = ropeBodies.get(i);
-        Rigidbody box = RigidbodyGenerator.CreateCircleBody(3f,
-                                                     1f, 20f, false, true,
-                                                     0.05, new PVector(0, 0, 0),
-                                                     new PVector(255, 255, 255));
-        box.SetInitialPosition(new PVector(lastRopeBody.getPosition().x, lastRopeBody.getPosition().y + 10));
-        Rod rod = new Rod(lastRopeBody, box, new PVector(0,0), new PVector(0,0));
-        Rod rod2 = new Rod(box, lastRopeBody, new PVector(0,0), new PVector(0,0));
-        lastRopeBody.addForceToForceRegistry(rod);
-        box.addForceToForceRegistry(rod2);
-        box.addForceToForceRegistry(new Gravity(box));
-        AddBodyToBodyEntityList(box);
-
-    }
-}
 }
 
 
