@@ -34,7 +34,6 @@ public class Rod implements ForceRegistry {
         this.localAnchorA = localAnchorA;
         this.localAnchorB = localAnchorB;
         
-        //FOR TESTING
         this.length = PVector.sub(rigidbodyB.getPosition(), rigidbodyA.getPosition()).mag();
 
         this.isTwoBodyRod = true;
@@ -136,10 +135,10 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
 public void setLength(float length) {
     this.length = length;
   }
-
-public void setIsHingable(boolean isHingeable) {
+public void setIsHingeable(boolean isHingeable) {
     this.isHingeable = isHingeable;
   }
+
 
 public void setAnchorPoint(PVector anchorPoint) {
     this.anchorPoint = anchorPoint;

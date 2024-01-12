@@ -417,7 +417,7 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
       PVector transformedVertexA = transformedVertices[vertexIndex];
       PVector transformedVertexB = transformedVertices[(vertexIndex + 1) % transformedVertices.length];
 
-      //Finds the edge between the two vertices, 
+      //Finds the edge between the two vertices,
       PVector edge = PVector.sub(transformedVertexB, transformedVertexA);
 
       //Finds the normal or "axis" from the edge vector
@@ -447,7 +447,7 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
   int closestPointIndex = FindClosestPointOnPolygon(circleCenter, transformedVertices);
   PVector closestPoint = transformedVertices[closestPointIndex];
 
-   axis = PVector.sub(closestPoint, circleCenter).normalize(); 
+   axis = PVector.sub(closestPoint, circleCenter).normalize();
 
      //Projects the vertices of polygon A onto the axis. Format is [min, max]
       float[] minMaxA = ProjectVertices(transformedVertices, axis);

@@ -93,7 +93,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
         worldAnchorB = anchorPoint;
 
         direction = PVector.sub(worldAnchorB, worldAnchorA);
-
+        
         if(!isPerfectSpring) {
         /*-------------------DAMPING-------------------*/
             PVector velocity = rigidbodyA.getVelocity();

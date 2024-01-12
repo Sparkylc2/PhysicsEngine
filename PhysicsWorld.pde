@@ -575,7 +575,8 @@ if(millis() - systemTime>= 200) {
 
 
 }
-
+stroke(255);
+fill(255);
 text("Total Step Time: " + totalStepTime + totalStepTimeUnit, 10, 20);
 text("Sub Step Time: " + subStepTime + subStepTimeUnit, 10, 40);
 text("Body Count: " + bodyCount, 10, 60);

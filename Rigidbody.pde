@@ -353,6 +353,44 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
     this.aabbUpdateRequired = true;
   }
   
+public boolean contains(float x, float y) {
+
+    if(this.ShapeType == ShapeType.CIRCLE) {
+      return this.containsCircle(x, y);
+    } else {
+      return this.containsPolygon(x, y);
+    }
+}
+
+public boolean containsCircle(float x, float y) {
+    float distance = PVector.dist(this.position, new PVector(x, y));
+
+    return (distance <= this.Radius);
+}
+
+public boolean containsPolygon(float x, float y) {
+    boolean inside = false;
+    PVector[] vertices = this.transformedVertices;
+
+    for (int i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
+        if ((vertices[i].y > y) != (vertices[j].y > y) &&
+            (x < (vertices[j].x - vertices[i].x) * (y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x)) {
+            inside = !inside;
+        }
+    }
+    
+    return inside;
+}
+
+public PVector[] reverseVertices() {
+    PVector[] vertices = this.transformedVertices;
+    PVector[] reversedVertices = new PVector[vertices.length];
+
+    for (int i = 0; i < vertices.length; i++) {
+        reversedVertices[i] = vertices[vertices.length - 1 - i];
+    }
+    return reversedVertices;
+}
 
   
 
@@ -379,7 +417,7 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
       dt /= (float)iterations;
       this.RK4Position(dt);
     } else {
-        
+
       this.aabbUpdateRequired = true;
       this.transformUpdateRequired = true;
       dt /= (float)iterations;
