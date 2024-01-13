@@ -115,12 +115,15 @@ void setup() {
     Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
 
     springLeft.setSpringLength(10);
+    springLeft.setEquilibriumLength(0.5f);
     springLeft.setSpringConstant(100);
     springLeft.setLockTranslationToYAxis(true);
 
 
+
     springRight.setSpringLength(10);
     springRight.setSpringConstant(100);
+    springRight.setEquilibriumLength(0.5f);
     springRight.setLockTranslationToYAxis(true);
     
 

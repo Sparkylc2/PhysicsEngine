@@ -7,15 +7,15 @@ public class Spring implements ForceRegistry {
   private PVector localAnchorA;
   private PVector localAnchorB;
 
-  private boolean lockTranslationToXAxis = false;
-  private boolean lockTranslationToYAxis = false;
+  private boolean lockTranslationToXAxis;
+  private boolean lockTranslationToYAxis;
   
-  private boolean isPerfectSpring = false;
+  private boolean isPerfectSpring;
 
-  private float equilibriumLength = 0.5f; //Equilibrium length is a percentage of the total magnitude of the length, which for now will be 0.5f percent
-  private float springLength = 5;
-  private float springConstant = 5;
-  private float damping = 1f;
+  private float equilibriumLength; //Equilibrium length is a percentage of the total magnitude of the length
+  private float springLength;
+  private float springConstant;
+  private float damping;
 
   private boolean isHingeable;
   private boolean isTwoBodySpring;
@@ -53,6 +53,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
   @Override
   public PVector getForce(Rigidbody rigidbody, PVector position) {
+
     if(rigidbody != rigidbodyA) {
         throw new IllegalArgumentException("The rigidbody passed in is not part of this spring");
     }
@@ -122,8 +123,8 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     force.add(dampingForce);
 
     return force;
+    }
 
-  }
   
 
 //TODO: IMPLEMENT A WAY TO MAKE THE SPRING SCALE WITH ITS LENGTH, SO THAT VISUALLY A LARGE SPRING

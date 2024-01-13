@@ -6,7 +6,14 @@ public class Motor implements ForceRegistry {
     private float targetAngularVelocity;
 
     private boolean drawMotorForce;
+    private boolean drawMotor;
 
+
+    public Motor(Rigidbody rigidbody) {
+        this.rigidbody = rigidbody;
+        this.localAnchor = new PVector(this.rigidbody.getRadius(), 0);
+        this.drawMotorForce = true;
+    }
 
     public Motor(Rigidbody rigidbody, float targetAngularVelocity) {
         this.rigidbody = rigidbody;
@@ -82,17 +89,28 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
 ======================================== Getters and Setters ========================================
 ====================================================================================================
 */
+    public void setDrawMotor(boolean drawMotor) {
+        this.drawMotor = drawMotor;
+    }
 
     public void setDrawMotorForce(boolean drawMotorForce) {
         this.drawMotorForce = drawMotorForce;
     }
 
-    public boolean getDrawMotorForce() {
-        return drawMotorForce;
-    }
-
     public void setTargetAngularVelocity(float targetAngularVelocity) {
         this.targetAngularVelocity = targetAngularVelocity;
+    }
+
+    public void setLocalAnchor(PVector localAnchor) {
+        this.localAnchor = localAnchor;
+    }
+
+    public boolean getDrawMotor() {
+        return drawMotor;
+    }
+    
+    public boolean getDrawMotorForce() {
+        return drawMotorForce;
     }
 
     public float getTargetAngularVelocity() {
@@ -103,9 +121,6 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
         return localAnchor;
     }
 
-    public void setLocalAnchor(PVector localAnchor) {
-        this.localAnchor = localAnchor;
-    }
 
 
 }

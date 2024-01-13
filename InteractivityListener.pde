@@ -50,13 +50,16 @@ public class InteractivityListener {
 */
 
 /*------------------------------ Global Variables ----------------------------*/
+    private ForceType forceType;
     private Rigidbody selectedRigidbody; //Can treat this as rigidbodyA
     private Rigidbody mouseInteractionRigidbody; //Can treat this rigidbodyB for drawing forces
+
+    private ForceRegistry mouseInteractionForce;
+
     private Rigidbody clickedRigidbody;
     private PVector anchorPoint;
     private PVector localAnchorA;
     private PVector localAnchorB;
-
 
 /*----------------------------- Spring Variables -----------------------------*/
 
@@ -72,16 +75,22 @@ public class InteractivityListener {
 
     private boolean isSpringHingeable;
 
+    private boolean springSnapToCenter;
+    private boolean springSnapToEdge;
+
 /*--------------------------- Rod Variables ---------------------------------*/
     
     private boolean isRodHingeable;
     private boolean isTwoBodyRod;
 
+    private boolean rodSnapToCenter;
+    private boolean rodSnapToEdge;
+
 
 /*--------------------------- Motor Variables ----------------------------*/
-    private float targetAngularVelocity;
-    
-    private boolean drawMotorForce;
+    private float motorTargetAngularVelocity;
+    private boolean motorDrawMotor;
+    private boolean motorDrawMotorForce;
 
 /*
 ====================================================================================================
@@ -203,15 +212,22 @@ public void GenerateRigidbody() {
 ====================================================================================================
 */
 
-public void setInitialGenerationValues(){
-    if(userInterface.getController("AddSpring").getValue() == 1) {
+public void setInitialGenerationValues(Rigidbody clickedRigidbody){
+        this.selectedRigidbody = clickedRigidbody;
         PVector mouseCoord = screenToWorld(mouseX, mouseY);
-
         this.localAnchorA = PVector.sub(mouseCoord, this.selectedRigidbody.getPosition());
-    }
 }
+
+public void resetInitialGenerationValues() {
+    this.selectedRigidbody = null;
+    this.localAnchorA = null;
+    this.localAnchorB = null;
+    this.anchorPoint = null;
+
+}
+
 public void AddNewForceToOneBody() {
-    if(userInterface.getController("AddSpring").getValue() == 1) {
+    if(this.forceType == ForceType.SPRING) {
         PVector anchorPoint = screenToWorld(mouseX, mouseY);
         Spring spring = new Spring(this.selectedRigidbody, this.localAnchorA, anchorPoint);
 
@@ -229,9 +245,11 @@ public void AddNewForceToOneBody() {
         this.selectedRigidbody.addForceToForceRegistry(spring);
 
 
-    //TOOOOODOOOOOOOOOOOO
-    } else if(userInterface.getController("AddRod").getValue() == 1) {
+
+    } else if(this.forceType == ForceType.ROD) {
+
         PVector anchorPoint = screenToWorld(mouseX, mouseY);
+
         
         Rod rod = new Rod(this.selectedRigidbody, this.localAnchorA, anchorPoint);
 
@@ -239,18 +257,26 @@ public void AddNewForceToOneBody() {
 
         this.selectedRigidbody.addForceToForceRegistry(rod);
     
-    } else if(userInterface.getController("AddMotor").getValue() == 1) {
+    } else if(this.forceType == ForceType.MOTOR) {
+
+        Motor motor = new Motor(this.selectedRigidbody);
+
+        motor.setTargetAngularVelocity(this.motorTargetAngularVelocity);
+        motor.setDrawMotor(this.motorDrawMotor);
+        motor.setDrawMotorForce(this.motorDrawMotorForce);
+
+        this.selectedRigidbody.addForceToForceRegistry(motor);
     }
 }
 
 public void AddNewForceToTwoBodies(Rigidbody clickedRigidbody){
-    if(userInterface.getController("AddSpring").getValue() == 1) {
+    if(forceType == ForceType.SPRING) {
         PVector anchorPoint = screenToWorld(mouseX, mouseY);
         PVector localAnchorB = PVector.sub(anchorPoint, clickedRigidbody.getPosition());
 
         float springLength = PVector.add(this.selectedRigidbody.getPosition(), this.localAnchorA).mag();
 
-        Spring spring1 = new Spring(selectedRigidbody, clickedRigidbody, this.localAnchorA, localAnchorB);
+        Spring spring1 = new Spring(this.selectedRigidbody, clickedRigidbody, this.localAnchorA, localAnchorB);
         Spring spring2 = new Spring(clickedRigidbody, this.selectedRigidbody, localAnchorB, this.localAnchorA);
 
         spring1.setPerfectSpring(this.isPerfectSpring);
@@ -279,6 +305,20 @@ public void AddNewForceToTwoBodies(Rigidbody clickedRigidbody){
 
         this.selectedRigidbody.addForceToForceRegistry(spring1);
         clickedRigidbody.addForceToForceRegistry(spring2);
+
+    } else if(this.forceType == ForceType.ROD) {
+
+        PVector anchorPoint = screenToWorld(mouseX, mouseY);
+        PVector localAnchorB = PVector.sub(anchorPoint, clickedRigidbody.getPosition());
+
+        Rod rod1 = new Rod(this.selectedRigidbody, clickedRigidbody, this.localAnchorA, localAnchorB);
+        Rod rod2 = new Rod(clickedRigidbody, this.selectedRigidbody, localAnchorB, this.localAnchorA);
+
+        rod1.setIsHingeable(this.isRodHingeable);
+        rod2.setIsHingeable(this.isRodHingeable);
+
+        this.selectedRigidbody.addForceToForceRegistry(rod1);
+        clickedRigidbody.addForceToForceRegistry(rod2);
     }
 }
 /*
@@ -360,6 +400,9 @@ public void setSelectedRigidbody(Rigidbody selectedRigidbody) {
   this.selectedRigidbody = selectedRigidbody;
 }
 
+public void setForceType(ForceType forceType) {
+  this.forceType = forceType;
+}
 
 public void setMouseInteractionRigidbody(Rigidbody mouseInteractionRigidbody) {
   this.mouseInteractionRigidbody = mouseInteractionRigidbody;
@@ -396,16 +439,37 @@ public void setLockToYAxis(boolean lockTranslationToYAxis) {
   this.lockTranslationToYAxis = lockTranslationToYAxis;
 }
 
+public void setSpringSnapToCenter(boolean springSnapToCenter) {
+  this.springSnapToCenter = springSnapToCenter;
+}
+
+public void setSpringSnapToEdge(boolean springSnapToEdge) {
+  this.springSnapToEdge = springSnapToEdge;
+}
+
 public void setRodIsHingeable(boolean isRodHingeable) {
   this.isRodHingeable = isRodHingeable;
 }
 
+public void setRodSnapToCenter(boolean rodSnapToCenter) {
+  this.rodSnapToCenter = rodSnapToCenter;
+}
 
+public void setRodSnapToEdge(boolean rodSnapToEdge) {
+  this.rodSnapToEdge = rodSnapToEdge;
+}
 
+public void setMotorDrawMotorForce(boolean motorDrawMotorForce) {
+  this.motorDrawMotorForce = motorDrawMotorForce;
+}
 
+public void setMotorDrawMotor(boolean motorDrawMotor) {
+  this.motorDrawMotor = motorDrawMotor;
+}
 
-
-
+public void setMotorTargetAngularVelocity(float motorTargetAngularVelocity) {
+  this.motorTargetAngularVelocity = motorTargetAngularVelocity;
+}
 public float getWidth() {
   return this.width;
 }
@@ -490,10 +554,35 @@ public boolean getAddGravity() {
 public boolean getIsPerfectSpring() {
   return this.isPerfectSpring;
 }
-
+public boolean getSpringSnapToCenter() {
+    return this.springSnapToCenter;
 }
 
+public boolean getSpringSnapToEdge() {
+    return this.springSnapToEdge;
+}
 
+public boolean getRodSnapToCenter() {
+    return this.rodSnapToCenter;
+}
+
+public boolean getRodSnapToEdge() {
+    return this.rodSnapToEdge;
+}
+
+public boolean getMotorDrawMotorForce() {
+    return this.motorDrawMotorForce;
+}
+
+public boolean getMotorDrawMotor() {
+    return this.motorDrawMotor;
+}
+
+public float getMotorTargetAngularVelocity() {
+    return this.motorTargetAngularVelocity;
+}
+
+}
 
 public void mouseWheel(MouseEvent event) {
     if(!userInterface.isMouseOver()) {
@@ -509,35 +598,41 @@ public void mouseDragged() {
 }
 
 
-public Rigidbody selectedRigidbody = null;
-
 public void mouseClicked() {
-
-    if(!userInterface.isMouseOver() && interactivityListener.getGenerateRigidbodies()) {
-        interactivityListener.GenerateRigidbody();
-    }
     
-    if(!userInterface.isMouseOver() && interactivityListener.getGenerateForces()) {
-        
-        Rigidbody clickedRigidbody = getClickedRigidbody();
-            if (clickedRigidbody != null) {
-                if (interactivityListener.getSelectedRigidbody() == null) {
-                    interactivityListener.setSelectedRigidbody(clickedRigidbody);
-                    interactivityListener.setInitialGenerationValues();
-                } else {
-                    if(clickedRigidbody != interactivityListener.getSelectedRigidbody()) {
-                        interactivityListener.AddNewForceToTwoBodies(clickedRigidbody);
-                        interactivityListener.setSelectedRigidbody(null);
+    //Checks if the mouse is over the user interface, if it isnt, continues
+    if(!userInterface.isMouseOver()) {
+        //If the user has selected a shape, generate a rigidbody
+        if(userInterface.getGroup("Rigidbodies").isVisible()) {
+            interactivityListener.GenerateRigidbody();
+        }
+        //If the user has selected a force, add a force to the rigidbody
+        if(userInterface.getGroup("Forces").isVisible()) {
+            //This is the code for selecting bodies
+            Rigidbody clickedRigidbody = getClickedRigidbody();
+
+            if(clickedRigidbody != null) {
+                
+                if(interactivityListener.getSelectedRigidbody() == null) {
+                    // Select the clicked rigidbody, and saves mouse coordinates, etc
+                    interactivityListener.setInitialGenerationValues(clickedRigidbody);
+
+                } else if(clickedRigidbody != interactivityListener.getSelectedRigidbody()) {
+                    //If the user has already selected a rigidbody, select the second one and add a force
+                    interactivityListener.AddNewForceToTwoBodies(clickedRigidbody);
+                    interactivityListener.resetInitialGenerationValues();
                     }
-                }
             } else {
-                if (interactivityListener.getSelectedRigidbody() != null) {
+                //If the user has already selected a rigidbody, add a force to it
+                if(interactivityListener.getSelectedRigidbody() != null) {
                     interactivityListener.AddNewForceToOneBody();
-                    interactivityListener.setSelectedRigidbody(null);
+                    interactivityListener.resetInitialGenerationValues();
                 }
             }
         }
     }
+}
+
 
 public Rigidbody getClickedRigidbody() {
     PVector mousePosition = interactivityListener.screenToWorld(mouseX, mouseY);
@@ -549,7 +644,6 @@ public Rigidbody getClickedRigidbody() {
 
     return null;
 }
-
 
 
 

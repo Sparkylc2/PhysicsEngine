@@ -1,6 +1,6 @@
 public class Rod implements ForceRegistry {
 
-    private float length = 1f;
+    private float length;
     private float stiffness = 2f;
     private float damping = 100f;
 
@@ -8,20 +8,18 @@ public class Rod implements ForceRegistry {
     private PVector localAnchorB;
     private PVector anchorPoint;
     
-    private boolean isHingeable = true;
+    private boolean isHingeable;
     private boolean isTwoBodyRod;
 
-    private final Rigidbody rigidbodyA;
-    private final Rigidbody rigidbodyB;
+    private Rigidbody rigidbodyA;
+    private Rigidbody rigidbodyB;
 
     public Rod(Rigidbody rigidbodyA, PVector localAnchorA, PVector anchorPoint) {
 
         this.rigidbodyA = rigidbodyA;
-        this.rigidbodyB = null;
         this.anchorPoint = anchorPoint;
         this.localAnchorA = localAnchorA;
 
-        //FOR TESTING
         this.length = PVector.sub(anchorPoint, rigidbodyA.getPosition()).mag();
         this.isTwoBodyRod = false;
     }
@@ -33,16 +31,13 @@ public class Rod implements ForceRegistry {
 
         this.localAnchorA = localAnchorA;
         this.localAnchorB = localAnchorB;
-        
         this.length = PVector.sub(rigidbodyB.getPosition(), rigidbodyA.getPosition()).mag();
-
         this.isTwoBodyRod = true;
     }
 
 
     @Override
 public PVector getForce(Rigidbody rigidbody, PVector position) {
-
     if(this.rigidbodyA != rigidbody) {
       throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
     }
@@ -73,6 +68,8 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
     PVector force = PVector.mult(direction, -lengthDifference * stiffness * 1000);
 
+    if(isTwoBodyRod){
+
     /*-------------------DAMPING-------------------*/
     PVector relativeVelocity = PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity());
     float rodVelocity = PVector.dot(relativeVelocity, direction);
@@ -80,9 +77,9 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
     PVector dampingForce = PVector.mult(direction, dampingForceMagnitude);
     force.add(dampingForce);
     /*----------------------------------------------*/
-    //(This dampening basically finds the relative velocity, checks how much of it is in the
-    //direction of the rod, and then applies a force in the opposite direction of the rod to
-    //slow it down.)
+
+    }
+
 
 
     return force;
@@ -123,7 +120,6 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
     }
 
     PVector transformedAnchor = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-    
     return transformedAnchor;
     }
 
@@ -203,8 +199,6 @@ public Rigidbody getRigidbodyA() {
 public Rigidbody getRigidbodyB() {
     return rigidbodyB;
   }
-
-
 
 }
 
