@@ -42,8 +42,6 @@ public class Rigidbody {
   private boolean isRotationallyStatic;
   private boolean isVisible;
   private boolean isCollidable;
-  private boolean isMouseInteractive;
-  private boolean isSelected;
   
   //TESTING THIS OUT
   private float scaleFactor = 10.0f; //10px are 1 meter
@@ -99,10 +97,7 @@ public class Rigidbody {
 
     this.isStatic = isStatic;
     this.isCollidable = isCollidable;
-    this.isMouseInteractive = isMouseInteractive;
     this.isVisible = true;
-
-  
 
     this.position = new PVector();
     this.linearVelocity = new PVector();
@@ -168,7 +163,7 @@ public class Rigidbody {
     if no change is made is made, cached vertices are returned.
     if the transform is updated, the vertices are transformed, and the cache is updated.
     */
-    
+    this.aabbUpdateRequired = true;
     this.transformUpdateRequired = false;
     return this.transformedVertices;
   }
@@ -401,6 +396,7 @@ public PVector[] reverseVertices() {
   */
   
   public void update(float dt, int iterations) {
+    if(!isPaused) {
     if(this.isStatic) {
       this.aabbUpdateRequired = false;
       return;
@@ -424,6 +420,7 @@ public PVector[] reverseVertices() {
       this.RK4Position(dt);
 
       this.angularIntegration(dt);
+    }
     }
   }
   
@@ -543,10 +540,6 @@ public PVector[] reverseVertices() {
     return this.isCollidable;
   }
   
-  public boolean getIsMouseInteractive() {
-    return this.isMouseInteractive;
-  }
-  
   public PVector[] getVertices() {
     return this.Vertices;
   }
@@ -584,6 +577,8 @@ public PVector[] reverseVertices() {
   }
   
   public void setPosition(PVector position) {
+    this.transformUpdateRequired = true;
+    this.aabbUpdateRequired = true;
     this.position = position;
   }
   public PVector getVelocity() {
@@ -592,14 +587,6 @@ public PVector[] reverseVertices() {
   
   public void setVelocity(PVector velocity) {
     this.linearVelocity = velocity;
-  }
-  
-  public boolean getIsSelected() {
-    return this.isSelected;
-  }
-  
-  public void setIsSelected(boolean isSelected) {
-    this.isSelected = isSelected;
   }
   
   public float getStrokeWeight() {
@@ -681,6 +668,7 @@ public PVector[] reverseVertices() {
   }
 
   public void setAngle(float angle) {
+    this.transformUpdateRequired = true;
     this.angle = angle;
   }
 

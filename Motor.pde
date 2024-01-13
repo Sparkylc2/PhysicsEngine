@@ -49,7 +49,7 @@ if(!drawMotorForce) {
     float size = this.rigidbody.getRadius() * 0.5f;
     float arrowSize = size * 0.15f;
     float startAngle = 0;
-    float endAngle = targetAngularVelocity > 0 ? 3 * PI/2 : -3 * PI/2; // Change this to control the curvature of the arrow
+    float endAngle = 3 * PI/2;// Change this to control the curvature of the arrow
 
     // Draw the curved part of the arrow
     pushMatrix();
@@ -67,6 +67,7 @@ if(!drawMotorForce) {
 
     fill(255, 0, 0); // Red color
     noStroke();
+    
     if(isClockwise) {
         triangle(endX, endY-arrowSize, endX, endY+arrowSize, endX+arrowSize*2, endY);
     } else {
@@ -108,7 +109,7 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
     public boolean getDrawMotor() {
         return drawMotor;
     }
-    
+
     public boolean getDrawMotorForce() {
         return drawMotorForce;
     }

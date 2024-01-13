@@ -85,4 +85,44 @@ public static class PhysEngMath {
   public static boolean Equals(PVector a, PVector b) {
     return PVector.sub(a, b).magSq() < precision * precision; //magSq is faster than mag
   }
+
+public static PVector SnapToCircle(Rigidbody rigidbody, PVector point) {
+    PVector circleCenter = rigidbody.getPosition();
+    PVector direction = PVector.sub(point, circleCenter);
+    direction.normalize();
+    direction.mult(rigidbody.getRadius());
+    return direction;
+}
+
+public static PVector SnapToPolygon(Rigidbody rigidbody, PVector point) {
+    PVector closestOnPolygon = new PVector();
+    float minDistanceSq = Float.MAX_VALUE;
+
+    PVector[] vertices = rigidbody.GetTransformedVertices();
+
+    for(int i = 0; i < vertices.length; i++) {
+        PVector start = vertices[i];
+        PVector end = vertices[(i + 1) % vertices.length];
+        PVector closest = getClosestPointOnLine(start, end, point);
+
+        float distanceSq = PVector.sub(point, closest).magSq();
+
+        if(distanceSq < minDistanceSq) {
+            minDistanceSq = distanceSq;
+            closestOnPolygon.set(closest);
+        }
+    }
+    return PVector.sub(closestOnPolygon, rigidbody.getPosition());
+  }
+
+  private static PVector getClosestPointOnLine(PVector start, PVector end, PVector point) {
+    PVector line = PVector.sub(end, start);
+    float len = line.mag();
+    line.normalize();
+
+    PVector v = PVector.sub(point, start);
+    float d = PVector.dot(v, line);
+    d = constrain(d, 0, len);
+    return PVector.add(start, line.mult(d));
+    }
 }

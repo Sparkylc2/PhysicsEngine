@@ -8,6 +8,8 @@ public class Rod implements ForceRegistry {
     private PVector localAnchorB;
     private PVector anchorPoint;
     
+    private float initialRotation;
+
     private boolean isHingeable;
     private boolean isTwoBodyRod;
 
@@ -19,8 +21,9 @@ public class Rod implements ForceRegistry {
         this.rigidbodyA = rigidbodyA;
         this.anchorPoint = anchorPoint;
         this.localAnchorA = localAnchorA;
+        this.initialRotation = rigidbodyA.getAngle();
+        this.length = PVector.sub(anchorPoint, PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
 
-        this.length = PVector.sub(anchorPoint, rigidbodyA.getPosition()).mag();
         this.isTwoBodyRod = false;
     }
 
@@ -31,7 +34,8 @@ public class Rod implements ForceRegistry {
 
         this.localAnchorA = localAnchorA;
         this.localAnchorB = localAnchorB;
-        this.length = PVector.sub(rigidbodyB.getPosition(), rigidbodyA.getPosition()).mag();
+        this.initialRotation = rigidbodyA.getAngle();
+        this.length = PVector.sub(PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()), PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
         this.isTwoBodyRod = true;
     }
 
@@ -57,9 +61,35 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
     }
 
     if(!this.isHingeable) {
+        rigidbodyA.setAngularVelocity(0f);
+        rigidbodyA.setTransformUpdateRequired(true);
+        // Assuming `initialRotation` is the initial angle of the rigidbody
         float rodAngle = PApplet.atan2(direction.y, direction.x);
-        float angleDifference = rigidbody.getAngle() - rodAngle;
-        rigidbody.setAngle(rigidbody.getAngle() - angleDifference);
+        float rigidbodyAngle = rigidbodyA.getAngle();
+
+        // Normalize angles to the range [0, 2*PI]
+        if (rodAngle < 0) rodAngle += PApplet.TWO_PI;
+        if (rigidbodyAngle < 0) rigidbodyAngle += PApplet.TWO_PI;
+
+        // Calculate the initial angle difference when the rod and rigidbody are created
+        float initialAngleDifference = rigidbodyAngle - rodAngle;
+
+        // In each update
+        float currentRodAngle = PApplet.atan2(direction.y, direction.x);
+        float currentRigidbodyAngle = rigidbodyA.getAngle();
+
+        // Normalize angles to the range [0, 2*PI]
+        if (currentRodAngle < 0) currentRodAngle += PApplet.TWO_PI;
+        if (currentRigidbodyAngle < 0) currentRigidbodyAngle += PApplet.TWO_PI;
+
+        // Calculate the current angle difference
+        float currentAngleDifference = currentRigidbodyAngle - currentRodAngle;
+
+        // Calculate the angle difference between the initial and current state
+        float angleDifference = initialAngleDifference - currentAngleDifference;
+
+        // Apply the angle difference to the rigidbody
+        rigidbodyA.setAngle(rigidbodyA.getAngle() - angleDifference);
     }
 
     float currentLength = direction.mag();
@@ -89,25 +119,26 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 public void draw() {
 
     if(isTwoBodyRod){
-    PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-    PVector worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
 
-    strokeWeight(0.15);
-    stroke(0);
-    line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
-    strokeWeight(0.1);
-    stroke(255);
-    line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+        PVector worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+
+        strokeWeight(0.15);
+        stroke(0);
+        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        strokeWeight(0.1);
+        stroke(255);
+        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
     } else {
-    PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
-    PVector worldAnchorB = anchorPoint;
 
-    strokeWeight(0.15);
-    stroke(0);
-    line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
-    strokeWeight(0.1);
-    stroke(255);
-    line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
+        PVector worldAnchorB = anchorPoint;
+        strokeWeight(0.15);
+        stroke(0);
+        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        strokeWeight(0.1);
+        stroke(255);
+        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
 
     }
 }
@@ -158,6 +189,10 @@ public void setDamping(float damping) {
 
 public void setTwoBodyRod(boolean isTwoBodyRod) {
     this.isTwoBodyRod = isTwoBodyRod;
+  }
+
+public void setInitialRotation(float initialRotation) {
+    this.initialRotation = initialRotation;
   }
 
 public float getLength() {

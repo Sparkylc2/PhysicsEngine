@@ -21,6 +21,8 @@ float dt;
 float fps;
 float displayTimeStep;
 
+public boolean isPaused = false;
+
 /*----------------------------------------------------------------------------------------------*/
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();

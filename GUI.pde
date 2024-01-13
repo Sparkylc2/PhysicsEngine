@@ -1,13 +1,13 @@
     public class GUI {
         
         //The size of the group
-        private int globalGroupHeight = 225;
-        private int globalGroupWidth = 230;
+        public int globalGroupHeight = 225;
+        public int globalGroupWidth = 230;
         private int globalGroupBarHeight = 20;
 
         //The padding of the group from the edges of the screen
-        private int globalScreenGroupPaddingX = 40;
-        private int globalScreenGroupPaddingY = 40;
+        public int globalScreenGroupPaddingX = 40;
+        public int globalScreenGroupPaddingY = 40;
 
 
         
@@ -72,13 +72,10 @@
         private boolean defaultSpringIsPerfect = false;
         private boolean defaultSpringIsHingeable = true;
 
-        private boolean defaultSpringSnapToCenter = true;
-        private boolean defaultSpringSnapToEdge = false;
-
         private boolean defaultRodIsHingeable = true;
 
-        private boolean defaultRodSnapToCenter = true;
-        private boolean defaultRodSnapToEdge = false;
+        private boolean defaultSnapToCenter = true;
+        private boolean defaultSnapToEdge = false;
 
         private float defaultMotorTargetAngularVelocity = 0f;
         private boolean defaultMotorDrawMotor = false;
@@ -134,12 +131,11 @@
 
         interactivityListener.setSpringIsPerfect(defaultSpringIsPerfect);
         interactivityListener.setSpringIsHingeable(defaultSpringIsHingeable);
-        interactivityListener.setSpringSnapToCenter(defaultSpringSnapToCenter);
-        interactivityListener.setSpringSnapToEdge(defaultSpringSnapToEdge);
-
         interactivityListener.setRodIsHingeable(defaultRodIsHingeable);
-        interactivityListener.setRodSnapToCenter(defaultRodSnapToCenter);
-        interactivityListener.setRodSnapToEdge(defaultRodSnapToEdge);
+        
+        interactivityListener.setSnapToCenter(defaultSnapToCenter);
+        interactivityListener.setSnapToEdge(defaultSnapToEdge);
+
 
         interactivityListener.setMotorTargetAngularVelocity(defaultMotorTargetAngularVelocity);
         interactivityListener.setMotorDrawMotor(defaultMotorDrawMotor);
@@ -149,11 +145,31 @@
 
                 Tab Rigidbodies = userInterface.addTab("Rigidbodies")
                                 .setLabel("Rigidbodies")
-                                .setId(0);
+                                .setId(0)
+                                .activateEvent(true)
+                                .addListener(new ControlListener() {
+                                    void controlEvent(ControlEvent theEvent) {
+                                        if(theEvent.isTab() && theEvent.getTab().getId() == 0) {
+                                            interactivityListener.setGenerateRigidbodies(true);
+                                            interactivityListener.setGenerateForces(false);
+                                        }
+                                    }
+                                })
+                                ;
 
                 Tab Forces = userInterface.addTab("Forces")
                                 .setLabel("Forces")
-                                .setId(1);
+                                .setId(1)
+                                .activateEvent(true)
+                                .addListener(new ControlListener() {
+                                    void controlEvent(ControlEvent theEvent) {
+                                        if(theEvent.isTab() && theEvent.getTab().getId() == 1) {
+                                            interactivityListener.setGenerateRigidbodies(false);
+                                            interactivityListener.setGenerateForces(true);
+                                        }
+                                    }
+                                })
+                                ;
 
                 Tab Editor = userInterface.addTab("Editor")
                                 .setLabel("Editor")
@@ -172,7 +188,7 @@
                                 .setWidth(globalGroupWidth)
                                  //.disableCollapse()
                                 .setTab("Rigidbodies")
-                                
+
                                 ;
 
                         Toggle Circle = userInterface.addToggle("Circle")
@@ -688,7 +704,7 @@
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Center")
                                         .setVisible(false)
-                                        .setValue(defaultSpringSnapToCenter)
+                                        .setValue(defaultSnapToCenter)
                                         .setGroup(ForceGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -701,7 +717,7 @@
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Edge")
                                         .setVisible(false)
-                                        .setValue(defaultSpringSnapToEdge)
+                                        .setValue(defaultSnapToEdge)
                                         .setGroup(ForceGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -729,7 +745,7 @@
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Center")
                                         .setVisible(false)
-                                        .setValue(defaultRodSnapToCenter)
+                                        .setValue(defaultSnapToCenter)
                                         .setGroup(ForceGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -742,7 +758,7 @@
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Edge")
                                         .setVisible(false)
-                                        .setValue(defaultRodSnapToEdge)
+                                        .setValue(defaultSnapToEdge)
                                         .setGroup(ForceGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
@@ -1435,14 +1451,21 @@ private void SpringIsHingeableSelectorElementOnChange() {
 }
 /*--------------------------------- Spring Snap To Center Selector Element ------------------------*/
 private void SpringSnapToCenterSelectorElementOnChange() {
+    if(userInterface.getController("SpringSnapToCenter").getValue() == 1) {
+        userInterface.getController("SpringSnapToEdge").setValue(0);
+    }
     boolean snapToCenter = userInterface.getController("SpringSnapToCenter").getValue() == 1 ? true : false;
-    interactivityListener.setSpringSnapToCenter(snapToCenter);
+    interactivityListener.setSnapToCenter(snapToCenter);
 }
 
 /*--------------------------------- Spring Snap To Edge Selector Element --------------------------*/
 private void SpringSnapToEdgeSelectorElementOnChange() {
+
+    if(userInterface.getController("SpringSnapToEdge").getValue() == 1) {
+        userInterface.getController("SpringSnapToCenter").setValue(0);
+    }
     boolean snapToEdge = userInterface.getController("SpringSnapToEdge").getValue() == 1 ? true : false;
-    interactivityListener.setSpringSnapToEdge(snapToEdge);
+    interactivityListener.setSnapToEdge(snapToEdge);
 }
 
 /*--------------------------------- Rod Is Hingeable Selector Element -----------------------------*/
@@ -1453,14 +1476,23 @@ private void RodIsHingeableSelectorElementOnChange() {
 
 /*--------------------------------- Rod Snap To Center Selector Element ---------------------------*/
 private void RodSnapToCenterSelectorElementOnChange() {
+    if(userInterface.getController("RodSnapToCenter").getValue() == 1) {
+        userInterface.getController("RodSnapToEdge").setValue(0);
+    }
     boolean snapToCenter = userInterface.getController("RodSnapToCenter").getValue() == 1 ? true : false;
-    interactivityListener.setRodSnapToCenter(snapToCenter);
+    interactivityListener.setSnapToCenter(snapToCenter);
+
 }
 
 /*--------------------------------- Rod Snap To Edge Selector Element -----------------------------*/
 private void RodSnapToEdgeSelectorElementOnChange() {
+    if(userInterface.getController("RodSnapToEdge").getValue() == 1) {
+        userInterface.getController("RodSnapToCenter").setValue(0);
+    }
+
     boolean snapToEdge = userInterface.getController("RodSnapToEdge").getValue() == 1 ? true : false;
-    interactivityListener.setRodSnapToEdge(snapToEdge);
+    interactivityListener.setSnapToEdge(snapToEdge);
+
 }
 /*--------------------------------- Motor Target Angular Velocity Slider Element -------------------*/
 private void MotorTargetAngularVelocitySliderElementOnChange() {
@@ -1484,6 +1516,7 @@ private void MotorDrawMotorForceSelectorElementOnChange() {
 ======================================== Getters and Setters =======================================
 ====================================================================================================
 */
+
 public int getGroupHeight() {
     return this.globalGroupHeight;
 }
