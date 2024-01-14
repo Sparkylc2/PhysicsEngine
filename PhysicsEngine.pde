@@ -53,7 +53,7 @@ void setup() {
 
     Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
     Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
-    Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
+    //Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
 
     springLeft.setSpringLength(10);
     springLeft.setEquilibriumLength(0.5f);
@@ -72,7 +72,7 @@ void setup() {
     springBody.addForceToForceRegistry(springLeft);
     springBody.addForceToForceRegistry(springRight);
 
-    test.addForceToForceRegistry(connectingRod);
+    //test.addForceToForceRegistry(connectingRod);
 
     test.addForceToForceRegistry(new Gravity(test));
     springBody.addForceToForceRegistry(new Gravity(springBody));
@@ -89,42 +89,42 @@ void setup() {
 void draw() {
   int currentFrameTime = millis();
 
+  /*NEVER DELETE THIS */
+  gui.getActiveTab();
+  /* PLEASE */
   interactivityListener.applyTransform();
   background(#101213);
   pushMatrix();
   translate(-1920/12.5, -1080/12.5);
   scale(0.05f);
-
   shape(background, 0, 0);
   popMatrix();
+
   render.draw();
+
+  /*--------------------- Cursor Trail ---------------------*/
+
+  if(IsMouseOverUI()) {
+    interactivityListener.setDrawCursorTrail(false);
+    cursor();
+} else {
+    interactivityListener.setDrawCursorTrail(true);
+    interactivityListener.drawInteractions();
+    noCursor();
+  }
+
 
   
   dt = (currentFrameTime - lastFrameTime) / 1000f;
   Step(dt, 20);
 
-  interactivityListener.drawForces();
-
-  userInterface.draw();
-  interactivityListener.drawMouseOverRigidbody();
   interactivityListener.resetTransform();
+
   displayTimings();
 
   lastFrameTime = currentFrameTime;
 
-/*--------------------- Cursor Trail ---------------------*/
-    int positionX = gui.calculateGroupPositionX();
-    int positionY = gui.calculateGroupPositionY();
-    int groupWidth = gui.globalGroupWidth;
-    int groupHeight = gui.globalGroupHeight;
-    
-  if(userInterface.isMouseOver() || positionX < mouseX && mouseX < positionX + groupWidth && positionY < mouseY && mouseY < positionY + groupHeight) {
-    interactivityListener.setDrawCursorTrail(false);
-    cursor();
-    } else {
-    interactivityListener.setDrawCursorTrail(true);
-    noCursor();
-    }
+
 }
 
 

@@ -104,6 +104,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
         }
     }
     
+/* TODO: FIX THIS
     if(!this.isHingeable) {
 
         float rodAngle = PApplet.atan2(direction.y, direction.x);
@@ -112,6 +113,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
         rigidbodyA.setAngle(rigidbodyA.getAngle() - angleDifference);
     }
 
+*/
     float currentLength = direction.mag();
     direction.normalize();
 

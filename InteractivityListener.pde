@@ -79,6 +79,7 @@ public class InteractivityListener {
 
     private boolean snapToCenter;
     private boolean snapToEdge;
+    private boolean snapToVertices;
 
 /*----------------------------- Spring Variables -----------------------------*/
 
@@ -180,12 +181,18 @@ public Rigidbody getClickedRigidbody() {
 
 
 
+
+/*
+====================================================================================================
+======================================= Generation Methods =========================================
+====================================================================================================
+*/
+
 /*
 ====================================================================================================
 ======================================= Rigidbody Generation Methods ================================
 ====================================================================================================
 */
-
 public void GenerateRigidbody() {
      if(this.shapeType == ShapeType.BOX) {
 
@@ -254,29 +261,26 @@ public void addSelectedRigidbody() {
 }
 
 public PVector getMouseCoordinatesOverRigidbody() {
-    if(!userInterface.isMouseOver()) {
+    if(!IsMouseOverUI()) {
         Rigidbody rigidbody = getClickedRigidbody();
-        if(rigidbody != null && (this.snapToCenter)) {
-            return rigidbody.getPosition().copy();
-    } else if(rigidbody != null && (this.snapToEdge) && rigidbody.getShapeType() == ShapeType.CIRCLE) {
-            PVector localAnchorA = PhysEngMath.SnapToCircle(rigidbody, screenToWorld(mouseX, mouseY));
-            PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbody.getPosition(), rigidbody.getAngle());
-            return worldAnchorA.copy();
-        } else if(rigidbody != null && (this.snapToEdge)) {
-            PVector localAnchorA = PhysEngMath.SnapToPolygon(rigidbody, screenToWorld(mouseX, mouseY));
+        PVector mousePos = screenToWorld(mouseX, mouseY);
+        if(rigidbody != null) {
+            PVector localAnchorA = PhysEngMath.SnapController(this, rigidbody, mousePos);
             PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbody.getPosition(), rigidbody.getAngle());
             return worldAnchorA.copy();
         } else {
-            return screenToWorld(mouseX, mouseY);
+            return mousePos;
         }
     } else {
-        return screenToWorld(mouseX, mouseY);
+        return null;
     }
 }
 
 public void drawMouseOverRigidbody() {
+
     Rigidbody rigidbody = getClickedRigidbody();
     PVector coordinate = getMouseCoordinatesOverRigidbody();
+
     fill(255, 0, 0);
     strokeWeight(0.1f);
     stroke(255, 0, 0);
@@ -311,6 +315,42 @@ public void drawMouseOverRigidbody() {
     }
 }
 
+public void drawInteractions() {
+    drawMouseOverRigidbody();
+    if(this.generateForces){
+        drawForces();
+    } else if(this.generateRigidbodies) {
+        drawBodies();
+    }
+}
+
+public void drawBodies() {
+    if(this.generateRigidbodies) {
+
+        PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
+
+        if(this.shapeType == ShapeType.CIRCLE) {
+            float diameter = this.radius * 2.0f;
+            fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
+            strokeWeight(this.strokeWeight);
+            stroke(this.strokeColor.x, this.strokeColor.y, this.strokeColor.z, this.opacity);
+            ellipseMode(CENTER);
+            ellipse(mouseCoordinates.x, mouseCoordinates.y,  diameter,  diameter);
+            PVector va = new PVector();
+            PVector vb = new  PVector(radius, 0);
+            va = PhysEngMath.Transform(va, mouseCoordinates, this.angle);
+            vb = PhysEngMath.Transform(vb, mouseCoordinates, this.angle);
+            line(va.x, va.y, vb.x, vb.y);
+        } else if (this.shapeType == ShapeType.BOX) {
+
+            fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
+            stroke(this.strokeColor.x, this.strokeColor.y, this.strokeColor.z, this.opacity);
+            strokeWeight(this.strokeWeight);
+            rectMode(CENTER);
+            rect(mouseCoordinates.x, mouseCoordinates.y, this.width, this.height);
+        }
+    }
+}
 
 public void drawForces() {
     PVector worldAnchorA;
@@ -391,7 +431,7 @@ public void drawForces() {
             line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
 
         } else if(this.forceType == ForceType.MOTOR) {
-
+            if(this.tempBody != null) {
             PVector position = this.tempBody.getPosition();
             boolean isClockwise = this.motorTargetAngularVelocity > 0;
 
@@ -426,6 +466,7 @@ public void drawForces() {
                 triangle(startX-arrowSize, startY, startX + arrowSize, startY, startX, startY - 2 * arrowSize);
             }
             popMatrix();
+        }
         }
     }
 }
@@ -522,15 +563,7 @@ public void createForces() {
             } else {
                 PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
-                if(this.snapToCenter) {
-                    this.localAnchorA = new PVector(0,0);
-                } else if(this.snapToEdge && selectedRigidbody.getShapeType() == ShapeType.CIRCLE) {
-                    this.localAnchorA = PhysEngMath.SnapToCircle(this.selectedRigidbody, mouseCoordinates);
-                } else if(this.snapToEdge) {
-                    this.localAnchorA = PhysEngMath.SnapToPolygon(this.selectedRigidbody, mouseCoordinates);
-                } else {
-                    this.localAnchorA = PVector.sub(mouseCoordinates, this.selectedRigidbody.getPosition());
-                }
+                this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
 
                 springLength = PVector.dist(mouseCoordinates, this.anchorPoint);
                 spring = new Spring(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
@@ -549,25 +582,17 @@ public void createForces() {
 
             Rod rod;
             if(isFirstClickOnRigidbody) {
+
                 PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
                 rod = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
 
             } else {
-                if(this.snapToCenter) {
-                    this.localAnchorA = new PVector(0,0);
-                } else if(this.snapToEdge && selectedRigidbody.getShapeType() == ShapeType.CIRCLE) {
-                    this.localAnchorA = PhysEngMath.SnapToCircle(this.selectedRigidbody, screenToWorld(mouseX, mouseY));
-                } else if(this.snapToEdge) {
-                    this.localAnchorA = PhysEngMath.SnapToPolygon(this.selectedRigidbody, screenToWorld(mouseX, mouseY));
-                } else {
-                    this.localAnchorA = PVector.sub(screenToWorld(mouseX, mouseY), this.selectedRigidbody.getPosition());
-                }
 
+                this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, screenToWorld(mouseX, mouseY));
                 rod = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
             rod.setIsHingeable(this.isRodHingeable);
-            rod.setInitialRotation(this.selectedRigidbody.getAngle());
 
             this.selectedRigidbody.addForceToForceRegistry(rod);
 
@@ -585,24 +610,10 @@ public void createForces() {
             Spring spring2;
 
             float springLength;
-            PVector localAnchorB;
-
-
-            if(this.snapToCenter) {
-                localAnchorB = new PVector(0,0);
-                
-            } else if(this.snapToEdge && selectedRigidbody2.getShapeType() == ShapeType.CIRCLE) {
-                
-               localAnchorB = PhysEngMath.SnapToCircle(this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
-            } else if(this.snapToEdge) {
-                    
-                    PVector mousePos = screenToWorld(mouseX, mouseY);
-                    localAnchorB = PhysEngMath.SnapToPolygon(this.selectedRigidbody2, mousePos);
-            } else {
-                localAnchorB = PVector.sub(screenToWorld(mouseX, mouseY), this.selectedRigidbody2.getPosition());
-            }
+            PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
 
             springLength = PVector.dist(screenToWorld(mouseX, mouseY), PVector.add(this.localAnchorA, this.selectedRigidbody1.getPosition()));
+
             spring1 = new Spring(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
             spring2 = new Spring(this.selectedRigidbody2, this.selectedRigidbody1, localAnchorB, this.localAnchorA);
         
@@ -632,18 +643,7 @@ public void createForces() {
             Rod rod2;
 
             float rodLength;
-            PVector localAnchorB;
-
-            if(this.snapToCenter) {
-                localAnchorB = new PVector(0,0);
-            } else if(this.snapToEdge && selectedRigidbody2.getShapeType() == ShapeType.CIRCLE) {
-                localAnchorB = PhysEngMath.SnapToCircle(this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
-            } else if(this.snapToEdge) {
-                PVector mousePos = screenToWorld(mouseX, mouseY);
-                localAnchorB = PhysEngMath.SnapToPolygon(this.selectedRigidbody2, mousePos);
-            } else {
-                localAnchorB = PVector.sub(screenToWorld(mouseX, mouseY), this.selectedRigidbody2.getPosition());
-            }
+            PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
 
             rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
             rod2 = new Rod(this.selectedRigidbody2, this.selectedRigidbody1, localAnchorB, this.localAnchorA);
@@ -655,7 +655,7 @@ public void createForces() {
             this.selectedRigidbody2.addForceToForceRegistry(rod2);
         }
 
-    } else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) {
+} else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this. selectedRigidbody2) {
         if(this.forceType == ForceType.MOTOR) {
             Motor motor = new Motor(this.selectedRigidbody1, this.motorTargetAngularVelocity);
             motor.setDrawMotor(this.motorDrawMotor);
@@ -667,23 +667,18 @@ public void createForces() {
 
 
 public void firstMouseClickInformation() {
-    if(getClickedRigidbody() != null) {
-        if(this.snapToCenter) {
-            this.localAnchorA = new PVector(0, 0);
 
-        } else if(this.snapToEdge && getClickedRigidbody().getShapeType() == ShapeType.CIRCLE) {
-                this.localAnchorA = PhysEngMath.SnapToCircle(getClickedRigidbody(), screenToWorld(mouseX, mouseY));
-            } else if(this.snapToEdge) {
-                PVector mousePos = screenToWorld(mouseX, mouseY);
-                this.localAnchorA = PhysEngMath.SnapToPolygon(getClickedRigidbody(), mousePos);
-            } else {
-                this.localAnchorA = PVector.sub(screenToWorld(mouseX, mouseY), getClickedRigidbody().getPosition());
-            }
-            this.anchorPoint = screenToWorld(mouseX, mouseY);
-            this.isFirstClickOnRigidbody = true;
-        } else {
-            this.anchorPoint = screenToWorld(mouseX, mouseY);
-            this.isFirstClickOnRigidbody = false;
+    Rigidbody clickedBody = getClickedRigidbody();
+    PVector mousePos = screenToWorld(mouseX, mouseY);
+
+    if(clickedBody != null) {
+
+        this.localAnchorA = PhysEngMath.SnapController(this, clickedBody, mousePos);
+        this.anchorPoint = mousePos;
+        this.isFirstClickOnRigidbody = true;
+    } else {
+        this.anchorPoint = mousePos;
+        this.isFirstClickOnRigidbody = false;
     }
 }
 
@@ -818,6 +813,10 @@ public void setSnapToEdge(boolean snapToEdge) {
   this.snapToEdge = snapToEdge;
 }
 
+public void setSnapToVertices(boolean snapToVertices) {
+  this.snapToVertices = snapToVertices;
+}
+
 public void setMotorDrawMotorForce(boolean motorDrawMotorForce) {
   this.motorDrawMotorForce = motorDrawMotorForce;
 }
@@ -928,6 +927,10 @@ public boolean getSnapToEdge() {
 
 public boolean getSnapToCenter() {
     return this.snapToCenter;
+}
+
+public boolean getSnapToVertices() {
+    return this.snapToVertices;
 }
 public boolean getMotorDrawMotorForce() {
     return this.motorDrawMotorForce;

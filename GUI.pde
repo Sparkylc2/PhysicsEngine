@@ -30,8 +30,13 @@
         private boolean isForcesTabOpen;
      
         /*---------------------------- Default Values Initialization ------------------------*/
-
+        private Tab defaultTab = userInterface.getTab("Rigidbodies");
+        private Tab currentTab = defaultTab;
         /*---------------------------- Rigidbodies Tab -------------------------------------*/
+        private boolean defaultCircleSelector = false;
+        private boolean defaultRectangleSelector = false;
+        private boolean defaultPolygonSelector = false;
+
         private float defaultRectangleWidth = 2f;
         private float defaultRectangleHeight = 2f;
         private float defaultCircleRadius = 1f;
@@ -52,10 +57,6 @@
         private float defaultAngularVelocity = 0f;
 
         private boolean isFillColourSelectedDefault = true;
-
-        private boolean defaultCircleSelector = false;
-        private boolean defaultRectangleSelector = false;
-        private boolean defaultPolygonSelector = false;
 
     /*---------------------------- Forces Tab -------------------------------------*/
         private boolean defaultSpringSelector = false;
@@ -81,6 +82,7 @@
         private boolean defaultMotorDrawMotor = false;
         private boolean defaultMotorDrawMotorForce = true;
 
+    /*---------------------------- Editor Tab ----------------------- */
 
 
 /*
@@ -91,7 +93,6 @@
         public GUI(ControlP5 userInterface) {
     /*---------------------- Interactivity Listener Initialization -----------------*/
         if(defaultCircleSelector == true){
-
             interactivityListener.setShapeType(ShapeType.CIRCLE);
         } else if(defaultRectangleSelector == true){
 
@@ -99,6 +100,15 @@
         } else if(defaultPolygonSelector == true){
 
             interactivityListener.setShapeType(ShapeType.POLYGON);
+        }
+
+        if(defaultSpringSelector) {
+            interactivityListener.setForceType(ForceType.SPRING);
+        } else if(defaultRodSelector) {
+
+            interactivityListener.setForceType(ForceType.ROD);
+        } else if(defaultMotorSelector) {
+            interactivityListener.setForceType(ForceType.MOTOR);
         }
 
 
@@ -156,6 +166,8 @@
                                     }
                                 })
                                 ;
+                
+  
 
                 Tab Forces = userInterface.addTab("Forces")
                                 .setLabel("Forces")
@@ -188,15 +200,14 @@
                                 .setWidth(globalGroupWidth)
                                  //.disableCollapse()
                                 .setTab("Rigidbodies")
-
                                 ;
 
                         Toggle Circle = userInterface.addToggle("Circle")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(3), calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
                                         .setLabel("Circle")
                                         .setGroup(RigidbodyGeneration)
-                                        .setValue(false)
+                                        .setValue(defaultCircleSelector)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
 
@@ -206,11 +217,11 @@
                                             ;
 
                         Toggle Rectangle = userInterface.addToggle("Box")
-                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(3), calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
                                         .setLabel("Rectangle")
                                         .setGroup(RigidbodyGeneration)
-                                        .setValue(false)
+                                        .setValue(defaultRectangleSelector)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
 
@@ -219,18 +230,6 @@
                                                 })
                                             ;
 
-                        Toggle Polygon = userInterface.addToggle("Polygon")
-                                        .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(3), calculateButtonHeight(rowCount))
-                                        .setLabel("Polygon")
-                                        .setGroup(RigidbodyGeneration)
-                                        .setValue(false)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                    //TODO: IMPLEMENT THIS FOR POLYGON
-                                                    }
-                                                })
-                                            ;
                                         
                         Slider Density = userInterface.addSlider("Density")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
@@ -712,6 +711,7 @@
                                                     }
                                                 })
                                             ;
+
                         Toggle springSnapToEdge = userInterface.addToggle("SpringSnapToEdge")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
@@ -753,6 +753,7 @@
                                                     }
                                                 })
                                             ;
+
                         Toggle rodSnapToEdge = userInterface.addToggle("RodSnapToEdge")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
@@ -766,6 +767,8 @@
                                                     }
                                                 })
                                             ;
+
+
                         Slider motorTargetAngularVelocity = userInterface.addSlider("MotorTargetAngularVelocity")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
@@ -814,7 +817,6 @@
 
 userInterface.getController("Circle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("Box").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("Polygon").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 userInterface.getController("RectangleWidth").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RectangleHeight").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
@@ -862,6 +864,7 @@ userInterface.getController("SpringIsHingeable").getCaptionLabel().align(Control
 
 userInterface.getController("SpringSnapToCenter").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("SpringSnapToEdge").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
 
 userInterface.getController("RodIsHingeable").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RodSnapToCenter").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
@@ -912,6 +915,18 @@ userInterface.getTab("default").hide();
      return globalScreenGroupPaddingY;
     }
 
+    public void getActiveTab() {
+        if(userInterface.getTab("default").isActive()) {
+            interactivityListener.setGenerateRigidbodies(false);
+            interactivityListener.setGenerateForces(false);
+        } else if(userInterface.getTab("Rigidbodies").isActive()) {
+            interactivityListener.setGenerateRigidbodies(true);
+            interactivityListener.setGenerateForces(false);
+        } else if(userInterface.getTab("Forces").isActive()) {
+            interactivityListener.setGenerateRigidbodies(false);
+            interactivityListener.setGenerateForces(true);
+        }
+    }
 
 /*
 ====================================================================================================
@@ -1023,14 +1038,12 @@ private void ShapeSelectorElementOnDeselect() {
 
 private void CircleShapeSelectorOnChange() {
     if(userInterface.getController("Circle").getValue() == 1){
-
         ShapeSelectorElementOnSelect();
         CircleShapeSelectorElementOnSelect();
         CircleShapeSelectorInteractivityListener();
 
     } else if(userInterface.getController("Circle").getValue() == 0
-            && userInterface.getController("Box").getValue() == 0
-            && userInterface.getController("Polygon").getValue() == 0){
+            && userInterface.getController("Box").getValue() == 0){
         
         ShapeSelectorElementOnDeselect();
     }
@@ -1039,7 +1052,6 @@ private void CircleShapeSelectorOnChange() {
 private void CircleShapeSelectorElementOnSelect() {
 
     userInterface.getController("Box").setValue(0);
-    userInterface.getController("Polygon").setValue(0);
 
     userInterface.getController("RectangleWidth").setVisible(false);
     userInterface.getController("RectangleHeight").setVisible(false);
@@ -1064,8 +1076,7 @@ private void RectangleShapeSelectorOnChange() {
         RectangleShapeSelectorElementInteractivityListener();
 
     } else if(userInterface.getController("Circle").getValue() == 0
-            && userInterface.getController("Box").getValue() == 0
-            && userInterface.getController("Polygon").getValue() == 0){
+            && userInterface.getController("Box").getValue() == 0){
         
         ShapeSelectorElementOnDeselect();
     }
@@ -1073,7 +1084,6 @@ private void RectangleShapeSelectorOnChange() {
 private void RectangleShapeSelectorElementOnSelect() {
 
     userInterface.getController("Circle").setValue(0);
-    userInterface.getController("Polygon").setValue(0);
 
     userInterface.getController("RectangleWidth").setVisible(true);
     userInterface.getController("RectangleHeight").setVisible(true);
@@ -1089,8 +1099,6 @@ private void RectangleShapeSelectorElementInteractivityListener() {
     interactivityListener.setShapeType(ShapeType.BOX);
 
 }
-/* --------------------------------- Polygon Shape Selector Element ------------------------------*/
-                            //TODO IMPLEMENT THIS
 
 /*-------------------------------------- Density Element -----------------------------------------*/
 private void DensityElementOnChange() {
@@ -1397,6 +1405,9 @@ private void MotorForceSelectorOnChange() {
         interactivityListener.setForceType(ForceType.MOTOR);
         interactivityListener.setGenerateRigidbodies(false);
         interactivityListener.setGenerateForces(true);
+        
+        interactivityListener.setSnapToCenter(true);
+        interactivityListener.setSnapToEdge(false);
 
         userInterface.getController("AddSpring").setValue(0);
         userInterface.getController("AddRod").setValue(0);
@@ -1468,6 +1479,8 @@ private void SpringSnapToEdgeSelectorElementOnChange() {
     interactivityListener.setSnapToEdge(snapToEdge);
 }
 
+
+
 /*--------------------------------- Rod Is Hingeable Selector Element -----------------------------*/
 private void RodIsHingeableSelectorElementOnChange() {
     boolean isHingeable = userInterface.getController("RodIsHingeable").getValue() == 1 ? true : false;
@@ -1487,6 +1500,7 @@ private void RodSnapToCenterSelectorElementOnChange() {
 /*--------------------------------- Rod Snap To Edge Selector Element -----------------------------*/
 private void RodSnapToEdgeSelectorElementOnChange() {
     if(userInterface.getController("RodSnapToEdge").getValue() == 1) {
+
         userInterface.getController("RodSnapToCenter").setValue(0);
     }
 
@@ -1494,6 +1508,9 @@ private void RodSnapToEdgeSelectorElementOnChange() {
     interactivityListener.setSnapToEdge(snapToEdge);
 
 }
+
+
+
 /*--------------------------------- Motor Target Angular Velocity Slider Element -------------------*/
 private void MotorTargetAngularVelocitySliderElementOnChange() {
     float targetAngularVelocity = userInterface.getController("MotorTargetAngularVelocity").getValue();

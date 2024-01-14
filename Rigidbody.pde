@@ -111,10 +111,16 @@ public class Rigidbody {
       this.transformedVertices = new PVector[this.Vertices.length];
       this.aabb = this.GetAABB();
       
+    } else if(shapeType == ShapeType.POLYGON){
+
+        this.Vertices = vertices;
+        this.transformedVertices = new PVector[this.Vertices.length];
+        this.aabb = this.GetAABB();
+      
     } else {
 
-      this.Vertices = null;
-      this.transformedVertices = null;
+        this.Vertices = null;
+        this.transformedVertices = null;
     }
     
     //Sets InvMass for static objects to 0
@@ -260,7 +266,7 @@ public class Rigidbody {
     PVector[] vertices = CreateBoxVertices(width, height);
     
     rigidbody = new Rigidbody(density, mass, rotationalIntertia, restitution, area, 0, width,
-                              height, vertices, isStatic, isCollidable, strokeWeight, strokeColour, 
+                              height, vertices, isStatic, isCollidable, strokeWeight, strokeColour,
                               fillColour, ShapeType.BOX);
     
     System.out.println("Rigidbody created with mass: " + mass + " and area: " + area);

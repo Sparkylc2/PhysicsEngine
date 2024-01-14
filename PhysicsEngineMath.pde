@@ -82,11 +82,42 @@ public static class PhysEngMath {
 
   }
 
-  public static boolean Equals(PVector a, PVector b) {
+public static boolean Equals(PVector a, PVector b) {
     return PVector.sub(a, b).magSq() < precision * precision; //magSq is faster than mag
   }
 
-public static PVector SnapToCircle(Rigidbody rigidbody, PVector point) {
+
+public static PVector SnapController(InteractivityListener interactivityListener, Rigidbody rigidbody, PVector point) {
+    
+        if(rigidbody.getShapeType() == ShapeType.CIRCLE) {
+
+        if(interactivityListener.getSnapToCenter()) {
+
+            return new PVector(0,0);
+
+        } else if(interactivityListener.getSnapToEdge()) {
+
+            return PhysEngMath.SnapToCircle(rigidbody, point);
+        } else {
+            return PVector.sub(point, rigidbody.getPosition());
+        }
+
+    } else {
+
+        if(interactivityListener.getSnapToCenter()) {
+
+            return new PVector(0,0);
+
+        } else if(interactivityListener.getSnapToEdge()) {
+
+            return PhysEngMath.SnapToPolygon(rigidbody, point);
+
+        } else {
+            return PVector.sub(point, rigidbody.getPosition());
+        }
+    }
+}
+private static PVector SnapToCircle(Rigidbody rigidbody, PVector point) {
     PVector circleCenter = rigidbody.getPosition();
     PVector direction = PVector.sub(point, circleCenter);
     direction.normalize();
@@ -94,7 +125,7 @@ public static PVector SnapToCircle(Rigidbody rigidbody, PVector point) {
     return direction;
 }
 
-public static PVector SnapToPolygon(Rigidbody rigidbody, PVector point) {
+private static PVector SnapToPolygon(Rigidbody rigidbody, PVector point) {
     PVector closestOnPolygon = new PVector();
     float minDistanceSq = Float.MAX_VALUE;
 

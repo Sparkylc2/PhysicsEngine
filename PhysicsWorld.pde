@@ -21,7 +21,7 @@ float dt;
 float fps;
 float displayTimeStep;
 
-public boolean isPaused = false;
+public static boolean isPaused = false;
 
 /*----------------------------------------------------------------------------------------------*/
 
