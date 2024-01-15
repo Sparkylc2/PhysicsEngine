@@ -393,6 +393,7 @@ public PVector[] reverseVertices() {
     return reversedVertices;
 }
 
+
   
 
   /*
@@ -501,6 +502,25 @@ public PVector[] reverseVertices() {
         return netTorque * InvRotationalInertia;
     }
 
+public void applyImpulse(PVector impulse, PVector pointOfApplication) {
+    // Linear impulse application
+    PVector deltaV = PVector.div(impulse, this.Mass);
+    this.linearVelocity.add(deltaV);
+
+    // If the rigid body can rotate
+    if (!this.isRotationallyStatic || !this.isStatic) {
+        // Calculating the vector from the center of mass to the point of application
+        PVector r = PVector.sub(pointOfApplication, this.position);
+
+        // Calculating the change in angular velocity
+        PVector angularImpulse =r.cross(impulse);
+        float deltaAngularVelocity = angularImpulse.mag() / this.RotationalInertia;
+
+        // Update angular velocity
+        // Assuming angularVelocity is a scalar. If it's a vector, adjust accordingly.
+        this.angularVelocity += deltaAngularVelocity;
+    }
+}
 
   
   /*

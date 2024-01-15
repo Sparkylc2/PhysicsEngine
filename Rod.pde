@@ -27,6 +27,9 @@ public class Rod implements ForceRegistry {
 
         this.isTwoBodyRod = false;
 
+        PVector direction =  PVector.sub(anchorPoint, PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
+        this.length = direction.mag();
+
 
     }
 
@@ -40,11 +43,6 @@ public class Rod implements ForceRegistry {
         
         this.isTwoBodyRod = true;
         PVector direction = PVector.sub(PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()), PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
-        float initialRigidbodyAngle = rigidbodyA.getAngle();
-        float initialRodAngle = PApplet.atan2(direction.y, direction.x);
-
-        this.initialAngleDifference = initialRodAngle - initialRigidbodyAngle;
-        this.initialAngleDifference = (this.initialAngleDifference + PI) % TWO_PI - PI;
         this.length = direction.mag();
 
     }
@@ -52,40 +50,37 @@ public class Rod implements ForceRegistry {
 
 @Override
 public PVector getForce(Rigidbody rigidbody, PVector position) {
-    // Calculate current distance between anchor points
+    if (this.rigidbodyA != rigidbody) {
+        throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+    }
 
-        enforceRigidConstraint();
-    return new PVector();
-}
-
-
-public void enforceRigidConstraint() {
     // Calculate current distance between the anchor points
-    PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-    PVector worldAnchorB;
+    PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+    PVector worldAnchorB = isTwoBodyRod ? PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()) : anchorPoint;
 
-    if (isTwoBodyRod) {
-        worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
-    } else {
-        worldAnchorB = anchorPoint;
-    }
+    PVector displacement = PVector.sub(worldAnchorB, worldAnchorA);
+    float currentLength = displacement.mag();
+    float stretch = currentLength - this.length;
+    PVector normalizedDisplacement = displacement.normalize();
 
-    float currentLength = PVector.dist(worldAnchorA, worldAnchorB);
+    // High stiffness factor to simulate rigidity
+    float stiffness = 5000000.0f; // Adjust this value as needed
 
-    // Calculate how much and in which direction to move each rigidbody
-      if (currentLength != this.length) {
-        PVector correctionDirection = PVector.sub(worldAnchorB, worldAnchorA);
-        correctionDirection.normalize();
+    // Relative velocity in the direction of the rod
+    PVector relativeVelocity = isTwoBodyRod ? PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity()) : rigidbodyA.getVelocity();
+    float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
 
-        // Calculate the magnitude of the impulse needed
-        float impulseMagnitude = /* Calculation based on difference, mass, inertia, etc. */;
+    float dampingFactor = 2f;
+    // Apply only the component of the velocity along the rod for damping
+    PVector dampingForce = PVector.mult(normalizedDisplacement, velocityAlongRod * -dampingFactor);
 
-        // Apply impulses in the correction direction
-        rigidbodyA.setVelocity(PVector.mult(correctionDirection, -impulseMagnitude));
-        if (isTwoBodyRod) {
-            rigidbodyB.applyImpulse(PVector.mult(correctionDirection, impulseMagnitude));
-    }
+    // Calculate force
+    PVector force = PVector.mult(normalizedDisplacement, stiffness * stretch);
+    force.add(dampingForce);
+
+    return force;
 }
+
 
 
 

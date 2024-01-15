@@ -198,6 +198,7 @@ public Rigidbody getClickedRigidbody() {
 ====================================================================================================
 */
 public void GenerateRigidbody() {
+    if(getClickedRigidbody() == null){
      if(this.shapeType == ShapeType.BOX) {
 
             Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody( this.width, this.height,
@@ -243,6 +244,7 @@ public void GenerateRigidbody() {
             AddBodyToBodyEntityList(rigidbody);
 
         }
+    }
 }
 
 /*
