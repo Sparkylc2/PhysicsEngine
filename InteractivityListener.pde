@@ -49,7 +49,7 @@ public class InteractivityListener {
   
 
   public InteractivityListener() {
-    position = new PVector(0, 0);
+    position = new PVector(-50, -50);
     zoom = 10f;
   }
 /*
@@ -609,6 +609,16 @@ public void createForces() {
             Motor motor = new Motor(this.selectedRigidbody, this.motorTargetAngularVelocity);
             motor.setDrawMotor(this.motorDrawMotor);
             motor.setDrawMotorForce(this.motorDrawMotorForce);
+            
+            Iterator<ForceRegistry> iterator = this.selectedRigidbody.getForceRegistry().iterator();
+            
+            while (iterator.hasNext()) {
+                ForceRegistry force = iterator.next();
+                
+                if (force instanceof Motor) {
+                    iterator.remove();
+                }
+            }
             this.selectedRigidbody.addForceToForceRegistry(motor);
         }
 
@@ -674,9 +684,20 @@ public void createForces() {
             this.selectedRigidbody1.addForceToForceRegistry(rod);
         }
         else if(this.forceType == ForceType.MOTOR) {
+
             Motor motor = new Motor(this.selectedRigidbody1, this.motorTargetAngularVelocity);
             motor.setDrawMotor(this.motorDrawMotor);
             motor.setDrawMotorForce(this.motorDrawMotorForce);
+            
+            Iterator<ForceRegistry> iterator = this.selectedRigidbody1.getForceRegistry().iterator();
+            
+            while (iterator.hasNext()) {
+                ForceRegistry force = iterator.next();
+                
+                if (force instanceof Motor) {
+                    iterator.remove();
+                }
+            }
             this.selectedRigidbody1.addForceToForceRegistry(motor);
         }
     }

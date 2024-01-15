@@ -59,13 +59,13 @@ public final float MIN_BODY_DENSITY = 0.01f; //g/cm^3
 public final float MAX_BODY_DENSITY = 300.0f; //g/cm^3
 
 public final float MIN_BODY_WIDTH = 0.01f; // m
-public final float MAX_BODY_WIDTH = 10.0f; // m
+public final float MAX_BODY_WIDTH = 300; // m
 
 public final float MIN_BODY_HEIGHT = 0.01f; // m
 public final float MAX_BODY_HEIGHT = 10.0f; // m
 
 public final float MIN_BODY_RADIUS = 0.01f;
-public final float MAX_BODY_RADIUS = 10.0f;
+public final float MAX_BODY_RADIUS = 300f;
 
 public final int MIN_ITERATIONS = 1;
 public final int MAX_ITERATIONS = 128;

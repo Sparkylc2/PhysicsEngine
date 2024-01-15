@@ -273,7 +273,6 @@
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-
                                                         RectangleWidthElementOnChange();
                                                     }
                                                 })
@@ -1080,10 +1079,6 @@ private void CircleShapeSelectorElementOnSelect() {
 
     userInterface.getController("RectangleWidth").setVisible(false);
     userInterface.getController("RectangleHeight").setVisible(false);
-
-    userInterface.getController("RectangleWidth").setValue(0f);
-    userInterface.getController("RectangleHeight").setValue(0f);
-
     userInterface.getController("CircleRadius").setVisible(true);
 }
 
@@ -1115,7 +1110,6 @@ private void RectangleShapeSelectorElementOnSelect() {
 
 
     userInterface.getController("CircleRadius").setVisible(false);
-    userInterface.getController("CircleRadius").setValue(0f);
 }
 
 

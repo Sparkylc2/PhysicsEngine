@@ -3,6 +3,7 @@ public class Rigidbody {
   //Capital letter denotes read only
 
   private PVector position;
+  private PVector initialPosition;
   private PVector linearVelocity;
   private float angle;
   private float angularVelocity;
@@ -336,6 +337,7 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
 
   public void SetInitialPosition(PVector position) {
     this.position = position;
+    this.initialPosition = position;
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
   }
@@ -404,32 +406,33 @@ public PVector[] reverseVertices() {
   
   public void update(float dt, int iterations) {
     if(!isPaused) {
-    if(this.isStatic) {
-      this.aabbUpdateRequired = false;
-      return;
-    } else if (this.isTranslationallyStatic) {
-      this.aabbUpdateRequired = true;
-      this.transformUpdateRequired = true;
-      dt /= (float)iterations;
-      this.angularIntegration(dt);
+        if(this.isStatic) {
+            this.aabbUpdateRequired = false;
+            return;
+        } else if (this.isTranslationallyStatic) {
+            this.aabbUpdateRequired = true;
+            this.transformUpdateRequired = true;
+            dt /= (float)iterations;
+            this.angularIntegration(dt);
 
-    } else if (this.isRotationallyStatic) {
+        } else if (this.isRotationallyStatic) {
 
-      this.aabbUpdateRequired = true;
-      this.transformUpdateRequired = true;
-      dt /= (float)iterations;
-      this.RK4Position(dt);
-    } else {
+            this.aabbUpdateRequired = true;
+            this.transformUpdateRequired = true;
+            dt /= (float)iterations;
+            this.RK4Position(dt);
 
-      this.aabbUpdateRequired = true;
-      this.transformUpdateRequired = true;
-      dt /= (float)iterations;
-      this.RK4Position(dt);
+        } else {
 
-      this.angularIntegration(dt);
-    }
-    }
-  }
+            this.aabbUpdateRequired = true;
+            this.transformUpdateRequired = true;
+            dt /= (float)iterations;
+            this.RK4Position(dt);
+
+            this.angularIntegration(dt);
+        }
+        }
+  } 
   
   
   
@@ -502,25 +505,7 @@ public PVector[] reverseVertices() {
         return netTorque * InvRotationalInertia;
     }
 
-public void applyImpulse(PVector impulse, PVector pointOfApplication) {
-    // Linear impulse application
-    PVector deltaV = PVector.div(impulse, this.Mass);
-    this.linearVelocity.add(deltaV);
 
-    // If the rigid body can rotate
-    if (!this.isRotationallyStatic || !this.isStatic) {
-        // Calculating the vector from the center of mass to the point of application
-        PVector r = PVector.sub(pointOfApplication, this.position);
-
-        // Calculating the change in angular velocity
-        PVector angularImpulse =r.cross(impulse);
-        float deltaAngularVelocity = angularImpulse.mag() / this.RotationalInertia;
-
-        // Update angular velocity
-        // Assuming angularVelocity is a scalar. If it's a vector, adjust accordingly.
-        this.angularVelocity += deltaAngularVelocity;
-    }
-}
 
   
   /*
