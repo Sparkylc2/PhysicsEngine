@@ -1,3 +1,4 @@
+/*
 public class Rod implements ForceRegistry {
 
     private float length;
@@ -39,6 +40,9 @@ public class Rod implements ForceRegistry {
         this.localAnchorB = localAnchorB;
         
         this.isTwoBodyRod = true;
+
+
+        //Logic for hinging
         PVector direction = PVector.sub(PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()), PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
         float initialRigidbodyAngle = rigidbodyA.getAngle();
         float initialRodAngle = PApplet.atan2(direction.y, direction.x);
@@ -46,48 +50,62 @@ public class Rod implements ForceRegistry {
         this.initialAngleDifference = initialRodAngle - initialRigidbodyAngle;
         this.initialAngleDifference = (this.initialAngleDifference + PI) % TWO_PI - PI;
         this.length = direction.mag();
-
     }
 
 
-@Override
+    @Override
 public PVector getForce(Rigidbody rigidbody, PVector position) {
-    // Calculate current distance between anchor points
+    if(this.rigidbodyA != rigidbody) {
+      throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+    }
 
-        enforceRigidConstraint();
-    return new PVector();
-}
-
-
-public void enforceRigidConstraint() {
-    // Calculate current distance between the anchor points
-    PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+    PVector direction;
+    PVector force = new PVector(0, 0);
+    PVector worldAnchorA;
     PVector worldAnchorB;
 
-    if (isTwoBodyRod) {
+    if(isTwoBodyRod) {
+        worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
         worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+        direction = PVector.sub(worldAnchorB, worldAnchorA);
     } else {
+        worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
         worldAnchorB = anchorPoint;
+        direction = PVector.sub(worldAnchorB, worldAnchorA);
     }
 
-    float currentLength = PVector.dist(worldAnchorA, worldAnchorB);
 
-    // Calculate how much and in which direction to move each rigidbody
-      if (currentLength != this.length) {
-        PVector correctionDirection = PVector.sub(worldAnchorB, worldAnchorA);
-        correctionDirection.normalize();
-
-        // Calculate the magnitude of the impulse needed
-        float impulseMagnitude = /* Calculation based on difference, mass, inertia, etc. */;
-
-        // Apply impulses in the correction direction
-        rigidbodyA.setVelocity(PVector.mult(correctionDirection, -impulseMagnitude));
-        if (isTwoBodyRod) {
-            rigidbodyB.applyImpulse(PVector.mult(correctionDirection, impulseMagnitude));
-    }
+//TODO FIX THIS
+  if(!this.isHingeable) {
+    float currentRodAngle = PApplet.atan2(direction.y, direction.x);
+    rigidbodyA.setAngle(currentRodAngle + initialAngleDifference);
 }
 
 
+    float currentLength = direction.mag();
+    float lengthDifference = length - currentLength;
+    direction.normalize();
+
+    force = PVector.mult(direction, -lengthDifference * stiffness * 1000);
+
+    if(isTwoBodyRod){
+
+    /*-------------------DAMPING-------------------*/
+    /*
+    PVector relativeVelocity = PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity());
+    float rodVelocity = PVector.dot(relativeVelocity, direction);
+    float dampingForceMagnitude = rodVelocity * damping;
+    PVector dampingForce = PVector.mult(direction, dampingForceMagnitude);
+    force.add(dampingForce);
+    */
+    /*----------------------------------------------*/
+/*
+    }
+
+
+
+    return force;
+}
 
 @Override
 public void draw() {
@@ -127,12 +145,13 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
     PVector transformedAnchor = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
     return transformedAnchor;
     }
-
+*/
 /*
 ====================================================================================================
 ===================================GETTERS AND SETTERS==============================================
 ====================================================================================================
 */
+/*
 public void setLength(float length) {
     this.length = length;
   }
@@ -209,3 +228,4 @@ public Rigidbody getRigidbodyB() {
 }
 
   
+*/
