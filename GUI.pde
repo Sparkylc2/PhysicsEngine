@@ -809,6 +809,31 @@
                                                     }
                                                 })
                                             ;
+/*------------------------------------ Editor Tab ----------------------------------------------- */
+                Group editorGroup = userInterface.addGroup("EditorGroup")
+                        .setPosition(calculateGroupPositionX(), calculateGroupPositionY())
+                        .setBackgroundHeight(globalGroupHeight)
+                        .setBarHeight(globalGroupBarHeight)
+                        .setBackgroundColor(globalGroupColor)
+                        .setWidth(globalGroupWidth)
+                         //.disableCollapse()
+                        .setTab("Editor")
+                        ;
+
+                        Toggle enableEditor = userInterface.addToggle("EditorEnableEditor")
+                            .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                            .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
+                            .setLabel("Enable Editor")
+                            .setVisible(true)
+                            .setValue(false)
+                            .setGroup(editorGroup)
+                            .onChange(new CallbackListener() {
+                                    void controlEvent(CallbackEvent theEvent) {
+                                            EditorEnableEditorSelectorElementOnChange();
+                                        }
+                                    })
+                                ;
+
 /*
 ====================================================================================================
 ======================================== Formatting ================================================
@@ -1405,7 +1430,7 @@ private void MotorForceSelectorOnChange() {
         interactivityListener.setForceType(ForceType.MOTOR);
         interactivityListener.setGenerateRigidbodies(false);
         interactivityListener.setGenerateForces(true);
-        
+
         interactivityListener.setSnapToCenter(true);
         interactivityListener.setSnapToEdge(false);
 
@@ -1526,6 +1551,15 @@ private void MotorDrawMotorSelectorElementOnChange() {
 private void MotorDrawMotorForceSelectorElementOnChange() {
     boolean drawMotorForce = userInterface.getController("MotorDrawMotorForce").getValue() == 1 ? true : false;
     interactivityListener.setMotorDrawMotorForce(drawMotorForce);
+}
+
+/* --------------------------------- Editor Tab --------------------------------------------------*/
+private void EditorEnableEditorSelectorElementOnChange() {
+    if(userInterface.getController("EditorEnableEditor").getValue() == 1) {
+        interactivityListener.setEnableEditor(true);
+    } else {
+        interactivityListener.setEnableEditor(false);
+    }
 }
 
 /*

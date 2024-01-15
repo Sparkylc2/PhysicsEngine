@@ -6,6 +6,17 @@ public void keyPressed() {
     if(key == 'r') {
         rigidbodyList.clear();
     }
+    if(key == BACKSPACE || key == DELETE) {
+
+        Rigidbody rigidbody = interactivityListener.getClickedRigidbody();
+        if(rigidbody != null) {
+            rigidbodyList.remove(rigidbody);
+        }
+    }
+    if(key == 'c') {
+        interactivityListener.position = new PVector(0, 0);
+        interactivityListener.zoom = 10f;
+    }
 }
 
 public void mouseWheel(MouseEvent event) {
@@ -16,7 +27,6 @@ public void mouseWheel(MouseEvent event) {
 }
 
 public void mouseDragged() {
-
     if(!userInterface.isMouseOver() && mouseButton == RIGHT){
         interactivityListener.move(pmouseX - mouseX, pmouseY - mouseY);
     }

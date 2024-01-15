@@ -16,6 +16,8 @@ public class InteractivityListener {
   private float width;
   private float height;
 
+  private PVector[] vertices;
+
   private float radius;
   private PVector rigidbodyPosition;
 
@@ -80,6 +82,8 @@ public class InteractivityListener {
     private boolean snapToCenter;
     private boolean snapToEdge;
     private boolean snapToVertices;
+
+    private boolean enableEditor;
 
 /*----------------------------- Spring Variables -----------------------------*/
 
@@ -329,6 +333,8 @@ public void drawBodies() {
 
         PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
+        pushMatrix();
+        rotate(this.angle);
         if(this.shapeType == ShapeType.CIRCLE) {
             float diameter = this.radius * 2.0f;
             fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
@@ -350,6 +356,7 @@ public void drawBodies() {
             rect(mouseCoordinates.x, mouseCoordinates.y, this.width, this.height);
         }
     }
+    popMatrix();
 }
 
 public void drawForces() {
@@ -655,8 +662,16 @@ public void createForces() {
             this.selectedRigidbody2.addForceToForceRegistry(rod2);
         }
 
-} else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this. selectedRigidbody2) {
-        if(this.forceType == ForceType.MOTOR) {
+} else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) {
+    
+        if(this.forceType == ForceType.ROD) {
+            PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
+            Rod rod = new Rod(this.selectedRigidbody1, this.localAnchorA, mouseCoordinates);
+            rod.setIsHingeable(this.isRodHingeable);
+
+            this.selectedRigidbody1.addForceToForceRegistry(rod);
+        }
+        else if(this.forceType == ForceType.MOTOR) {
             Motor motor = new Motor(this.selectedRigidbody1, this.motorTargetAngularVelocity);
             motor.setDrawMotor(this.motorDrawMotor);
             motor.setDrawMotorForce(this.motorDrawMotorForce);
@@ -844,6 +859,15 @@ public void setSelectedRigidbody2(Rigidbody selectedRigidbody2) {
 public void setDrawCursorTrail(boolean showCursorTrail) {
   this.showCursorTrail = showCursorTrail;
 }
+
+public void setEnableEditor(boolean enableEditor) {
+  this.enableEditor = enableEditor;
+}
+
+public void setVertices(PVector[] vertices) {
+  this.vertices = vertices;
+}
+
 public float getWidth() {
   return this.width;
 }
@@ -956,6 +980,13 @@ public Rigidbody getSelectedRigidbody2() {
     return this.selectedRigidbody2;
 }
 
+public boolean getEnableEditor() {
+    return this.enableEditor;
+}
+
+public PVector[] getVertices() {
+    return this.vertices;
+}
 }
 
 
