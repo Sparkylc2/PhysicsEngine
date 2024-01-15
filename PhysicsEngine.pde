@@ -12,7 +12,6 @@ void setup() {
     size(1500, 1000);
     
     windowMove(10, 4);
-    fullScreen();
     frameRate(240);
     interactivityListener = new InteractivityListener();
     
