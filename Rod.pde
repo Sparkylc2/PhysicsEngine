@@ -1,8 +1,8 @@
 public class Rod implements ForceRegistry {
 
     private float length;
-    private float stiffness = 2f;
-    private float damping = 100f;
+    private float stiffness = 1f;
+    private float damping = 150f;
 
     private PVector localAnchorA;
     private PVector localAnchorB;
@@ -28,6 +28,8 @@ public class Rod implements ForceRegistry {
         this.isTwoBodyRod = false;
 
         PVector direction =  PVector.sub(anchorPoint, PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
+
+
         this.length = direction.mag();
 
 
@@ -40,8 +42,9 @@ public class Rod implements ForceRegistry {
 
         this.localAnchorA = localAnchorA;
         this.localAnchorB = localAnchorB;
-        
+
         this.isTwoBodyRod = true;
+
         PVector direction = PVector.sub(PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()), PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
         this.length = direction.mag();
 
@@ -64,13 +67,13 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
     PVector normalizedDisplacement = displacement.normalize();
 
     // High stiffness factor to simulate rigidity
-    float stiffness = 5000000.0f; // Adjust this value as needed
+    float stiffness = 1000000.0f; // Adjust this value as needed
 
     // Relative velocity in the direction of the rod
     PVector relativeVelocity = isTwoBodyRod ? PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity()) : rigidbodyA.getVelocity();
     float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
 
-    float dampingFactor = 2f;
+    float dampingFactor = 1f;
     // Apply only the component of the velocity along the rod for damping
     PVector dampingForce = PVector.mult(normalizedDisplacement, velocityAlongRod * -dampingFactor);
 
@@ -79,6 +82,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
     force.add(dampingForce);
 
     return force;
+
 }
 
 

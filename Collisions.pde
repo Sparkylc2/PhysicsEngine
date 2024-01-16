@@ -409,7 +409,6 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
     PVector axis = new PVector();
     float axisDepth = 0f;
 
-
     for(int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
       //!!!ALL OF THIS ASSUMES A CLOCKWISE WINDING ORDER!!!
 
@@ -444,7 +443,7 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
       }
   }
 
-  int closestPointIndex = FindClosestPointOnPolygon(circleCenter, transformedVertices);
+    int closestPointIndex = FindClosestPointOnPolygon(circleCenter, transformedVertices);
   PVector closestPoint = transformedVertices[closestPointIndex];
 
    axis = PVector.sub(closestPoint, circleCenter).normalize();
@@ -490,7 +489,7 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
 //Returns an array with array = [min, max]
 private static float[] ProjectVertices(PVector[] vertices, PVector axis){
   float min = Float.MAX_VALUE;
-  float max = Float.MIN_VALUE; 
+  float max = Float.MIN_VALUE;
 
   for(PVector vertex : vertices) {
 
@@ -542,8 +541,8 @@ private static int FindClosestPointOnPolygon(PVector circleCenter, PVector[] tra
   return result;
 }
 
-public static CollisionResult PointSegmentDistance(PVector point, PVector lineSegmentStart, 
-                                        PVector lineSegmentEnd) 
+public static CollisionResult PointSegmentDistance(PVector point, PVector lineSegmentStart,
+                                                    PVector lineSegmentEnd)
 {
 
   PVector closestPoint = new PVector();

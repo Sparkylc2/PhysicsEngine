@@ -7,7 +7,7 @@ public class Shape {
     drawRigidbodies();
     drawAABB(); //DONT REMOVE THIS, IT BREAKS SOMETHING
   /*---------------------------------Collision Point Debugging--------------------------------------*/
-    drawCollisionPoints();
+    //drawCollisionPoints();
   /*-----------------------------------------------------------------------------------------------*/
   drawForces();
   }
@@ -83,11 +83,14 @@ public class Shape {
     for(Rigidbody rigidbody : rigidbodyList) {
       if(rigidbody.getIsVisible()) {
         AABB aabb = rigidbody.GetAABB();
+
+        /*
         rectMode(CORNERS);
         //stroke(255, 0, 0);
         noStroke();
         noFill();
         rect(aabb.getMin().x, aabb.getMin().y, aabb.getMax().x, aabb.getMax().y);
+        */
       }
     }
   }

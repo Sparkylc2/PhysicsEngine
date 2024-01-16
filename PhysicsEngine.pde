@@ -83,6 +83,9 @@ void setup() {
     AddBodyToBodyEntityList(spinningBody);
 
 
+    Softbody softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
+    //softbody.CreateBoxSoftbody();
+
 }
 
 

@@ -484,12 +484,13 @@ public PVector[] reverseVertices() {
         PVector netForce = new PVector();
 
         for (ForceRegistry force : this.forceRegistry) {
-            netForce.add(force.getForce(this, position));
+
+                netForce.add(force.getForce(this, position));
         }
         return PVector.div(netForce, this.Mass);
     }
 
-
+ 
     public float calculateAngularAcceleration() {
 
         float netTorque = 0f;
