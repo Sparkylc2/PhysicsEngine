@@ -2,6 +2,7 @@
 
 GUI gui;
 PShape background;
+Softbody softbody;
 void setup() {
 /*--------------------- Timing Utilities ---------------------*/
     lastFrameTime = millis();
@@ -83,8 +84,8 @@ void setup() {
     AddBodyToBodyEntityList(spinningBody);
 
 
-    Softbody softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
-    //softbody.CreateBoxSoftbody();
+     softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
+    softbody.CreateBoxSoftbody();
 
 }
 
@@ -104,6 +105,7 @@ void draw() {
   popMatrix();
 
   render.draw();
+  softbody.draw();
 
   /*--------------------- Cursor Trail ---------------------*/
 

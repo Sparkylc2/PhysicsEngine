@@ -7,7 +7,7 @@ public class Softbody {
     private float height;
 
     private float stiffness = 750;
-    private float damping = 1f;
+    private float damping = 2f;
 
     private int numRowParticles;
     private int numColumnParticles;
@@ -200,6 +200,31 @@ public class Softbody {
         }
 
     }
+
+ void draw() {
+  beginShape();
+  // Top edge
+  for (int column = 0; column < numColumnParticles; column++) {
+    PVector pos = softBodyParticles[0][column].getPosition();
+    vertex(pos.x, pos.y);
+  }
+  // Right edge
+  for (int row = 0; row < numRowParticles; row++) {
+    PVector pos = softBodyParticles[row][numColumnParticles - 1].getPosition();
+    vertex(pos.x, pos.y);
+  }
+  // Bottom edge
+  for (int column = numColumnParticles - 1; column >= 0; column--) {
+    PVector pos = softBodyParticles[numRowParticles - 1][column].getPosition();
+    vertex(pos.x, pos.y);
+  }
+  // Left edge
+  for (int row = numRowParticles - 1; row >= 0; row--) {
+    PVector pos = softBodyParticles[row][0].getPosition();
+    vertex(pos.x, pos.y);
+  }
+  endShape(CLOSE);
+}
 
 
 }
