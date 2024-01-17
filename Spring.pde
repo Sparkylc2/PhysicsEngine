@@ -1,73 +1,63 @@
 public class Spring implements ForceRegistry {
 
-  private Rigidbody rigidbodyA;
-  private Rigidbody rigidbodyB;
-  
-  private PVector anchorPoint;
-  private PVector localAnchorA;
-  private PVector localAnchorB;
+    private Rigidbody rigidbodyA;
+    private Rigidbody rigidbodyB;
 
-
-/*------------------- Reusable Stuff -------------------*/
-  private PVector worldAnchorA;
-  private PVector worldAnchorB;
-  private PVector direction;
-  private float directionMag;
-
-  public boolean drawSpring = true;
+    private PVector anchorPoint;
+    private PVector localAnchorA;
+    private PVector localAnchorB;
+    
+    private boolean drawSpring = true;
 
     //Some default values
-  private boolean lockTranslationToXAxis = false;
-  private boolean lockTranslationToYAxis = false;
-  
-  private boolean isPerfectSpring = false;
-  private boolean isHingeable = true;
+    private boolean lockTranslationToXAxis = false;
+    private boolean lockTranslationToYAxis = false;
+    
+    private boolean isPerfectSpring = false;
+    private boolean isHingeable = true;
 
-  private float equilibriumLength = 1f; //Equilibrium length is a percentage of the total magnitude of the length
-  private float springConstant = 50;
-  private float damping = 0.5f;
-  
-  private float springLength;
+    private float equilibriumLength = 1f; //Equilibrium length is a percentage of the total magnitude of the length
+    private float springConstant = 50;
+    private float damping = 0.5f;
+    
+    private float springLength;
 
-  private boolean isTwoBodySpring;
+    private boolean isTwoBodySpring;
+    //TODO: IMPLEMENT THIS
+    private float initialRotationA;
+    private float initialRotationB;
 
+    private PVector force;
+    private int callCounter = 0;
 
+    public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
-  //TODO: IMPLEMENT THIS
-  private float initialRotationA;
-  private float initialRotationB;
+        this.rigidbodyA = rigidbody;
 
-  private PVector force;
-  private int callCounter = 0;
+        this.localAnchorA = localAnchorA;
+        this.anchorPoint = anchorPoint;
 
-public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
+        this.springLength = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
 
-    this.rigidbodyA = rigidbody;
+        this.isTwoBodySpring = false;
+        this.isHingeable = true;
 
-    this.localAnchorA = localAnchorA;
-    this.anchorPoint = anchorPoint;
+    }
 
-    this.springLength = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
+    public Spring(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {
+        
+        this.rigidbodyA = rigidbodyA;
+        this.rigidbodyB = rigidbodyB;
+        
+        this.localAnchorA = localAnchorA;
+        this.localAnchorB = localAnchorB;
+        
+        this.springLength = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()).sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
 
-    this.isTwoBodySpring = false;
-    this.isHingeable = true;
+        this.isTwoBodySpring = true;
+        this.isHingeable = true;
 
-}
-
- public Spring(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {
-
-    this.rigidbodyA = rigidbodyA;
-    this.rigidbodyB = rigidbodyB;
-
-    this.localAnchorA = localAnchorA;
-    this.localAnchorB = localAnchorB;
-
-    this.springLength = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()).sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
-
-    this.isTwoBodySpring = true;
-    this.isHingeable = true;
-
- }
+    }
 
     @Override
     public PVector getForce(Rigidbody rigidbody, PVector position) {
@@ -91,6 +81,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
         PVector worldAnchorA;
         PVector worldAnchorB;
+        PVector direction;
         float displacement;
 
 
@@ -160,16 +151,13 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
             PVector direction;
             float length;
 
-
-
-  if(isTwoBodySpring) {
-    worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-    worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
-  } else {
-
-    worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-    worldAnchorB = anchorPoint;
-  }
+            if(isTwoBodySpring) {
+                worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+                worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+            } else {
+                worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+                worldAnchorB = anchorPoint;
+            }
 
             direction = PVector.sub(worldAnchorA, worldAnchorB);
             length = direction.mag();
@@ -177,7 +165,7 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
             fill(255);
 
-            float segments = 10;
+            float segments = 5;
             float segmentLength = length / segments;
 
             // Set the offset to a constant value
@@ -190,28 +178,35 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
             stroke(255); // White
             strokeWeight(0.1);
             line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+            
+            PVector segmentStart = new PVector();
+            PVector segmentEnd = new PVector();
+            PVector midPoint = new PVector();
+            PVector midPoint1 = new PVector();
+            PVector midPoint2 = new PVector();
+            PVector directionSegmentLength = PVector.mult(direction, segmentLength);
+            PVector offset1 = new PVector();
+            PVector offset2 = new PVector();
 
             for(int i = 0; i < segments; i++) {
 
-                PVector segmentStart = PVector.add(worldAnchorB, PVector.mult(direction, segmentLength * i));
-                PVector segmentEnd = PVector.add(worldAnchorB, PVector.mult(direction, segmentLength * (i + 1)));
+                segmentStart.set(PVector.add(worldAnchorB, PVector.mult(directionSegmentLength, i)));
+                segmentEnd.set(PVector.add(worldAnchorB, PVector.mult(directionSegmentLength, i + 1)));
 
                 // Calculate the midpoint of the segment
-                PVector midPoint = PVector.lerp(segmentStart, segmentEnd, 0.5f);
+                midPoint.set(PVector.lerp(segmentStart, segmentEnd, 0.5f));
 
-                // Alternate the offset direction to give appearance of spring
-                PVector offset1, offset2;
                 if(i % 2 == 0) {
-                    offset1 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
-                    offset2 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
+                    offset1.set(new PVector(-direction.y, direction.x).mult(offsetMagnitude));
+                    offset2.set(new PVector(direction.y, -direction.x).mult(offsetMagnitude));
                 } else {
-                    offset1 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
-                    offset2 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
+                    offset1.set(new PVector(direction.y, -direction.x).mult(offsetMagnitude));
+                    offset2.set(new PVector(-direction.y, direction.x).mult(offsetMagnitude));
                 }
 
                 // Add the offsets to the midpoint
-                PVector midPoint1 = PVector.add(midPoint, offset1);
-                PVector midPoint2 = PVector.add(midPoint, offset2);
+                midPoint1.set(PVector.add(midPoint, offset1));
+                midPoint2.set(PVector.add(midPoint, offset2));
 
                 // Draw the lines
                 strokeWeight(0.2);
@@ -230,18 +225,18 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
         }
     }
 
-@Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    if(rigidbody == this.rigidbodyA || rigidbody == this.rigidbodyB) {
-        if(rigidbody == rigidbodyA) {
-            return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-        } else {
-            return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+    @Override
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+        if(rigidbody == this.rigidbodyA || rigidbody == this.rigidbodyB) {
+            if(rigidbody == rigidbodyA) {
+                return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+            } else {
+                return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+            }
+        } else{
+            throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
         }
-    } else{
-        throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
     }
-}
 
 /*
 ====================================================================================================
@@ -249,118 +244,121 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
 ====================================================================================================
 */
 
-public void setIsHingeable(boolean isHingeable) {
-    this.isHingeable = isHingeable;
-}
+    public void setIsHingeable(boolean isHingeable) {
+        this.isHingeable = isHingeable;
+    }
 
-public void setSpringConstant(float springConstant) {
-    this.springConstant = springConstant;
- }
+    public void setSpringConstant(float springConstant) {
+        this.springConstant = springConstant;
+    }
 
-public void setSpringLength(float springLength) {
-    this.springLength = springLength;
-}
-public void setEquilibriumLength(float equilibriumLength) {
-    this.equilibriumLength = equilibriumLength;
-}
-public void setDamping(float damping) {
-    this.damping = damping;
-}
+    public void setSpringLength(float springLength) {
+        this.springLength = springLength;
+    }
 
-public void setLockTranslationToXAxis(boolean lockTranslationToXAxis) {
-    this.lockTranslationToXAxis = lockTranslationToXAxis;
-}
+    public void setEquilibriumLength(float equilibriumLength) {
+        this.equilibriumLength = equilibriumLength;
+    }
 
-public void setLockTranslationToYAxis(boolean lockTranslationToYAxis) {
-    this.lockTranslationToYAxis = lockTranslationToYAxis;
-}
+    public void setDamping(float damping) {
+        this.damping = damping;
+    }
 
-public void setPerfectSpring(boolean isPerfectSpring) {
-    this.isPerfectSpring = isPerfectSpring;
-}
+    public void setLockTranslationToXAxis(boolean lockTranslationToXAxis) {
+        this.lockTranslationToXAxis = lockTranslationToXAxis;
+    }
 
-public void setAnchorPoint(PVector anchorPoint) {
-    this.anchorPoint = anchorPoint;
-}
+    public void setLockTranslationToYAxis(boolean lockTranslationToYAxis) {
+        this.lockTranslationToYAxis = lockTranslationToYAxis;
+    }
 
-public void setLocalAnchorA(PVector localAnchorA) {
-    this.localAnchorA = localAnchorA;
-}
+    public void setPerfectSpring(boolean isPerfectSpring) {
+        this.isPerfectSpring = isPerfectSpring;
+    }
 
-public void setLocalAnchorB(PVector localAnchorB) {
-    this.localAnchorB = localAnchorB;
-}
-public void setInitialRotationA(float initialRotationA) {
-    this.initialRotationA = initialRotationA;
-}
-public void setInitialRotationB(float initialRotationB) {
-    this.initialRotationB = initialRotationB;
-}
+    public void setAnchorPoint(PVector anchorPoint) {
+        this.anchorPoint = anchorPoint;
+    }
 
-public boolean getIsHingeable() {
-    return this.isHingeable;
-}
+    public void setLocalAnchorA(PVector localAnchorA) {
+        this.localAnchorA = localAnchorA;
+    }
 
-public float getSpringConstant() {
-    return this.springConstant;
-}
+    public void setLocalAnchorB(PVector localAnchorB) {
+        this.localAnchorB = localAnchorB;
+    }
 
-public float getSpringLength() {
-    return this.springLength;
-}
+    public void setInitialRotationA(float initialRotationA) {
+        this.initialRotationA = initialRotationA;
+    }
 
-public float getEquilibriumLength() {
-    return this.equilibriumLength;
-}
+    public void setInitialRotationB(float initialRotationB) {
+        this.initialRotationB = initialRotationB;
+    }
 
-public float getDamping() {
-    return this.damping;
-}
+    public boolean getIsHingeable() {
+        return this.isHingeable;
+    }
 
-public boolean getLockTranslationToXAxis() {
-    return this.lockTranslationToXAxis;
-}
+    public float getSpringConstant() {
+        return this.springConstant;
+    }
 
-public boolean getLockTranslationToYAxis() {
-    return this.lockTranslationToYAxis;
-}
+    public float getSpringLength() {
+        return this.springLength;
+    }
 
-public boolean getPerfectSpring() {
-    return this.isPerfectSpring;
-}
+    public float getEquilibriumLength() {
+        return this.equilibriumLength;
+    }
 
-public PVector getAnchorPoint() {
-    return this.anchorPoint;
-}
+    public float getDamping() {
+        return this.damping;
+    }
 
-public PVector getLocalAnchorA() {
-    return this.localAnchorA;
-}
+    public boolean getLockTranslationToXAxis() {
+        return this.lockTranslationToXAxis;
+    }
 
-public PVector getLocalAnchorB() {
-    return this.localAnchorB;
-}
+    public boolean getLockTranslationToYAxis() {
+        return this.lockTranslationToYAxis;
+    }
 
-public float getInitialRotationA() {
-    return this.initialRotationA;
-}
+    public boolean getPerfectSpring() {
+        return this.isPerfectSpring;
+    }
 
-public float getInitialRotationB() {
-    return this.initialRotationB;
-}
+    public PVector getAnchorPoint() {
+        return this.anchorPoint;
+    }
 
-public Rigidbody getRigidbodyA() {
-    return this.rigidbodyA;
-}
+    public PVector getLocalAnchorA() {
+        return this.localAnchorA;
+    }
 
-public Rigidbody getRigidbodyB() {
-    return this.rigidbodyB;
-}
+    public PVector getLocalAnchorB() {
+        return this.localAnchorB;
+    }
 
-public boolean getIsTwoBodySpring() {
-    return this.isTwoBodySpring;
-}
+    public float getInitialRotationA() {
+        return this.initialRotationA;
+    }
 
+    public float getInitialRotationB() {
+        return this.initialRotationB;
+    }
+
+    public Rigidbody getRigidbodyA() {
+        return this.rigidbodyA;
+    }
+
+    public Rigidbody getRigidbodyB() {
+        return this.rigidbodyB;
+    }
+
+    public boolean getIsTwoBodySpring() {
+        return this.isTwoBodySpring;
+    }
 }
 
 

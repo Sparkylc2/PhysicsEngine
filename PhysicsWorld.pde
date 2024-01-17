@@ -453,12 +453,17 @@ public void BroadPhaseStep() {
             
             Rigidbody rigidbodyB = rigidbodyList.get(j);
             AABB rigidbodyB_AABB = rigidbodyB.GetAABB();
-            
+
             
             if ((rigidbodyA.getIsStatic() && rigidbodyB.getIsStatic()) && (rigidbodyA.getInvMass() == 0f && rigidbodyB.getInvMass() == 0f)) {
                 continue;
             }
             
+
+            //Remove this if shit breaks
+            if(!rigidbodyA.getCollidability() || !rigidbodyB.getCollidability()) {
+                continue;
+            }
             
             if (!Collisions.IntersectAABB(rigidbodyA_AABB, rigidbodyB_AABB)) {
                 continue;

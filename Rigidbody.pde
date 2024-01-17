@@ -3,7 +3,7 @@ public class Rigidbody {
   //Capital letter denotes read only
 
   private PVector position;
-  private PVector initialPosition;
+  private PVector previousPosition;
   private PVector linearVelocity;
   private float angle;
   private float angularVelocity;
@@ -43,6 +43,9 @@ public class Rigidbody {
   private boolean isRotationallyStatic;
   private boolean isVisible;
   private boolean isCollidable;
+
+    public boolean useVerletIntegration = false;
+    public boolean useRK4Integration = true;
   
   private float netTorque;
   private PVector netForce = new PVector();
@@ -67,7 +70,6 @@ public class Rigidbody {
     float area, float radius, float width, float height, PVector[] vertices, boolean isStatic,
     boolean isCollidable, float strokeWeight, PVector strokeColour, PVector fillColour, ShapeType shapeType)
   {
-    
     this.Mass = mass;
     this.RotationalInertia = rotationalIntertia;
     this.InvMass = mass > 0 ? 1 / mass : 0;
@@ -92,7 +94,7 @@ public class Rigidbody {
 
 
     this.isStatic = isStatic;
-    this.isCollidable = isCollidable;
+    this.isCollidable = true;
     this.isVisible = true;
 
     this.position = new PVector();
@@ -332,7 +334,7 @@ this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
 
   public void SetInitialPosition(PVector position) {
     this.position = position;
-    this.initialPosition = position;
+    this.previousPosition = position.copy();
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
   }
@@ -420,12 +422,26 @@ public PVector[] reverseVertices() {
             this.aabbUpdateRequired = true;
             this.transformUpdateRequired = true;
             dt /= (float)iterations;
-            this.RK4Position(dt);
+
+            if(this.useVerletIntegration) {
+                this.VerletPosition(dt);
+            } else if(this.useRK4Integration){
+                this.RK4Position(dt);
+            } else {
+                this.EulerPosition(dt);
+            }
         } else {
             this.aabbUpdateRequired = true;
             this.transformUpdateRequired = true;
             dt /= (float)iterations;
-            this.RK4Position(dt);
+
+            if(this.useVerletIntegration) {
+                this.VerletPosition(dt);
+            } else if(this.useRK4Integration){
+                this.RK4Position(dt);
+            } else {
+                this.EulerPosition(dt);
+            }
             this.angularIntegration(dt);
         }
     }
@@ -438,7 +454,22 @@ public PVector[] reverseVertices() {
   ================================== INTEGRATOR ====================================================
   ==================================================================================================
   */
-  public void RK4Position(float dt) {
+    public void EulerPosition(float dt) {
+        PVector acceleration = calculateAcceleration(this.position);
+        this.linearVelocity.add(PVector.mult(acceleration, dt));
+        this.position.add(PVector.mult(this.linearVelocity, dt));
+        this.transformUpdateRequired = true;
+    }
+
+    public void VerletPosition(float dt) {
+        PVector temp = position.copy();
+        PVector velocity = PVector.sub(this.position, this.previousPosition);
+        this.position.add(PVector.add(velocity, PVector.mult(calculateAcceleration(this.position), dt*dt)));
+        previousPosition = temp;
+        this.transformUpdateRequired = true;
+    }
+
+    public void RK4Position(float dt) {
 
         /*-------------- RK4 Position And Velocity Integration --------------*/
         PVector k1_v = PVector.mult(calculateAcceleration(this.position), dt);
@@ -476,13 +507,13 @@ public PVector[] reverseVertices() {
         this.transformUpdateRequired = true;
         /*--------------------------------------------------------*/
 
-  }
+    }
   
 
-  public void angularIntegration(float dt) {
-    this.angularVelocity += calculateAngularAcceleration() * dt;
-    this.angle += this.angularVelocity*dt;
-  }
+    public void angularIntegration(float dt) {
+        this.angularVelocity += calculateAngularAcceleration() * dt;
+        this.angle += this.angularVelocity*dt;
+    }
 
 
 
@@ -563,12 +594,7 @@ public PVector[] reverseVertices() {
   public ShapeType getShapeType() {
     return this.ShapeType;
   }
-  
-  
-  public boolean getIsColliding() {
-    return this.isCollidable;
-  }
-  
+
   public PVector[] getVertices() {
     return this.Vertices;
   }
@@ -674,9 +700,11 @@ public PVector[] reverseVertices() {
   public void addForceToForceRegistry(ForceRegistry forceRegistry) {
     this.forceRegistry.add(forceRegistry);
   }
+
   public void clearForceRegistry() {
     this.forceRegistry.clear();
   }
+
   public void removeForceFromForceRegistry(ForceRegistry forceRegistry) {
     this.forceRegistry.remove(forceRegistry);
   }
@@ -734,18 +762,6 @@ public void setCoefficientOfStaticFriction(float coefficientOfStaticFriction) {
     this.coefficientOfStaticFriction = coefficientOfStaticFriction;
 }
 
-public ArrayList<Rigidbody> getCollisionExclusionList() {
-    return this.collisionExclusionList;
-}
-
-public void AddRigidbodyToCollisionExclusionList(Rigidbody rigidbody) {
-    this.collisionExclusionList.add(rigidbody);
-}
-
-public Rigidbody getRigidbodyInCollisionExclusionList(int index) {
-    return this.collisionExclusionList.get(index);
-}
-
 public boolean getIsTranslationallyStatic() {
     return this.isTranslationallyStatic;
 }
@@ -760,5 +776,14 @@ public boolean getIsRotationallyStatic() {
 
 public void setIsRotationallyStatic(boolean isRotationallyStatic) {
     this.isRotationallyStatic = isRotationallyStatic;
+}
+
+  
+public boolean getCollidability() {
+    return this.isCollidable;
+}
+
+public void setCollidability(boolean isCollidable) {
+    this.isCollidable = isCollidable;
 }
 }

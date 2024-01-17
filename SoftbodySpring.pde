@@ -3,8 +3,8 @@ public class Softbody {
     private PVector initialPosition;
 
     private float radius;
-    private float width;
-    private float height;
+    private float rectWidth;
+    private float rectHeight;
 
     private float stiffness = 300;
     private float damping = 0.5f;
@@ -14,21 +14,23 @@ public class Softbody {
 
     private float particleRadius = 0.25f;
 
+    private ArrayList<Rigidbody> softbodyEntityList = new ArrayList<Rigidbody>();
+    private ArrayList<Rigidbody> edgeParticles = new ArrayList<Rigidbody>();
     private Rigidbody[][] softBodyParticles;
+
     
 
-    public Softbody(PVector initialPosition, float radius, float width, float height) {
+    public Softbody(PVector initialPosition, float radius, float RectWidth, float RectHeight) {
 
         this.initialPosition = initialPosition;
         this.radius = radius;
 
-        this.width = Math.round(width);
-        this.height = Math.round(height);
+        this.rectWidth = (int)round(RectWidth);
+        this.rectHeight = (int)round(RectHeight);
 
         //Create a way to calculate this later
-        this.numRowParticles = Math.round(this.width/this.particleRadius);
-        this.numColumnParticles = Math.round(this.height/this.particleRadius);
-
+        this.numRowParticles = (int)round(this.rectWidth/this.particleRadius);
+        this.numColumnParticles = (int)round(this.rectHeight/this.particleRadius);
         softBodyParticles = new Rigidbody[numRowParticles][numColumnParticles];
     }
 
@@ -37,8 +39,8 @@ public class Softbody {
         float spacingX = 1;
         float spacingY = 1f;
 
-        float initialParticlePositionX = this.initialPosition.x - this.width/2;
-        float initialParticlePositionY = this.initialPosition.y - this.height/2;
+        float initialParticlePositionX = this.initialPosition.x - this.rectWidth/2;
+        float initialParticlePositionY = this.initialPosition.y - this.rectHeight/2;
 
         for(int row = 0; row < numRowParticles; row++) {
             for(int column = 0; column < numColumnParticles; column++) {
@@ -51,8 +53,7 @@ public class Softbody {
                 softBodyParticles[row][column] = currentParticle;
 
                 currentParticle.addForceToForceRegistry(new Gravity(currentParticle));
-                currentParticle.setIsVisible(false);
-
+                //currentParticle.setIsVisible(false);
                 AddBodyToBodyEntityList(currentParticle);
             }
         }
@@ -86,8 +87,10 @@ for(int row = 0; row < numRowParticles; row++) {
             Rigidbody particleToLinkTo = softBodyParticles[row-1][column+1];
             addSpringBetweenParticles(currentParticle, particleToLinkTo);
         }
+        
     }
 }
+
     }
 
 private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB) {
@@ -101,33 +104,39 @@ private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB)
     particleB.addForceToForceRegistry(spring);
 }
 
- public void draw() {
-    
-  beginShape();
-  // Top edge
-  for (int column = 0; column < numColumnParticles; column++) {
-    PVector pos = softBodyParticles[0][column].getPosition();
-    vertex(pos.x, pos.y);
-  }
-  // Right edge
-  for (int row = 0; row < numRowParticles; row++) {
-    PVector pos = softBodyParticles[row][numColumnParticles - 1].getPosition();
-    vertex(pos.x, pos.y);
-  }
-  // Bottom edge
-  for (int column = numColumnParticles - 1; column >= 0; column--) {
-    PVector pos = softBodyParticles[numRowParticles - 1][column].getPosition();
-    vertex(pos.x, pos.y);
-  }
-  // Left edge
-  for (int row = numRowParticles - 1; row >= 0; row--) {
-    PVector pos = softBodyParticles[row][0].getPosition();
-    vertex(pos.x, pos.y);
-  }
-  endShape(CLOSE);
-  
-  
-}
+    public void updateSoftbody() {
+      draw();
+    }
+
+
+
+
+    public void draw() {
+        beginShape();
+        // Top edge
+        for (int column = 0; column < numColumnParticles; column++) {
+          PVector pos = softBodyParticles[0][column].getPosition();
+          vertex(pos.x, pos.y);
+        }
+        // Right edge
+        for (int row = 0; row < numRowParticles; row++) {
+          PVector pos = softBodyParticles[row][numColumnParticles - 1].getPosition();
+          vertex(pos.x, pos.y);
+        }
+        // Bottom edge
+        for (int column = numColumnParticles - 1; column >= 0; column--) {
+          PVector pos = softBodyParticles[numRowParticles - 1][column].getPosition();
+          vertex(pos.x, pos.y);
+        }
+        // Left edge
+        for (int row = numRowParticles - 1; row >= 0; row--) {
+          PVector pos = softBodyParticles[row][0].getPosition();
+          vertex(pos.x, pos.y);
+        }
+        endShape(CLOSE);
+
+
+    }
 
 
 }

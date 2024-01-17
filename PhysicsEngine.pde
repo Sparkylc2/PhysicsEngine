@@ -3,6 +3,7 @@
 GUI gui;
 PShape background;
 Softbody softbody;
+Cloth cloth;
 void setup() {
 /*--------------------- Timing Utilities ---------------------*/
     lastFrameTime = millis();
@@ -84,8 +85,13 @@ void setup() {
     AddBodyToBodyEntityList(spinningBody);
 
 
-    softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
-    softbody.CreateBoxSoftbody();
+    //softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
+    //softbody.CreateBoxSoftbody();
+    //softbody = new Softbody(new PVector(-20, -50), 0.0f, 2, 2);
+    //softbody.CreateBoxSoftbody();
+
+    cloth = new Cloth(new PVector(-50,-50), new PVector(-20, -50), 30);
+    cloth.CreateCloth();
 
 }
 
@@ -106,7 +112,8 @@ void draw() {
   popMatrix();
 
   render.draw();
-  softbody.draw();
+  //softbody.updateSoftbody();
+  cloth.updateCloth();
 
   /*--------------------- Cursor Trail ---------------------*/
 
@@ -120,7 +127,7 @@ void draw() {
   }
 
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 128);
+  Step(dt, 64);
 
   interactivityListener.resetTransform();
 
