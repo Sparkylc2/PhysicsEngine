@@ -73,7 +73,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
     PVector relativeVelocity = isTwoBodyRod ? PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity()) : rigidbodyA.getVelocity();
     float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
 
-    float dampingFactor = 1f;
+    float dampingFactor = 0.95f;
     // Apply only the component of the velocity along the rod for damping
     PVector dampingForce = PVector.mult(normalizedDisplacement, velocityAlongRod * -dampingFactor);
 

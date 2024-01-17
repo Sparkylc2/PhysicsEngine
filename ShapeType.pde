@@ -2,5 +2,6 @@
 public enum ShapeType {
   CIRCLE,
   BOX,
-  POLYGON
+  POLYGON,
+  SOFTBODY
 }

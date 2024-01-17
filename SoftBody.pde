@@ -51,6 +51,7 @@ public class Softbody {
                 softBodyParticles[row][column] = currentParticle;
 
                 currentParticle.addForceToForceRegistry(new Gravity(currentParticle));
+                //currentParticle.setIsVisible(false);
 
                 AddBodyToBodyEntityList(currentParticle);
             }

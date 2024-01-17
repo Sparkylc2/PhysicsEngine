@@ -16,6 +16,9 @@ public class InteractivityListener {
   private float width;
   private float height;
 
+  private float softbodyWidth;
+  private float softbodyHeight;
+
   private PVector[] vertices;
 
   private float radius;
@@ -45,7 +48,7 @@ public class InteractivityListener {
   private PVector strokeColor;
   private PVector fillColor;
 
-  private ShapeType shapeType;
+  private ShapeType shapeType = ShapeType.SOFTBODY;
   
 
   public InteractivityListener() {
@@ -242,8 +245,14 @@ public void GenerateRigidbody() {
             }
 
             AddBodyToBodyEntityList(rigidbody);
+        }
+
+        if(this.shapeType == ShapeType.SOFTBODY) {
+            Softbody softbody = new Softbody(screenToWorld(mouseX, mouseY), 0.0f, this.softbodyWidth, this.softbodyHeight);
+            softbody.CreateBoxSoftbody();
 
         }
+
     }
 }
 
@@ -891,6 +900,14 @@ public void setVertices(PVector[] vertices) {
   this.vertices = vertices;
 }
 
+public void setSoftbodyWidth(float softbodyWidth) {
+  this.softbodyWidth = softbodyWidth;
+}
+
+public void setSoftbodyHeight(float softbodyHeight) {
+  this.softbodyHeight = softbodyHeight;
+}
+
 public float getWidth() {
   return this.width;
 }
@@ -1010,6 +1027,15 @@ public boolean getEnableEditor() {
 public PVector[] getVertices() {
     return this.vertices;
 }
+
+public float getSoftbodyWidth(){
+    return this.softbodyWidth;
+}
+
+public float getSoftbodyHeight(){
+    return this.softbodyHeight;
+}
+
 }
 
 

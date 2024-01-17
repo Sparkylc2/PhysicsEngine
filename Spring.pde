@@ -59,10 +59,10 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
   @Override
   public PVector getForce(Rigidbody rigidbody, PVector position) {
-
     if(rigidbody != rigidbodyA) {
         throw new IllegalArgumentException("The rigidbody passed in is not part of this spring");
     }
+
 
     PVector force;
     PVector direction;
@@ -93,7 +93,6 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
             dampingForceMagnitude = direction.normalize().dot(PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity())) * damping;
             totalForceMagnitude += dampingForceMagnitude;
             /*----------------------------------------------*/
-
         }
     } else {
 

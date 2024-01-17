@@ -84,7 +84,7 @@ void setup() {
     AddBodyToBodyEntityList(spinningBody);
 
 
-     softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
+    softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
     softbody.CreateBoxSoftbody();
 
 }
@@ -96,6 +96,7 @@ void draw() {
   /*NEVER DELETE THIS */
   gui.getActiveTab();
   /* PLEASE */
+  
   interactivityListener.applyTransform();
   background(#101213);
   pushMatrix();
@@ -121,7 +122,7 @@ void draw() {
 
   
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 128);
+  Step(dt, 64);
 
   interactivityListener.resetTransform();
 

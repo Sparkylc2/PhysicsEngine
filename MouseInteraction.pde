@@ -1,6 +1,6 @@
 
 public int qCount = 0;
-public boolean switchTab = false;
+public boolean switchTab = true;
 
 public  boolean dPressed = false;
 public  boolean shiftPressed = false;
