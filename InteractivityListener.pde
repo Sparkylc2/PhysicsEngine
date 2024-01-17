@@ -568,26 +568,18 @@ public void updateSelectedRigidbodies() {
 public void createForces() {
     if(this.selectedRigidbody != null && this.selectedRigidbody1 == null && this.selectedRigidbody2 == null) {
         if(this.forceType == ForceType.SPRING) {
+
             Spring spring;
-            float springLength;
+            PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
             if(isFirstClickOnRigidbody) {
 
-                PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
-
-                springLength = PVector.dist(mouseCoordinates, PVector.add(this.localAnchorA, this.selectedRigidbody.getPosition()));
-
                 spring = new Spring(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
-
             } else {
-                PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
                 this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
-
-                springLength = PVector.dist(mouseCoordinates, this.anchorPoint);
                 spring = new Spring(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
-            spring.setSpringLength(springLength);
             spring.setPerfectSpring(this.isPerfectSpring);
             spring.setEquilibriumLength(this.equilibriumLength);
             spring.setSpringConstant(this.springConstant);
@@ -597,16 +589,13 @@ public void createForces() {
             this.selectedRigidbody.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-
             Rod rod;
+            PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
+
             if(isFirstClickOnRigidbody) {
-
-                PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
                 rod = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
-
             } else {
-
-                this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, screenToWorld(mouseX, mouseY));
+                this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
                 rod = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
@@ -634,60 +623,45 @@ public void createForces() {
     } else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody == null && this.selectedRigidbody1 != this.selectedRigidbody2) {
         if(this.forceType == ForceType.SPRING) {
 
-            Spring spring1;
-            Spring spring2;
 
-            float springLength;
             PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
 
-            springLength = PVector.dist(screenToWorld(mouseX, mouseY), PVector.add(this.localAnchorA, this.selectedRigidbody1.getPosition()));
+            Spring spring = new Spring(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
-            spring1 = new Spring(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
-            spring2 = new Spring(this.selectedRigidbody2, this.selectedRigidbody1, localAnchorB, this.localAnchorA);
-        
-            spring1.setSpringLength(springLength);
-            spring2.setSpringLength(springLength);
+            spring.setPerfectSpring(this.isPerfectSpring);
 
-            spring1.setPerfectSpring(this.isPerfectSpring);
-            spring2.setPerfectSpring(this.isPerfectSpring);
+            spring.setEquilibriumLength(this.equilibriumLength);
 
-            spring1.setEquilibriumLength(this.equilibriumLength);
-            spring2.setEquilibriumLength(this.equilibriumLength);
+            spring.setSpringConstant(this.springConstant);
 
-            spring1.setSpringConstant(this.springConstant);
-            spring2.setSpringConstant(this.springConstant);
+            spring.setDamping(this.springDamping);
 
-            spring1.setDamping(this.springDamping);
-            spring2.setDamping(this.springDamping);
+            spring.setIsHingeable(this.isSpringHingeable);
 
-            spring1.setIsHingeable(this.isSpringHingeable);
-            spring2.setIsHingeable(this.isSpringHingeable);
-
-            this.selectedRigidbody1.addForceToForceRegistry(spring1);
-            this.selectedRigidbody2.addForceToForceRegistry(spring2);
+            this.selectedRigidbody1.addForceToForceRegistry(spring);
+            this.selectedRigidbody2.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-            Rod rod1;
-            Rod rod2;
+            Rod rod;
 
             float rodLength;
             PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
 
-            rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
-            rod2 = new Rod(this.selectedRigidbody2, this.selectedRigidbody1, localAnchorB, this.localAnchorA);
+            rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
-            rod1.setIsHingeable(this.isRodHingeable);
-            rod2.setIsHingeable(this.isRodHingeable);
+            rod.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody1.addForceToForceRegistry(rod1);
-            this.selectedRigidbody2.addForceToForceRegistry(rod2);
+            this.selectedRigidbody1.addForceToForceRegistry(rod);
+            this.selectedRigidbody2.addForceToForceRegistry(rod);
         }
 
 } else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) {
     
         if(this.forceType == ForceType.ROD) {
             PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
+
             Rod rod = new Rod(this.selectedRigidbody1, this.localAnchorA, mouseCoordinates);
+
             rod.setIsHingeable(this.isRodHingeable);
 
             this.selectedRigidbody1.addForceToForceRegistry(rod);
@@ -719,7 +693,7 @@ public void firstMouseClickInformation() {
     PVector mousePos = screenToWorld(mouseX, mouseY);
 
     if(clickedBody != null) {
-
+        
         this.localAnchorA = PhysEngMath.SnapController(this, clickedBody, mousePos);
         this.anchorPoint = mousePos;
         this.isFirstClickOnRigidbody = true;

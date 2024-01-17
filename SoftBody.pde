@@ -6,8 +6,8 @@ public class Softbody {
     private float width;
     private float height;
 
-    private float stiffness = 750;
-    private float damping = 2f;
+    private float stiffness = 300;
+    private float damping = 0.5f;
 
     private int numRowParticles;
     private int numColumnParticles;
@@ -51,158 +51,58 @@ public class Softbody {
                 softBodyParticles[row][column] = currentParticle;
 
                 currentParticle.addForceToForceRegistry(new Gravity(currentParticle));
-                //currentParticle.setIsVisible(false);
+                currentParticle.setIsVisible(false);
 
                 AddBodyToBodyEntityList(currentParticle);
             }
         }
 
 
-        for(int row = 0; row < numRowParticles; row++) {
-            for(int column = 0; column < numColumnParticles; column++) {
-                    
-                    Rigidbody currentParticle = softBodyParticles[row][column];
-    
-                    if(row == 0) {
-                        Rigidbody particleToLinkTo = softBodyParticles[row+1][column];
+for(int row = 0; row < numRowParticles; row++) {
+    for(int column = 0; column < numColumnParticles; column++) {
 
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
+        Rigidbody currentParticle = softBodyParticles[row][column];
 
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-
-                    }
-                    else if(row == numRowParticles-1) {
-                        Rigidbody particleToLinkTo = softBodyParticles[row-1][column];
-
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-                    else {
-                        Rigidbody particleToLinkTo = softBodyParticles[row+1][column];
-                        
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-    
-                        particleToLinkTo = softBodyParticles[row-1][column];
-                        
-                        currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-    
-                    if(column == 0) {
-                        Rigidbody particleToLinkTo = softBodyParticles[row][column+1];
-                        
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-                    else if(column == numColumnParticles-1) {
-                        Rigidbody particleToLinkTo = softBodyParticles[row][column-1];
-                        
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-                    else {
-                        Rigidbody particleToLinkTo = softBodyParticles[row][column+1];
-
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-    
-                        particleToLinkTo = softBodyParticles[row][column-1];
-
-                        currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-                    
-                    if(row > 0 && column > 0) { // Top-left diagonal
-                        Rigidbody particleToLinkTo = softBodyParticles[row-1][column-1];
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-
-                    if(row > 0 && column < numColumnParticles-1) { // Top-right diagonal
-                        Rigidbody particleToLinkTo = softBodyParticles[row-1][column+1];
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-
-                    if(row < numRowParticles-1 && column > 0) { // Bottom-left diagonal
-                        Rigidbody particleToLinkTo = softBodyParticles[row+1][column-1];
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-
-                    if(row < numRowParticles-1 && column < numColumnParticles-1) { // Bottom-right diagonal
-                        Rigidbody particleToLinkTo = softBodyParticles[row+1][column+1];
-                        Spring currentParticleSpring = new Spring(currentParticle, particleToLinkTo, new PVector(), new PVector());
-
-                        currentParticleSpring.setSpringConstant(this.stiffness);
-                        currentParticleSpring.setDamping(this.damping);
-                        currentParticleSpring.drawSpring = false;
-
-                        currentParticle.addForceToForceRegistry(currentParticleSpring);
-                    }
-
-
-            }
+        // Link to particle below if it exists
+        if(row < numRowParticles - 1) {
+            Rigidbody particleToLinkTo = softBodyParticles[row+1][column];
+            addSpringBetweenParticles(currentParticle, particleToLinkTo);
         }
 
+        // Link to particle to the right if it exists
+        if(column < numColumnParticles - 1) {
+            Rigidbody particleToLinkTo = softBodyParticles[row][column+1];
+            addSpringBetweenParticles(currentParticle, particleToLinkTo);
+        }
+
+        // Link to bottom-right diagonal if it exists
+        if(row < numRowParticles - 1 && column < numColumnParticles - 1) {
+            Rigidbody particleToLinkTo = softBodyParticles[row+1][column+1];
+            addSpringBetweenParticles(currentParticle, particleToLinkTo);
+        }
+
+        // Link to top-right diagonal if it exists
+        if(row > 0 && column < numColumnParticles - 1) {
+            Rigidbody particleToLinkTo = softBodyParticles[row-1][column+1];
+            addSpringBetweenParticles(currentParticle, particleToLinkTo);
+        }
+    }
+}
     }
 
- void draw() {
+private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB) {
+    Spring spring = new Spring(particleA, particleB, new PVector(), new PVector());
+    spring.setSpringLength(PVector.dist(particleA.getPosition(), particleB.getPosition()));
+    spring.setSpringConstant(this.stiffness);
+    spring.setDamping(this.damping);
+    spring.drawSpring = false;
+
+    particleA.addForceToForceRegistry(spring);
+    particleB.addForceToForceRegistry(spring);
+}
+
+ public void draw() {
+    
   beginShape();
   // Top edge
   for (int column = 0; column < numColumnParticles; column++) {
@@ -225,6 +125,8 @@ public class Softbody {
     vertex(pos.x, pos.y);
   }
   endShape(CLOSE);
+  
+  
 }
 
 

@@ -1,5 +1,5 @@
 public class Rod implements ForceRegistry {
-
+/*-------------------------------------------------------------------------------------------------*/
     private float length;
     private float stiffness = 1f;
     private float damping = 150f;
@@ -18,6 +18,9 @@ public class Rod implements ForceRegistry {
     private Rigidbody rigidbodyA;
     private Rigidbody rigidbodyB;
 
+    private PVector force;
+    private int callCounter = 0;
+/*-------------------------------------------------------------------------------------------------*/
     public Rod(Rigidbody rigidbodyA, PVector localAnchorA, PVector anchorPoint) {
 
         this.rigidbodyA = rigidbodyA;
@@ -28,8 +31,6 @@ public class Rod implements ForceRegistry {
         this.isTwoBodyRod = false;
 
         PVector direction =  PVector.sub(anchorPoint, PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
-
-
         this.length = direction.mag();
 
 
@@ -53,17 +54,46 @@ public class Rod implements ForceRegistry {
 
 @Override
 public PVector getForce(Rigidbody rigidbody, PVector position) {
-    if (this.rigidbodyA != rigidbody) {
-        throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
-    }
+        if(isTwoBodyRod) {
+            if(rigidbody == rigidbodyA) {
+                return calculateForce(rigidbody, position);
+            } else if(rigidbody == rigidbodyB) {
+                return calculateForce(rigidbody, position).mult(-1);
+            } else {
+                throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+            }
+        } else {
+            return calculateForce(rigidbody, position);
+        }
+}
+
+private PVector calculateForce(Rigidbody rigidbody, PVector position) {
 
     // Calculate current distance between the anchor points
-    PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-    PVector worldAnchorB = isTwoBodyRod ? PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()) : anchorPoint;
+    PVector worldAnchorA;
+    PVector worldAnchorB;
+
+    if(isTwoBodyRod) {
+        if(rigidbody == rigidbodyA) {
+            worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+            worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+            
+        } else if(rigidbody == rigidbodyB) {
+            worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+            worldAnchorB = PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+        } else {
+            throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+        }
+    } else {
+        worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+        worldAnchorB = anchorPoint;
+    }
 
     PVector displacement = PVector.sub(worldAnchorB, worldAnchorA);
     float currentLength = displacement.mag();
+
     float stretch = currentLength - this.length;
+    
     PVector normalizedDisplacement = displacement.normalize();
 
     // High stiffness factor to simulate rigidity
@@ -71,9 +101,9 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
     // Relative velocity in the direction of the rod
     PVector relativeVelocity = isTwoBodyRod ? PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity()) : rigidbodyA.getVelocity();
-    float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
 
-    float dampingFactor = 0.95f;
+    float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
+    float dampingFactor = 5f;
     // Apply only the component of the velocity along the rod for damping
     PVector dampingForce = PVector.mult(normalizedDisplacement, velocityAlongRod * -dampingFactor);
 
@@ -119,13 +149,17 @@ public void draw() {
 
 @Override
 public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    if(this.rigidbodyA != rigidbody) {
-      throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+    if(rigidbody == this.rigidbodyA || rigidbody == this.rigidbodyB) {
+        if(rigidbody == rigidbodyA) {
+            return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+        } else {
+            return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+        }
+    } else{
+        throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
     }
+}
 
-    PVector transformedAnchor = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-    return transformedAnchor;
-    }
 
 /*
 ====================================================================================================

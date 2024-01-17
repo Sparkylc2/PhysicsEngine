@@ -83,7 +83,8 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
         throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
     }
     return PhysEngMath.Transform(localAnchor, this.rigidbody.getPosition(), this.rigidbody.getAngle());
-    }
+}
+
 
 /*
 ====================================================================================================

@@ -1,4 +1,4 @@
-/*------------------------Related to Timekeeping Debugging --------------------------------------*/
+/*------------------------Related to Timekeeping Debugging ---------------------------------------*/
 public long totalWorldStepTime;
 public long subWorldStepTime;
 
@@ -23,23 +23,27 @@ float displayTimeStep;
 
 public static boolean isPaused = false;
 
-/*----------------------------------------------------------------------------------------------*/
-
-public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
+/*------------------------------------------------------------------------------------------------*/
 
 
 /*
 ====================================================================================================
-===================================  PHYSICS ENGINE CONSTANTS  =====================================
+===================================  PHYSICS ENGINE OBJECTS  =======================================
 ====================================================================================================
 */
+
+/*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
+
+public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
+
 public Rigidbody RigidbodyGenerator = new Rigidbody();
 public InteractivityListener interactivityListener = new InteractivityListener();
 public Shape render = new Shape();
 ControlP5 userInterface;
 
 
-public ArrayList<Rigidbody> rigidbodyList = new ArrayList<Rigidbody>();
+public static ArrayList<Rigidbody> rigidbodyList = new ArrayList<Rigidbody>();
+
 public ArrayList<ArrayList<Integer>> collisionPairs = new ArrayList<ArrayList<Integer>>();
     
 
@@ -50,7 +54,11 @@ public PVector[] rbList = new PVector[2];
 public PVector[] frictionImpulseList = new PVector[2];
 public float[] jList = new float[2];
    
-
+/*
+====================================================================================================
+===================================  PHYSICS ENGINE CONSTANTS  =====================================
+====================================================================================================
+*/
 
 public final float MIN_BODY_AREA = 0.001f * 0.001f; // m^2
 public final float MAX_BODY_AREA = 300f * 300f; // m^2
@@ -107,10 +115,6 @@ public void Step(float dt, int totalIterations) {
         StepBodies(dt, totalIterations);
         BroadPhaseStep();
         NarrowPhaseStep();
-        
-        
-        
-        
         
         /*-----------------Related to Timekeeping Debugging -----------------*/
         subSampleCount++;
@@ -431,9 +435,9 @@ public void ResolveCollisionRotationAndFriction(CollisionManifold contact) {
     }
 
 /*
-==================================================================================================
-============================ Broad & Narrow - Phase Collision Methods ============================
-==================================================================================================
+====================================================================================================
+============================ Broad & Narrow - Phase Collision Methods ==============================
+====================================================================================================
 */
 
 public void BroadPhaseStep() {
@@ -506,8 +510,6 @@ public void AddBodyToBodyEntityList(Rigidbody body) {
     rigidbodyList.add(body);
 }
 
-
-    
 public void RemoveBodyFromBodyEntityList(Rigidbody body) {
      rigidbodyList.remove(body);
 }

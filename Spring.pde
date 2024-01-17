@@ -7,7 +7,14 @@ public class Spring implements ForceRegistry {
   private PVector localAnchorA;
   private PVector localAnchorB;
 
-    public boolean drawSpring = true;
+
+/*------------------- Reusable Stuff -------------------*/
+  private PVector worldAnchorA;
+  private PVector worldAnchorB;
+  private PVector direction;
+  private float directionMag;
+
+  public boolean drawSpring = true;
 
     //Some default values
   private boolean lockTranslationToXAxis = false;
@@ -30,13 +37,18 @@ public class Spring implements ForceRegistry {
   private float initialRotationA;
   private float initialRotationB;
 
-
+  private PVector force;
+  private int callCounter = 0;
 
 public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
     this.rigidbodyA = rigidbody;
+
     this.localAnchorA = localAnchorA;
     this.anchorPoint = anchorPoint;
+
+    this.springLength = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
+
     this.isTwoBodySpring = false;
     this.isHingeable = true;
 
@@ -50,164 +62,185 @@ public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
     this.localAnchorA = localAnchorA;
     this.localAnchorB = localAnchorB;
 
-    this.springLength = PVector.sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()), PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle())).mag();
+    this.springLength = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()).sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
 
     this.isTwoBodySpring = true;
     this.isHingeable = true;
 
  }
 
-  @Override
-  public PVector getForce(Rigidbody rigidbody, PVector position) {
-    if(rigidbody != rigidbodyA) {
-        throw new IllegalArgumentException("The rigidbody passed in is not part of this spring");
-    }
-
-
-    PVector force;
-    PVector direction;
-    PVector worldAnchorA;
-    PVector worldAnchorB;
-    PVector dampingForce = new PVector();
-    float totalForceMagnitude = 0f;
-    float springForce = 0f;
-    float dampingForceMagnitude = 0f;
-
-    if(lockTranslationToYAxis) {
-        rigidbodyA.setVelocity(new PVector(0, rigidbodyA.getVelocity().y));
-    } else if(lockTranslationToXAxis) {
-        rigidbodyA.setVelocity(new PVector(rigidbodyA.getVelocity().x, 0));
-    }
-
-    if(isTwoBodySpring) {
-        worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-        worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
-        direction = PVector.sub(worldAnchorB, worldAnchorA);
-
-        springForce = (direction.mag() - springLength * equilibriumLength) * springConstant;
-        
-        totalForceMagnitude += springForce;
-
-        if(!isPerfectSpring) {
-            /*-------------------DAMPING-------------------*/
-            dampingForceMagnitude = direction.normalize().dot(PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity())) * damping;
-            totalForceMagnitude += dampingForceMagnitude;
-            /*----------------------------------------------*/
-        }
-    } else {
-
-        worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-        worldAnchorB = anchorPoint;
-        direction = PVector.sub(worldAnchorB, worldAnchorA);
-
-        springForce = (direction.mag() - springLength * equilibriumLength)* springConstant;
-
-        totalForceMagnitude += springForce;
-
-        if(!isPerfectSpring) {
-        /*-------------------DAMPING-------------------*/
-            dampingForceMagnitude = direction.normalize().dot(PVector.sub(new PVector(), rigidbodyA.getVelocity())) * damping;
-            totalForceMagnitude += dampingForceMagnitude;
-        /*----------------------------------------------*/
+    @Override
+    public PVector getForce(Rigidbody rigidbody, PVector position) {
+        if(isTwoBodySpring) {
+            if(rigidbody == rigidbodyA) {
+                return calculateForce(rigidbody, position);
+            } else if(rigidbody == rigidbodyB) {
+                return calculateForce(rigidbody, position).mult(-1);
+            } else {
+                throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+            }
+        } else {
+            return calculateForce(rigidbody, position);
         }
     }
 
-    force = PVector.mult(direction, totalForceMagnitude);
+    private PVector calculateForce(Rigidbody rigidbody, PVector position) {
 
-    return force;
+        PVector force = new PVector();
+        float totalForceMagnitude = 0f;
+
+        PVector worldAnchorA;
+        PVector worldAnchorB;
+        float displacement;
+
+
+        if(isTwoBodySpring) {
+            if(rigidbody == rigidbodyA) {
+                worldAnchorA = PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle());
+                worldAnchorB = PhysEngMath.Transform(this.localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+
+                if(lockTranslationToYAxis) {
+                    this.rigidbodyA.setVelocity(new PVector(0, this.rigidbodyA.getVelocity().y));
+                } else if(lockTranslationToXAxis) {
+                    this.rigidbodyA.setVelocity(new PVector(this.rigidbodyA.getVelocity().x, 0));
+                }
+            } else {
+                worldAnchorA = PhysEngMath.Transform(this.localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+                worldAnchorB = PhysEngMath.Transform(this.localAnchorB, position, rigidbodyB.getAngle());
+
+                if(lockTranslationToYAxis) {
+                    this.rigidbodyB.setVelocity(new PVector(0, this.rigidbodyB.getVelocity().y));
+                } else if(lockTranslationToXAxis) {
+                    this.rigidbodyB.setVelocity(new PVector(this.rigidbodyB.getVelocity().x, 0));
+                }
+            }
+        } else {
+            worldAnchorA = PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle());
+            worldAnchorB = this.anchorPoint;
+
+            if(lockTranslationToYAxis) {
+                rigidbodyA.setVelocity(new PVector(this.rigidbodyA.getVelocity().x, 0));
+            } else if(lockTranslationToXAxis) {
+                rigidbodyA.setVelocity(new PVector(0, this.rigidbodyA.getVelocity().y));
+            }
+        }
+
+
+        direction = PVector.sub(worldAnchorB, worldAnchorA);
+        displacement = direction.mag();
+        direction.normalize();
+
+        //Spring Force
+        totalForceMagnitude += (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
+        if(!isPerfectSpring) {
+            if(isTwoBodySpring) {
+                /*------------------- Damping -------------------*/
+                totalForceMagnitude += direction.dot(PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity())) * this.damping;
+                /*-----------------------------------------------*/
+            } else {
+                /*------------------- Damping -------------------*/
+                totalForceMagnitude += direction.dot(PVector.sub(new PVector(), rigidbodyA.getVelocity())) * this.damping;
+                /*-----------------------------------------------*/
+            }
+        }
+
+        force = PVector.mult(direction, totalForceMagnitude);
+        return force;
     }
 
   
 
 //TODO: IMPLEMENT A WAY TO MAKE THE SPRING SCALE WITH ITS LENGTH, SO THAT VISUALLY A LARGE SPRING
 //WILL HAVE THICKER LINES, AND MORE OFFSET, ETC
-  @Override
-  public void draw() {
-    if(this.drawSpring) {
-    PVector anchorA;
-    PVector anchorB;
+    @Override
+    public void draw() {
+        if(this.drawSpring) {
+            PVector worldAnchorA;
+            PVector worldAnchorB;
+            PVector direction;
+            float length;
+
+
 
   if(isTwoBodySpring) {
-    anchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-    anchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+    worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+    worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
   } else {
 
-    anchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-    anchorB = anchorPoint;
+    worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+    worldAnchorB = anchorPoint;
   }
 
-  fill(255);
+            direction = PVector.sub(worldAnchorA, worldAnchorB);
+            length = direction.mag();
+            direction.normalize();
 
-  PVector direction = PVector.sub(anchorA, anchorB);
-  float length = direction.mag();
-  direction.normalize();
+            fill(255);
 
-  float segments = 10;
-  float segmentLength = length / segments;
+            float segments = 10;
+            float segmentLength = length / segments;
 
-  // Set the offset to a constant value
-  float offsetMagnitude = 0.5; // Adjust this value to change the size of the zigzags
+            // Set the offset to a constant value
+            float offsetMagnitude = 0.5; // Adjust this value to change the size of the zigzags
 
-// Set the colors for the front and back lines
-color frontColor = color(100, 100, 100); // Black
-color backColor = color(255, 255, 255); // Light gray
+            // Draw the rod
+            strokeWeight(0.3);
+            stroke(0); // Black
+            line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+            stroke(255); // White
+            strokeWeight(0.1);
+            line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
 
-// Draw the rod
-strokeWeight(0.3);
-stroke(0); // Black
-line(anchorA.x, anchorA.y, anchorB.x, anchorB.y);
-stroke(255); // White
-strokeWeight(0.1);
-line(anchorA.x, anchorA.y, anchorB.x, anchorB.y);
+            for(int i = 0; i < segments; i++) {
 
-for(int i = 0; i < segments; i++) {
-    PVector segmentStart = PVector.add(anchorB, PVector.mult(direction, segmentLength * i));
-    PVector segmentEnd = PVector.add(anchorB, PVector.mult(direction, segmentLength * (i + 1)));
+                PVector segmentStart = PVector.add(worldAnchorB, PVector.mult(direction, segmentLength * i));
+                PVector segmentEnd = PVector.add(worldAnchorB, PVector.mult(direction, segmentLength * (i + 1)));
 
-    // Calculate the midpoint of the segment
-    PVector midPoint = PVector.lerp(segmentStart, segmentEnd, 0.5f);
+                // Calculate the midpoint of the segment
+                PVector midPoint = PVector.lerp(segmentStart, segmentEnd, 0.5f);
 
-    // Alternate the offset direction to give appearance of spring
-    PVector offset1, offset2;
-    if(i % 2 == 0) {
-      offset1 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
-      offset2 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
-      stroke(backColor); // Set the color to backColor
-    } else {
-      offset1 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
-      offset2 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
-      stroke(frontColor); // Set the color to frontColor
+                // Alternate the offset direction to give appearance of spring
+                PVector offset1, offset2;
+                if(i % 2 == 0) {
+                    offset1 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
+                    offset2 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
+                } else {
+                    offset1 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
+                    offset2 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
+                }
+
+                // Add the offsets to the midpoint
+                PVector midPoint1 = PVector.add(midPoint, offset1);
+                PVector midPoint2 = PVector.add(midPoint, offset2);
+
+                // Draw the lines
+                strokeWeight(0.2);
+                stroke(0);
+                line(segmentStart.x, segmentStart.y, midPoint1.x, midPoint1.y);
+                line(midPoint1.x, midPoint1.y, segmentEnd.x, segmentEnd.y);
+                line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
+                line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
+                strokeWeight(0.1);
+                stroke(255);
+                line(segmentStart.x, segmentStart.y, midPoint1.x, midPoint1.y);
+                line(midPoint1.x, midPoint1.y, segmentEnd.x, segmentEnd.y);
+                line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
+                line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
+            }
+        }
     }
 
-    // Add the offsets to the midpoint
-    PVector midPoint1 = PVector.add(midPoint, offset1);
-    PVector midPoint2 = PVector.add(midPoint, offset2);
-
-    // Draw the lines
-    strokeWeight(0.2);
-    stroke(0);
-    line(segmentStart.x, segmentStart.y, midPoint1.x, midPoint1.y);
-    line(midPoint1.x, midPoint1.y, segmentEnd.x, segmentEnd.y);
-    line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
-    line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
-    strokeWeight(0.1);
-    stroke(255);
-    line(segmentStart.x, segmentStart.y, midPoint1.x, midPoint1.y);
-    line(midPoint1.x, midPoint1.y, segmentEnd.x, segmentEnd.y);
-    line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
-    line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
-
-    
-  }
-  
-}
-  }
 @Override
 public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    if(rigidbody != rigidbodyA) {
-        throw new IllegalArgumentException("The rigidbody passed in is not part of this spring");
+    if(rigidbody == this.rigidbodyA || rigidbody == this.rigidbodyB) {
+        if(rigidbody == rigidbodyA) {
+            return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+        } else {
+            return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+        }
+    } else{
+        throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
     }
-    return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
 }
 
 /*

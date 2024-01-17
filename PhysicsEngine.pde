@@ -59,14 +59,14 @@ void setup() {
     springLeft.setSpringLength(10);
     springLeft.setEquilibriumLength(0.5f);
     springLeft.setSpringConstant(100);
-    springLeft.setLockTranslationToYAxis(true);
+    springLeft.setLockTranslationToXAxis(true);
 
 
 
     springRight.setSpringLength(10);
     springRight.setSpringConstant(100);
     springRight.setEquilibriumLength(0.5f);
-    springRight.setLockTranslationToYAxis(true);
+    springRight.setLockTranslationToXAxis(true);
     
 
     
@@ -96,7 +96,7 @@ void draw() {
   /*NEVER DELETE THIS */
   gui.getActiveTab();
   /* PLEASE */
-  
+
   interactivityListener.applyTransform();
   background(#101213);
   pushMatrix();
@@ -119,10 +119,8 @@ void draw() {
     noCursor();
   }
 
-
-  
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 64);
+  Step(dt, 128);
 
   interactivityListener.resetTransform();
 

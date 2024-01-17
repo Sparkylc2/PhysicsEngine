@@ -28,4 +28,5 @@ public class Gravity implements ForceRegistry {
     }
     return position.copy();
  }
+
 }
