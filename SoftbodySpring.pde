@@ -12,7 +12,7 @@ public class Softbody {
     private int numRowParticles;
     private int numColumnParticles;
 
-    private float particleRadius = 0.25f;
+    private float particleRadius = 0.5f;
 
     private ArrayList<Rigidbody> softbodyEntityList = new ArrayList<Rigidbody>();
     private ArrayList<Rigidbody> edgeParticles = new ArrayList<Rigidbody>();
@@ -36,8 +36,8 @@ public class Softbody {
 
 
     public void CreateBoxSoftbody() {
-        float spacingX = 1;
-        float spacingY = 1f;
+        float spacingX = 2;
+        float spacingY = 2f;
 
         float initialParticlePositionX = this.initialPosition.x - this.rectWidth/2;
         float initialParticlePositionY = this.initialPosition.y - this.rectHeight/2;
@@ -51,12 +51,13 @@ public class Softbody {
                 currentParticle.setPosition(currentParticlePosition);
 
                 softBodyParticles[row][column] = currentParticle;
-
+                //currentParticle.setCollidability(false);
                 currentParticle.addForceToForceRegistry(new Gravity(currentParticle));
-                //currentParticle.setIsVisible(false);
+                currentParticle.setIsVisible(false);
                 AddBodyToBodyEntityList(currentParticle);
             }
         }
+
 
 
 for(int row = 0; row < numRowParticles; row++) {
@@ -95,7 +96,7 @@ for(int row = 0; row < numRowParticles; row++) {
 
 private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB) {
     Spring spring = new Spring(particleA, particleB, new PVector(), new PVector());
-    spring.setSpringLength(PVector.dist(particleA.getPosition(), particleB.getPosition()));
+    
     spring.setSpringConstant(this.stiffness);
     spring.setDamping(this.damping);
     spring.drawSpring = false;

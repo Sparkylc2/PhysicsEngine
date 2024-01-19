@@ -7,26 +7,17 @@ public class Gravity implements ForceRegistry {
 
   @Override
   public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
-
-    if(this.rigidbody != rigidbody) {
-      throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
-    }
-
     return PVector.mult(GRAVITY_VECTOR, rigidbody.getMass());
   }
 
   @Override
   public void draw() {
-    // do nothing
+    // Do nothing
   }
 
-@Override
- public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    
-    if(this.rigidbody != rigidbody) {
-      throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+    @Override
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+        return position.copy();
     }
-    return position.copy();
- }
 
 }

@@ -32,6 +32,8 @@ public static boolean isPaused = false;
 ====================================================================================================
 */
 
+ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
 /*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
@@ -455,7 +457,7 @@ public void BroadPhaseStep() {
             AABB rigidbodyB_AABB = rigidbodyB.GetAABB();
 
             
-            if ((rigidbodyA.getIsStatic() && rigidbodyB.getIsStatic()) && (rigidbodyA.getInvMass() == 0f && rigidbodyB.getInvMass() == 0f)) {
+            if ((rigidbodyA.getIsStatic() && rigidbodyB.getIsStatic())) {
                 continue;
             }
             
@@ -498,10 +500,14 @@ public void NarrowPhaseStep() {
         }
     }
 }
-        
-public void StepBodies(float dt, int totalIterations) {
+    
 
-    for (Rigidbody rigidbody : rigidbodyList) {
+public void StepBodies(float dt, int totalIterations) {
+    for(Rigidbody rigidbody : rigidbodyList) {
+
+        if(rigidbody.getIsStatic()) {
+            continue;
+        }
         rigidbody.update(dt, totalIterations);
     }
 }

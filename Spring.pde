@@ -28,8 +28,14 @@ public class Spring implements ForceRegistry {
     private float initialRotationB;
 
     private PVector force;
-    private int callCounter = 0;
 
+
+    private PVector worldAnchorA;
+    private PVector worldAnchorB;
+    private PVector direction;
+    private float displacement;
+
+        
     public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
         this.rigidbodyA = rigidbody;
@@ -64,10 +70,8 @@ public class Spring implements ForceRegistry {
         if(isTwoBodySpring) {
             if(rigidbody == rigidbodyA) {
                 return calculateForce(rigidbody, position);
-            } else if(rigidbody == rigidbodyB) {
-                return calculateForce(rigidbody, position).mult(-1);
             } else {
-                throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
+                return calculateForce(rigidbody, position).mult(-1);
             }
         } else {
             return calculateForce(rigidbody, position);
@@ -79,22 +83,17 @@ public class Spring implements ForceRegistry {
         PVector force = new PVector();
         float totalForceMagnitude = 0f;
 
-        PVector worldAnchorA;
-        PVector worldAnchorB;
-        PVector direction;
-        float displacement;
-
-
         if(isTwoBodySpring) {
             if(rigidbody == rigidbodyA) {
                 worldAnchorA = PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle());
                 worldAnchorB = PhysEngMath.Transform(this.localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
-
+                
                 if(lockTranslationToYAxis) {
                     this.rigidbodyA.setVelocity(new PVector(0, this.rigidbodyA.getVelocity().y));
                 } else if(lockTranslationToXAxis) {
                     this.rigidbodyA.setVelocity(new PVector(this.rigidbodyA.getVelocity().x, 0));
                 }
+
             } else {
                 worldAnchorA = PhysEngMath.Transform(this.localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
                 worldAnchorB = PhysEngMath.Transform(this.localAnchorB, position, rigidbodyB.getAngle());
@@ -104,16 +103,19 @@ public class Spring implements ForceRegistry {
                 } else if(lockTranslationToXAxis) {
                     this.rigidbodyB.setVelocity(new PVector(this.rigidbodyB.getVelocity().x, 0));
                 }
+
             }
         } else {
+
             worldAnchorA = PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle());
-            worldAnchorB = this.anchorPoint;
+            worldAnchorB = anchorPoint;
 
             if(lockTranslationToYAxis) {
                 rigidbodyA.setVelocity(new PVector(this.rigidbodyA.getVelocity().x, 0));
             } else if(lockTranslationToXAxis) {
                 rigidbodyA.setVelocity(new PVector(0, this.rigidbodyA.getVelocity().y));
             }
+
         }
 
 
@@ -123,6 +125,8 @@ public class Spring implements ForceRegistry {
 
         //Spring Force
         totalForceMagnitude += (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
+
+        
         if(!isPerfectSpring) {
             if(isTwoBodySpring) {
                 /*------------------- Damping -------------------*/
@@ -222,20 +226,18 @@ public class Spring implements ForceRegistry {
                 line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
                 line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
             }
+        } else {
+            return;
         }
     }
 
     @Override
     public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-        if(rigidbody == this.rigidbodyA || rigidbody == this.rigidbodyB) {
             if(rigidbody == rigidbodyA) {
                 return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
             } else {
                 return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
             }
-        } else{
-            throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
-        }
     }
 
 /*

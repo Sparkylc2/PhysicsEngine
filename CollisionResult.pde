@@ -63,18 +63,23 @@ public class CollisionResult {
   public boolean getIsColliding() {
     return isColliding;
   }
+  
   public PVector getNormal() {
     return normal;
   }
+
   public float getDepth() {
     return depth;
   }
+
   public PVector[] getPointsOfContact() {
     return pointsOfContact;
   }
+
   public int getContactCount() {
     return contactCount;
   }
+  
   public float getDistanceSquared() {
     return distanceSquared;
   }
@@ -99,9 +104,11 @@ public class CollisionResult {
   public void setPointsOfContact(PVector[] pointsOfContact) {
     this.pointsOfContact = pointsOfContact;
   }
+  
   public void setPointsOfContact(PVector pointOfContact) {
     this.pointsOfContact = new PVector[] {pointOfContact};
   }
+
   public void setPointsOfContact(PVector pointOfContactA, PVector pointOfContactB) {
     this.pointsOfContact = new PVector[] {pointOfContactA, pointOfContactB};
   }

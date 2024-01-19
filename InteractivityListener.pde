@@ -343,7 +343,6 @@ public void drawBodies() {
     if(this.generateRigidbodies) {
 
         PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
-
         pushMatrix();
         rotate(this.angle);
         if(this.shapeType == ShapeType.CIRCLE) {

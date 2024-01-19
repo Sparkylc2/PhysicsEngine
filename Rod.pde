@@ -1,8 +1,8 @@
 public class Rod implements ForceRegistry {
 /*-------------------------------------------------------------------------------------------------*/
     private float length;
-    private float stiffness = 1f;
-    private float damping = 1f;
+    private float stiffness = 1000000.0f;
+    private float damping = 0.5f;
 
     private PVector localAnchorA;
     private PVector localAnchorB;
@@ -18,9 +18,18 @@ public class Rod implements ForceRegistry {
     private Rigidbody rigidbodyA;
     private Rigidbody rigidbodyB;
 
-    private PVector force;
-    private int callCounter = 0;
+
 /*-------------------------------------------------------------------------------------------------*/
+    private PVector worldAnchorA = new PVector();
+    private PVector worldAnchorB = new PVector();
+    private PVector relativeVelocity = new PVector();
+    private PVector displacement = new PVector();
+    private PVector dampingForce = new PVector();
+    private PVector force = new PVector();
+/*-------------------------------------------------------------------------------------------------*/
+//Reusable stuff
+
+
     public Rod(Rigidbody rigidbodyA, PVector localAnchorA, PVector anchorPoint) {
 
         this.rigidbodyA = rigidbodyA;
@@ -68,59 +77,39 @@ public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
 }
 
 private PVector calculateForce(Rigidbody rigidbody, PVector position) {
-
-    // Calculate current distance between the anchor points
-    PVector worldAnchorA;
-    PVector worldAnchorB;
-    PVector relativeVelocity;
+    this.force.set(0, 0);
+    this.dampingForce.set(0, 0);
+    this.relativeVelocity.set(0, 0);
+    this.displacement.set(0, 0);
+    this.worldAnchorA.set(0, 0);
+    this.worldAnchorB.set(0, 0);
 
     if(isTwoBodyRod) {
         if(rigidbody == rigidbodyA) {
-            worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-            worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
-            
-        } else if(rigidbody == rigidbodyB) {
-            worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-            worldAnchorB = PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
-        } else {
-            throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
-        }
+                this.worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+                this.worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+            } else {
+                this.worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+                this.worldAnchorB = PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+            } 
     } else {
-        worldAnchorA = PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
-        worldAnchorB = anchorPoint;
-    }
+        this.worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+        this.worldAnchorB = anchorPoint;
+        }
 
-    PVector displacement = PVector.sub(worldAnchorB, worldAnchorA);
-    float currentLength = displacement.mag();
-
-    float stretch = currentLength - this.length;
-    
-    PVector normalizedDisplacement = displacement.normalize();
-
-    // High stiffness factor to simulate rigidity
-    float stiffness = 1000000.0f; // Adjust this value as needed
+    this.displacement.set(worldAnchorB.sub(worldAnchorA));
 
     // Relative velocity in the direction of the rod
-   if(isTwoBodyRod) {
-        if(rigidbody == rigidbodyA) {
-            relativeVelocity = PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity());
-        } else {
-            relativeVelocity = PVector.sub(rigidbodyA.getVelocity(), rigidbodyB.getVelocity());
-        }
-    } else {
-        relativeVelocity = rigidbodyA.getVelocity();
+   if(this.isTwoBodyRod) {
+        this.relativeVelocity.set(rigidbodyB.getVelocity().sub(rigidbodyA.getVelocity()));
+    }  else {
+        this.relativeVelocity.set(rigidbodyA.getVelocity());
     }
 
+    this.dampingForce.set(PVector.mult(this.displacement, -damping * PVector.dot(relativeVelocity, this.displacement)));
 
-    float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
-    float dampingFactor = 1f;
-
-    // Apply only the component of the velocity along the rod for damping
-    PVector dampingForce = PVector.mult(normalizedDisplacement, (-velocityAlongRod * rigidbody.getMass()/dt));
-
-    // Calculate force
-    PVector force = PVector.mult(normalizedDisplacement, stiffness * stretch);
-    force.add(dampingForce);
+    this.force.set(PVector.mult(this.displacement.copy().normalize(), this.stiffness * (this.displacement.mag() - this.length)));
+    force.add(this.dampingForce);
 
     return force;
 
