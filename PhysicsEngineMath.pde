@@ -33,9 +33,16 @@ public static class PhysEngMath {
   
   
   public static PVector Transform(PVector vertex, PVector position, float angle) {
+    
+    /***** THIS IS CURRENLTY WHATS BREAKING STUFF */
     if(vertex.x == 0 && vertex.y == 0) {
         return position;
     } 
+    /***** THIS IS CURRENLTY WHATS BREAKING STUFF */
+
+
+
+    
     float sin = sin(angle);
     float cos = cos(angle);
     return new PVector(
