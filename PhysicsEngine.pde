@@ -127,7 +127,7 @@ void draw() {
   }
 
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 64);
+  Step(dt, 128);
 
   interactivityListener.resetTransform();
 

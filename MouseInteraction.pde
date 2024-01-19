@@ -2,11 +2,23 @@
 public int qCount = 0;
 public boolean switchTab = true;
 
-public  boolean dPressed = false;
-public  boolean shiftPressed = false;
-public  boolean wPressed = false;
-public  boolean sPressed = false;
-public  boolean aPressed = false;
+
+public boolean onePressed = false;
+public boolean twoPressed = false;
+public boolean threePressed = false;
+public boolean fourPressed = false;
+public boolean fivePressed = false;
+public boolean sixPressed = false;
+
+public boolean dPressed = false;
+public boolean shiftPressed = false;
+public boolean tabPressed = false;
+public boolean wPressed = false;
+public boolean sPressed = false;
+public boolean aPressed = false;
+public boolean qPressed = false;
+public boolean cPressed = false;
+public boolean rPressed = false;
 
 public void keyPressed() {
     if (key == 'd' || key == 'D') {
@@ -291,10 +303,8 @@ public void mouseClicked() {
 
 public boolean IsMouseOverUI() {
   if(userInterface.isMouseOver() || gui.calculateGroupPositionX() < mouseX && mouseX < gui.calculateGroupPositionX() + gui.globalGroupWidth &&  gui.calculateGroupPositionY() < mouseY && mouseY <  gui.calculateGroupPositionY() +  gui.globalGroupHeight) {
-
     return true;
     } else {
-
     return false;
     }
 }

@@ -455,7 +455,7 @@ public PVector[] reverseVertices() {
   ==================================================================================================
   */
     public void EulerPosition(float dt) {
-        PVector acceleration = calculateAcceleration(this.position);
+        PVector acceleration = calculateAcceleration(this.position, dt);
         this.linearVelocity.add(PVector.mult(acceleration, dt));
         this.position.add(PVector.mult(this.linearVelocity, dt));
         this.transformUpdateRequired = true;
@@ -464,7 +464,7 @@ public PVector[] reverseVertices() {
     public void VerletPosition(float dt) {
         PVector temp = position.copy();
         PVector velocity = PVector.sub(this.position, this.previousPosition);
-        this.position.add(PVector.add(velocity, PVector.mult(calculateAcceleration(this.position), dt*dt)));
+        this.position.add(PVector.add(velocity, PVector.mult(calculateAcceleration(this.position, dt), dt*dt)));
         previousPosition = temp;
         this.transformUpdateRequired = true;
     }
@@ -472,16 +472,16 @@ public PVector[] reverseVertices() {
     public void RK4Position(float dt) {
 
         /*-------------- RK4 Position And Velocity Integration --------------*/
-        PVector k1_v = PVector.mult(calculateAcceleration(this.position), dt);
+        PVector k1_v = PVector.mult(calculateAcceleration(this.position, dt), dt);
         PVector k1_r = PVector.mult(this.linearVelocity, dt);
 
-        PVector k2_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k1_r, 0.5f))), dt);
+        PVector k2_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k1_r, 0.5f)), dt), dt);
         PVector k2_r = PVector.mult(PVector.add(this.linearVelocity, PVector.mult(k1_v, 0.5f)), dt);
 
-        PVector k3_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k2_r, 0.5f))), dt);
+        PVector k3_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k2_r, 0.5f)), dt), dt);
         PVector k3_r = PVector.mult(PVector.add(this.linearVelocity, PVector.mult(k2_v, 0.5f)), dt);
 
-        PVector k4_v = PVector.mult(calculateAcceleration(PVector.add(this.position, k3_r)), dt);
+        PVector k4_v = PVector.mult(calculateAcceleration(PVector.add(this.position, k3_r), dt), dt);
         PVector k4_r = PVector.mult(PVector.add(this.linearVelocity, k3_v), dt);
         /*-------------------------------------------------------------------*/
 
@@ -517,14 +517,14 @@ public PVector[] reverseVertices() {
 
 
 
-    public PVector calculateAcceleration(PVector position) {
+    public PVector calculateAcceleration(PVector position, float dt) {
         /*--------------- Force Reset --------------*/
         this.netForce.set(0,0,0);
         /*------------------------------------------*/
 
         /*------------ Net Force Calculation ------------*/
         for (ForceRegistry force : this.forceRegistry) {
-            this.netForce.add(force.getForce(this, position));
+            this.netForce.add(force.getForce(this, position, dt));
         }
         /*-----------------------------------------------*/
 
@@ -544,7 +544,7 @@ public PVector[] reverseVertices() {
 
         /*------------ Net Torque Calculation ------------*/
         for (ForceRegistry force : this.forceRegistry) {
-            this.netTorque += force.getApplicationPoint(this, this.position).sub(this.position).cross(force.getForce(this, this.position)).z;
+            this.netTorque += force.getApplicationPoint(this, this.position).sub(this.position).cross(force.getForce(this, this.position, dt)).z;
         }
         /*-------------------------------------------------*/
 

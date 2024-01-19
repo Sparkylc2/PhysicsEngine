@@ -24,7 +24,7 @@ public class Motor implements ForceRegistry {
 
 
 @Override
-public PVector getForce(Rigidbody rigidbody, PVector position) {
+public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
 
     if(this.rigidbody != rigidbody) {
         throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");

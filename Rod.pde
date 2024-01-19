@@ -2,7 +2,7 @@ public class Rod implements ForceRegistry {
 /*-------------------------------------------------------------------------------------------------*/
     private float length;
     private float stiffness = 1f;
-    private float damping = 150f;
+    private float damping = 1f;
 
     private PVector localAnchorA;
     private PVector localAnchorB;
@@ -53,7 +53,7 @@ public class Rod implements ForceRegistry {
 
 
 @Override
-public PVector getForce(Rigidbody rigidbody, PVector position) {
+public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
         if(isTwoBodyRod) {
             if(rigidbody == rigidbodyA) {
                 return calculateForce(rigidbody, position);
@@ -72,6 +72,7 @@ private PVector calculateForce(Rigidbody rigidbody, PVector position) {
     // Calculate current distance between the anchor points
     PVector worldAnchorA;
     PVector worldAnchorB;
+    PVector relativeVelocity;
 
     if(isTwoBodyRod) {
         if(rigidbody == rigidbodyA) {
@@ -100,12 +101,22 @@ private PVector calculateForce(Rigidbody rigidbody, PVector position) {
     float stiffness = 1000000.0f; // Adjust this value as needed
 
     // Relative velocity in the direction of the rod
-    PVector relativeVelocity = isTwoBodyRod ? PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity()) : rigidbodyA.getVelocity();
+   if(isTwoBodyRod) {
+        if(rigidbody == rigidbodyA) {
+            relativeVelocity = PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity());
+        } else {
+            relativeVelocity = PVector.sub(rigidbodyA.getVelocity(), rigidbodyB.getVelocity());
+        }
+    } else {
+        relativeVelocity = rigidbodyA.getVelocity();
+    }
+
 
     float velocityAlongRod = PVector.dot(relativeVelocity, normalizedDisplacement);
-    float dampingFactor = 5f;
+    float dampingFactor = 1f;
+
     // Apply only the component of the velocity along the rod for damping
-    PVector dampingForce = PVector.mult(normalizedDisplacement, velocityAlongRod * -dampingFactor);
+    PVector dampingForce = PVector.mult(normalizedDisplacement, (-velocityAlongRod * rigidbody.getMass()/dt));
 
     // Calculate force
     PVector force = PVector.mult(normalizedDisplacement, stiffness * stretch);

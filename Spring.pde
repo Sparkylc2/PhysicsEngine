@@ -60,7 +60,7 @@ public class Spring implements ForceRegistry {
     }
 
     @Override
-    public PVector getForce(Rigidbody rigidbody, PVector position) {
+    public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
         if(isTwoBodySpring) {
             if(rigidbody == rigidbodyA) {
                 return calculateForce(rigidbody, position);
