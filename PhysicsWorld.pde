@@ -86,7 +86,7 @@ public final int MAX_ITERATIONS = 128;
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
 
-public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
+public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f);
 public final float GRAVITY_MAG = 9.81f;
 
 

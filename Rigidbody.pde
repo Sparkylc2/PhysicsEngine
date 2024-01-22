@@ -449,8 +449,7 @@ public PVector[] reverseVertices() {
   ================================== INTEGRATOR ====================================================
   ==================================================================================================
   */
-
-     public void RK4Position(float dt) {
+    public void RK4Position(float dt) {
 
         /*-------------- RK4 Position And Velocity Integration --------------*/
         PVector k1_v = PVector.mult(calculateAcceleration(this.position), dt);
@@ -491,20 +490,12 @@ public PVector[] reverseVertices() {
   }
 
 
-  public void angularIntegration(float dt) {
-
-    this.angularVelocity += this.netTorque * this.InvRotationalInertia * dt;
-    this.angle += this.angularVelocity*dt;
-
-
-  }
 
 
 
     public PVector calculateAcceleration(PVector position) {
         /*--------------- Force Reset --------------*/
         this.netForce.set(0,0,0);
-        this.netTorque = 0f;
         /*------------------------------------------*/
 
         /*------------ Net Force Calculation ------------*/
@@ -512,19 +503,22 @@ public PVector[] reverseVertices() {
             PVector currentForce = force.getForce(this, position);
             this.netForce.add(currentForce);
 
-            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position), this.position);
-            this.netTorque += leverArm.cross(currentForce).z;
-
+            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position, this.angle), this.position);
+            this.netForce.set(this.netForce.x, this.netForce.y, leverArm.cross(currentForce).z);
         }
         /*-----------------------------------------------*/
 
         /*------------ Acceleration Calculation ------------*/
-        return this.netForce.mult(this.InvMass);
+        return this.netForce;
         /*--------------------------------------------------*/
 
     }
 
   
+  public void angularIntegration(float dt) {
+    this.angularVelocity += this.netForce.z * this.InvRotationalInertia * dt;
+    this.angle += this.angularVelocity*dt;
+  }
   /*
   ==================================================================================================
   ==================================READ-ONLY FIELDS================================================

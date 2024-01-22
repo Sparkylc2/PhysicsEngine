@@ -1185,7 +1185,7 @@ public static CollisionResult PointSegmentDistance(PVector point, PVector lineSe
 public interface ForceRegistry {
     public PVector getForce(Rigidbody rigidbody, PVector position);
     public void draw();
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position);
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle);
 }
 
 public enum ForceType {
@@ -2783,8 +2783,9 @@ public class Gravity implements ForceRegistry {
   }
 
     @Override
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-      return rigidbody.getPosition();
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+      return position.copy();
+    
     }
 
 }
@@ -3896,8 +3897,8 @@ if(!drawMotorForce) {
 
 }
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    return PhysEngMath.Transform(localAnchor, position, rigidbody.getAngle());
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+    return PhysEngMath.Transform(localAnchor, position, angle);
 }
 
 
@@ -4515,7 +4516,7 @@ public final int MAX_ITERATIONS = 128;
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
 
-public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
+public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f);
 public final float GRAVITY_MAG = 9.81f;
 
 
@@ -5486,8 +5487,7 @@ public PVector[] reverseVertices() {
   ================================== INTEGRATOR ====================================================
   ==================================================================================================
   */
-
-     public void RK4Position(float dt) {
+    public void RK4Position(float dt) {
 
         /*-------------- RK4 Position And Velocity Integration --------------*/
         PVector k1_v = PVector.mult(calculateAcceleration(this.position), dt);
@@ -5528,20 +5528,12 @@ public PVector[] reverseVertices() {
   }
 
 
-  public void angularIntegration(float dt) {
-
-    this.angularVelocity += this.netTorque * this.InvRotationalInertia * dt;
-    this.angle += this.angularVelocity*dt;
-
-
-  }
 
 
 
     public PVector calculateAcceleration(PVector position) {
         /*--------------- Force Reset --------------*/
         this.netForce.set(0,0,0);
-        this.netTorque = 0f;
         /*------------------------------------------*/
 
         /*------------ Net Force Calculation ------------*/
@@ -5549,32 +5541,22 @@ public PVector[] reverseVertices() {
             PVector currentForce = force.getForce(this, position);
             this.netForce.add(currentForce);
 
-            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position), this.position);
-            this.netTorque += leverArm.cross(currentForce).z;
-
+            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position, this.angle), this.position);
+            this.netForce.set(this.netForce.x, this.netForce.y, leverArm.cross(currentForce).z);
         }
         /*-----------------------------------------------*/
 
         /*------------ Acceleration Calculation ------------*/
-        return this.netForce.mult(this.InvMass);
+        return this.netForce;
         /*--------------------------------------------------*/
 
     }
 
-/*
-public float calculateAngularAcceleration() {
-    float netTorque = 0f;
-
-    for (ForceRegistry force : this.forceRegistry) {
-
-
-        netTorque += leverArm.cross(forceVector).z; 
-    }
-
-    return netTorque * this.InvRotationalInertia;
-}
-*/
   
+  public void angularIntegration(float dt) {
+    this.angularVelocity += this.netForce.z * this.InvRotationalInertia * dt;
+    this.angle += this.angularVelocity*dt;
+  }
   /*
   ==================================================================================================
   ==================================READ-ONLY FIELDS================================================
@@ -6051,7 +6033,7 @@ public void draw() {
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
     } else {
 
-        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
+        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
         PVector worldAnchorB = anchorPoint;
         strokeWeight(0.15f);
         stroke(0);
@@ -6065,11 +6047,11 @@ public void draw() {
 
 
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
         if(rigidbody == rigidbodyA) {
-            return PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbody.getAngle());
+            return PhysEngMath.Transform(localAnchorA, position, angle);
         } else {
-            return PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbody.getAngle());
+            return PhysEngMath.Transform(localAnchorB, position, angle);
         }
 }
 
@@ -6719,11 +6701,11 @@ public class Spring implements ForceRegistry {
     }
 
     @Override
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
             if(rigidbody == rigidbodyA) {
-                return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
+                return PhysEngMath.Transform(localAnchorA, position, angle);
             } else {
-                return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
+                return PhysEngMath.Transform(localAnchorB, position, angle);
             }
     }
 

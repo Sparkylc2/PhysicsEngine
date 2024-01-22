@@ -78,8 +78,8 @@ if(!drawMotorForce) {
 
 }
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    return PhysEngMath.Transform(localAnchor, position, rigidbody.getAngle());
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+    return PhysEngMath.Transform(localAnchor, position, angle);
 }
 
 

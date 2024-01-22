@@ -16,8 +16,9 @@ public class Gravity implements ForceRegistry {
   }
 
     @Override
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-      return rigidbody.getPosition();
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+      return position.copy();
+    
     }
 
 }

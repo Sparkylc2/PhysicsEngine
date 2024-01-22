@@ -244,7 +244,7 @@ public void draw() {
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
     } else {
 
-        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
+        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
         PVector worldAnchorB = anchorPoint;
         strokeWeight(0.15);
         stroke(0);
@@ -258,11 +258,11 @@ public void draw() {
 
 
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
         if(rigidbody == rigidbodyA) {
-            return PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbody.getAngle());
+            return PhysEngMath.Transform(localAnchorA, position, angle);
         } else {
-            return PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbody.getAngle());
+            return PhysEngMath.Transform(localAnchorB, position, angle);
         }
 }
 
