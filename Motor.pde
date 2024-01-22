@@ -24,7 +24,7 @@ public class Motor implements ForceRegistry {
 
 
 @Override
-public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
+public PVector getForce(Rigidbody rigidbody, PVector position) {
 
     if(this.rigidbody != rigidbody) {
         throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
@@ -79,10 +79,7 @@ if(!drawMotorForce) {
 }
 @Override
 public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-    if(this.rigidbody != rigidbody) {
-        throw new IllegalArgumentException("Rigidbody is not the same as the one this force is applied to");
-    }
-    return PhysEngMath.Transform(localAnchor, this.rigidbody.getPosition(), this.rigidbody.getAngle());
+    return PhysEngMath.Transform(localAnchor, position, rigidbody.getAngle());
 }
 
 

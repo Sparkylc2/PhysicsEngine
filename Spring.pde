@@ -3,9 +3,9 @@ public class Spring implements ForceRegistry {
     private Rigidbody rigidbodyA;
     private Rigidbody rigidbodyB;
 
-    private PVector anchorPoint;
-    private PVector localAnchorA;
-    private PVector localAnchorB;
+    private PVector anchorPoint = new PVector();
+    private PVector localAnchorA = new PVector();
+    private PVector localAnchorB = new PVector();
     
     private boolean drawSpring = true;
 
@@ -27,21 +27,23 @@ public class Spring implements ForceRegistry {
     private float initialRotationA;
     private float initialRotationB;
 
-    private PVector force;
+
+    /*--------------- Reusable --------------- */
+    private PVector worldAnchorA = new PVector();
+    private PVector worldAnchorB = new PVector();
+
+    private PVector velocityA = new PVector();
+    private PVector velocityB = new PVector();
+
+    private PVector direction = new PVector();
 
 
-    private PVector worldAnchorA;
-    private PVector worldAnchorB;
-    private PVector direction;
-    private float displacement;
 
-        
     public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 
         this.rigidbodyA = rigidbody;
-
-        this.localAnchorA = localAnchorA;
-        this.anchorPoint = anchorPoint;
+        this.localAnchorA.set(localAnchorA);
+        this.anchorPoint.set(anchorPoint);
 
         this.springLength = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
 
@@ -55,8 +57,8 @@ public class Spring implements ForceRegistry {
         this.rigidbodyA = rigidbodyA;
         this.rigidbodyB = rigidbodyB;
         
-        this.localAnchorA = localAnchorA;
-        this.localAnchorB = localAnchorB;
+        this.localAnchorA.set(localAnchorA);
+        this.localAnchorB.set(localAnchorB);
         
         this.springLength = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()).sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
 
@@ -66,82 +68,79 @@ public class Spring implements ForceRegistry {
     }
 
     @Override
-    public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
-        if(isTwoBodySpring) {
-            if(rigidbody == rigidbodyA) {
-                return calculateForce(rigidbody, position);
-            } else {
-                return calculateForce(rigidbody, position).mult(-1);
-            }
-        } else {
-            return calculateForce(rigidbody, position);
-        }
-    }
-
-    private PVector calculateForce(Rigidbody rigidbody, PVector position) {
-
-        PVector force = new PVector();
+    public PVector getForce(Rigidbody rigidbody, PVector position) {
         float totalForceMagnitude = 0f;
+        float displacement = 0f;
 
         if(isTwoBodySpring) {
+            velocityA.set(rigidbodyA.getVelocity());
+            velocityB.set(rigidbodyB.getVelocity());
+    
             if(rigidbody == rigidbodyA) {
-                worldAnchorA = PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle());
-                worldAnchorB = PhysEngMath.Transform(this.localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
-                
-                if(lockTranslationToYAxis) {
-                    this.rigidbodyA.setVelocity(new PVector(0, this.rigidbodyA.getVelocity().y));
-                } else if(lockTranslationToXAxis) {
-                    this.rigidbodyA.setVelocity(new PVector(this.rigidbodyA.getVelocity().x, 0));
-                }
+                worldAnchorA.set(PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle()));
+                worldAnchorB.set(PhysEngMath.Transform(this.localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()));
 
+                if(lockTranslationToYAxis) rigidbodyA.setVelocity(velocityA.set(0, velocityA.y));
+                else if(lockTranslationToXAxis) rigidbodyA.setVelocity(velocityA.set(velocityA.x, 0));
+
+                this.direction.set(worldAnchorB.sub(worldAnchorA));
+                displacement = direction.mag();
+
+                if(!isPerfectSpring){                                                                                    
+                    totalForceMagnitude = (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
+                    direction.normalize();
+                    totalForceMagnitude += (direction.dot(velocityB.sub(velocityA)) * this.damping);
+                } else {
+                    totalForceMagnitude = (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
+                }
+                return this.direction.mult(totalForceMagnitude);
+    
             } else {
-                worldAnchorA = PhysEngMath.Transform(this.localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-                worldAnchorB = PhysEngMath.Transform(this.localAnchorB, position, rigidbodyB.getAngle());
+                worldAnchorA.set(PhysEngMath.Transform(this.localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()));
+                worldAnchorB.set(PhysEngMath.Transform(this.localAnchorB, position, rigidbodyB.getAngle()));
+            
+                this.direction.set(worldAnchorB.sub(worldAnchorA));
+                displacement = direction.mag();
+                direction.normalize();
 
-                if(lockTranslationToYAxis) {
-                    this.rigidbodyB.setVelocity(new PVector(0, this.rigidbodyB.getVelocity().y));
-                } else if(lockTranslationToXAxis) {
-                    this.rigidbodyB.setVelocity(new PVector(this.rigidbodyB.getVelocity().x, 0));
+                if(lockTranslationToYAxis) rigidbodyB.setVelocity(velocityB.set(0, velocityB.y));
+                else if(lockTranslationToXAxis) rigidbodyB.setVelocity(velocityB.set(velocityB.x, 0));
+
+                if(!isPerfectSpring){                                                                                    
+                    totalForceMagnitude = (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
+                    totalForceMagnitude += (direction.dot(velocityB.sub(velocityA)) * this.damping);
+                } else {
+                    totalForceMagnitude = (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
                 }
 
+                return this.direction.mult(-totalForceMagnitude);
             }
         } else {
+            worldAnchorA.set(PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle()));
+            worldAnchorB.set(anchorPoint);
+    
+            velocityA.set(rigidbodyA.getVelocity());
+            velocityB.set(0,0);
 
-            worldAnchorA = PhysEngMath.Transform(this.localAnchorA, position, rigidbodyA.getAngle());
-            worldAnchorB = anchorPoint;
+            this.direction.set(worldAnchorB.sub(worldAnchorA));
+            displacement = direction.mag();
+            direction.normalize();
 
-            if(lockTranslationToYAxis) {
-                rigidbodyA.setVelocity(new PVector(this.rigidbodyA.getVelocity().x, 0));
-            } else if(lockTranslationToXAxis) {
-                rigidbodyA.setVelocity(new PVector(0, this.rigidbodyA.getVelocity().y));
-            }
-
-        }
-
-
-        direction = PVector.sub(worldAnchorB, worldAnchorA);
-        displacement = direction.mag();
-        direction.normalize();
-
-        //Spring Force
-        totalForceMagnitude += (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
-
-        
-        if(!isPerfectSpring) {
-            if(isTwoBodySpring) {
-                /*------------------- Damping -------------------*/
-                totalForceMagnitude += direction.dot(PVector.sub(rigidbodyB.getVelocity(), rigidbodyA.getVelocity())) * this.damping;
-                /*-----------------------------------------------*/
+            if(lockTranslationToYAxis) rigidbodyA.setVelocity(velocityA.set(0, velocityA.y));
+            else if(lockTranslationToXAxis) rigidbodyA.setVelocity(velocityA.set(velocityA.x, 0));
+            
+            if(!isPerfectSpring){                                                                                    
+                totalForceMagnitude = (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
+                direction.normalize();
+                totalForceMagnitude += (direction.dot(velocityB.sub(velocityA)) * this.damping);
             } else {
-                /*------------------- Damping -------------------*/
-                totalForceMagnitude += direction.dot(PVector.sub(new PVector(), rigidbodyA.getVelocity())) * this.damping;
-                /*-----------------------------------------------*/
+                totalForceMagnitude = (displacement- this.springLength * this.equilibriumLength) * this.springConstant;
             }
-        }
 
-        force = PVector.mult(direction, totalForceMagnitude);
-        return force;
-    }
+            return this.direction.mult(totalForceMagnitude);
+        }
+    
+} 
 
   
 
@@ -160,7 +159,7 @@ public class Spring implements ForceRegistry {
                 worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
             } else {
                 worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-                worldAnchorB = anchorPoint;
+                worldAnchorB = this.anchorPoint;
             }
 
             direction = PVector.sub(worldAnchorA, worldAnchorB);

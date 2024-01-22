@@ -2,7 +2,6 @@
 public int qCount = 0;
 public boolean switchTab = true;
 
-
 public boolean onePressed = false;
 public boolean twoPressed = false;
 public boolean threePressed = false;
@@ -45,6 +44,7 @@ public void keyPressed() {
     }
     if(key == 'r') {
         rigidbodyList.clear();
+        softbodyList.clear();
     }
     if(key == BACKSPACE || key == DELETE) {
 
@@ -54,9 +54,14 @@ public void keyPressed() {
         }
     }
     if(key == 'c') {
-        interactivityListener.position = new PVector(0, 0);
+        interactivityListener.position = new PVector(-50, -50);
         interactivityListener.zoom = 10f;
     }
+    if((key == 'b' || key == 'B') && (userInterface.getController("Box").getValue() == 1)) {
+        Softbody softbody = new Softbody(interactivityListener.screenToWorld(mouseX, mouseY), 0, interactivityListener.getWidth(), interactivityListener.getHeight());
+        softbody.CreateBoxSoftbody();
+    }
+
     if(key == 'q') {
         qCount++;
         if(qCount == 1) {
@@ -96,43 +101,97 @@ public void keyPressed() {
         }
     }
     if(key == '1') {
-        if(userInterface.getController("AddSpring").isVisible()) {
+        if(userInterface.getTab("Forces").isActive()) {
             userInterface.getController("AddSpring").setValue(1);
             userInterface.getController("AddRod").setValue(0);
             userInterface.getController("AddMotor").setValue(0);
 
-        }
-        if(userInterface.getController("Circle").isVisible()) {
+        } else if(userInterface.getTab("Rigidbodies").isActive()) {
             userInterface.getController("Circle").setValue(1);
             userInterface.getController("Box").setValue(0);
         }
     }
     if(key == '2') {
-        if(userInterface.getController("AddRod").isVisible()) {
+        if(userInterface.getTab("Forces").isActive()) {
             userInterface.getController("AddSpring").setValue(0);
             userInterface.getController("AddRod").setValue(1);
             userInterface.getController("AddMotor").setValue(0);
 
-        }
-        if(userInterface.getController("Circle").isVisible()) {
+        } else if(userInterface.getTab("Rigidbodies").isActive()) {
             userInterface.getController("Circle").setValue(0);
             userInterface.getController("Box").setValue(1);
         }
     }
     if(key == '3') {
-        if(userInterface.getController("AddMotor").isVisible()) {
+        if(userInterface.getTab("Forces").isActive()) {
             userInterface.getController("AddSpring").setValue(0);
             userInterface.getController("AddRod").setValue(0);
             userInterface.getController("AddMotor").setValue(1);
-
         }
     }
+    if(key == '4') {
+        if(userInterface.getTab("Rigidbodies").isActive()) {
+            if(userInterface.getController("isStatic").getValue() == 1) {
+                userInterface.getController("isStatic").setValue(0);
+            } else {
+                userInterface.getController("isStatic").setValue(1);
+            }
+
+            userInterface.getController("transStatic").setValue(0);
+            userInterface.getController("rotStatic").setValue(0);
+
+        } else if(userInterface.getTab("Forces").isActive()) {
+            if(userInterface.getController("AddSpring").getValue() == 1) {
+                if(userInterface.getController("SpringLockToX").getValue() == 1) {
+                    userInterface.getController("SpringLockToX").setValue(0);
+                } else {
+                    userInterface.getController("SpringLockToX").setValue(1);
+                }
+            }
+        }
+    }
+    if(key == '5') {
+        if(userInterface.getTab("Rigidbodies").isActive()) {
+            if(userInterface.getController("transStatic").getValue() == 1) {
+                userInterface.getController("transStatic").setValue(0);
+            } else {
+                userInterface.getController("transStatic").setValue(1);
+            }
+
+            userInterface.getController("isStatic").setValue(0);
+            userInterface.getController("rotStatic").setValue(0);
+        } else if(userInterface.getTab("Forces").isActive()) {
+
+            if(userInterface.getController("AddSpring").getValue() == 1){
+                if(userInterface.getController("SpringLockToY").getValue() == 1) {
+                    userInterface.getController("SpringLockToY").setValue(0);
+                } else {
+                    userInterface.getController("SpringLockToY").setValue(1);
+                }
+            }
+        }
+    }
+
+    if(key == '6') {
+        if(userInterface.getTab("Rigidbodies").isActive()) {
+            if(userInterface.getController("rotStatic").getValue() == 1) {
+                userInterface.getController("rotStatic").setValue(0);
+            } else {
+                userInterface.getController("rotStatic").setValue(1);
+            }
+
+            userInterface.getController("isStatic").setValue(0);
+            userInterface.getController("transStatic").setValue(0);
+        }
+    }
+
     if(key == TAB) {
         if(switchTab) {
-        userInterface.getTab("Rigidbodies").bringToFront();
+            userInterface.getTab("Rigidbodies").bringToFront();
+
         } else {
-        userInterface.getTab("Forces").bringToFront();
-        }
+            userInterface.getTab("Forces").bringToFront();
+        }   
         switchTab = !switchTab;
     }
 

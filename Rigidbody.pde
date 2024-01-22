@@ -44,10 +44,11 @@ public class Rigidbody {
   private boolean isVisible;
   private boolean isCollidable;
 
-    public boolean useVerletIntegration = false;
-    public boolean useRK4Integration = true;
+
+  public boolean useVerletIntegration = false;
+  public boolean useRK4Integration = true;
   
-  private float netTorque;
+  private float netTorque = 0f;
   private PVector netForce = new PVector();
   
   private ArrayList<ForceRegistry> forceRegistry = new ArrayList<ForceRegistry>();
@@ -410,38 +411,32 @@ public PVector[] reverseVertices() {
   public void update(float dt, int iterations) {
     if(!isPaused) {
         if(this.isStatic) {
+
             this.aabbUpdateRequired = false;
+
             return;
         } else if (this.isTranslationallyStatic) {
+
             this.aabbUpdateRequired = true;
             this.transformUpdateRequired = true;
+
             dt /= (float)iterations;
             this.angularIntegration(dt);
 
         } else if (this.isRotationallyStatic) {
+
             this.aabbUpdateRequired = true;
             this.transformUpdateRequired = true;
-            dt /= (float)iterations;
 
-            if(this.useVerletIntegration) {
-                this.VerletPosition(dt);
-            } else if(this.useRK4Integration){
-                this.RK4Position(dt);
-            } else {
-                this.EulerPosition(dt);
-            }
+            dt /= (float)iterations;
+            this.RK4Position(dt);
+
         } else {
             this.aabbUpdateRequired = true;
             this.transformUpdateRequired = true;
-            dt /= (float)iterations;
 
-            if(this.useVerletIntegration) {
-                this.VerletPosition(dt);
-            } else if(this.useRK4Integration){
-                this.RK4Position(dt);
-            } else {
-                this.EulerPosition(dt);
-            }
+            dt /= (float)iterations;                
+            this.RK4Position(dt);
             this.angularIntegration(dt);
         }
     }
@@ -454,34 +449,20 @@ public PVector[] reverseVertices() {
   ================================== INTEGRATOR ====================================================
   ==================================================================================================
   */
-    public void EulerPosition(float dt) {
-        PVector acceleration = calculateAcceleration(this.position, dt);
-        this.linearVelocity.add(PVector.mult(acceleration, dt));
-        this.position.add(PVector.mult(this.linearVelocity, dt));
-        this.transformUpdateRequired = true;
-    }
 
-    public void VerletPosition(float dt) {
-        PVector temp = position.copy();
-        PVector velocity = PVector.sub(this.position, this.previousPosition);
-        this.position.add(PVector.add(velocity, PVector.mult(calculateAcceleration(this.position, dt), dt*dt)));
-        previousPosition = temp;
-        this.transformUpdateRequired = true;
-    }
-
-    public void RK4Position(float dt) {
+     public void RK4Position(float dt) {
 
         /*-------------- RK4 Position And Velocity Integration --------------*/
-        PVector k1_v = PVector.mult(calculateAcceleration(this.position, dt), dt);
+        PVector k1_v = PVector.mult(calculateAcceleration(this.position), dt);
         PVector k1_r = PVector.mult(this.linearVelocity, dt);
 
-        PVector k2_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k1_r, 0.5f)), dt), dt);
+        PVector k2_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k1_r, 0.5f))), dt);
         PVector k2_r = PVector.mult(PVector.add(this.linearVelocity, PVector.mult(k1_v, 0.5f)), dt);
 
-        PVector k3_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k2_r, 0.5f)), dt), dt);
+        PVector k3_v = PVector.mult(calculateAcceleration(PVector.add(this.position, PVector.mult(k2_r, 0.5f))), dt);
         PVector k3_r = PVector.mult(PVector.add(this.linearVelocity, PVector.mult(k2_v, 0.5f)), dt);
 
-        PVector k4_v = PVector.mult(calculateAcceleration(PVector.add(this.position, k3_r), dt), dt);
+        PVector k4_v = PVector.mult(calculateAcceleration(PVector.add(this.position, k3_r)), dt);
         PVector k4_r = PVector.mult(PVector.add(this.linearVelocity, k3_v), dt);
         /*-------------------------------------------------------------------*/
 
@@ -507,24 +488,33 @@ public PVector[] reverseVertices() {
         this.transformUpdateRequired = true;
         /*--------------------------------------------------------*/
 
-    }
-  
-
-    public void angularIntegration(float dt) {
-        this.angularVelocity += calculateAngularAcceleration() * dt;
-        this.angle += this.angularVelocity*dt;
-    }
+  }
 
 
+  public void angularIntegration(float dt) {
 
-    public PVector calculateAcceleration(PVector position, float dt) {
+    this.angularVelocity += this.netTorque * this.InvRotationalInertia * dt;
+    this.angle += this.angularVelocity*dt;
+
+
+  }
+
+
+
+    public PVector calculateAcceleration(PVector position) {
         /*--------------- Force Reset --------------*/
         this.netForce.set(0,0,0);
+        this.netTorque = 0f;
         /*------------------------------------------*/
 
         /*------------ Net Force Calculation ------------*/
         for (ForceRegistry force : this.forceRegistry) {
-            this.netForce.add(force.getForce(this, position, dt));
+            PVector currentForce = force.getForce(this, position);
+            this.netForce.add(currentForce);
+
+            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position), this.position);
+            this.netTorque += leverArm.cross(currentForce).z;
+
         }
         /*-----------------------------------------------*/
 
@@ -533,28 +523,6 @@ public PVector[] reverseVertices() {
         /*--------------------------------------------------*/
 
     }
-
- 
-    public float calculateAngularAcceleration() {
-
-        /*--------------- Torque Reset --------------*/
-        this.netTorque = 0f;
-        /*--------------------------------------------*/
-
-
-        /*------------ Net Torque Calculation ------------*/
-        for (ForceRegistry force : this.forceRegistry) {
-            this.netTorque += force.getApplicationPoint(this, this.position).sub(this.position).cross(force.getForce(this, this.position, dt)).z;
-        }
-        /*-------------------------------------------------*/
-
-
-        /*------------ Angular Acceleration Calculation ------------*/
-        return this.netTorque * this.InvRotationalInertia;
-        /*----------------------------------------------------------*/
-    }
-
-
 
   
   /*

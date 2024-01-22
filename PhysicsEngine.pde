@@ -27,7 +27,7 @@ void setup() {
 /*------------------------------------------------------------*/
 
 /*------------------- Background ---------------------------*/
-    background = loadShape("background.svg");
+    //background = loadShape("background.svg");
 /*-------------------------- Rigidbodies ------------------------*/
   rigidbodyList = new ArrayList<Rigidbody>();
 /*------------------------------------------------------------*/
@@ -62,14 +62,14 @@ void setup() {
     springLeft.setSpringLength(10);
     springLeft.setEquilibriumLength(0.5f);
     springLeft.setSpringConstant(100);
-    springLeft.setLockTranslationToXAxis(true);
+    springLeft.setLockTranslationToYAxis(true);
 
 
 
     springRight.setSpringLength(10);
     springRight.setSpringConstant(100);
     springRight.setEquilibriumLength(0.5f);
-    springRight.setLockTranslationToXAxis(true);
+    springRight.setLockTranslationToYAxis(true);
     
 
     
@@ -106,15 +106,16 @@ void draw() {
   /* PLEASE */
 
   interactivityListener.applyTransform();
-  background(#101213);
   pushMatrix();
   translate(-1920/12.5, -1080/12.5);
   scale(0.05f);
-  shape(background, 0, 0);
+  //shape(background, 0, 0);
   popMatrix();
-
   render.draw();
-  softbody.updateSoftbody();
+  
+  for(Softbody softbody : softbodyList) {
+    softbody.draw();
+  }
   //cloth.updateCloth();
 
   /*--------------------- Cursor Trail ---------------------*/

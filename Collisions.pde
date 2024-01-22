@@ -4,15 +4,19 @@ public static class Collisions {
   //This is required as there is no enclosing instance of physics class for collisionResult
   public static PhysicsEngine physicsEngine = new PhysicsEngine();
 
+
+
+
+  /*------------------- Reusable  ------------------- */
+  public static PVector ZeroNormal = new PVector();
 /*
 ====================================================================================================
 ===================================== COLLIDE INFO =================================================
 ====================================================================================================
 */
+
+/*optimizied*/
 public static CollisionResult Collide(Rigidbody rigidbodyA, Rigidbody rigidbodyB) {
-    PVector normal = new PVector();
-    float depth = 0f;
-    boolean isColliding = false;
 
     ShapeType shapeTypeA = rigidbodyA.getShapeType();
     ShapeType shapeTypeB = rigidbodyB.getShapeType();
@@ -32,7 +36,6 @@ public static CollisionResult Collide(Rigidbody rigidbodyA, Rigidbody rigidbodyB
                                                                    rigidbodyA.getPosition(),
                                                                    rigidbodyA.GetTransformedVertices()
                                                                    );
-        
         result.setNormal(result.getNormal().mult(-1));
         return result;
 
@@ -54,7 +57,8 @@ public static CollisionResult Collide(Rigidbody rigidbodyA, Rigidbody rigidbodyB
 
         }
       }
-    return physicsEngine.new CollisionResult(isColliding, normal, depth);
+
+    return physicsEngine.new CollisionResult();
   }
 
 
@@ -64,11 +68,10 @@ public static CollisionResult Collide(Rigidbody rigidbodyA, Rigidbody rigidbodyB
 ======================================= COLLISION-RESULT ===========================================
 */
 
+/*optimized*/
+
 public static void FindCollisionPoints(Rigidbody rigidbodyA, Rigidbody rigidbodyB,
                                                   CollisionResult collisionResult) {
-
-
-    PVector[] pointsOfContact = new PVector[0];
     int contactCount = 0;
 
     ShapeType shapeTypeA = rigidbodyA.getShapeType();
@@ -77,38 +80,42 @@ public static void FindCollisionPoints(Rigidbody rigidbodyA, Rigidbody rigidbody
     if(shapeTypeA == ShapeType.BOX) {
 
       if(shapeTypeB == ShapeType.BOX) {
-        pointsOfContact = FindPolygonsCollisionPoints(rigidbodyA.GetTransformedVertices(),
-                                                      rigidbodyB.GetTransformedVertices());
-        contactCount = pointsOfContact.length;
+        PVector[] pointsOfContact = FindPolygonsCollisionPoints(rigidbodyA.GetTransformedVertices(),
+                                                                rigidbodyB.GetTransformedVertices());
+        collisionResult.setPointsOfContact(pointsOfContact);
+        collisionResult.setContactCount(pointsOfContact.length);
+        return;
 
       } else if(shapeTypeB == ShapeType.CIRCLE) {
-
-          pointsOfContact = FindCirclePolygonCollisionPoint(rigidbodyB.getPosition(),
-                                                            rigidbodyB.getRadius(),
-                                                            rigidbodyA.getPosition(),
-                                                            rigidbodyA.GetTransformedVertices());
-        contactCount = 1;
+        PVector[] pointsOfContact = FindCirclePolygonCollisionPoint(rigidbodyB.getPosition(),
+                                                                    rigidbodyB.getRadius(),
+                                                                    rigidbodyA.getPosition(),
+                                                                    rigidbodyA.GetTransformedVertices());
+        collisionResult.setPointsOfContact(pointsOfContact);
+        collisionResult.setContactCount(1);
+        return;
       }
 
     }
   if (shapeTypeA == ShapeType.CIRCLE) {
         
         if(shapeTypeB == ShapeType.BOX) {
-          
-          pointsOfContact = FindCirclePolygonCollisionPoint(rigidbodyA.getPosition(),
-                                                            rigidbodyA.getRadius(),
-                                                            rigidbodyB.getPosition(),
-                                                            rigidbodyB.GetTransformedVertices());
-            contactCount = 1;
-
+          PVector[] pointsOfContact = FindCirclePolygonCollisionPoint(rigidbodyA.getPosition(),
+                                                                      rigidbodyA.getRadius(),
+                                                                      rigidbodyB.getPosition(),
+                                                                      rigidbodyB.GetTransformedVertices());
+          collisionResult.setPointsOfContact(pointsOfContact);
+          collisionResult.setContactCount(1);
+          return;
 
         } else if(shapeTypeB == ShapeType.CIRCLE) {
-
-            pointsOfContact = FindCirclesCollisionPoint(rigidbodyA.getPosition(),
-                                                        rigidbodyA.getRadius(),
-                                                        rigidbodyB.getPosition(),
-                                                        rigidbodyB.getRadius());
-            contactCount = 1;
+           PVector[] pointsOfContact = FindCirclesCollisionPoint(rigidbodyA.getPosition(),
+                                                                 rigidbodyA.getRadius(),
+                                                                 rigidbodyB.getPosition(),
+                                                                 rigidbodyB.getRadius());
+            collisionResult.setPointsOfContact(pointsOfContact);
+            collisionResult.setContactCount(1);
+            return;
         }
       }
 
@@ -119,8 +126,6 @@ public static void FindCollisionPoints(Rigidbody rigidbodyA, Rigidbody rigidbody
         }
    */
 
-  collisionResult.setPointsOfContact(pointsOfContact);
-  collisionResult.setContactCount(contactCount);
 }
 /*
 ====================================================================================================
@@ -224,13 +229,18 @@ private static PVector[] FindPolygonsCollisionPoints(PVector[] transformedVertic
                                                            PVector[] transformedVerticesB) {
   PVector contactPointA = new PVector();
   PVector contactPointB = new PVector();
+
+  PVector vertexA = new PVector();
+  PVector vertexB = new PVector();
+  
+  PVector point = new PVector();
   int contactCount = 0;
 
   float minDistanceSquared = Float.MAX_VALUE;
 
   for(int i = 0; i < transformedVerticesA.length; i++) {
 
-    PVector point = transformedVerticesA[i];
+      point.set(transformedVerticesA[i]);
 
       for(int j = 0; j < transformedVerticesB.length; j++) {
         
@@ -240,7 +250,7 @@ private static PVector[] FindPolygonsCollisionPoints(PVector[] transformedVertic
 
             if(!PhysEngMath.Equals(pointSegmentDistanceResult.getPointsOfContact()[0], contactPointA)) {
 
-              contactPointB = pointSegmentDistanceResult.getPointsOfContact()[0];
+              contactPointB.set(pointSegmentDistanceResult.getPointsOfContact()[0]);
               contactCount = 2;
 
             }
@@ -248,34 +258,34 @@ private static PVector[] FindPolygonsCollisionPoints(PVector[] transformedVertic
         } else if(pointSegmentDistanceResult.getDistanceSquared() < minDistanceSquared) {
 
             minDistanceSquared = pointSegmentDistanceResult.getDistanceSquared();
-            contactPointA = pointSegmentDistanceResult.getPointsOfContact()[0];
+            contactPointA.set(pointSegmentDistanceResult.getPointsOfContact()[0]);
             contactCount = 1;
         }
       }
     }
 
+
   for(int i = 0; i < transformedVerticesB.length; i++) {
 
-      PVector point = transformedVerticesB[i];
+      point.set(transformedVerticesB[i]);
 
       for(int j = 0; j < transformedVerticesA.length; j++) {
           
-          PVector vertexA = transformedVerticesA[j];
-          PVector vertexB = transformedVerticesA[(j + 1) % transformedVerticesA.length];
+          vertexA.set(transformedVerticesA[j]);
+          vertexB.set(transformedVerticesA[(j + 1) % transformedVerticesA.length]);
   
           CollisionResult pointSegmentDistanceResult = PointSegmentDistance(point, transformedVerticesA[j], transformedVerticesA[(j + 1) % transformedVerticesA.length]);
 
         if(PhysEngMath.Equals(pointSegmentDistanceResult.getDistanceSquared(),minDistanceSquared)) {
 
             if(!PhysEngMath.Equals(pointSegmentDistanceResult.getPointsOfContact()[0], contactPointA)) {
-              contactPointB = pointSegmentDistanceResult.getPointsOfContact()[0];
+              contactPointB.set(pointSegmentDistanceResult.getPointsOfContact()[0]);
               contactCount = 2;
             }
 
         } else if(pointSegmentDistanceResult.getDistanceSquared() < minDistanceSquared) {
-
             minDistanceSquared = pointSegmentDistanceResult.getDistanceSquared();
-            contactPointA = pointSegmentDistanceResult.getPointsOfContact()[0];
+            contactPointA.set(pointSegmentDistanceResult.getPointsOfContact()[0]);
             contactCount = 1;
         }
       }
@@ -296,6 +306,8 @@ private static PVector[] FindPolygonsCollisionPoints(PVector[] transformedVertic
 ====================================================================================================
 */
 
+/*Somewhat optimized */
+
 private static PVector[] FindCirclePolygonCollisionPoint(PVector circleCenter,
                                                          float circleRadius,
                                                          PVector polygonCenter,
@@ -311,8 +323,7 @@ private static PVector[] FindCirclePolygonCollisionPoint(PVector circleCenter,
         if(pointSegmentDistanceResult.getDistanceSquared() < minDistanceSquared) {
 
             minDistanceSquared = pointSegmentDistanceResult.getDistanceSquared();
-            contactPoint = pointSegmentDistanceResult.getPointsOfContact()[0];
-
+            contactPoint.set(pointSegmentDistanceResult.getPointsOfContact()[0]);
         }
     }
 
@@ -341,28 +352,19 @@ public static boolean IntersectAABB (AABB aabbA, AABB aabbB) {
 ======================================= COLLISION-RESULT ===========================================
 ====================================================================================================
 */
+/*somewhat Optimized*/
   public static CollisionResult IntersectCircle(PVector centerA, PVector centerB,
                                                 float radiusA, float radiusB) {
 
-    boolean isColliding;
-    PVector normal = new PVector();
-    float depth;
-
-
-    float distance = PVector.sub(centerA, centerB).mag();
+    PVector direction = PVector.sub(centerB, centerA);
+    float distance = direction.mag();
     float radiusSum = (radiusA + radiusB);
     
     if(distance < radiusSum) {
-        isColliding = true;
-        normal = PVector.sub(centerB, centerA).normalize();
-        depth = radiusSum - distance;
+      return physicsEngine.new CollisionResult(true, direction.normalize(), radiusSum - distance);
     } else {
-        isColliding = false;
-        normal = new PVector();
-        depth = 0;
+      return physicsEngine.new CollisionResult();
     }
-    
-    return physicsEngine.new CollisionResult(isColliding, normal, depth);
   }
   
                                              
@@ -374,46 +376,52 @@ public static boolean IntersectAABB (AABB aabbA, AABB aabbB) {
 ====================================================================================================
 */
 
-
+/*Optimized somewhat*/
 public static CollisionResult IntersectPolygon(PVector centerA,
                                                PVector[] transformedVerticesA,
                                                PVector centerB,
                                                PVector[] transformedVerticesB) {
 
-    boolean isColliding;
     float depth = Float.MAX_VALUE;
+
+    PVector axis = new PVector();
     PVector normal = new PVector();
+    PVector edge = new PVector();
+
+    PVector transformedVertexA = new PVector();
+    PVector transformedVertexB = new PVector();
+
+    PVector secondTransformedVertexA = new PVector();
+    PVector secondTransformedVertexB = new PVector();
+
 
     for(int vertexIndexA = 0; vertexIndexA < transformedVerticesA.length; vertexIndexA++) {
  
 
       //Gets the transformed vertices in polygon A, when at the end of the list, loops back to the start
-      PVector transformedVertexA = transformedVerticesA[vertexIndexA];
-      PVector transformedVertexB = transformedVerticesA[(vertexIndexA + 1) % transformedVerticesA.length];
+      transformedVertexA.set(transformedVerticesA[vertexIndexA]);
+      transformedVertexB.set(transformedVerticesA[(vertexIndexA + 1) % transformedVerticesA.length]);
 
       //Finds the edge between the two vertices,
-      PVector edge = PVector.sub(transformedVertexB, transformedVertexA);
+      edge.set(PVector.sub(transformedVertexB, transformedVertexA));
 
       //Finds the normal or "axis" from the edge vector
-      PVector axis = new PVector(-edge.y, edge.x).normalize();
+      axis.set(-edge.y, edge.x);
+      axis.normalize();
 
       //Projects the vertices of polygon A onto the axis. Format is [min, max]
       float[] minMaxA = ProjectVertices(transformedVerticesA, axis);
       float[] minMaxB = ProjectVertices(transformedVerticesB, axis);
 
       if(minMaxA[0] >= minMaxB[1] || minMaxB[0] >= minMaxA[1]) {
-        isColliding = false;
-        depth = 0;
-        normal = new PVector();
-
-        return physicsEngine.new CollisionResult(isColliding, normal, depth);
+        return physicsEngine.new CollisionResult();
       }
 
       float axisDepth = min(minMaxB[1]-minMaxA[0], minMaxA[1]-minMaxB[0]);
-      
+
       if(axisDepth < depth) {
         depth = axisDepth;
-        normal = axis;
+        normal.set(axis);
       }
     }
 
@@ -421,45 +429,40 @@ public static CollisionResult IntersectPolygon(PVector centerA,
       //!!!ALL OF THIS ASSUMES A CLOCKWISE WINDING ORDER!!!
 
       //Gets the transformed vertices in polygon A, when at the end of the list, loops back to the start
-      PVector transformedVertexA = transformedVerticesB[vertexIndexB];
-      PVector transformedVertexB = transformedVerticesB[(vertexIndexB + 1) % transformedVerticesB.length];
+      secondTransformedVertexA.set(transformedVerticesB[vertexIndexB]);
+      secondTransformedVertexB.set(transformedVerticesB[(vertexIndexB + 1) % transformedVerticesB.length]);
 
       //Finds the edge between the two vertices, 
-      PVector edge = PVector.sub(transformedVertexB, transformedVertexA);
+      edge.set(PVector.sub(secondTransformedVertexB, secondTransformedVertexA));
 
       //Finds the normal or "axis" from the edge vector
-      PVector axis = new PVector(-edge.y, edge.x).normalize();
+      axis.set(-edge.y, edge.x);
+      axis.normalize();
 
       //Projects the vertices of polygon A onto the axis. Format is [min, max]
       float[] minMaxA = ProjectVertices(transformedVerticesA, axis);
       float[] minMaxB = ProjectVertices(transformedVerticesB, axis);
 
-      if(minMaxA[0] >= minMaxB[1] || minMaxB[0] >= minMaxA[1]) {
-        isColliding = false;
-        depth = 0;
-        normal = new PVector();
-        
-        return physicsEngine.new CollisionResult(isColliding, normal, depth);
+      if(minMaxA[0] >= minMaxB[1] || minMaxB[0] >= minMaxA[1]) {        
+        return physicsEngine.new CollisionResult();
       }
 
       float axisDepth = min(minMaxB[1]-minMaxA[0], minMaxA[1]-minMaxB[0]);
       
       if(axisDepth < depth) {
         depth = axisDepth;
-        normal = axis;
+        normal.set(axis);
       }
     }
 
     //This is correction code so that the normal points in the correct direction
     //If its not pointing in the correct direction, flip the normal
-    
-    PVector correctNormalDirection = PVector.sub(centerB, centerA);
-    if(PVector.dot(correctNormalDirection, normal) < 0) {
+  
+    if(PVector.dot(PVector.sub(centerB, centerA), normal) < 0) {
       normal.mult(-1);
     }
-    
-    isColliding = true;
-    return physicsEngine.new CollisionResult(isColliding, normal, depth);
+
+    return physicsEngine.new CollisionResult(true, normal, depth);
   }
 
 //The overloaded method is used when the center of the polygon is not known
@@ -480,17 +483,20 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
     float depth = Float.MAX_VALUE;
     PVector normal = new PVector();
 
+    PVector edge = new PVector();
     PVector axis = new PVector();
+
     float axisDepth = 0f;
 
     for(int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
       //!!!ALL OF THIS ASSUMES A CLOCKWISE WINDING ORDER!!!
 
       //Finds the edge between the two vertices,
-      PVector edge = PVector.sub(transformedVertices[(vertexIndex + 1) % transformedVertices.length], transformedVertices[vertexIndex]);
+      edge.set(PVector.sub(transformedVertices[(vertexIndex + 1) % transformedVertices.length], transformedVertices[vertexIndex]));
       
       //Finds the normal or "axis" from the edge vector
-       axis = new PVector(-edge.y, edge.x).normalize();
+       axis.set(-edge.y, edge.x);
+       axis.normalize();
 
       //Projects the vertices of polygon A onto the axis. Format is [min, max]
       float[] minMaxA = ProjectVertices(transformedVertices, axis);
@@ -499,18 +505,14 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
       float[] minMaxB = ProjectCircle(circleCenter, axis, circleRadius);
 
       if(minMaxA[0] >= minMaxB[1] || minMaxB[0] >= minMaxA[1]) {
-        isColliding = false;
-        depth = 0;
-        normal = new PVector();
 
-        return physicsEngine.new CollisionResult(isColliding, normal, depth);
+        return physicsEngine.new CollisionResult();
       }
 
        axisDepth = min(minMaxB[1]-minMaxA[0], minMaxA[1]-minMaxB[0]);
-        
         if(axisDepth < depth) {
             depth = axisDepth;
-            normal = axis;
+            normal.set(axis);
         }
   }
 
@@ -520,7 +522,7 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
     axis = PVector.sub(closestPoint, circleCenter).normalize();
     */
 
-    axis = PVector.sub(transformedVertices[FindClosestPointOnPolygon(circleCenter, transformedVertices)], circleCenter).normalize();
+    axis.set(PVector.sub(transformedVertices[FindClosestPointOnPolygon(circleCenter, transformedVertices)], circleCenter).normalize());
 
      //Projects the vertices of polygon A onto the axis. Format is [min, max]
       float[] minMaxA = ProjectVertices(transformedVertices, axis);
@@ -529,18 +531,15 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
 
 
       if(minMaxA[0] >= minMaxB[1] || minMaxB[0] >= minMaxA[1]) {
-        isColliding = false;
-        depth = 0;
-        normal = new PVector();
-
-        return physicsEngine.new CollisionResult(isColliding, normal, depth);
+        
+        return physicsEngine.new CollisionResult();
       }
 
-       axisDepth = min(minMaxB[1]-minMaxA[0], minMaxA[1]-minMaxB[0]);
-      
+      axisDepth = min(minMaxB[1]-minMaxA[0], minMaxA[1]-minMaxB[0]);
+
       if(axisDepth < depth) {
         depth = axisDepth;
-        normal = axis;
+        normal.set(axis);
       }
 
         if(PVector.dot(PVector.sub(polygonCenter, circleCenter), normal) < 0) {
@@ -600,13 +599,13 @@ private static float[] ProjectCircle(PVector center, PVector axis, float radius)
 }
 
 private static int FindClosestPointOnPolygon(PVector circleCenter, PVector[] transformedVertices) {
-
+/*
   int result = -1;
   float minDistance = Float.MAX_VALUE;
 
   for(int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
 
-    float distance = PVector.sub(circleCenter, transformedVertices[vertexIndex]).mag();
+    float distance = PVector.sub(circleCenter, transformedVertices[vertexIndex]).magSq();
 
     if(distance < minDistance) {
       minDistance = distance;
@@ -616,26 +615,44 @@ private static int FindClosestPointOnPolygon(PVector circleCenter, PVector[] tra
   }
 
   return result;
+  */
+
+  int result = -1;
+  float minDistanceSq = Float.MAX_VALUE;
+
+  for(int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
+
+    float distanceSq = PVector.sub(circleCenter, transformedVertices[vertexIndex]).magSq();
+
+    if(distanceSq < minDistanceSq) {
+      minDistanceSq = distanceSq;
+      result = vertexIndex;
+    }
+
+  }
+
+  return result;
 }
 
 public static CollisionResult PointSegmentDistance(PVector point, PVector lineSegmentStart, PVector lineSegmentEnd) {
+    //PVector.sub(point, lineSegmentStart) is equivalent to pointToLineSegment
 
-    PVector lineSegment = PVector.sub(lineSegmentEnd, lineSegmentStart);
-    PVector pointToLineSegment = PVector.sub(point, lineSegmentStart);
+    PVector lineSegment = new PVector();
+    lineSegment.set(PVector.sub(lineSegmentEnd, lineSegmentStart));
 
-    float projection = PVector.dot(pointToLineSegment, lineSegment);
+    float projection = PVector.dot(PVector.sub(point, lineSegmentStart), lineSegment);
     float lineSegmentLengthSquared = lineSegment.magSq();
 
     float distance = projection / lineSegmentLengthSquared;
 
-    PVector closestPoint;
+    PVector closestPoint = new PVector();
 
     if (distance <= 0f) {
-        closestPoint = lineSegmentStart;
+        closestPoint.set(lineSegmentStart);
     } else if (distance >= 1f) {
-        closestPoint = lineSegmentEnd;
+        closestPoint.set(lineSegmentEnd);
     } else {
-        closestPoint = PVector.add(lineSegmentStart, PVector.mult(lineSegment, distance));
+        closestPoint.set(PVector.add(lineSegmentStart, PVector.mult(lineSegment, distance)));
     }
 
     float distanceSquared = PVector.sub(point, closestPoint).magSq();

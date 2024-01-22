@@ -6,7 +6,7 @@ public class Gravity implements ForceRegistry {
   }
 
   @Override
-  public PVector getForce(Rigidbody rigidbody, PVector position, float dt) {
+  public PVector getForce(Rigidbody rigidbody, PVector position) {
     return PVector.mult(GRAVITY_VECTOR, rigidbody.getMass());
   }
 
@@ -17,7 +17,7 @@ public class Gravity implements ForceRegistry {
 
     @Override
     public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
-        return position.copy();
+      return rigidbody.getPosition();
     }
 
 }

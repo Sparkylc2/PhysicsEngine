@@ -175,16 +175,15 @@ public PVector[] getWorldBoundsWithPadding(float padding) {
 }
 
 public Rigidbody getClickedRigidbody() {
-    
     PVector mousePosition = interactivityListener.screenToWorld(mouseX, mouseY);
     for (Rigidbody rigidbody : rigidbodyList) {
         if (rigidbody.contains(mousePosition.x, mousePosition.y)) {
             return rigidbody;
         }
     }
-
     return null;
 }
+
 
 
 
@@ -580,8 +579,12 @@ public void createForces() {
             }
 
             spring.setPerfectSpring(this.isPerfectSpring);
+            spring.setLockTranslationToXAxis(this.lockTranslationToXAxis);
+            spring.setLockTranslationToYAxis(this.lockTranslationToYAxis);
+
             spring.setEquilibriumLength(this.equilibriumLength);
             spring.setSpringConstant(this.springConstant);
+
             spring.setDamping(this.springDamping);
             spring.setIsHingeable(this.isSpringHingeable);
 
@@ -628,6 +631,9 @@ public void createForces() {
             Spring spring = new Spring(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
             spring.setPerfectSpring(this.isPerfectSpring);
+
+            spring.setLockTranslationToXAxis(this.lockTranslationToXAxis);
+            spring.setLockTranslationToYAxis(this.lockTranslationToYAxis);
 
             spring.setEquilibriumLength(this.equilibriumLength);
 

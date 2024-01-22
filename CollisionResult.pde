@@ -1,7 +1,7 @@
 public class CollisionResult {
  
   private boolean isColliding;
-  private PVector normal;
+  private PVector normal = new PVector();
   private float depth;
 
   private float distanceSquared;
@@ -18,6 +18,17 @@ public class CollisionResult {
 ================================ PointSegmentDistance Constructor ==================================
 ====================================================================================================
 */
+
+//Default constructor for no collision
+  public CollisionResult(){
+
+    this.isColliding = false;
+    this.normal.set(0,0,0);
+    this.depth = 0f;
+    this.pointsOfContact = null;
+    this.contactCount = 0;
+  }
+
 
   public CollisionResult(float distanceSquared, PVector pointOfContact) {
 
@@ -50,7 +61,7 @@ public class CollisionResult {
     this.isColliding = isColliding;
     this.normal = normal;
     this.depth = depth;
-    this.pointsOfContact = new PVector[0];
+    this.pointsOfContact = null;
     this.contactCount = 0;
   }
  

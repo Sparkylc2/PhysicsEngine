@@ -31,12 +31,14 @@ public static boolean isPaused = false;
 ===================================  PHYSICS ENGINE OBJECTS  =======================================
 ====================================================================================================
 */
-
-ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
 /*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
+
+/*-------- Trying this out ----------*/
+//public PVectorPool SpringPVectorPool = new PVectorPool(10);
+/*-----------------------------------*/
+
 
 public Rigidbody RigidbodyGenerator = new Rigidbody();
 public InteractivityListener interactivityListener = new InteractivityListener();
@@ -45,17 +47,18 @@ ControlP5 userInterface;
 
 
 public static ArrayList<Rigidbody> rigidbodyList = new ArrayList<Rigidbody>();
+public static ArrayList<Softbody> softbodyList = new ArrayList<Softbody>();
 
 public ArrayList<ArrayList<Integer>> collisionPairs = new ArrayList<ArrayList<Integer>>();
     
 
 public PVector[] contactList = new PVector[0];
 public PVector[] impulseList = new PVector[2];
-public PVector[] raList = new PVector[2];
+public PVector[] raList = new PVector[2]; 
 public PVector[] rbList = new PVector[2];
 public PVector[] frictionImpulseList = new PVector[2];
 public float[] jList = new float[2];
-   
+
 /*
 ====================================================================================================
 ===================================  PHYSICS ENGINE CONSTANTS  =====================================

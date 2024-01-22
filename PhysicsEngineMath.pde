@@ -1,6 +1,7 @@
 
 public static class PhysEngMath {
 
+    private static final PVector emptyVector = new PVector(0, 0);
   //Precision for float comparison, equal to 0.00005 meters
   public static final float precision = 0.0001f;
 
@@ -31,34 +32,23 @@ public static class PhysEngMath {
     }
   }
   
-  
-  public static PVector Transform(PVector vertex, PVector position, float angle) {
-    
-    /***** THIS IS CURRENLTY WHATS BREAKING STUFF */
-    if(vertex.x == 0 && vertex.y == 0) {
-        return position;
-    } 
-    /***** THIS IS CURRENLTY WHATS BREAKING STUFF */
 
 
-
-    
+  public static PVector Transform(PVector vertex, PVector position, float angle){
     float sin = sin(angle);
     float cos = cos(angle);
-    return new PVector(
-        vertex.x * cos - vertex.y * sin + position.x,
-        vertex.x * sin + vertex.y * cos + position.y
-    );
+    
+    return new PVector(vertex.x * cos - vertex.y * sin + position.x, vertex.x * sin + vertex.y * cos + position.y);
   }
   
   //Overloaded method for Transform
-  public static PVector Transform(float x, float y, float angle) {
-
-    float sin = sin(angle);
-    float cos = cos(angle);
-
-    return new PVector(x * cos - y * sin + x, x * sin + y * cos + y);
+    public static PVector Transform(float x, float y, float angle) {
+        float sin = sin(angle);
+        float cos = cos(angle);
+    
+        return new PVector(x * cos - y * sin + x, x * sin + y * cos + y);
   }
+
   
 
   public static PVector zeroTransform = Transform(0, 0, 0);

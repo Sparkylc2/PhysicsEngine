@@ -6,8 +6,8 @@ public class Softbody {
     private float rectWidth;
     private float rectHeight;
 
-    private float stiffness = 300;
-    private float damping = 0.5f;
+    private float stiffness = 1000;
+    private float damping = 1f;
 
     private int numRowParticles;
     private int numColumnParticles;
@@ -21,7 +21,6 @@ public class Softbody {
     
 
     public Softbody(PVector initialPosition, float radius, float RectWidth, float RectHeight) {
-
         this.initialPosition = initialPosition;
         this.radius = radius;
 
@@ -32,6 +31,8 @@ public class Softbody {
         this.numRowParticles = (int)round(this.rectWidth/this.particleRadius);
         this.numColumnParticles = (int)round(this.rectHeight/this.particleRadius);
         softBodyParticles = new Rigidbody[numRowParticles][numColumnParticles];
+
+        softbodyList.add(this);
     }
 
 
@@ -57,7 +58,6 @@ public class Softbody {
                 AddBodyToBodyEntityList(currentParticle);
             }
         }
-
 
 
 for(int row = 0; row < numRowParticles; row++) {
@@ -109,12 +109,9 @@ private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB)
       draw();
     }
 
-
-
-
     public void draw() {
+        
         beginShape();
-        // Top edge
         for (int column = 0; column < numColumnParticles; column++) {
           PVector pos = softBodyParticles[0][column].getPosition();
           vertex(pos.x, pos.y);
@@ -136,9 +133,66 @@ private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB)
         }
         endShape(CLOSE);
 
-
     }
 
 
+/*
+
+public void draw() {
+
+    beginShape();
+    PVector center = calculateCenter();
+    // Top edge
+    for (int column = 0; column < numColumnParticles; column++) {
+        PVector pos = softBodyParticles[0][column].getPosition();
+        PVector offset = pos.copy().sub(center).normalize().mult(particleRadius);
+        vertex(pos.x + offset.x, pos.y + offset.y);
+    }
+    // Right edge
+    for (int row = 0; row < numRowParticles; row++) {
+        PVector pos = softBodyParticles[row][numColumnParticles - 1].getPosition();
+        PVector offset = pos.copy().sub(center).normalize().mult(particleRadius);
+        vertex(pos.x + offset.x, pos.y + offset.y);
+    }
+    // Bottom edge
+    for (int column = numColumnParticles - 1; column >= 0; column--) {
+        PVector pos = softBodyParticles[numRowParticles - 1][column].getPosition();
+        PVector offset = pos.copy().sub(center).normalize().mult(particleRadius);
+        vertex(pos.x + offset.x, pos.y + offset.y);
+    }
+    // Left edge
+    for (int row = numRowParticles - 1; row >= 0; row--) {
+        PVector pos = softBodyParticles[row][0].getPosition();
+        PVector offset = pos.copy().sub(center).normalize().mult(radius);
+        vertex(pos.x + offset.x, pos.y + offset.y);
+    }
+
+    endShape(CLOSE);
+}
+
+private PVector calculateCenter() {
+    float totalX = 0;
+    float totalY = 0;
+    int count = 0;
+
+    for (int row = 0; row < numRowParticles; row++) {
+        for (int col = 0; col < numColumnParticles; col++) {
+            PVector pos = softBodyParticles[row][col].getPosition();
+            totalX += pos.x;
+            totalY += pos.y;
+            count++;
+        }
+    }
+
+    if (count == 0) {
+        return new PVector(0, 0); // or some default value in case there are no particles
+    }
+
+    float centerX = totalX / count;
+    float centerY = totalY / count;
+
+    return new PVector(centerX, centerY);
+}
+*/
 }
 
