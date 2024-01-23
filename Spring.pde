@@ -231,11 +231,11 @@ public class Spring implements ForceRegistry {
     }
 
     @Override
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
             if(rigidbody == rigidbodyA) {
-                return PhysEngMath.Transform(localAnchorA, position, angle);
+                return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
             } else {
-                return PhysEngMath.Transform(localAnchorB, position, angle);
+                return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
             }
     }
 

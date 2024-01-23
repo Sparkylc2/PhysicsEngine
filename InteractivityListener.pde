@@ -291,7 +291,7 @@ public PVector getMouseCoordinatesOverRigidbody() {
 }
 
 public void drawMouseOverRigidbody() {
-
+    
     Rigidbody rigidbody = getClickedRigidbody();
     PVector coordinate = getMouseCoordinatesOverRigidbody();
 
@@ -343,26 +343,32 @@ public void drawBodies() {
 
         PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
         pushMatrix();
+        translate(mouseCoordinates.x, mouseCoordinates.y);
         rotate(this.angle);
+
         if(this.shapeType == ShapeType.CIRCLE) {
+
             float diameter = this.radius * 2.0f;
             fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
             strokeWeight(this.strokeWeight);
             stroke(this.strokeColor.x, this.strokeColor.y, this.strokeColor.z, this.opacity);
             ellipseMode(CENTER);
-            ellipse(mouseCoordinates.x, mouseCoordinates.y,  diameter,  diameter);
+
+            ellipse(0, 0, diameter,  diameter);
+
             PVector va = new PVector();
             PVector vb = new  PVector(radius, 0);
-            va = PhysEngMath.Transform(va, mouseCoordinates, this.angle);
-            vb = PhysEngMath.Transform(vb, mouseCoordinates, this.angle);
+            va = PhysEngMath.Transform(va, new PVector(), this.angle);
+            vb = PhysEngMath.Transform(vb, new PVector(), this.angle);
             line(va.x, va.y, vb.x, vb.y);
+
         } else if (this.shapeType == ShapeType.BOX) {
 
             fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
             stroke(this.strokeColor.x, this.strokeColor.y, this.strokeColor.z, this.opacity);
             strokeWeight(this.strokeWeight);
             rectMode(CENTER);
-            rect(mouseCoordinates.x, mouseCoordinates.y, this.width, this.height);
+            rect(0, 0, this.width, this.height);
         }
     }
     popMatrix();
@@ -591,19 +597,20 @@ public void createForces() {
             this.selectedRigidbody.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-            Rod rod;
+            Rod rod1;
             PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
             if(isFirstClickOnRigidbody) {
-                rod = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
+                rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
             } else {
                 this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
-                rod = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
+                rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
-            rod.setIsHingeable(this.isRodHingeable);
+            rod1.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody.addForceToForceRegistry(rod);
+
+            this.selectedRigidbody.addForceToForceRegistry(rod1);
 
         } else if(this.forceType == ForceType.MOTOR) {
             Motor motor = new Motor(this.selectedRigidbody, this.motorTargetAngularVelocity);
@@ -647,17 +654,20 @@ public void createForces() {
             this.selectedRigidbody2.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-            Rod rod;
+            Rod rod1;
 
-            float rodLength;
             PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
 
-            rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
+            rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
-            rod.setIsHingeable(this.isRodHingeable);
+            rod1.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody1.addForceToForceRegistry(rod);
-            this.selectedRigidbody2.addForceToForceRegistry(rod);
+
+
+            this.selectedRigidbody1.addForceToForceRegistry(rod1);
+
+
+            this.selectedRigidbody2.addForceToForceRegistry(rod1);
         }
 
 } else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) {
@@ -665,11 +675,12 @@ public void createForces() {
         if(this.forceType == ForceType.ROD) {
             PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
-            Rod rod = new Rod(this.selectedRigidbody1, this.localAnchorA, mouseCoordinates);
+            Rod rod1 = new Rod(this.selectedRigidbody1, this.localAnchorA, mouseCoordinates);
 
-            rod.setIsHingeable(this.isRodHingeable);
+            rod1.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody1.addForceToForceRegistry(rod);
+            this.selectedRigidbody1.addForceToForceRegistry(rod1);
+
         }
         else if(this.forceType == ForceType.MOTOR) {
 

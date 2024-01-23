@@ -68,9 +68,7 @@ public static boolean Equals(PVector a, PVector b) {
 public static PVector SnapController(InteractivityListener interactivityListener, Rigidbody rigidbody, PVector point) {
     if (rigidbody.getShapeType() == ShapeType.CIRCLE) {
         if (interactivityListener.getSnapToCenter()) {
-
             return new PVector(0, 0);
-
         } else if (interactivityListener.getSnapToEdge()) {
             
             return point.sub(rigidbody.getPosition()).normalize().mult(rigidbody.getRadius()).copy();

@@ -18,6 +18,7 @@ public boolean aPressed = false;
 public boolean qPressed = false;
 public boolean cPressed = false;
 public boolean rPressed = false;
+public boolean ePressed = false;
 
 public void keyPressed() {
     if (key == 'd' || key == 'D') {
@@ -35,6 +36,13 @@ public void keyPressed() {
         aPressed = true;
     }
 
+    if(key == 'q' || key == 'Q') {
+        qPressed = true;
+    }
+
+    if(key == 'e' || key == 'E') {
+        ePressed = true;
+    }
     if (keyCode == SHIFT) {
         shiftPressed = true;
     }
@@ -62,44 +70,73 @@ public void keyPressed() {
         softbody.CreateBoxSoftbody();
     }
 
-    if(key == 'q') {
-        qCount++;
-        if(qCount == 1) {
-            interactivityListener.setSnapToCenter(true);
-            interactivityListener.setSnapToEdge(false);
-
-            if(userInterface.getController("AddSpring").getValue() == 1) {
-                userInterface.getController("SpringSnapToCenter").setValue(1);
-                userInterface.getController("SpringSnapToEdge").setValue(0);
-            } else if(userInterface.getController("AddRod").getValue() == 1) {
-                userInterface.getController("RodSnapToCenter").setValue(1);
-                userInterface.getController("RodSnapToEdge").setValue(0);
+    if(key == 'q' || key == 'Q') {
+        if(userInterface.getTab("Forces").isActive()){
+            qCount++;
+            if(qCount == 1) {
+                interactivityListener.setSnapToCenter(true);
+                interactivityListener.setSnapToEdge(false);
+    
+                if(userInterface.getController("AddSpring").getValue() == 1) {
+                    userInterface.getController("SpringSnapToCenter").setValue(1);
+                    userInterface.getController("SpringSnapToEdge").setValue(0);
+                } else if(userInterface.getController("AddRod").getValue() == 1) {
+                    userInterface.getController("RodSnapToCenter").setValue(1);
+                    userInterface.getController("RodSnapToEdge").setValue(0);
+                }
+            } else if(qCount == 2) {
+                interactivityListener.setSnapToCenter(false);
+                interactivityListener.setSnapToEdge(true);
+    
+                if(userInterface.getController("AddSpring").getValue() == 1) {
+                    userInterface.getController("SpringSnapToCenter").setValue(0);
+                    userInterface.getController("SpringSnapToEdge").setValue(1);
+                } else if(userInterface.getController("AddRod").getValue() == 1) {
+                    userInterface.getController("RodSnapToCenter").setValue(0);
+                    userInterface.getController("RodSnapToEdge").setValue(1);
+                }
+            } else if(qCount == 3) {
+                interactivityListener.setSnapToCenter(false);
+                interactivityListener.setSnapToEdge(false);
+    
+                if(userInterface.getController("AddSpring").getValue() == 1) {
+                    userInterface.getController("SpringSnapToCenter").setValue(0);
+                    userInterface.getController("SpringSnapToEdge").setValue(0);
+                } else if(userInterface.getController("AddRod").getValue() == 1) {
+                    userInterface.getController("RodSnapToCenter").setValue(0);
+                    userInterface.getController("RodSnapToEdge").setValue(0);
+                }
+                qCount = 0;
             }
-        } else if(qCount == 2) {
-            interactivityListener.setSnapToCenter(false);
-            interactivityListener.setSnapToEdge(true);
-
-            if(userInterface.getController("AddSpring").getValue() == 1) {
-                userInterface.getController("SpringSnapToCenter").setValue(0);
-                userInterface.getController("SpringSnapToEdge").setValue(1);
-            } else if(userInterface.getController("AddRod").getValue() == 1) {
-                userInterface.getController("RodSnapToCenter").setValue(0);
-                userInterface.getController("RodSnapToEdge").setValue(1);
-            }
-        } else if(qCount == 3) {
-            interactivityListener.setSnapToCenter(false);
-            interactivityListener.setSnapToEdge(false);
-
-            if(userInterface.getController("AddSpring").getValue() == 1) {
-                userInterface.getController("SpringSnapToCenter").setValue(0);
-                userInterface.getController("SpringSnapToEdge").setValue(0);
-            } else if(userInterface.getController("AddRod").getValue() == 1) {
-                userInterface.getController("RodSnapToCenter").setValue(0);
-                userInterface.getController("RodSnapToEdge").setValue(0);
-            }
-            qCount = 0;
         }
     }
+
+    if(qPressed) {
+        if(shiftPressed) {
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() - 10);
+            }
+        } else {
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() - 1);
+            }
+        }
+    }
+
+    if(ePressed) {
+        if(shiftPressed){
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() + 10);
+            }
+        } else {
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() + 1);
+            }
+        }
+    }
+
+ 
+
     if(key == '1') {
         if(userInterface.getTab("Forces").isActive()) {
             userInterface.getController("AddSpring").setValue(1);
@@ -328,6 +365,12 @@ void keyReleased() {
     }
     if (key == 'a' || key == 'A') {
         aPressed = false;
+    }
+    if(key == 'q' || key == 'Q') {
+        qPressed = false;
+    }
+    if(key == 'e' || key == 'E') {
+        ePressed = false;
     }
 }
 

@@ -102,12 +102,8 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
 
                 dot = PVector.dot(relativeVelocity, this.direction);
+                this.dampingForce.set(this.direction.copy().mult(damping * dot));
 
-                if(dot > 0.8f) {
-                    this.rigidbodyA.setVelocity(this.dampingForce.set(0,0)); 
-                } else {
-                    this.dampingForce.set(this.direction.copy().mult(-damping * dot));
-                }
 
                 /*
                 if(!this.isHingeable) {
@@ -148,11 +144,8 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.relativeVelocity.set(PVector.add(this.velocityA, this.velocityB));
                 dot = PVector.dot(relativeVelocity, this.direction);
 
-                if(dot > 0.8f) {
-                    this.rigidbodyA.setVelocity(this.dampingForce.set(0,0));
-                } else {
-                    this.dampingForce.set(this.direction.copy().mult(-damping * dot));
-                }
+                this.dampingForce.set(this.direction.copy().mult(-damping * dot));
+
                 /*
                 if(!this.isHingeable) {
                     float rigidbodyAngle = rigidbodyB.getAngle();
@@ -193,9 +186,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
         this.relativeVelocity.set(this.velocityB.sub(this.velocityA));
         dot = PVector.dot(relativeVelocity, this.direction);
 
-        if(dot > 0.8f) {
-            rigidbodyA.setVelocity(velocityA.sub(this.direction.copy().mult(dot)));
-        }
+        this.dampingForce.set(this.direction.copy().mult(-damping * dot));
 
         /*
         if(!this.isHingeable) {
@@ -244,7 +235,7 @@ public void draw() {
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
     } else {
 
-        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
         PVector worldAnchorB = anchorPoint;
         strokeWeight(0.15);
         stroke(0);
@@ -258,11 +249,11 @@ public void draw() {
 
 
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
         if(rigidbody == rigidbodyA) {
-            return PhysEngMath.Transform(localAnchorA, position, angle);
+            return PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbody.getAngle());
         } else {
-            return PhysEngMath.Transform(localAnchorB, position, angle);
+            return PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbody.getAngle());
         }
 }
 

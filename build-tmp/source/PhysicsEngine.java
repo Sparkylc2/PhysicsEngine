@@ -111,8 +111,8 @@ public void setup() {
     AddBodyToBodyEntityList(spinningBody);
 
 
-    softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
-    softbody.CreateBoxSoftbody();
+    //softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
+    //softbody.CreateBoxSoftbody();
     //softbody = new Softbody(new PVector(-20, -50), 0.0f, 2, 2);
     //softbody.CreateBoxSoftbody();
 
@@ -1185,7 +1185,7 @@ public static CollisionResult PointSegmentDistance(PVector point, PVector lineSe
 public interface ForceRegistry {
     public PVector getForce(Rigidbody rigidbody, PVector position);
     public void draw();
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle);
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position);
 }
 
 public enum ForceType {
@@ -2783,9 +2783,8 @@ public class Gravity implements ForceRegistry {
   }
 
     @Override
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
-      return position.copy();
-    
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+      return rigidbody.getPosition();
     }
 
 }
@@ -3134,26 +3133,32 @@ public void drawBodies() {
 
         PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
         pushMatrix();
+        translate(mouseCoordinates.x, mouseCoordinates.y);
         rotate(this.angle);
+
         if(this.shapeType == ShapeType.CIRCLE) {
+
             float diameter = this.radius * 2.0f;
             fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
             strokeWeight(this.strokeWeight);
             stroke(this.strokeColor.x, this.strokeColor.y, this.strokeColor.z, this.opacity);
             ellipseMode(CENTER);
-            ellipse(mouseCoordinates.x, mouseCoordinates.y,  diameter,  diameter);
+
+            ellipse(0, 0, diameter,  diameter);
+
             PVector va = new PVector();
             PVector vb = new  PVector(radius, 0);
-            va = PhysEngMath.Transform(va, mouseCoordinates, this.angle);
-            vb = PhysEngMath.Transform(vb, mouseCoordinates, this.angle);
+            va = PhysEngMath.Transform(va, new PVector(), this.angle);
+            vb = PhysEngMath.Transform(vb, new PVector(), this.angle);
             line(va.x, va.y, vb.x, vb.y);
+
         } else if (this.shapeType == ShapeType.BOX) {
 
             fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
             stroke(this.strokeColor.x, this.strokeColor.y, this.strokeColor.z, this.opacity);
             strokeWeight(this.strokeWeight);
             rectMode(CENTER);
-            rect(mouseCoordinates.x, mouseCoordinates.y, this.width, this.height);
+            rect(0, 0, this.width, this.height);
         }
     }
     popMatrix();
@@ -3382,19 +3387,20 @@ public void createForces() {
             this.selectedRigidbody.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-            Rod rod;
+            Rod rod1;
             PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
             if(isFirstClickOnRigidbody) {
-                rod = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
+                rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
             } else {
                 this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
-                rod = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
+                rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
-            rod.setIsHingeable(this.isRodHingeable);
+            rod1.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody.addForceToForceRegistry(rod);
+
+            this.selectedRigidbody.addForceToForceRegistry(rod1);
 
         } else if(this.forceType == ForceType.MOTOR) {
             Motor motor = new Motor(this.selectedRigidbody, this.motorTargetAngularVelocity);
@@ -3438,17 +3444,20 @@ public void createForces() {
             this.selectedRigidbody2.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-            Rod rod;
+            Rod rod1;
 
-            float rodLength;
             PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
 
-            rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
+            rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
-            rod.setIsHingeable(this.isRodHingeable);
+            rod1.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody1.addForceToForceRegistry(rod);
-            this.selectedRigidbody2.addForceToForceRegistry(rod);
+
+
+            this.selectedRigidbody1.addForceToForceRegistry(rod1);
+
+
+            this.selectedRigidbody2.addForceToForceRegistry(rod1);
         }
 
 } else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) {
@@ -3456,11 +3465,12 @@ public void createForces() {
         if(this.forceType == ForceType.ROD) {
             PVector mouseCoordinates = screenToWorld(mouseX, mouseY);
 
-            Rod rod = new Rod(this.selectedRigidbody1, this.localAnchorA, mouseCoordinates);
+            Rod rod1 = new Rod(this.selectedRigidbody1, this.localAnchorA, mouseCoordinates);
 
-            rod.setIsHingeable(this.isRodHingeable);
+            rod1.setIsHingeable(this.isRodHingeable);
 
-            this.selectedRigidbody1.addForceToForceRegistry(rod);
+            this.selectedRigidbody1.addForceToForceRegistry(rod1);
+
         }
         else if(this.forceType == ForceType.MOTOR) {
 
@@ -3897,8 +3907,8 @@ if(!drawMotorForce) {
 
 }
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
-    return PhysEngMath.Transform(localAnchor, position, angle);
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
+    return PhysEngMath.Transform(localAnchor, position, rigidbody.getAngle());
 }
 
 
@@ -3962,6 +3972,7 @@ public boolean aPressed = false;
 public boolean qPressed = false;
 public boolean cPressed = false;
 public boolean rPressed = false;
+public boolean ePressed = false;
 
 public void keyPressed() {
     if (key == 'd' || key == 'D') {
@@ -3979,6 +3990,13 @@ public void keyPressed() {
         aPressed = true;
     }
 
+    if(key == 'q' || key == 'Q') {
+        qPressed = true;
+    }
+
+    if(key == 'e' || key == 'E') {
+        ePressed = true;
+    }
     if (keyCode == SHIFT) {
         shiftPressed = true;
     }
@@ -4006,44 +4024,73 @@ public void keyPressed() {
         softbody.CreateBoxSoftbody();
     }
 
-    if(key == 'q') {
-        qCount++;
-        if(qCount == 1) {
-            interactivityListener.setSnapToCenter(true);
-            interactivityListener.setSnapToEdge(false);
-
-            if(userInterface.getController("AddSpring").getValue() == 1) {
-                userInterface.getController("SpringSnapToCenter").setValue(1);
-                userInterface.getController("SpringSnapToEdge").setValue(0);
-            } else if(userInterface.getController("AddRod").getValue() == 1) {
-                userInterface.getController("RodSnapToCenter").setValue(1);
-                userInterface.getController("RodSnapToEdge").setValue(0);
+    if(key == 'q' || key == 'Q') {
+        if(userInterface.getTab("Forces").isActive()){
+            qCount++;
+            if(qCount == 1) {
+                interactivityListener.setSnapToCenter(true);
+                interactivityListener.setSnapToEdge(false);
+    
+                if(userInterface.getController("AddSpring").getValue() == 1) {
+                    userInterface.getController("SpringSnapToCenter").setValue(1);
+                    userInterface.getController("SpringSnapToEdge").setValue(0);
+                } else if(userInterface.getController("AddRod").getValue() == 1) {
+                    userInterface.getController("RodSnapToCenter").setValue(1);
+                    userInterface.getController("RodSnapToEdge").setValue(0);
+                }
+            } else if(qCount == 2) {
+                interactivityListener.setSnapToCenter(false);
+                interactivityListener.setSnapToEdge(true);
+    
+                if(userInterface.getController("AddSpring").getValue() == 1) {
+                    userInterface.getController("SpringSnapToCenter").setValue(0);
+                    userInterface.getController("SpringSnapToEdge").setValue(1);
+                } else if(userInterface.getController("AddRod").getValue() == 1) {
+                    userInterface.getController("RodSnapToCenter").setValue(0);
+                    userInterface.getController("RodSnapToEdge").setValue(1);
+                }
+            } else if(qCount == 3) {
+                interactivityListener.setSnapToCenter(false);
+                interactivityListener.setSnapToEdge(false);
+    
+                if(userInterface.getController("AddSpring").getValue() == 1) {
+                    userInterface.getController("SpringSnapToCenter").setValue(0);
+                    userInterface.getController("SpringSnapToEdge").setValue(0);
+                } else if(userInterface.getController("AddRod").getValue() == 1) {
+                    userInterface.getController("RodSnapToCenter").setValue(0);
+                    userInterface.getController("RodSnapToEdge").setValue(0);
+                }
+                qCount = 0;
             }
-        } else if(qCount == 2) {
-            interactivityListener.setSnapToCenter(false);
-            interactivityListener.setSnapToEdge(true);
-
-            if(userInterface.getController("AddSpring").getValue() == 1) {
-                userInterface.getController("SpringSnapToCenter").setValue(0);
-                userInterface.getController("SpringSnapToEdge").setValue(1);
-            } else if(userInterface.getController("AddRod").getValue() == 1) {
-                userInterface.getController("RodSnapToCenter").setValue(0);
-                userInterface.getController("RodSnapToEdge").setValue(1);
-            }
-        } else if(qCount == 3) {
-            interactivityListener.setSnapToCenter(false);
-            interactivityListener.setSnapToEdge(false);
-
-            if(userInterface.getController("AddSpring").getValue() == 1) {
-                userInterface.getController("SpringSnapToCenter").setValue(0);
-                userInterface.getController("SpringSnapToEdge").setValue(0);
-            } else if(userInterface.getController("AddRod").getValue() == 1) {
-                userInterface.getController("RodSnapToCenter").setValue(0);
-                userInterface.getController("RodSnapToEdge").setValue(0);
-            }
-            qCount = 0;
         }
     }
+
+    if(qPressed) {
+        if(shiftPressed) {
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() - 10);
+            }
+        } else {
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() - 1);
+            }
+        }
+    }
+
+    if(ePressed) {
+        if(shiftPressed){
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() + 10);
+            }
+        } else {
+            if(userInterface.getTab("Rigidbodies").isActive()) {
+                userInterface.getController("Angle").setValue(userInterface.getController("Angle").getValue() + 1);
+            }
+        }
+    }
+
+ 
+
     if(key == '1') {
         if(userInterface.getTab("Forces").isActive()) {
             userInterface.getController("AddSpring").setValue(1);
@@ -4272,6 +4319,12 @@ public void keyReleased() {
     }
     if (key == 'a' || key == 'A') {
         aPressed = false;
+    }
+    if(key == 'q' || key == 'Q') {
+        qPressed = false;
+    }
+    if(key == 'e' || key == 'E') {
+        ePressed = false;
     }
 }
 
@@ -4516,7 +4569,7 @@ public final int MAX_ITERATIONS = 128;
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
 
-public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f);
+public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
 public final float GRAVITY_MAG = 9.81f;
 
 
@@ -5487,7 +5540,8 @@ public PVector[] reverseVertices() {
   ================================== INTEGRATOR ====================================================
   ==================================================================================================
   */
-    public void RK4Position(float dt) {
+
+     public void RK4Position(float dt) {
 
         /*-------------- RK4 Position And Velocity Integration --------------*/
         PVector k1_v = PVector.mult(calculateAcceleration(this.position), dt);
@@ -5528,35 +5582,57 @@ public PVector[] reverseVertices() {
   }
 
 
+  public void angularIntegration(float dt) {
+
+    this.angularVelocity += this.netTorque * this.InvRotationalInertia * dt;
+    this.angle += this.angularVelocity*dt;
+
+
+  }
 
 
 
     public PVector calculateAcceleration(PVector position) {
+
+        ArrayList<ForceRegistry> rodList = new ArrayList<ForceRegistry>();
         /*--------------- Force Reset --------------*/
         this.netForce.set(0,0,0);
+        this.netTorque = 0f;
         /*------------------------------------------*/
 
         /*------------ Net Force Calculation ------------*/
         for (ForceRegistry force : this.forceRegistry) {
+
+            if(force instanceof Rod){
+              rodList.add(force);
+              continue;
+            }
+
             PVector currentForce = force.getForce(this, position);
             this.netForce.add(currentForce);
 
-            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position, this.angle), this.position);
-            this.netForce.set(this.netForce.x, this.netForce.y, leverArm.cross(currentForce).z);
+            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position), this.position);
+            this.netTorque += leverArm.cross(currentForce).z;
+
+        }
+
+        for(ForceRegistry rod : rodList) {
+            PVector currentForce = rod.getForce(this, position);
+            this.netForce.add(currentForce);
+
+            PVector leverArm = PVector.sub(rod.getApplicationPoint(this, this.position), this.position);
+            this.netTorque += leverArm.cross(currentForce).z;
+
         }
         /*-----------------------------------------------*/
 
         /*------------ Acceleration Calculation ------------*/
-        return this.netForce;
+        return this.netForce.mult(this.InvMass);
         /*--------------------------------------------------*/
 
     }
 
   
-  public void angularIntegration(float dt) {
-    this.angularVelocity += this.netForce.z * this.InvRotationalInertia * dt;
-    this.angle += this.angularVelocity*dt;
-  }
   /*
   ==================================================================================================
   ==================================READ-ONLY FIELDS================================================
@@ -5891,12 +5967,8 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
 
                 dot = PVector.dot(relativeVelocity, this.direction);
+                this.dampingForce.set(this.direction.copy().mult(damping * dot));
 
-                if(dot > 0.8f) {
-                    this.rigidbodyA.setVelocity(this.dampingForce.set(0,0)); 
-                } else {
-                    this.dampingForce.set(this.direction.copy().mult(-damping * dot));
-                }
 
                 /*
                 if(!this.isHingeable) {
@@ -5937,11 +6009,8 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.relativeVelocity.set(PVector.add(this.velocityA, this.velocityB));
                 dot = PVector.dot(relativeVelocity, this.direction);
 
-                if(dot > 0.8f) {
-                    this.rigidbodyA.setVelocity(this.dampingForce.set(0,0));
-                } else {
-                    this.dampingForce.set(this.direction.copy().mult(-damping * dot));
-                }
+                this.dampingForce.set(this.direction.copy().mult(-damping * dot));
+
                 /*
                 if(!this.isHingeable) {
                     float rigidbodyAngle = rigidbodyB.getAngle();
@@ -5982,9 +6051,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
         this.relativeVelocity.set(this.velocityB.sub(this.velocityA));
         dot = PVector.dot(relativeVelocity, this.direction);
 
-        if(dot > 0.8f) {
-            rigidbodyA.setVelocity(velocityA.sub(this.direction.copy().mult(dot)));
-        }
+        this.dampingForce.set(this.direction.copy().mult(-damping * dot));
 
         /*
         if(!this.isHingeable) {
@@ -6033,7 +6100,7 @@ public void draw() {
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
     } else {
 
-        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
         PVector worldAnchorB = anchorPoint;
         strokeWeight(0.15f);
         stroke(0);
@@ -6047,11 +6114,11 @@ public void draw() {
 
 
 @Override
-public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
         if(rigidbody == rigidbodyA) {
-            return PhysEngMath.Transform(localAnchorA, position, angle);
+            return PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbody.getAngle());
         } else {
-            return PhysEngMath.Transform(localAnchorB, position, angle);
+            return PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbody.getAngle());
         }
 }
 
@@ -6309,7 +6376,7 @@ public class Softbody {
 
 
     public void CreateBoxSoftbody() {
-        float spacingX = 2;
+        float spacingX = 2f;
         float spacingY = 2f;
 
         float initialParticlePositionX = this.initialPosition.x - this.rectWidth/2;
@@ -6701,11 +6768,11 @@ public class Spring implements ForceRegistry {
     }
 
     @Override
-    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position, float angle) {
+    public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
             if(rigidbody == rigidbodyA) {
-                return PhysEngMath.Transform(localAnchorA, position, angle);
+                return PhysEngMath.Transform(localAnchorA, position, rigidbodyA.getAngle());
             } else {
-                return PhysEngMath.Transform(localAnchorB, position, angle);
+                return PhysEngMath.Transform(localAnchorB, position, rigidbodyB.getAngle());
             }
     }
 

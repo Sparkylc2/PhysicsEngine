@@ -37,7 +37,7 @@ public class Softbody {
 
 
     public void CreateBoxSoftbody() {
-        float spacingX = 2;
+        float spacingX = 2f;
         float spacingY = 2f;
 
         float initialParticlePositionX = this.initialPosition.x - this.rectWidth/2;
