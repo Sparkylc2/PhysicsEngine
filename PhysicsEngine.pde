@@ -40,7 +40,7 @@ void setup() {
                                                             0.05f, new PVector(0, 0, 0),
                                                             new PVector(255, 255, 255));
 
-    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(2f, 1f, 0.5f, false, true,
+    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
                                                             0.05f, new PVector(0, 0, 0),
                                                             new PVector(255, 255, 255));
     
@@ -48,12 +48,17 @@ void setup() {
     Motor motor = new Motor(spinningBody, 0.5);
 
     //spinningBody.addForceToForceRegistry(motor);
-    spinningBody.setIsTranslationallyStatic(true);
+    Rod rod = new Rod(springBody, test, new PVector(), new PVector());
+    rod.setLength(0);
+    springBody.addForceToForceRegistry(rod);
+    test.addForceToForceRegistry(rod); 
 
-    test.SetInitialPosition(new PVector(-10, -5.1));
+    test.SetInitialPosition(new PVector(-10, -5));
+    test.addBodyToCollisionExclusionList(springBody);
+
 
     springBody.SetInitialPosition(new PVector(-10, -5));
-    springBody.setIsRotationallyStatic(false);
+    springBody.addBodyToCollisionExclusionList(test);
 
     Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
     Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));

@@ -722,6 +722,14 @@ public PVector[] reverseVertices() {
     this.angle = angle;
   }
 
+  public void addBodyToCollisionExclusionList(Rigidbody rigidbody) {
+    this.collisionExclusionList.add(rigidbody);
+  }
+
+  public ArrayList<Rigidbody> getCollisionExclusionList() {
+    return this.collisionExclusionList;
+  }
+
   public float getAngularVelocity(){
     return this.angularVelocity;
   }

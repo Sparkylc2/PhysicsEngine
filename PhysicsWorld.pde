@@ -450,15 +450,18 @@ public void BroadPhaseStep() {
     for (int i = 0; i < rigidbodyList.size() - 1; i++) {
         
         Rigidbody rigidbodyA = rigidbodyList.get(i);
+        ArrayList<Rigidbody> rigidbodyACollisionExclusionList = rigidbodyA.getCollisionExclusionList();
         AABB rigidbodyA_AABB = rigidbodyA.GetAABB();
         
         
         
         for (int j = i + 1; j < rigidbodyList.size(); j++) {
-            
             Rigidbody rigidbodyB = rigidbodyList.get(j);
             AABB rigidbodyB_AABB = rigidbodyB.GetAABB();
 
+            if(rigidbodyACollisionExclusionList.contains(rigidbodyB)) {
+                continue;
+            }
             
             if ((rigidbodyA.getIsStatic() && rigidbodyB.getIsStatic())) {
                 continue;
