@@ -446,7 +446,10 @@ public void ResolveCollisionRotationAndFriction(CollisionManifold contact) {
 */
 
 public void BroadPhaseStep() {
-    
+    if(this.isPaused) {
+        return;
+    }
+
     for (int i = 0; i < rigidbodyList.size() - 1; i++) {
         
         Rigidbody rigidbodyA = rigidbodyList.get(i);
@@ -460,9 +463,10 @@ public void BroadPhaseStep() {
             AABB rigidbodyB_AABB = rigidbodyB.GetAABB();
 
             if(rigidbodyACollisionExclusionList.contains(rigidbodyB)) {
+                System.out.println("Skipped Collision");
                 continue;
             }
-            
+
             if ((rigidbodyA.getIsStatic() && rigidbodyB.getIsStatic())) {
                 continue;
             }

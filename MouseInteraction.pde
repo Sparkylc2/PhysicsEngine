@@ -70,8 +70,7 @@ public void keyPressed() {
         softbody.CreateBoxSoftbody();
     }
 
-    if(key == 'q' || key == 'Q') {
-        if(userInterface.getTab("Forces").isActive()){
+    if(key == 'z' || key == 'Z') {
             qCount++;
             if(qCount == 1) {
                 interactivityListener.setSnapToCenter(true);
@@ -108,7 +107,6 @@ public void keyPressed() {
                 }
                 qCount = 0;
             }
-        }
     }
 
     if(qPressed) {

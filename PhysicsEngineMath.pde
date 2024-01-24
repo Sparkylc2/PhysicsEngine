@@ -70,18 +70,14 @@ public static PVector SnapController(InteractivityListener interactivityListener
         if (interactivityListener.getSnapToCenter()) {
             return new PVector(0, 0);
         } else if (interactivityListener.getSnapToEdge()) {
-            
             return point.sub(rigidbody.getPosition()).normalize().mult(rigidbody.getRadius()).copy();
         } else {
             return PVector.sub(point, rigidbody.getPosition());
         }
     } else {
         if (interactivityListener.getSnapToCenter()) {
-
             return new PVector(0, 0);
-
         } else if (interactivityListener.getSnapToEdge()) {
-
             PVector closestOnPolygon = new PVector();
             float minDistanceSq = Float.MAX_VALUE;
             PVector[] vertices = rigidbody.GetTransformedVertices();
@@ -100,6 +96,15 @@ public static PVector SnapController(InteractivityListener interactivityListener
             return PVector.sub(point, rigidbody.getPosition());
         }
     }
+}
+
+
+public PVector[] reverseVertices(PVector[] vertices) {
+    PVector[] reversedVertices = new PVector[vertices.length];
+    for (int i = 0; i < vertices.length; i++) {
+        reversedVertices[i] = vertices[vertices.length - 1 - i];
+    }
+    return reversedVertices;
 }
 
   private static PVector getClosestPointOnLine(PVector start, PVector end, PVector point) {

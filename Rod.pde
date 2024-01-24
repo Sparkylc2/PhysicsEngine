@@ -17,6 +17,7 @@ public class Rod implements ForceRegistry {
 
     private boolean isHingeable;
     private boolean isTwoBodyRod;
+    private boolean isJoint;
 
     private Rigidbody rigidbodyA;
     private Rigidbody rigidbodyB;
@@ -54,8 +55,6 @@ public class Rod implements ForceRegistry {
         this.isTwoBodyRod = false;
 
         this.length = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
-
-
     }
 
     public Rod(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {
@@ -297,6 +296,20 @@ public void setDamping(float damping) {
 public void setTwoBodyRod(boolean isTwoBodyRod) {
     this.isTwoBodyRod = isTwoBodyRod;
   }
+
+public void setIsJoint(boolean isJoint) {
+    this.isJoint = isJoint;
+    if(this.isJoint) {
+        if(this.isTwoBodyRod){
+            this.length = 0f;
+            rigidbodyA.addBodyToCollisionExclusionList(rigidbodyB);
+            rigidbodyB.addBodyToCollisionExclusionList(rigidbodyA);
+        } else {
+            this.length = 0f;
+        }
+    }
+}   
+
 
 
 public float getLength() {

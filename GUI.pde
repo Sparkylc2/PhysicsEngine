@@ -53,6 +53,7 @@
         private boolean defaultIsRotStatic = false;
 
         private boolean defaultAddGravity = true;
+        private boolean defaultIsCollidable = true;
         private float defaultAngle = 0f;
         private float defaultAngularVelocity = 0f;
 
@@ -74,6 +75,7 @@
         private boolean defaultSpringIsHingeable = true;
 
         private boolean defaultRodIsHingeable = true;
+        private boolean defaultRodIsJoint = false;
 
         private boolean defaultSnapToCenter = true;
         private boolean defaultSnapToEdge = false;
@@ -131,6 +133,7 @@
         interactivityListener.setIsTranslationallyStatic(defaultIsTransStatic);
         interactivityListener.setIsRotationallyStatic(defaultIsRotStatic);
         interactivityListener.setAddGravity(defaultAddGravity);
+        interactivityListener.setCollidability(defaultIsCollidable);
         
         interactivityListener.setSpringConstant(defaultSpringConstant);
         interactivityListener.setSpringDamping(defaultSpringDamping);
@@ -142,6 +145,7 @@
         interactivityListener.setSpringIsPerfect(defaultSpringIsPerfect);
         interactivityListener.setSpringIsHingeable(defaultSpringIsHingeable);
         interactivityListener.setRodIsHingeable(defaultRodIsHingeable);
+        interactivityListener.setRodIsJoint(defaultRodIsJoint);
         
         interactivityListener.setSnapToCenter(defaultSnapToCenter);
         interactivityListener.setSnapToEdge(defaultSnapToEdge);
@@ -537,8 +541,8 @@
                                                 })
                                         ;
                         Toggle addGravity = userInterface.addToggle("AddGravity")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Add Gravity")
                                         .setVisible(false)
                                         .setValue(defaultAddGravity)
@@ -546,6 +550,19 @@
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         AddGravitySelectorElementOnChange();
+                                                    }
+                                                })
+                                            ;
+                        Toggle isCollidable = userInterface.addToggle("IsCollidable") 
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setLabel("Collidable")
+                                        .setVisible(false)
+                                        .setValue(defaultIsCollidable)
+                                        .setGroup(RigidbodyGeneration)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        IsCollidableSelectorElementOnChange();
                                                     }
                                                 })
                                             ;
@@ -740,8 +757,8 @@
                                                 })
                                             ;
                         Toggle rodSnapToCenter = userInterface.addToggle("RodSnapToCenter")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Center")
                                         .setVisible(false)
                                         .setValue(defaultSnapToCenter)
@@ -754,8 +771,8 @@
                                             ;
 
                         Toggle rodSnapToEdge = userInterface.addToggle("RodSnapToEdge")
-                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Edge")
                                         .setVisible(false)
                                         .setValue(defaultSnapToEdge)
@@ -763,6 +780,19 @@
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         RodSnapToEdgeSelectorElementOnChange();
+                                                    }
+                                                })
+                                            ;
+                        Toggle rodIsJoint = userInterface.addToggle("RodIsJoint")
+                                        .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
+                                        .setLabel("Joint")
+                                        .setVisible(false)
+                                        .setValue(defaultRodIsJoint)
+                                        .setGroup(ForceGeneration)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        RodIsJointSelectorElementOnChange();
                                                     }
                                                 })
                                             ;
@@ -871,6 +901,7 @@ userInterface.getController("Angle").getCaptionLabel().align(ControlP5.RIGHT, Co
 userInterface.getController("AngularVelocity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 
 userInterface.getController("AddGravity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("IsCollidable").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 
 userInterface.getController("AddSpring").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("AddRod").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
@@ -893,6 +924,7 @@ userInterface.getController("SpringSnapToEdge").getCaptionLabel().align(ControlP
 userInterface.getController("RodIsHingeable").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RodSnapToCenter").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RodSnapToEdge").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+userInterface.getController("RodIsJoint").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 userInterface.getController("MotorTargetAngularVelocity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 userInterface.getController("MotorDrawMotor").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
@@ -903,9 +935,6 @@ userInterface.getController("MotorDrawMotorForce").getCaptionLabel().align(Contr
 
 
 userInterface.getTab("default").hide();
-
-       // TODO: IMPLEMENT A STARTING ANGLE FOR THE RIGIDRODS, SO OBJECTS CAN BE JOINTED AT
-       //ANGLES AND STAY FIXED
 
     }
 
@@ -1005,6 +1034,7 @@ private void ShapeSelectorElementOnSelect() {
     userInterface.getController("Angle").setVisible(true);
     userInterface.getController("AngularVelocity").setVisible(true);
     userInterface.getController("AddGravity").setVisible(true);
+    userInterface.getController("IsCollidable").setVisible(true);
     
 }
 
@@ -1040,7 +1070,9 @@ private void ShapeSelectorElementOnDeselect() {
     userInterface.getController("AngularVelocity").setVisible(false);
 
     userInterface.getController("AddGravity").setVisible(false);
+    userInterface.getController("IsCollidable").setVisible(false);
 }
+
 /*-------------------------------- Global Colouring Element Methods ------------------------------*/
  private void ColouringElementOnDeselect() {
      if(userInterface.getController("FillColour").getValue() == 0
@@ -1328,6 +1360,15 @@ private void AddGravitySelectorElementOnChange() {
             interactivityListener.setAddGravity(false);
         }
 }
+/*--------------------------------- IsCollidable Selector Element ---------------------------------*/
+private void IsCollidableSelectorElementOnChange() {
+
+        if(userInterface.getController("IsCollidable").getValue() == 1) {
+                interactivityListener.setCollidability(true);
+        } else {
+                interactivityListener.setCollidability(false);
+        }
+}
 
 /*--------------------------------- Forces Tab ---------------------------------------------------*/
 
@@ -1351,6 +1392,7 @@ private void ForceSelectorElementDeselect() {
     userInterface.getController("RodIsHingeable").setVisible(false);
     userInterface.getController("RodSnapToCenter").setVisible(false);
     userInterface.getController("RodSnapToEdge").setVisible(false);
+    userInterface.getController("RodIsJoint").setVisible(false);
 
 
     /*-------------------------------- Motor Elements ------------------------------------*/
@@ -1408,6 +1450,7 @@ private void RodForceSelectorOnChange() {
         userInterface.getController("RodIsHingeable").setVisible(true);
         userInterface.getController("RodSnapToCenter").setVisible(true);
         userInterface.getController("RodSnapToEdge").setVisible(true);
+        userInterface.getController("RodIsJoint").setVisible(true);
 
     } else if(userInterface.getController("AddSpring").getValue() == 0 && userInterface.getController("AddRod").getValue() == 0 && userInterface.getController("AddMotor").getValue() == 0) {
 
@@ -1526,6 +1569,15 @@ private void RodSnapToEdgeSelectorElementOnChange() {
     boolean snapToEdge = userInterface.getController("RodSnapToEdge").getValue() == 1 ? true : false;
     interactivityListener.setSnapToEdge(snapToEdge);
 
+}
+
+private void RodIsJointSelectorElementOnChange() {
+
+        if(userInterface.getController("RodIsJoint").getValue() == 1) {
+                interactivityListener.setRodIsJoint(true);
+        } else {
+                interactivityListener.setRodIsJoint(false);
+        }
 }
 
 

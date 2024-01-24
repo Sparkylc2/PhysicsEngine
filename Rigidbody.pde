@@ -149,7 +149,6 @@ public class Rigidbody {
     vertices[3] = new PVector(left, bottom);
     return vertices;
   }
-
   
   public PVector[] GetTransformedVertices() {
     if (this.transformUpdateRequired) {
@@ -290,25 +289,25 @@ public class Rigidbody {
       maxY = this.position.y + this.Radius;
 
     } else if (this.ShapeType == ShapeType.BOX) {
-  PVector[] vertices = this.GetTransformedVertices();
-  for (PVector vertex : vertices) {
-    if (vertex.x < minX) {
-      minX = vertex.x;
-    }
-    if (vertex.x > maxX) {
-      maxX = vertex.x;
-    }
-    if (vertex.y < minY) {
-      minY = vertex.y;
-    }
-    if (vertex.y > maxY) {
-      maxY = vertex.y;
-    }
-  }
+      PVector[] vertices = this.GetTransformedVertices();
+      for (PVector vertex : vertices) {
+        if (vertex.x < minX) {
+          minX = vertex.x;
+        }
+        if (vertex.x > maxX) {
+          maxX = vertex.x;
+        }
+        if (vertex.y < minY) {
+          minY = vertex.y;
+        }
+        if (vertex.y > maxY) {
+          maxY = vertex.y;
+        }
+      }
     }
 
-this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
-  this.aabbUpdateRequired = false;
+    this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
+    this.aabbUpdateRequired = false;
 
   }
   return this.aabb;
@@ -389,16 +388,6 @@ public boolean containsPolygon(float x, float y) {
 
 
 
-public PVector[] reverseVertices() {
-    PVector[] vertices = this.transformedVertices;
-    PVector[] reversedVertices = new PVector[vertices.length];
-
-    for (int i = 0; i < vertices.length; i++) {
-        reversedVertices[i] = vertices[vertices.length - 1 - i];
-    }
-    return reversedVertices;
-}
-
 /*-------------------------------------------------------------------------------------*/
   
 
@@ -419,9 +408,11 @@ public PVector[] reverseVertices() {
 
             this.aabbUpdateRequired = true;
             this.transformUpdateRequired = true;
-
             dt /= (float)iterations;
+            PVector pos = this.position.copy();
+            this.RK4Position(dt);
             this.angularIntegration(dt);
+            this.position = pos;
 
         } else if (this.isRotationallyStatic) {
 
