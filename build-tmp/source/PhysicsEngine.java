@@ -40,7 +40,7 @@ public void setup() {
     /* size commented out by preprocessor */;
     
     windowMove(10, 4);
-    frameRate(240);
+    frameRate(300);
     interactivityListener = new InteractivityListener();
     
 /*------------------------------------------------------------*/
@@ -51,77 +51,49 @@ public void setup() {
 /*------------------------------------------------------------*/
 
 /*------------------- Background ---------------------------*/
-    //background = loadShape("background.svg");
+    background = loadShape("background.svg");
 /*-------------------------- Rigidbodies ------------------------*/
   rigidbodyList = new ArrayList<Rigidbody>();
 /*------------------------------------------------------------*/
 
 
-    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true,
-                                                          0.05f, new PVector(0, 0, 0),
-                                                           new PVector(255, 255, 255));
-    Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
-                                                            0.05f, new PVector(0, 0, 0),
-                                                            new PVector(255, 255, 255));
+    Rigidbody floor = RigidbodyGenerator.CreateBoxBody(1000f, 5f, 1f, 0.5f, true, true, 0.05f, new PVector(0,0,0), new PVector(255,255,255));
+    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
+    Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
+    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
 
-    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
-                                                            0.05f, new PVector(0, 0, 0),
-                                                            new PVector(255, 255, 255));
-    
-    spinningBody.SetInitialPosition(new PVector(0, -5));
-    Motor motor = new Motor(spinningBody, 0.5f);
 
-    //spinningBody.addForceToForceRegistry(motor);
-    Rod rod = new Rod(springBody, test, new PVector(), new PVector());
-    rod.setLength(0);
-    springBody.addForceToForceRegistry(rod);
-    test.addForceToForceRegistry(rod); 
-
+        
+    floor.SetInitialPosition(new PVector(0, 10));
     test.SetInitialPosition(new PVector(-10, -5));
-    test.addBodyToCollisionExclusionList(springBody);
-
-
     springBody.SetInitialPosition(new PVector(-10, -5));
-    springBody.addBodyToCollisionExclusionList(test);
+    spinningBody.SetInitialPosition(new PVector(0, -5));
 
+    spinningBody.setIsTranslationallyStatic(true);
+
+
+    Rod rod = new Rod(springBody, test, new PVector(), new PVector());
     Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
     Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
 
-    springLeft.setSpringLength(10);
-    springLeft.setEquilibriumLength(0.5f);
-    springLeft.setSpringConstant(100);
-    springLeft.setLockTranslationToYAxis(true);
+    rod.setIsJoint(true);
 
 
+    springBody.addForceToForceRegistry(rod);
+    test.addForceToForceRegistry(rod); 
 
-    springRight.setSpringLength(10);
-    springRight.setSpringConstant(100);
-    springRight.setEquilibriumLength(0.5f);
-    springRight.setLockTranslationToYAxis(true);
-    
-
-    
     springBody.addForceToForceRegistry(springLeft);
     springBody.addForceToForceRegistry(springRight);
 
-    //test.addForceToForceRegistry(connectingRod);
-
     test.addForceToForceRegistry(new Gravity(test));
     springBody.addForceToForceRegistry(new Gravity(springBody));
-
+    spinningBody.addForceToForceRegistry(new Gravity(spinningBody));
 
     AddBodyToBodyEntityList(springBody);
     AddBodyToBodyEntityList(test);
+    AddBodyToBodyEntityList(floor);
     AddBodyToBodyEntityList(spinningBody);
 
-
-    //softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
-    //softbody.CreateBoxSoftbody();
-    //softbody = new Softbody(new PVector(-20, -50), 0.0f, 2, 2);
-    //softbody.CreateBoxSoftbody();
-
-    //cloth = new Cloth(new PVector(-50,-50), new PVector(-20, -50), 30);
-    //cloth.CreateCloth();
 
 }
 
@@ -134,11 +106,6 @@ public void draw() {
   /* PLEASE */
 
   interactivityListener.applyTransform();
-  pushMatrix();
-  translate(-1920/12.5f, -1080/12.5f);
-  scale(0.05f);
-  //shape(background, 0, 0);
-  popMatrix();
   render.draw();
   
   for(Softbody softbody : softbodyList) {
@@ -158,7 +125,7 @@ public void draw() {
   }
 
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 128);
+  Step(dt, 1024);
 
   interactivityListener.resetTransform();
 
@@ -1713,7 +1680,7 @@ public enum ForceType {
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Angle")
                                         .setVisible(false)
-                                        .setRange(0, 360)
+                                        .setRange(-360, 360)
                                         .setValue(defaultAngle)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {
@@ -4672,7 +4639,7 @@ public final float MIN_BODY_RADIUS = 0.01f;
 public final float MAX_BODY_RADIUS = 300f;
 
 public final int MIN_ITERATIONS = 1;
-public final int MAX_ITERATIONS = 128;
+public final int MAX_ITERATIONS = 1024;
 
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
@@ -6003,13 +5970,8 @@ public void setCollidability(boolean isCollidable) {
 public class Rod implements ForceRegistry {
 /*-------------------------------------------------------------------------------------------------*/
     private float length;
-    private float stiffness = 10000000.0f;
-    private float damping = 1f;
-
-    private float angleStiffness = 1000000.0f;
-    private float angleDamping = 0f;
-
-
+    private float stiffness = 250000.0f;
+    private float damping = 1.0f;
 
     private PVector localAnchorA = new PVector();
     private PVector localAnchorB = new PVector();
@@ -6099,7 +6061,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.displacement = direction.mag();
                 this.direction.normalize();
 
-                this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
+                this.relativeVelocity.set(PVector.sub(this.velocityB, this.velocityA));
 
                 this.dot = PVector.dot(relativeVelocity, this.direction);
                 this.dampingForce.set(PVector.mult(this.direction, damping * dot));
@@ -6122,7 +6084,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.direction.normalize();
 
 
-                this.relativeVelocity.set(PVector.add(this.velocityA, this.velocityB));
+                this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
                 this.dot = PVector.dot(relativeVelocity, this.direction);
 
                 this.dampingForce.set(PVector.mult(direction, -damping * dot));
@@ -6324,8 +6286,13 @@ public class Shape {
   
   public void draw() {
     background(16, 18, 19);
+    pushMatrix();
+    translate(-1920/12.5f, -1080/12.5f);
+    scale(0.05f);
+    shape(background, 0, 0);
+    popMatrix();
+    
     drawRigidbodies();
-    //drawAABB(); //DONT REMOVE THIS, IT BREAKS SOMETHING
   /*---------------------------------Collision Point Debugging--------------------------------------*/
     //drawCollisionPoints();
   /*-----------------------------------------------------------------------------------------------*/
@@ -6403,14 +6370,11 @@ public class Shape {
     for(Rigidbody rigidbody : rigidbodyList) {
       if(rigidbody.getIsVisible()) {
         AABB aabb = rigidbody.GetAABB();
-
-        /*
         rectMode(CORNERS);
-        //stroke(255, 0, 0);
+        stroke(255, 0, 0);
         noStroke();
         noFill();
         rect(aabb.getMin().x, aabb.getMin().y, aabb.getMax().x, aabb.getMax().y);
-        */
       }
     }
   }

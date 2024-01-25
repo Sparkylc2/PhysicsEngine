@@ -514,7 +514,7 @@
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Angle")
                                         .setVisible(false)
-                                        .setRange(0, 360)
+                                        .setRange(-360, 360)
                                         .setValue(defaultAngle)
                                         .setGroup(RigidbodyGeneration)
                                         .onChange(new CallbackListener() {

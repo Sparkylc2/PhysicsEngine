@@ -1,13 +1,8 @@
 public class Rod implements ForceRegistry {
 /*-------------------------------------------------------------------------------------------------*/
     private float length;
-    private float stiffness = 10000000.0f;
-    private float damping = 1f;
-
-    private float angleStiffness = 1000000.0f;
-    private float angleDamping = 0f;
-
-
+    private float stiffness = 250000.0f;
+    private float damping = 1.0f;
 
     private PVector localAnchorA = new PVector();
     private PVector localAnchorB = new PVector();
@@ -97,7 +92,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.displacement = direction.mag();
                 this.direction.normalize();
 
-                this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
+                this.relativeVelocity.set(PVector.sub(this.velocityB, this.velocityA));
 
                 this.dot = PVector.dot(relativeVelocity, this.direction);
                 this.dampingForce.set(PVector.mult(this.direction, damping * dot));
@@ -120,7 +115,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.direction.normalize();
 
 
-                this.relativeVelocity.set(PVector.add(this.velocityA, this.velocityB));
+                this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
                 this.dot = PVector.dot(relativeVelocity, this.direction);
 
                 this.dampingForce.set(PVector.mult(direction, -damping * dot));

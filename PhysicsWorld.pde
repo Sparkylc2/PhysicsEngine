@@ -81,7 +81,7 @@ public final float MIN_BODY_RADIUS = 0.01f;
 public final float MAX_BODY_RADIUS = 300f;
 
 public final int MIN_ITERATIONS = 1;
-public final int MAX_ITERATIONS = 128;
+public final int MAX_ITERATIONS = 1024;
 
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 

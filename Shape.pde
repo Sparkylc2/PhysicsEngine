@@ -6,8 +6,13 @@ public class Shape {
   
   public void draw() {
     background(16, 18, 19);
+    pushMatrix();
+    translate(-1920/12.5, -1080/12.5);
+    scale(0.05f);
+    shape(background, 0, 0);
+    popMatrix();
+    
     drawRigidbodies();
-    //drawAABB(); //DONT REMOVE THIS, IT BREAKS SOMETHING
   /*---------------------------------Collision Point Debugging--------------------------------------*/
     //drawCollisionPoints();
   /*-----------------------------------------------------------------------------------------------*/
@@ -85,14 +90,11 @@ public class Shape {
     for(Rigidbody rigidbody : rigidbodyList) {
       if(rigidbody.getIsVisible()) {
         AABB aabb = rigidbody.GetAABB();
-
-        /*
         rectMode(CORNERS);
-        //stroke(255, 0, 0);
+        stroke(255, 0, 0);
         noStroke();
         noFill();
         rect(aabb.getMin().x, aabb.getMin().y, aabb.getMax().x, aabb.getMax().y);
-        */
       }
     }
   }

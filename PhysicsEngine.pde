@@ -16,7 +16,7 @@ void setup() {
     size(1500, 1000);
     
     windowMove(10, 4);
-    frameRate(240);
+    frameRate(300);
     interactivityListener = new InteractivityListener();
     
 /*------------------------------------------------------------*/
@@ -27,77 +27,49 @@ void setup() {
 /*------------------------------------------------------------*/
 
 /*------------------- Background ---------------------------*/
-    //background = loadShape("background.svg");
+    background = loadShape("background.svg");
 /*-------------------------- Rigidbodies ------------------------*/
   rigidbodyList = new ArrayList<Rigidbody>();
 /*------------------------------------------------------------*/
 
 
-    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true,
-                                                          0.05f, new PVector(0, 0, 0),
-                                                           new PVector(255, 255, 255));
-    Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
-                                                            0.05f, new PVector(0, 0, 0),
-                                                            new PVector(255, 255, 255));
+    Rigidbody floor = RigidbodyGenerator.CreateBoxBody(1000f, 5f, 1f, 0.5f, true, true, 0.05f, new PVector(0,0,0), new PVector(255,255,255));
+    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
+    Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
+    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
 
-    Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true,
-                                                            0.05f, new PVector(0, 0, 0),
-                                                            new PVector(255, 255, 255));
-    
-    spinningBody.SetInitialPosition(new PVector(0, -5));
-    Motor motor = new Motor(spinningBody, 0.5);
 
-    //spinningBody.addForceToForceRegistry(motor);
-    Rod rod = new Rod(springBody, test, new PVector(), new PVector());
-    rod.setLength(0);
-    springBody.addForceToForceRegistry(rod);
-    test.addForceToForceRegistry(rod); 
-
+        
+    floor.SetInitialPosition(new PVector(0, 10));
     test.SetInitialPosition(new PVector(-10, -5));
-    test.addBodyToCollisionExclusionList(springBody);
-
-
     springBody.SetInitialPosition(new PVector(-10, -5));
-    springBody.addBodyToCollisionExclusionList(test);
+    spinningBody.SetInitialPosition(new PVector(0, -5));
 
+    spinningBody.setIsTranslationallyStatic(true);
+
+
+    Rod rod = new Rod(springBody, test, new PVector(), new PVector());
     Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
     Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
 
-    springLeft.setSpringLength(10);
-    springLeft.setEquilibriumLength(0.5f);
-    springLeft.setSpringConstant(100);
-    springLeft.setLockTranslationToYAxis(true);
+    rod.setIsJoint(true);
 
 
+    springBody.addForceToForceRegistry(rod);
+    test.addForceToForceRegistry(rod); 
 
-    springRight.setSpringLength(10);
-    springRight.setSpringConstant(100);
-    springRight.setEquilibriumLength(0.5f);
-    springRight.setLockTranslationToYAxis(true);
-    
-
-    
     springBody.addForceToForceRegistry(springLeft);
     springBody.addForceToForceRegistry(springRight);
 
-    //test.addForceToForceRegistry(connectingRod);
-
     test.addForceToForceRegistry(new Gravity(test));
     springBody.addForceToForceRegistry(new Gravity(springBody));
-
+    spinningBody.addForceToForceRegistry(new Gravity(spinningBody));
 
     AddBodyToBodyEntityList(springBody);
     AddBodyToBodyEntityList(test);
+    AddBodyToBodyEntityList(floor);
     AddBodyToBodyEntityList(spinningBody);
 
-
-    //softbody = new Softbody(new PVector(-50, -50), 0.0f, 2, 2);
-    //softbody.CreateBoxSoftbody();
-    //softbody = new Softbody(new PVector(-20, -50), 0.0f, 2, 2);
-    //softbody.CreateBoxSoftbody();
-
-    //cloth = new Cloth(new PVector(-50,-50), new PVector(-20, -50), 30);
-    //cloth.CreateCloth();
 
 }
 
@@ -110,11 +82,6 @@ void draw() {
   /* PLEASE */
 
   interactivityListener.applyTransform();
-  pushMatrix();
-  translate(-1920/12.5, -1080/12.5);
-  scale(0.05f);
-  //shape(background, 0, 0);
-  popMatrix();
   render.draw();
   
   for(Softbody softbody : softbodyList) {
@@ -134,7 +101,7 @@ void draw() {
   }
 
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 128);
+  Step(dt, 1024);
 
   interactivityListener.resetTransform();
 
