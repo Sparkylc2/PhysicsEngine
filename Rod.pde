@@ -1,11 +1,12 @@
 public class Rod implements ForceRegistry {
 /*-------------------------------------------------------------------------------------------------*/
     private float length;
-    private float stiffness = 1000000.0f;
+    private float stiffness = 10000000.0f;
     private float damping = 1f;
 
     private float angleStiffness = 1000000.0f;
     private float angleDamping = 0f;
+
 
 
     private PVector localAnchorA = new PVector();
@@ -27,6 +28,9 @@ public class Rod implements ForceRegistry {
     private PVector worldAnchorA = new PVector();
     private PVector worldAnchorB = new PVector();
 
+    private PVector drawWorldAnchorA = new PVector();
+    private PVector drawWorldAnchorB = new PVector();
+
     private PVector relativeVelocity = new PVector();
 
     private PVector velocityA = new PVector();
@@ -36,8 +40,11 @@ public class Rod implements ForceRegistry {
     private PVector direction = new PVector();
     private PVector rodForce = new PVector();
     private PVector force = new PVector();
-    public float netTorque = 0f;
     private PVector rigidbodyOrientation = new PVector();
+
+    private float displacement;
+    private float dot;
+    private float currentRigidbodyAngle;
 
 /*-------------------------------------------------------------------------------------------------*/
 //Reusable stuff
@@ -50,11 +57,11 @@ public class Rod implements ForceRegistry {
         this.anchorPoint.set(anchorPoint);
         this.localAnchorA.set(localAnchorA);
 
-        this.initialAngleA = rigidbodyA.getAngle();
-
         this.isTwoBodyRod = false;
 
-        this.length = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
+        this.length = PVector.sub(PhysEngMath.Transform(this.localAnchorA, this.rigidbodyA.getPosition(), this.rigidbodyA.getAngle()), 
+                                  this.anchorPoint)
+                                  .mag();
     }
 
     public Rod(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector localAnchorA, PVector localAnchorB) {
@@ -62,27 +69,19 @@ public class Rod implements ForceRegistry {
         this.rigidbodyA = rigidbodyA;
         this.rigidbodyB = rigidbodyB;
 
-        this.initialAngleA = rigidbodyA.getAngle();
-        this.initialAngleB = rigidbodyB.getAngle();
-
         this.localAnchorA.set(localAnchorA);
         this.localAnchorB.set(localAnchorB);
 
         this.isTwoBodyRod = true;
-        this.length = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()).sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
-
+        this.length = PVector.sub(PhysEngMath.Transform(this.localAnchorB, this.rigidbodyB.getPosition(), this.rigidbodyB.getAngle()), 
+                                  PhysEngMath.Transform(this.localAnchorA, this.rigidbodyA.getPosition(), this.rigidbodyA.getAngle()))
+                                  .mag();
     }
 
 
 @Override
 public PVector getForce(Rigidbody rigidbody, PVector position) {
 
-    float displacement;
-    float currentAngleA;
-    float currentAngleB;
-    float dot;
-    float currentRigidbodyAngle;
-    this.netTorque = 0f;
     this.force.set(0,0,0);
 
     if(isTwoBodyRod) {
@@ -95,32 +94,13 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
                 this.direction.set(this.worldAnchorB.sub(this.worldAnchorA));
 
-                displacement = direction.mag();
+                this.displacement = direction.mag();
                 this.direction.normalize();
 
                 this.relativeVelocity.set(PVector.sub(this.velocityA, this.velocityB));
 
-                dot = PVector.dot(relativeVelocity, this.direction);
-                this.dampingForce.set(this.direction.copy().mult(damping * dot));
-
-
-                /*
-                if(!this.isHingeable) {
-                    float rigidbodyAngle = rigidbodyA.getAngle();
-                    this.rigidbodyOrientation.set(cos(rigidbodyAngle), sin(rigidbodyAngle));
-
-                    float angleBetween = PVector.angleBetween(this.direction, this.rigidbodyOrientation);
-
-                    if (direction.copy().cross(rigidbodyOrientation).z < 0) {
-                        angleBetween = -angleBetween;
-                    }
-
-                    float angleDifference = angleBetween - this.initialAngleA;
-                    //this.netTorque = -angleStiffness * angleDifference - angleDamping * rigidbody.getAngularVelocity();
-                    //rigidbodyA.setAngle(rigidbodyA.getAngle()-angleDifference);
-                    //force.add(0, 0, correctiveTorque);
-                }
-                */
+                this.dot = PVector.dot(relativeVelocity, this.direction);
+                this.dampingForce.set(PVector.mult(this.direction, damping * dot));
 
                 this.force.add(this.direction.mult(this.stiffness * (displacement - this.length)));
                 this.force.add(this.dampingForce);
@@ -136,32 +116,14 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
 
                 this.direction.set(this.worldAnchorB.sub(this.worldAnchorA));
-                displacement = direction.mag();
+                this.displacement = direction.mag();
                 this.direction.normalize();
 
 
                 this.relativeVelocity.set(PVector.add(this.velocityA, this.velocityB));
-                dot = PVector.dot(relativeVelocity, this.direction);
+                this.dot = PVector.dot(relativeVelocity, this.direction);
 
-                this.dampingForce.set(this.direction.copy().mult(-damping * dot));
-
-                /*
-                if(!this.isHingeable) {
-                    float rigidbodyAngle = rigidbodyB.getAngle();
-                    this.rigidbodyOrientation.set(cos(rigidbodyAngle), sin(rigidbodyAngle));
-
-                    float angleBetween = PVector.angleBetween(this.direction, this.rigidbodyOrientation);
-
-                    if (this.direction.copy().cross(this.rigidbodyOrientation).z < 0) {
-                        angleBetween = -angleBetween;
-                    }
-
-                    float angleDifference = angleBetween - this.initialAngleB;
-                    //this.netTorque = -angleStiffness * angleDifference - angleDamping * rigidbody.getAngularVelocity();
-                    //rigidbodyB.setAngle(rigidbodyB.getAngle()-angleDifference);
-                    //force.add(0, 0, correctiveTorque);
-                }
-                */
+                this.dampingForce.set(PVector.mult(direction, -damping * dot));
 
                 this.force.add(this.dampingForce);
                 this.force.add(this.direction.mult(this.stiffness * (displacement - this.length)));
@@ -187,25 +149,6 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
         this.dampingForce.set(this.direction.copy().mult(-damping * dot));
 
-        /*
-        if(!this.isHingeable) {
-            float rigidbodyAngle = rigidbodyA.getAngle();
-            this.rigidbodyOrientation.set(cos(rigidbodyAngle), sin(rigidbodyAngle));
-
-            float angleBetween = PVector.angleBetween(this.direction, this.rigidbodyOrientation);
-
-            if (this.direction.copy().cross(this.rigidbodyOrientation).z < 0) {
-                angleBetween = -angleBetween;
-            }
-
-            float angleDifference = angleBetween - this.initialAngleA;
-            //this.netTorque = -angleStiffness * angleDifference - angleDamping * rigidbody.getAngularVelocity();
-            //r
-            //rigidbodyB.setAngle(rigidbodyB.getAngle()-angleDifference);
-            //force.add(0, 0, correctiveTorque);
-        }
-        */
-
         this.dampingForce.set(this.direction.copy().mult(-damping * PVector.dot(relativeVelocity, this.direction)));
 
         this.force.add(this.direction.mult(this.stiffness * (displacement - this.length)));
@@ -220,31 +163,31 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
 @Override
 public void draw() {
-
     if(isTwoBodyRod){
 
-        PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
-        PVector worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+        this.drawWorldAnchorA.set(PhysEngMath.Transform(this.localAnchorA, this.rigidbodyA.getPosition(), this.rigidbodyA.getAngle()));
+        this.drawWorldAnchorB.set(PhysEngMath.Transform(this.localAnchorB, this.rigidbodyB.getPosition(), this.rigidbodyB.getAngle()));
 
         strokeWeight(0.15);
         stroke(0);
-        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        line(this.drawWorldAnchorA.x, this.drawWorldAnchorA.y, this.drawWorldAnchorB.x, this.drawWorldAnchorB.y);
         strokeWeight(0.1);
         stroke(255);
-        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        line(this.drawWorldAnchorA.x, this.drawWorldAnchorA.y, this.drawWorldAnchorB.x, this.drawWorldAnchorB.y);
     } else {
 
-        PVector worldAnchorA = getApplicationPoint(rigidbodyA, rigidbodyA.getPosition());
-        PVector worldAnchorB = anchorPoint;
+        this.drawWorldAnchorA.set(PhysEngMath.Transform(this.localAnchorA, this.rigidbodyA.getPosition(), this.rigidbodyA.getAngle()));
+
         strokeWeight(0.15);
         stroke(0);
-        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        line(this.drawWorldAnchorA.x, this.drawWorldAnchorA.y, this.anchorPoint.x, this.anchorPoint.y);
         strokeWeight(0.1);
         stroke(255);
-        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        line(this.drawWorldAnchorA.x, this.drawWorldAnchorA.y, this.anchorPoint.x, this.anchorPoint.y);
 
     }
-}
+}  
+
 
 
 @Override
@@ -268,10 +211,6 @@ public void setLength(float length) {
 public void setIsHingeable(boolean isHingeable) {
     this.isHingeable = isHingeable;
   }
-public float getNetTorque() {
-    return this.netTorque;
-  }
-
 
 public void setAnchorPoint(PVector anchorPoint) {
     this.anchorPoint = anchorPoint;
@@ -299,6 +238,7 @@ public void setTwoBodyRod(boolean isTwoBodyRod) {
 
 public void setIsJoint(boolean isJoint) {
     this.isJoint = isJoint;
+
     if(this.isJoint) {
         if(this.isTwoBodyRod){
             this.length = 0f;
@@ -354,4 +294,23 @@ public Rigidbody getRigidbodyB() {
 
 }
 
+
+
+                /*
+                if(!this.isHingeable) {
+                    float rigidbodyAngle = rigidbodyB.getAngle();
+                    this.rigidbodyOrientation.set(cos(rigidbodyAngle), sin(rigidbodyAngle));
+
+                    float angleBetween = PVector.angleBetween(this.direction, this.rigidbodyOrientation);
+
+                    if (this.direction.copy().cross(this.rigidbodyOrientation).z < 0) {
+                        angleBetween = -angleBetween;
+                    }
+
+                    float angleDifference = angleBetween - this.initialAngleB;
+                    //this.netTorque = -angleStiffness * angleDifference - angleDamping * rigidbody.getAngularVelocity();
+                    //rigidbodyB.setAngle(rigidbodyB.getAngle()-angleDifference);
+                    //force.add(0, 0, correctiveTorque);
+                }
+                */
   

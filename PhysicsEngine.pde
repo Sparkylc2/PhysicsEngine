@@ -54,15 +54,14 @@ void setup() {
     test.addForceToForceRegistry(rod); 
 
     test.SetInitialPosition(new PVector(-10, -5));
-    //test.addBodyToCollisionExclusionList(springBody);
+    test.addBodyToCollisionExclusionList(springBody);
 
 
     springBody.SetInitialPosition(new PVector(-10, -5));
-    //springBody.addBodyToCollisionExclusionList(test);
+    springBody.addBodyToCollisionExclusionList(test);
 
     Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
     Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
-    //Rod connectingRod = new Rod(test, spinningBody, new PVector(0,0), new PVector(2f,0));
 
     springLeft.setSpringLength(10);
     springLeft.setEquilibriumLength(0.5f);

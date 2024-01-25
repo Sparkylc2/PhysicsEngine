@@ -33,7 +33,13 @@ public static class PhysEngMath {
   }
   
 
+  public static PVector Transform(PVector vertex, float angle) {
+    float sin = sin(angle);
+    float cos = cos(angle);
 
+    return new PVector(vertex.x * cos - vertex.y * sin, vertex.x * sin + vertex.y * cos);
+  }
+  
   public static PVector Transform(PVector vertex, PVector position, float angle){
     float sin = sin(angle);
     float cos = cos(angle);
@@ -77,7 +83,9 @@ public static PVector SnapController(InteractivityListener interactivityListener
     } else {
         if (interactivityListener.getSnapToCenter()) {
             return new PVector(0, 0);
+
         } else if (interactivityListener.getSnapToEdge()) {
+        /* 
             PVector closestOnPolygon = new PVector();
             float minDistanceSq = Float.MAX_VALUE;
             PVector[] vertices = rigidbody.GetTransformedVertices();
@@ -92,6 +100,25 @@ public static PVector SnapController(InteractivityListener interactivityListener
                 }
             }
             return PVector.sub(closestOnPolygon, rigidbody.getPosition());
+            */
+
+        PVector[] vertices = rigidbody.GetTransformedVertices();
+        PVector closestPoint = new PVector();
+        float minDistanceSq = Float.MAX_VALUE;
+
+        for (int i = 0; i < vertices.length; i++) {
+            PVector start = vertices[i];
+            PVector end = vertices[(i + 1) % vertices.length]; // Loop back to the first vertex
+
+            PVector closestOnEdge = getClosestPointOnLine(start, end, point);
+            float distanceSq = PVector.dist(closestOnEdge, point);
+
+            if (distanceSq < minDistanceSq) {
+                minDistanceSq = distanceSq;
+                closestPoint = closestOnEdge;
+            }
+        }
+            return PVector.sub(closestPoint, rigidbody.getPosition());
         } else {
             return PVector.sub(point, rigidbody.getPosition());
         }
@@ -99,22 +126,23 @@ public static PVector SnapController(InteractivityListener interactivityListener
 }
 
 
-public PVector[] reverseVertices(PVector[] vertices) {
-    PVector[] reversedVertices = new PVector[vertices.length];
-    for (int i = 0; i < vertices.length; i++) {
-        reversedVertices[i] = vertices[vertices.length - 1 - i];
-    }
-    return reversedVertices;
-}
+    public static PVector[] reverseVertices(PVector[] vertices) {
+        PVector[] reversedVertices = new PVector[vertices.length];
 
-  private static PVector getClosestPointOnLine(PVector start, PVector end, PVector point) {
-    PVector line = PVector.sub(end, start);
-    float len = line.mag();
-    line.normalize();
-    PVector v = PVector.sub(point, start);
-    float d = PVector.dot(v, line);
-    d = constrain(d, 0, len);
-    return PVector.add(start, line.mult(d));
-
+        for (int i = 0; i < vertices.length; i++) {
+            reversedVertices[i] = vertices[vertices.length - 1 - i];
+        }
+        return reversedVertices;
     }
+
+    private static PVector getClosestPointOnLine(PVector start, PVector end, PVector point) {
+        PVector line = PVector.sub(end, start);
+        float len = line.mag();
+        line.normalize();
+        PVector v = PVector.sub(point, start);
+        float d = PVector.dot(v, line);
+        d = constrain(d, 0, len);
+        return PVector.add(start, line.mult(d));
+    }
+
 }

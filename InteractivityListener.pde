@@ -296,7 +296,7 @@ public PVector getMouseCoordinatesOverRigidbody() {
         
         if(rigidbody != null) {
             PVector localAnchorA = PhysEngMath.SnapController(this, rigidbody, mousePos);
-            PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbody.getPosition(), rigidbody.getAngle());
+            PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbody.getPosition(), 0f);
             //PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbody.getPosition(), rigidbodyA.getAngle());
             return worldAnchorA.copy();
         } else {
@@ -595,7 +595,7 @@ public void createForces() {
                 spring = new Spring(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
             } else {
 
-                this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
+                this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates), -this.selectedRigidbody.getAngle());
                 spring = new Spring(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
@@ -619,7 +619,7 @@ public void createForces() {
             if(isFirstClickOnRigidbody) {
                 rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
             } else {
-                this.localAnchorA = PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates);
+                this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates), -this.selectedRigidbody.getAngle());
                 rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
@@ -649,7 +649,7 @@ public void createForces() {
         if(this.forceType == ForceType.SPRING) {
 
 
-            PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
+            PVector localAnchorB = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY)), -this.selectedRigidbody2.getAngle());
 
             Spring spring = new Spring(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
@@ -672,7 +672,7 @@ public void createForces() {
         } else if(this.forceType == ForceType.ROD) {
             Rod rod1;
 
-            PVector localAnchorB = PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY));
+            PVector localAnchorB = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld(mouseX, mouseY)), -this.selectedRigidbody2.getAngle());
 
             rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
@@ -726,7 +726,7 @@ public void firstMouseClickInformation() {
     PVector mousePos = screenToWorld(mouseX, mouseY);
 
     if(clickedBody != null) {        
-        this.localAnchorA = PhysEngMath.SnapController(this, clickedBody, mousePos);
+        this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, clickedBody, mousePos), -clickedBody.getAngle());
         this.anchorPoint = mousePos;
         this.isFirstClickOnRigidbody = true;
     } else {

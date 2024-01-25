@@ -463,7 +463,6 @@ public void BroadPhaseStep() {
             AABB rigidbodyB_AABB = rigidbodyB.GetAABB();
 
             if(rigidbodyACollisionExclusionList.contains(rigidbodyB)) {
-                System.out.println("Skipped Collision");
                 continue;
             }
 

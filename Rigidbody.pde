@@ -396,7 +396,7 @@ public boolean containsPolygon(float x, float y) {
   ==================================UPDATE==========================================================
   ==================================================================================================
   */
-
+/*
   public void update(float dt, int iterations) {
     if(!isPaused) {
         if(this.isStatic) {
@@ -432,9 +432,22 @@ public boolean containsPolygon(float x, float y) {
         }
     }
 }
-  
-  
-  
+  */
+
+  public void update(float dt, int iterations) {
+    if(!isPaused) {
+          if(isStatic) {
+            return;
+          }
+            this.aabbUpdateRequired = true;
+            this.transformUpdateRequired = true;
+            dt /= (float)iterations;                
+            this.RK4Position(dt);
+            this.angularIntegration(dt);
+        }
+    }
+
+
   /*
   ==================================================================================================
   ================================== INTEGRATOR ====================================================
@@ -695,6 +708,10 @@ public boolean containsPolygon(float x, float y) {
   
   public void setIsStatic(boolean isStatic) {
     this.isStatic = isStatic;
+    if(isStatic) {
+      this.InvMass = 0f;
+      this.InvRotationalInertia = 0f;
+    }
   }
 
   public boolean getIsVisible() {
@@ -752,6 +769,10 @@ public boolean getIsTranslationallyStatic() {
 
 public void setIsTranslationallyStatic(boolean isTranslationallyStatic) {
     this.isTranslationallyStatic = isTranslationallyStatic;
+
+    if(this.isTranslationallyStatic) {
+      this.InvMass = 0f;
+    }
 }
 
 public boolean getIsRotationallyStatic() {
@@ -760,6 +781,9 @@ public boolean getIsRotationallyStatic() {
 
 public void setIsRotationallyStatic(boolean isRotationallyStatic) {
     this.isRotationallyStatic = isRotationallyStatic;
+    if(this.isRotationallyStatic) {
+      this.InvRotationalInertia = 0f;
+    }
 }
 
   
