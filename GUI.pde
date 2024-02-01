@@ -187,9 +187,9 @@
                                 })
                                 ;
 
-                Tab Editor = userInterface.addTab("Editor")
-                                .setLabel("Editor")
-                                .setId(2);
+                //Tab Editor = userInterface.addTab("Editor")
+                //                .setLabel("Editor")
+                //                .setId(2);
 
                 Tab Debug = userInterface.addTab("Debug")
                                 .setLabel("Debug")
@@ -838,30 +838,65 @@
                                                     }
                                                 })
                                             ;
-/*------------------------------------ Editor Tab ----------------------------------------------- */
-                Group editorGroup = userInterface.addGroup("EditorGroup")
+/*------------------------------------ Debug Tab ----------------------------------------------- */
+                Group DebugGroup = userInterface.addGroup("DebugGroup")
                         .setPosition(calculateGroupPositionX(), calculateGroupPositionY())
                         .setBackgroundHeight(globalGroupHeight)
                         .setBarHeight(globalGroupBarHeight)
                         .setBackgroundColor(globalGroupColor)
                         .setWidth(globalGroupWidth)
+                        .setLabel("Debug")
                          //.disableCollapse()
-                        .setTab("Editor")
+                        .setTab("Debug")
                         ;
 
-                        Toggle enableEditor = userInterface.addToggle("EditorEnableEditor")
-                            .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                            .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
-                            .setLabel("Enable Editor")
-                            .setVisible(true)
-                            .setValue(false)
-                            .setGroup(editorGroup)
-                            .onChange(new CallbackListener() {
-                                    void controlEvent(CallbackEvent theEvent) {
-                                            EditorEnableEditorSelectorElementOnChange();
-                                        }
-                                    })
-                                ;
+                        Slider subStepCount = userInterface.addSlider("SubStepCount")
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(1), calculateButtonHeight(rowCount))
+                                        .setLabel("Substep Count")
+                                        .setVisible(true)
+                                        .setRange(0, 1024)
+                                        .setValue(128)
+                                        .setNumberOfTickMarks(17)
+                                        .setSliderMode(Slider.FLEXIBLE)
+                                        .setGroup(DebugGroup)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        SUB_STEP_COUNT = (int) userInterface.getController("SubStepCount").getValue();
+                                                    }
+                                                })
+                                            ;
+                        Toggle drawContactPoints = userInterface.addToggle("drawContactPoints")
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
+                                        .setLabel("Draw Contact Points")
+                                        .setVisible(true)
+                                        .setValue(false)
+                                        .setGroup(DebugGroup)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                       DRAW_CONTACT_POINTS = !DRAW_CONTACT_POINTS;
+                                                    }
+                                                })
+                                            ;
+
+                        Toggle drawABBs = userInterface.addToggle("drawAABBs")
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
+                                        .setLabel("Draw AABB's")
+                                        .setVisible(true)
+                                        .setValue(false)
+                                        .setGroup(DebugGroup)
+                                        .onChange(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                       DRAW_AABBS = !DRAW_AABBS;
+                                                    }
+                                                })
+                                            ;
+
+
+
+
 
 /*
 ====================================================================================================
@@ -929,6 +964,12 @@ userInterface.getController("RodIsJoint").getCaptionLabel().align(ControlP5.CENT
 userInterface.getController("MotorTargetAngularVelocity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 userInterface.getController("MotorDrawMotor").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("MotorDrawMotorForce").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
+
+userInterface.getController("SubStepCount").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+userInterface.getController("drawContactPoints").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+userInterface.getController("drawAABBs").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+
 
 
 

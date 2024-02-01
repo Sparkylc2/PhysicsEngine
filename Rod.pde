@@ -208,15 +208,15 @@ public void setIsHingeable(boolean isHingeable) {
   }
 
 public void setAnchorPoint(PVector anchorPoint) {
-    this.anchorPoint = anchorPoint;
+    this.anchorPoint.set(anchorPoint);
   }
 
 public void setLocalAnchorA(PVector localAnchorA) {
-    this.localAnchorA = localAnchorA;
+    this.localAnchorA.set(localAnchorA);
   }
 
 public void setLocalAnchorB(PVector localAnchorB) {
-    this.localAnchorB = localAnchorB;
+    this.localAnchorB.set(localAnchorB);
   }
 
 public void setStiffness(float stiffness) {
@@ -278,13 +278,16 @@ public float getDamping() {
 public boolean getTwoBodyRod() {
     return isTwoBodyRod;
   }
-
+@Override
 public Rigidbody getRigidbodyA() {
     return rigidbodyA;
   }
-
+@Override
 public Rigidbody getRigidbodyB() {
-    return rigidbodyB;
+    if(this.isTwoBodyRod) {
+        return this.rigidbodyB;
+    }
+    return this.rigidbodyA;
   }
 
 }

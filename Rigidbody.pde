@@ -27,8 +27,8 @@ public class Rigidbody {
   private AABB aabb;
   private PVector[] transformedVertices;
 
-
   private ArrayList<Rigidbody> collisionExclusionList = new ArrayList<Rigidbody>();
+  private ArrayList<ForceRegistry> rodList = new ArrayList<ForceRegistry>();
 
   private Shape shapeRenderer;
   private float strokeWeight;
@@ -128,6 +128,9 @@ public class Rigidbody {
     this.aabbUpdateRequired = true;
     this.transformUpdateRequired = true;
   }
+
+
+
   
   
   
@@ -182,25 +185,16 @@ public class Rigidbody {
     float area = (float) PI * radius * radius;
     
     //Argument exceptions for area and density
-    if (area < MIN_BODY_AREA) {
+    if (area < MIN_BODY_AREA || area > MAX_BODY_AREA) {
 
-      throw new IllegalArgumentException("Body area is too small, radius too small. Min area is " + MIN_BODY_AREA);
+      throw new IllegalArgumentException("Body area is too small or large");
     }
 
-    if (area > MAX_BODY_AREA) {
+    if (density < MIN_BODY_DENSITY || density > MAX_BODY_DENSITY) {
 
-      throw new IllegalArgumentException("Body area is too large, radius too large. Max area is " + MAX_BODY_AREA);
-    }
+      throw new IllegalArgumentException("Density is too small or large");
+    } 
 
-    if (density < MIN_BODY_DENSITY) {
-
-      throw new IllegalArgumentException("Density is too small. Min density is " + MIN_BODY_DENSITY);
-    }
-
-    if (density > MAX_BODY_DENSITY) {
-
-      throw new IllegalArgumentException("Density is too large. Max density is " + MAX_BODY_DENSITY);
-    }
     
     //Clamps restitution between 0 and 1
     restitution = PhysEngMath.Clamp(restitution, 0, 1);
@@ -220,7 +214,6 @@ public class Rigidbody {
                               null, isStatic, isCollidable, strokeWeight,
                               strokeColour, fillColour, ShapeType.CIRCLE);
     
-    System.out.println("Rigidbody created with mass: " + mass + " and area: " + area);
     return rigidbody;
   }
   
@@ -232,22 +225,15 @@ public class Rigidbody {
     float area = width * height;
     
     //Argument exceptions for area and density
-    if (area < MIN_BODY_AREA) {
+    if (area < MIN_BODY_AREA || area > MAX_BODY_AREA) {
 
-      throw new IllegalArgumentException("Body area is too small, dimensions too small. Min area is " + MIN_BODY_AREA);
+      throw new IllegalArgumentException("Body area is too small or large");
     }
-    if (area > MAX_BODY_AREA) {
 
-      throw new IllegalArgumentException("Body area is too large, dimensions too large. Max area is " + MAX_BODY_AREA);
-    }
-    if (density < MIN_BODY_DENSITY) {
+    if (density < MIN_BODY_DENSITY || density > MAX_BODY_DENSITY) {
 
-      throw new IllegalArgumentException("Density is too small. Min density is " + MIN_BODY_DENSITY);
-    }
-    if (density > MAX_BODY_DENSITY) {
-
-      throw new IllegalArgumentException("Density is too large. Max density is " + MAX_BODY_DENSITY);
-    }
+      throw new IllegalArgumentException("Density is too small or large");
+    } 
     
     //Clamps restitution between 0 and 1
     restitution = PhysEngMath.Clamp(restitution, 0, 1);
@@ -266,8 +252,6 @@ public class Rigidbody {
     rigidbody = new Rigidbody(density, mass, rotationalIntertia, restitution, area, 0, width,
                               height, vertices, isStatic, isCollidable, strokeWeight, strokeColour,
                               fillColour, ShapeType.BOX);
-    
-    System.out.println("Rigidbody created with mass: " + mass + " and area: " + area);
     
     return rigidbody;
   }
@@ -289,21 +273,22 @@ public class Rigidbody {
       maxY = this.position.y + this.Radius;
 
     } else if (this.ShapeType == ShapeType.BOX) {
+
       PVector[] vertices = this.GetTransformedVertices();
       for (PVector vertex : vertices) {
         if (vertex.x < minX) {
-          minX = vertex.x;
+            minX = vertex.x;
+          }
+          if (vertex.x > maxX) {
+            maxX = vertex.x;
+          }
+          if (vertex.y < minY) {
+            minY = vertex.y;
+          }
+          if (vertex.y > maxY) {
+            maxY = vertex.y;
+          }
         }
-        if (vertex.x > maxX) {
-          maxX = vertex.x;
-        }
-        if (vertex.y < minY) {
-          minY = vertex.y;
-        }
-        if (vertex.y > maxY) {
-          maxY = vertex.y;
-        }
-      }
     }
 
     this.aabb = new AABB(new PVector(minX, minY), new PVector(maxX, maxY));
@@ -311,6 +296,132 @@ public class Rigidbody {
 
   }
   return this.aabb;
+}
+
+
+public float calculateArea(PVector[] vertices) {
+  float area = 0;
+  int n = vertices.length;
+
+  for (int i = 0, j = n - 1; i < n; j = i++) {
+    area += vertices[i].x * vertices[j].y - vertices[j].x * vertices[i].y;
+  }
+  return Math.abs(area / 2.0);
+}
+
+
+public float calculateMass(PVector[] vertices) {
+  float area = calculateArea(vertices);
+  return area * this.Density;
+}
+
+
+public float calculateMomentOfInertia(PVector[] vertices, float mass) {
+  float I = 0;
+  float area = calculateArea(vertices);
+  int n = vertices.length;
+  PVector centroid = calculateCentroid(vertices); // Use the calculateCentroid method provided earlier
+
+  for (int i = 0, j = n - 1; i < n; j = i++) {
+    float xi = vertices[i].x - centroid.x, yi = vertices[i].y - centroid.y;
+    float xj = vertices[j].x - centroid.x, yj = vertices[j].y - centroid.y;
+    float cross = Math.abs(xi * yj - xj * yi);
+    I += cross * (xi * xi + yi * yi + xi * xj + yi * yj + xj * xj + yj * yj);
+  }
+  I *= mass / (6 * area);
+  return I;
+}
+
+
+public PVector calculateCentroid(PVector[] vertices) {
+    float signedArea = 0;
+    float cx = 0;
+    float cy = 0;
+    for (int i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
+        float temp = (vertices[i].x * vertices[j].y) - (vertices[j].x * vertices[i].y);
+        signedArea += temp;
+        cx += (vertices[i].x + vertices[j].x) * temp;
+        cy += (vertices[i].y + vertices[j].y) * temp;
+    }
+    signedArea /= 2;
+    cx /= (6 * signedArea);
+    cy /= (6 * signedArea);
+    return new PVector(cx, cy);
+}
+
+
+public void adjustRigidbodyPosition(PVector[] vertices) {
+    PVector newCOM = calculateCentroid(vertices);
+
+    PVector offset = PVector.sub(newCOM, this.position);
+    this.position.add(offset);
+}
+
+private boolean doEdgesIntersect(PVector p1, PVector p2, PVector p3, PVector p4) {
+
+    float denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
+    if (denominator == 0) {
+        return false; // Lines are parallel
+    }
+
+    float ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
+    float ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
+
+    if (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1) {
+        return true; 
+    }
+
+    return false;
+}
+
+private boolean validatePolygonVertices(PVector[] vertices) {
+    for (int i = 0; i < vertices.length; i++) {
+        for (int j = i + 1; j < vertices.length; j++) {
+            int nextI = (i + 1) % vertices.length;
+            int nextJ = (j + 1) % vertices.length;
+
+            if (nextI != j && i != nextJ) {
+                if (doEdgesIntersect(vertices[i], vertices[nextI], vertices[j], vertices[nextJ])) {
+                    return false; // Found intersecting edges
+                }
+            }
+        }
+    }
+    return true;
+}
+
+public void updatePolygon(PVector[] newVertices) {
+
+    newVertices = PhysEngMath.OrderVerticesClockwise(newVertices);
+
+    if(!this.validatePolygonVertices(newVertices)){
+      System.out.println("Vertices Invalid");
+      return;
+    }
+
+    this.Vertices = newVertices;
+    this.transformedVertices = new PVector[this.Vertices.length];
+    PVector newCOM = calculateCentroid(this.Vertices);
+    float newArea = calculateArea(this.Vertices);
+    float newMass = calculateMass(this.Vertices);
+    float newMomentOfInertia = calculateMomentOfInertia(this.Vertices, newMass);
+
+
+    PVector offset = PVector.sub(newCOM, calculateCentroid(this.Vertices));
+    this.position.add(offset);
+    this.Area = newArea;
+
+    if (!isStatic && !isTranslationallyStatic) {
+        this.Mass = newMass;
+        this.InvMass = this.Mass > 0 ? 1 / this.Mass : 0;
+    }
+    if (!isStatic && !isRotationallyStatic) {
+        this.RotationalInertia = newMomentOfInertia;
+        this.InvRotationalInertia = this.RotationalInertia > 0 ? 1 / this.RotationalInertia : 0;
+    }
+
+    this.transformUpdateRequired = true;
+    this.aabbUpdateRequired = true;
 }
 
   /*
@@ -396,44 +507,6 @@ public boolean containsPolygon(float x, float y) {
   ==================================UPDATE==========================================================
   ==================================================================================================
   */
-/*
-  public void update(float dt, int iterations) {
-    if(!isPaused) {
-        if(this.isStatic) {
-
-            this.aabbUpdateRequired = false;
-
-            return;
-        } else if (this.isTranslationallyStatic) {
-
-            this.aabbUpdateRequired = true;
-            this.transformUpdateRequired = true;
-            dt /= (float)iterations;
-            PVector pos = this.position.copy();
-            this.RK4Position(dt);
-            this.angularIntegration(dt);
-            this.position = pos;
-
-        } else if (this.isRotationallyStatic) {
-
-            this.aabbUpdateRequired = true;
-            this.transformUpdateRequired = true;
-
-            dt /= (float)iterations;
-            this.RK4Position(dt);
-
-        } else {
-            this.aabbUpdateRequired = true;
-            this.transformUpdateRequired = true;
-
-            dt /= (float)iterations;                
-            this.RK4Position(dt);
-            this.angularIntegration(dt);
-        }
-    }
-}
-  */
-
   public void update(float dt, int iterations) {
     if(!isPaused) {
           if(isStatic) {
@@ -505,10 +578,10 @@ public boolean containsPolygon(float x, float y) {
 
 
 
-    public PVector calculateAcceleration(PVector position) {
+    public PVector calculateeration(PVector position) {
 
-        ArrayList<ForceRegistry> rodList = new ArrayList<ForceRegistry>();
         /*--------------- Force Reset --------------*/
+        this.rodList.clear();
         this.netForce.set(0,0,0);
         this.netTorque = 0f;
         /*------------------------------------------*/
@@ -528,12 +601,39 @@ public boolean containsPolygon(float x, float y) {
             this.netTorque += leverArm.cross(currentForce).z;
 
         }
+        PVector rodForce = new PVector();
 
         for(ForceRegistry rod : rodList) {
             PVector currentForce = rod.getForce(this, position);
-            this.netForce.add(currentForce);
+            rodForce.add(currentForce);
 
             PVector leverArm = PVector.sub(rod.getApplicationPoint(this, this.position), this.position);
+            this.netTorque += leverArm.cross(currentForce).z;
+
+        }
+        /*-----------------------------------------------*/
+
+        /*------------ Acceleration Calculation ------------*/
+        return this.netForce.mult(this.InvMass).add(rodForce);
+        /*--------------------------------------------------*/
+
+    }
+
+    public PVector calculateAcceleration(PVector position) {
+
+        /*--------------- Force Reset --------------*/
+        this.rodList.clear();
+        this.netForce.set(0,0,0);
+        this.netTorque = 0f;
+        /*------------------------------------------*/
+
+        /*------------ Net Force Calculation ------------*/
+        for (ForceRegistry force : this.forceRegistry) {
+
+            PVector currentForce = force.getForce(this, position);
+            this.netForce.add(currentForce);
+
+            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position), this.position);
             this.netTorque += leverArm.cross(currentForce).z;
 
         }
@@ -555,13 +655,29 @@ public boolean containsPolygon(float x, float y) {
   public float getMass() {
     return this.Mass;
   }
-  
+
+  public void setMass(float mass) {
+    this.Mass = mass;
+    this.InvMass = 1/mass;
+    this.RotationalInertia = (this.ShapeType == ShapeType.BOX) ? 0.5f * Mass * width * width + height * height : 0.5f * Mass * this.Radius * this.Radius;
+    this.InvRotationalInertia = (this.RotationalInertia > 0) ? 1 / this.RotationalInertia : 0;
+  }
+
   public float getDensity() {
     return this.Density;
+  }
+
+  public void setDensity(float density) {
+    this.Density = density;
+    this.setMass(this.Area * this.Density);
   }
   
   public float getRestitution() {
     return this.Restitution;
+  }
+
+  public void setRestitution(float restitution) {
+    this.Restitution = restitution;
   }
   
   public float getArea() {
@@ -571,21 +687,55 @@ public boolean containsPolygon(float x, float y) {
   public float getRadius() {
     return this.Radius;
   }
-  
+
+  public void setRadius(float radius) {
+    this.Radius = radius;
+    this.Area = (float) PI * this.Radius * this.Radius;
+    setDensity(this.Density);
+  }
+
   public float getWidth() {
     return this.Width;
   }
-  
+
+  public void setWidth(float width) {
+    this.Width = width;
+    this.Area = this.Width*this.Height;
+    setDensity(this.Density);
+    this.Vertices = CreateBoxVertices(this.Width, this.Height);
+    this.transformUpdateRequired = true;
+  }
+
   public float getHeight() {
     return this.Height;
   }
   
+  public void setHeight(float height) {
+    this.Height = height;
+    this.Area = this.Width*this.Height;
+    setDensity(this.Density);
+    this.Vertices = CreateBoxVertices(this.Width, this.Height);
+    this.transformUpdateRequired = true;
+  }
+
   public ShapeType getShapeType() {
     return this.ShapeType;
   }
 
+  public void setShapeType(ShapeType shapeType) {
+    this.ShapeType = shapeType;
+  }
+
+  public void setVertices(PVector[] vertices) {
+    this.Vertices = vertices;
+  }
+
   public PVector[] getVertices() {
     return this.Vertices;
+  }
+
+  public void setTransformedVerticesLength(int length) {
+    this.transformedVertices = new PVector[length];
   }
   
   public float getInvMass() {
@@ -599,6 +749,8 @@ public boolean containsPolygon(float x, float y) {
   public float getInvRotationalInertia() {
     return this.InvRotationalInertia;
   }
+
+
 
 
   

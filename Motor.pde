@@ -119,6 +119,14 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
     public PVector getLocalAnchor() {
         return localAnchor;
     }
+    @Override
+    public Rigidbody getRigidbodyA(){
+        return this.rigidbody;
+    }
+    @Override
+    public Rigidbody getRigidbodyB(){
+        return this.rigidbody;
+    }
 
 
 

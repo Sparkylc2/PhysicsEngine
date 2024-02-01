@@ -35,16 +35,13 @@ public static boolean isPaused = false;
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
 
-/*-------- Trying this out ----------*/
-//public PVectorPool SpringPVectorPool = new PVectorPool(10);
-/*-----------------------------------*/
-
 
 public Rigidbody RigidbodyGenerator = new Rigidbody();
 public InteractivityListener interactivityListener = new InteractivityListener();
 public Shape render = new Shape();
-ControlP5 userInterface;
+public ControlP5 userInterface;
 
+public Editor editor = new Editor();
 
 public static ArrayList<Rigidbody> rigidbodyList = new ArrayList<Rigidbody>();
 public static ArrayList<Softbody> softbodyList = new ArrayList<Softbody>();
@@ -75,19 +72,28 @@ public final float MIN_BODY_WIDTH = 0.01f; // m
 public final float MAX_BODY_WIDTH = 300; // m
 
 public final float MIN_BODY_HEIGHT = 0.01f; // m
-public final float MAX_BODY_HEIGHT = 10.0f; // m
+public final float MAX_BODY_HEIGHT = 300.0f; // m
 
 public final float MIN_BODY_RADIUS = 0.01f;
-public final float MAX_BODY_RADIUS = 300f;
+public final float MAX_BODY_RADIUS = 300.0f;
+
+public final float MIN_MOUSE_VELOCITY_MAG = 0.0f;
+public final float MAX_MOUSE_VELOCITY_MAG = 15.0f;
 
 public final int MIN_ITERATIONS = 1;
 public final int MAX_ITERATIONS = 1024;
 
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
+public int SUB_STEP_COUNT = 128;
+public boolean DRAW_CONTACT_POINTS = false;
+public boolean DRAW_AABBS = false;
+
 
 public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
 public final float GRAVITY_MAG = 9.81f;
+
+
 
 
 /*
@@ -505,7 +511,9 @@ public void NarrowPhaseStep() {
             CollisionManifold collisionManifold = new CollisionManifold(rigidbodyA, rigidbodyB, collisionResult);
             this.ResolveCollisionRotationAndFriction(collisionManifold);
 
-                
+            for(PVector contact : collisionResult.getPointsOfContact()) {
+                pointsOfContactList.add(contact);
+            }
         }
     }
 }

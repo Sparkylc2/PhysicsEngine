@@ -19,5 +19,12 @@ public class Gravity implements ForceRegistry {
     public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
       return rigidbody.getPosition();
     }
-
+    @Override
+    public Rigidbody getRigidbodyA() {
+      return this.rigidbody;
+    }
+    @Override
+    public Rigidbody getRigidbodyB(){
+      return this.rigidbody;
+    }
 }

@@ -64,13 +64,17 @@ void setup() {
     test.addForceToForceRegistry(new Gravity(test));
     springBody.addForceToForceRegistry(new Gravity(springBody));
     spinningBody.addForceToForceRegistry(new Gravity(spinningBody));
+    springBody.setIsTranslationallyStatic(true);
 
     AddBodyToBodyEntityList(springBody);
     AddBodyToBodyEntityList(test);
     AddBodyToBodyEntityList(floor);
     AddBodyToBodyEntityList(spinningBody);
 
-
+    //softbody = new Softbody(new PVector(0, -50), 0, 2, 2);
+    //softbody.CreateBoxSoftbody();
+    //cloth = new Cloth(new PVector(-20, -50), new PVector(0, -50), 20);
+    //cloth.CreateCloth();
 }
 
 
@@ -83,10 +87,11 @@ void draw() {
 
   interactivityListener.applyTransform();
   render.draw();
+    editor.whileEditorSelect(-1);
   
-  for(Softbody softbody : softbodyList) {
-    softbody.draw();
-  }
+  //for(Softbody softbody : softbodyList) {
+  //  softbody.draw();
+  //}
   //cloth.updateCloth();
 
   /*--------------------- Cursor Trail ---------------------*/
@@ -101,7 +106,7 @@ void draw() {
   }
 
   dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, 1024);
+  Step(dt, SUB_STEP_COUNT);
 
   interactivityListener.resetTransform();
 

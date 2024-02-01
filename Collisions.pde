@@ -333,7 +333,7 @@ private static PVector[] FindCirclePolygonCollisionPoint(PVector circleCenter,
 
 /*
 ====================================================================================================
-===================================== AABB-AABB COLLISIONS =========================================
+===================================== AABB-AABB Collisions =========================================
 ====================================================================================================
 */
 public static boolean IntersectAABB (AABB aabbA, AABB aabbB) {
@@ -346,6 +346,20 @@ public static boolean IntersectAABB (AABB aabbA, AABB aabbB) {
 
   return true;
 }
+
+/*
+====================================================================================================
+===================================== AABB-AABB Point Collision ====================================
+====================================================================================================
+*/
+public static boolean IntersectAABBWithPoint(AABB aabb, PVector point) {
+    if (point.x >= aabb.getMin().x && point.x <= aabb.getMax().x &&
+        point.y >= aabb.getMin().y && point.y <= aabb.getMax().y) {
+        return true; // The point is within the AABB
+    }
+    return false; // The point is outside the AABB
+  }
+
 /*
 ====================================================================================================
 ===================================== CIRCLE-CIRCLE COLLISIONS =====================================

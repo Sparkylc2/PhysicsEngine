@@ -1,6 +1,8 @@
 
 public class Shape {
-  
+
+
+
   public Shape() {
   }
   
@@ -14,9 +16,15 @@ public class Shape {
     
     drawRigidbodies();
   /*---------------------------------Collision Point Debugging--------------------------------------*/
-    //drawCollisionPoints();
+    if(DRAW_AABBS) {
+      drawAABB();
+    }
+    
+    if(DRAW_CONTACT_POINTS) {
+      drawCollisionPoints();
+    }
   /*-----------------------------------------------------------------------------------------------*/
-  drawForces();
+    drawForces();
   }
 
 /*
@@ -88,14 +96,11 @@ public class Shape {
 
   public void drawAABB() {
     for(Rigidbody rigidbody : rigidbodyList) {
-      if(rigidbody.getIsVisible()) {
         AABB aabb = rigidbody.GetAABB();
         rectMode(CORNERS);
         stroke(255, 0, 0);
-        noStroke();
         noFill();
         rect(aabb.getMin().x, aabb.getMin().y, aabb.getMax().x, aabb.getMax().y);
-      }
     }
   }
 

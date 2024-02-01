@@ -244,7 +244,9 @@ public class Spring implements ForceRegistry {
 ================================== Getters & Setters ===============================================
 ====================================================================================================
 */
-
+    public void setRigidbodyA(Rigidbody rigidbody){
+        this.rigidbodyA = rigidbody;
+    }
     public void setIsHingeable(boolean isHingeable) {
         this.isHingeable = isHingeable;
     }
@@ -278,23 +280,27 @@ public class Spring implements ForceRegistry {
     }
 
     public void setAnchorPoint(PVector anchorPoint) {
-        this.anchorPoint = anchorPoint;
+        this.anchorPoint.set(anchorPoint);
+    }
+
+    public void setAnchorPoint(float x, float y) {
+        this.anchorPoint.set(x, y);
     }
 
     public void setLocalAnchorA(PVector localAnchorA) {
-        this.localAnchorA = localAnchorA;
+        this.localAnchorA.set(localAnchorA);
+    }
+
+    public void setLocalAnchorA(float x, float y) {
+        this.localAnchorA.set(x, y);
     }
 
     public void setLocalAnchorB(PVector localAnchorB) {
-        this.localAnchorB = localAnchorB;
+        this.localAnchorB.set(localAnchorB);
     }
 
-    public void setInitialRotationA(float initialRotationA) {
-        this.initialRotationA = initialRotationA;
-    }
-
-    public void setInitialRotationB(float initialRotationB) {
-        this.initialRotationB = initialRotationB;
+    public void setLocalAnchorB(float x, float y) {
+        this.localAnchorB.set(x, y);
     }
 
     public boolean getIsHingeable() {
@@ -348,13 +354,16 @@ public class Spring implements ForceRegistry {
     public float getInitialRotationB() {
         return this.initialRotationB;
     }
-
+    @Override
     public Rigidbody getRigidbodyA() {
         return this.rigidbodyA;
     }
-
+    @Override
     public Rigidbody getRigidbodyB() {
-        return this.rigidbodyB;
+        if(isTwoBodySpring) {
+            return this.rigidbodyB;
+        }
+        return this.rigidbodyA;
     }
 
     public boolean getIsTwoBodySpring() {
