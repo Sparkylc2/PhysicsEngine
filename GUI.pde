@@ -689,8 +689,8 @@
                                                 })
                                             ;
                         Toggle springIsPerfect = userInterface.addToggle("SpringIsPerfect")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Perfect Spring")
                                         .setVisible(false)
                                         .setValue(defaultSpringIsPerfect)
@@ -698,19 +698,6 @@
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringIsPerfectSelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
-                        Toggle springIsHingeable = userInterface.addToggle("SpringIsHingeable")
-                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
-                                        .setLabel("Hingeable")
-                                        .setVisible(false)
-                                        .setValue(defaultSpringIsHingeable)
-                                        .setGroup(ForceGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        SpringIsHingeableSelectorElementOnChange();
                                                     }
                                                 })
                                             ;
@@ -741,23 +728,8 @@
                                                     }
                                                 })
                                             ;
-
-
-                        Toggle rodIsHingeable = userInterface.addToggle("RodIsHingeable")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
-                                        .setLabel("Hingeable")
-                                        .setVisible(false)
-                                        .setValue(defaultRodIsHingeable)
-                                        .setGroup(ForceGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        RodIsHingeableSelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
                         Toggle rodSnapToCenter = userInterface.addToggle("RodSnapToCenter")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Center")
                                         .setVisible(false)
@@ -771,7 +743,7 @@
                                             ;
 
                         Toggle rodSnapToEdge = userInterface.addToggle("RodSnapToEdge")
-                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Snap to Edge")
                                         .setVisible(false)
@@ -784,7 +756,7 @@
                                                 })
                                             ;
                         Toggle rodIsJoint = userInterface.addToggle("RodIsJoint")
-                                        .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
+                                        .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Joint")
                                         .setVisible(false)
@@ -950,13 +922,9 @@ userInterface.getController("SpringLockToX").getCaptionLabel().align(ControlP5.C
 userInterface.getController("SpringLockToY").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 userInterface.getController("SpringIsPerfect").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("SpringIsHingeable").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
 userInterface.getController("SpringSnapToCenter").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("SpringSnapToEdge").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
-
-userInterface.getController("RodIsHingeable").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RodSnapToCenter").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RodSnapToEdge").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RodIsJoint").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
@@ -1424,13 +1392,11 @@ private void ForceSelectorElementDeselect() {
     userInterface.getController("SpringLockToY").setVisible(false);
 
     userInterface.getController("SpringIsPerfect").setVisible(false);
-    userInterface.getController("SpringIsHingeable").setVisible(false);
 
     userInterface.getController("SpringSnapToCenter").setVisible(false);
     userInterface.getController("SpringSnapToEdge").setVisible(false);
 
     /*-------------------------------- Rod Elements --------------------------------------*/
-    userInterface.getController("RodIsHingeable").setVisible(false);
     userInterface.getController("RodSnapToCenter").setVisible(false);
     userInterface.getController("RodSnapToEdge").setVisible(false);
     userInterface.getController("RodIsJoint").setVisible(false);
@@ -1462,7 +1428,6 @@ private void SpringForceSelectorOnChange() {
         userInterface.getController("SpringLockToY").setVisible(true);
 
         userInterface.getController("SpringIsPerfect").setVisible(true);
-        userInterface.getController("SpringIsHingeable").setVisible(true);
 
         userInterface.getController("SpringSnapToCenter").setVisible(true);
         userInterface.getController("SpringSnapToEdge").setVisible(true);
@@ -1488,7 +1453,6 @@ private void RodForceSelectorOnChange() {
         userInterface.getController("AddSpring").setValue(0);
         userInterface.getController("AddMotor").setValue(0);
 
-        userInterface.getController("RodIsHingeable").setVisible(true);
         userInterface.getController("RodSnapToCenter").setVisible(true);
         userInterface.getController("RodSnapToEdge").setVisible(true);
         userInterface.getController("RodIsJoint").setVisible(true);

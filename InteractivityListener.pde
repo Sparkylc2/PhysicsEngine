@@ -10,7 +10,6 @@ public class InteractivityListener {
   public ArrayList<PVector> trail = new ArrayList<PVector>();
 
 
-
 /*--------- Stuff for the velocity calculation ----------------*/
   public boolean mouseDown = false;
   public PVector initialMousePosition = new PVector();
@@ -105,6 +104,7 @@ public class InteractivityListener {
     private boolean snapToCenter;
     private boolean snapToEdge;
     private boolean snapToVertices;
+    private boolean snapGeneral = true;
 
     private boolean enableEditor;
 
@@ -307,6 +307,9 @@ public void GenerateRigidbody() {
     if(!isPaused && getClickedRigidbody() != null) {
         return;
     }
+    if(isInEditMode) {
+        return;
+    }
 
     if(!IsMouseOverUI()){
      if(this.shapeType == ShapeType.BOX) {
@@ -332,7 +335,7 @@ public void GenerateRigidbody() {
             rigidbody.setAngularVelocity(this.angularVelocity);
 
             if(this.copied && !this.pasted) {
-                rigidbody.setVertices(vertices);
+                rigidbody.updatePolygon(this.vertices);
                 this.pasted = true;
                 this.copied = false;
             }
@@ -374,13 +377,6 @@ public void GenerateRigidbody() {
         }
 
         this.velocity.set(0,0,0);
-        /*
-        if(this.shapeType == ShapeType.SOFTBODY) {
-            Softbody softbody = new Softbody(screenToWorld(mouseX, mouseY), 0.0f, this.softbodyWidth, this.softbodyHeight);
-            softbody.CreateBoxSoftbody();
-
-        }
-        */
 
    }
 }
@@ -468,17 +464,17 @@ public void drawInteractions() {
         }
         drawForces();
     } else if(userInterface.getTab("Rigidbodies").isActive() && (userInterface.getController("Circle").getValue() == 1 || userInterface.getController("Box").getValue() == 1)) {
-        if(this.mouseDown){
+        if(this.mouseDown && !isInEditMode){
             drawVelocityLine();
         }
         if(userInterface.getController("Circle").getValue() == 0 && userInterface.getController("Box").getValue() == 0) {
             return;
         }
         if(userInterface.getTab("Rigidbodies").isActive()){
-            if(clickedRigidbody == null) {
-                drawBodies();
-            } else if(editRigidbody) {
+            if(editRigidbody) {
                 updateRigidbodyValues();
+            } else if(!mouseSpringAdded && !isInEditMode) {
+                drawBodies();
             }
         }
     }
@@ -514,9 +510,7 @@ public void drawBodies() {
     pushMatrix();
     translate(mouseCoordinates.x, mouseCoordinates.y);
     rotate(this.angle);
-
     if(this.shapeType == ShapeType.CIRCLE) {
-
         float diameter = this.radius * 2.0f;
         fill(this.fillColor.x, this.fillColor.y, this.fillColor.z, this.opacity);
         strokeWeight(this.strokeWeight);
@@ -776,26 +770,27 @@ public void createForces() {
             spring.setSpringConstant(this.springConstant);
 
             spring.setDamping(this.springDamping);
-            spring.setIsHingeable(this.isSpringHingeable);
 
+            ALL_FORCES_ARRAYLIST.add(spring);
             this.selectedRigidbody.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
 
-            Rod rod1;
+            Rod rod;
             PVector mouseCoordinates = screenToWorld();
 
             if(isFirstClickOnRigidbody) {
-                rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
+                rod = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
             } else {
                 this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates), -this.selectedRigidbody.getAngle());
-                rod1 = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
+                rod = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
             }
 
-            rod1.setIsHingeable(this.isRodHingeable);
-            rod1.setIsJoint(this.isJoint);
+            rod.setIsJoint(this.isJoint);
 
-            this.selectedRigidbody.addForceToForceRegistry(rod1);
+
+            ALL_FORCES_ARRAYLIST.add(rod);
+            this.selectedRigidbody.addForceToForceRegistry(rod);
 
         } else if(this.forceType == ForceType.MOTOR) {
             Motor motor = new Motor(this.selectedRigidbody, this.motorTargetAngularVelocity);
@@ -811,6 +806,7 @@ public void createForces() {
                     iterator.remove();
                 }
             }
+            ALL_FORCES_ARRAYLIST.add(motor);
             this.selectedRigidbody.addForceToForceRegistry(motor);
         }
 
@@ -833,41 +829,39 @@ public void createForces() {
 
             spring.setDamping(this.springDamping);
 
-            spring.setIsHingeable(this.isSpringHingeable);
 
+            ALL_FORCES_ARRAYLIST.add(spring);
             this.selectedRigidbody1.addForceToForceRegistry(spring);
             this.selectedRigidbody2.addForceToForceRegistry(spring);
 
         } else if(this.forceType == ForceType.ROD) {
-            Rod rod1;
+            Rod rod;
 
             PVector localAnchorB = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld()), -this.selectedRigidbody2.getAngle());
 
-            rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
+            rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
 
-            rod1.setIsHingeable(this.isRodHingeable);
-            rod1.setIsJoint(this.isJoint);
+            rod.setIsJoint(this.isJoint);
 
-            this.selectedRigidbody1.addForceToForceRegistry(rod1);
-
-
-            this.selectedRigidbody2.addForceToForceRegistry(rod1);
+            ALL_FORCES_ARRAYLIST.add(rod);
+            this.selectedRigidbody1.addForceToForceRegistry(rod);
+            this.selectedRigidbody2.addForceToForceRegistry(rod);
         }
 
 } else if((this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) || (this.selectedRigidbody1 != null && this.selectedRigidbody2 == null))
 
         if(this.forceType == ForceType.ROD) {
-            Rod rod1;
+            Rod rod;
 
             if(this.isJoint){
-                rod1 = new Rod(this.selectedRigidbody1, this.selectedRigidbody1.getPosition(), this.selectedRigidbody1.getPosition());
-                rod1.setIsJoint(true);
+                rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody1.getPosition(), this.selectedRigidbody1.getPosition());
+                rod.setIsJoint(true);
             } else {
-                rod1 = new Rod(this.selectedRigidbody1, this.localAnchorA, screenToWorld());
+                rod = new Rod(this.selectedRigidbody1, this.localAnchorA, screenToWorld());
             }
 
-            rod1.setIsHingeable(this.isRodHingeable);
-            this.selectedRigidbody1.addForceToForceRegistry(rod1);
+            ALL_FORCES_ARRAYLIST.add(rod);
+            this.selectedRigidbody1.addForceToForceRegistry(rod);
         }
 
         else if(this.forceType == ForceType.MOTOR) {
@@ -883,8 +877,10 @@ public void createForces() {
                 
                 if (force instanceof Motor) {
                     iterator.remove();
+                    ALL_FORCES_ARRAYLIST.remove(force);
                 }
             }
+            ALL_FORCES_ARRAYLIST.add(motor);
             this.selectedRigidbody1.addForceToForceRegistry(motor);
         }
     }
@@ -1219,6 +1215,19 @@ public boolean getRodIsJoint(){
 
 public ArrayList<Rigidbody> getSelectedRigidbodiesArrayList(){
     return this.selectedRigidbodies;
+}
+
+public int getOpacity() {
+    return this.opacity;
+}
+
+public boolean getSnapGeneral(){
+    return this.snapGeneral;
+}
+
+public void setSnapGeneral(boolean snapGeneral) {
+    this.snapGeneral = snapGeneral;
+
 }
 
 }

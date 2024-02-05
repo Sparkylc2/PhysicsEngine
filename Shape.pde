@@ -2,6 +2,11 @@
 public class Shape {
 
 
+  private int opacity = interactivityListener.getOpacity();
+
+
+  private PVector fill = new PVector();
+  private PVector stroke = new PVector();
 
   public Shape() {
   }
@@ -33,31 +38,51 @@ public class Shape {
 ====================================================================================================
 */
   public void drawRigidbodies() {
+    boolean inEditMode = editor.getInEditMode();
+    Rigidbody selectedRigidbody = editor.getSelectedRigidbody();
+
     for(int body = 0; body < rigidbodyList.size(); body++) {
 
       Rigidbody rigidbody = rigidbodyList.get(body);
         if(rigidbody.getIsVisible()) {
-          
           if (rigidbody.getShapeType() == ShapeType.CIRCLE) {
             drawCircle(rigidbody.getPosition(), rigidbody.getRadius(),
                       rigidbody.getAngle(), rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
-                       rigidbody.getStrokeColour());
+                       rigidbody.getStrokeColour(), inEditMode);
           }
 
           if (rigidbody.getShapeType() == ShapeType.BOX) {
-            drawPolygon(rigidbody.getPosition(), rigidbody.GetTransformedVertices(),
-                        rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
-                        rigidbody.getStrokeColour());
+            if(rigidbody == selectedRigidbody && inEditMode) {
+              drawPolygon(rigidbody.getPosition(), rigidbody.GetTransformedVertices(),
+                          rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
+                          rigidbody.getStrokeColour(), false);
+            } else {
+              drawPolygon(rigidbody.getPosition(), rigidbody.GetTransformedVertices(),
+                          rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
+                          rigidbody.getStrokeColour(), inEditMode);
+            }
           }
         }
       }
   }
+
   public void drawCircle(PVector position, float radius, float angle, float strokeWeight, PVector fillColour,
-    PVector strokeColour) {
-    
+    PVector strokeColour, boolean inEditMode) {
+
     float diameter = radius * 2.0f;
-    fill(fillColour.x, fillColour.y, fillColour.z);
-    stroke(strokeColour.x, strokeColour.y, strokeColour.z);
+
+    this.stroke.set(strokeColour);
+    this.fill.set(fillColour);
+
+
+    if(inEditMode) {
+      fill(this.fill.x, this.fill.y, this.fill.z, this.opacity);
+      stroke(this.stroke.x, this.stroke.y, this.stroke.z, this.opacity);
+    } else {
+      fill(this.fill.x, this.fill.y, this.fill.z);
+      stroke(this.stroke.x, this.stroke.y, this.stroke.z);
+    }
+
     strokeWeight(strokeWeight);
     ellipseMode(CENTER);
     ellipse(position.x, position.y,  diameter,  diameter);
@@ -68,25 +93,104 @@ public class Shape {
     vb = PhysEngMath.Transform(vb, position, angle);
     line(va.x, va.y, vb.x, vb.y);
     }
+
+  public void drawCircle(PVector position, float radius, float angle, float strokeWeight, PVector fillColour,
+    PVector strokeColour, float opacity) {
+
+    float diameter = radius * 2.0f;
+
+    this.stroke.set(strokeColour);
+    this.fill.set(fillColour);
+
+    fill(this.fill.x, this.fill.y, this.fill.z, opacity);
+    stroke(this.stroke.x, this.stroke.y, this.stroke.z, opacity);
+
+    strokeWeight(strokeWeight);
+    ellipseMode(CENTER);
+    ellipse(position.x, position.y,  diameter,  diameter);
+
+    PVector va = new PVector();
+    PVector vb = new PVector(radius, 0);
+    va = PhysEngMath.Transform(va, position, angle);
+    vb = PhysEngMath.Transform(vb, position, angle);
+    line(va.x, va.y, vb.x, vb.y);
+  }
   
   public void drawBox(PVector position, float width, float height, float angle, float strokeWeight,
-    PVector fillColour, PVector strokeColour) {
-    
-    fill(fillColour.x, fillColour.y, fillColour.z);
-    stroke(strokeColour.x, strokeColour.y, strokeColour.z);
+    PVector fillColour, PVector strokeColour, boolean inEditMode) {
+
+    this.stroke.set(strokeColour);
+    this.fill.set(fillColour);
+
+
+    if(inEditMode) {
+      fill(this.fill.x, this.fill.y, this.fill.z, this.opacity);
+      stroke(this.stroke.x, this.stroke.y, this.stroke.z, this.opacity);
+    } else {
+      fill(this.fill.x, this.fill.y, this.fill.z);
+      stroke(this.stroke.x, this.stroke.y, this.stroke.z);
+    }
     strokeWeight(strokeWeight);
     rectMode(CENTER);
     pushMatrix();
     rect(position.x, position.y, width, height);
     popMatrix();
   }
+
+  public void drawBox(PVector position, float width, float height, float angle, float strokeWeight,
+    PVector fillColour, PVector strokeColour, int opacity) {
+
+    this.stroke.set(strokeColour);
+    this.fill.set(fillColour);
+
+
+    fill(this.fill.x, this.fill.y, this.fill.z, opacity);
+    stroke(this.stroke.x, this.stroke.y, this.stroke.z, opacity);
+
+    strokeWeight(strokeWeight);
+    rectMode(CENTER);
+
+    pushMatrix();
+    rotate(angle);
+    rect(position.x, position.y, width, height);
+    popMatrix();
+  }
   
   public void drawPolygon(PVector position, PVector[] transformedVertices, float strokeWeight,
-    PVector fillColour, PVector strokeColour) {
+    PVector fillColour, PVector strokeColour, boolean inEditMode) {
     
-    fill(fillColour.x, fillColour.y, fillColour.z);
-    stroke(strokeColour.x, strokeColour.y, strokeColour.z);
+    this.stroke.set(strokeColour);
+    this.fill.set(fillColour);
+
+    if(inEditMode) {
+      fill(this.fill.x, this.fill.y, this.fill.z, this.opacity);
+      stroke(this.stroke.x, this.stroke.y, this.stroke.z, this.opacity);
+    } else {
+      fill(this.fill.x, this.fill.y, this.fill.z);
+      stroke(this.stroke.x, this.stroke.y, this.stroke.z);
+    }
+
     strokeWeight(strokeWeight);
+
+    beginShape();
+    for (PVector transformedVertex : transformedVertices) {
+      vertex(transformedVertex.x, transformedVertex.y);
+    }
+    endShape(CLOSE);
+  }
+
+
+public void drawPolygon(PVector position, PVector[] transformedVertices, float strokeWeight,
+    PVector fillColour, PVector strokeColour, int opacity) {
+    
+    this.stroke.set(strokeColour);
+    this.fill.set(fillColour);
+
+    fill(this.fill.x, this.fill.y, this.fill.z, opacity);
+    stroke(this.stroke.x, this.stroke.y, this.stroke.z, opacity);
+
+    strokeWeight(strokeWeight);
+
     beginShape();
     for (PVector transformedVertex : transformedVertices) {
       vertex(transformedVertex.x, transformedVertex.y);

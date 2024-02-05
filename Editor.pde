@@ -12,6 +12,9 @@ public class Editor {
 
 
 	public void onEditorSelect (Rigidbody rigidbody) {
+		if(rigidbody.getShapeType() == ShapeType.CIRCLE) {
+			return;
+		}
 		this.rigidbody = rigidbody;
 		this.inEditMode = true;
 	}
@@ -20,42 +23,46 @@ public class Editor {
 	//ID -1 corresponds to drawing the vertices in the main draw loop
 	//ID 0 corresponds to a click
 	//ID 1 corresponds to a drag
+	//ID 2 corresponds to a delete press
 
 	public void whileEditorSelect(int id) {
 		if(inEditMode) {
 			if(id == -1) {
+				//int index = this.selectVertex(VERTEX_SNAP_RADIUS);
+				//this.drawVertices(index);
 				this.drawVertices();
 				return;
 			} else if(id == 0){
 				this.addVertexClick();
 			} else if(id == 1) {
-
-				int index = this.selectVertexDrag();
-
+				int index = this.selectVertex(VERTEX_SNAP_RADIUS);
 				if(index != -1) {
 					this.moveVertex(index);
+				}
+			} else if(id == 2) {
+				int index = this.selectVertex(VERTEX_SNAP_RADIUS);
+				if(index != -1) {
+					this.deleteVertex(index);
 				}
 			}
 		}
 	}
 
 
-	public int selectVertexDrag() {
+	public int selectVertex(float radius) {
 		PVector[] rigidbodyVertices = rigidbody.GetTransformedVertices();
 
 		for(int i = 0; i < rigidbodyVertices.length; i++) {
-			if(PVector.sub(interactivityListener.screenToWorld(), rigidbodyVertices[i]).magSq() < 0.125f) {
+			if(PVector.sub(PVector.add(rigidbody.getPosition(), PhysEngMath.SnapController(interactivityListener, rigidbody, interactivityListener.screenToWorld())), rigidbodyVertices[i]).magSq() < radius) {
+				//System.out.println(i);
 				return i;
 			}
 		}
-
 		return -1;
-
 	}
 
 	public void addVertexClick() {
-		PVector vertex = PhysEngMath.Transform(interactivityListener.screenToWorld(), this.rigidbody.getPosition().copy().mult(-1), -this.rigidbody.getAngle());
-		System.out.println("Adding A vertex");
+		PVector vertex = PhysEngMath.ReverseTransform(interactivityListener.screenToWorld(), this.rigidbody.getPosition().copy().mult(-1), -this.rigidbody.getAngle());
 		PVector[] rigidbodyVertices = this.rigidbody.getVertices();
 		PVector[] newRigidbodyVertices = new PVector[rigidbodyVertices.length + 1];
 
@@ -68,21 +75,24 @@ public class Editor {
 		this.rigidbody.updatePolygon(newRigidbodyVertices);
 	} 
 
+	public void deleteVertex(int index) {
+		ArrayList<PVector> vertexList = new ArrayList<PVector>(Arrays.asList(this.rigidbody.getVertices()));
+		vertexList.remove(index);
+		this.rigidbody.updatePolygon(vertexList.toArray(new PVector[vertexList.size()]));
+	}
+
 
 	public void drawVertices() {
 		PVector[] currentVertices = this.rigidbody.GetTransformedVertices();
-
 		for(PVector vertex : currentVertices) {
-			/*
-			if(vertex == null) {
-				fill(0, 255, 0);
-				noStroke();
-				ellipse(0, 0, 0.75, 0.75);
-			*/
+			pushMatrix();
+			translate(vertex.x, vertex.y);
 
-			fill(255, 0, 0);
+			fill(0, 255, 0);
 			noStroke();
-			ellipse(vertex.x, vertex.y, 0.25, 0.25);
+			ellipse(0, 0, 0.25, 0.25);
+			popMatrix();
+
 		}
 	}
 
@@ -92,8 +102,7 @@ public class Editor {
 
 		PVector[] vertexList = Arrays.copyOf(rigidbodyCoreVertices, rigidbodyCoreVertices.length);
 
-		vertexList[index] = PhysEngMath.Transform(vertex, this.rigidbody.getPosition().copy().mult(-1), -this.rigidbody.getAngle());
-		//vertexList[index] = PhysEngMath.Transform(vertex, this.rigidbody.getPosition().copy().mult(-1), 0f);
+		vertexList[index] = PhysEngMath.ReverseTransform(vertex, this.rigidbody.getPosition().copy().mult(-1), -this.rigidbody.getAngle());
 
 		this.rigidbody.updatePolygon(vertexList);
 	}
@@ -118,5 +127,13 @@ public class Editor {
 
 	public void onRelease(){
 
+	}
+
+	public boolean getInEditMode() {
+		return this.inEditMode;
+	}
+
+	public Rigidbody getSelectedRigidbody() {
+		return this.rigidbody;
 	}
 }

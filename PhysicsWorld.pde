@@ -40,6 +40,7 @@ public Rigidbody RigidbodyGenerator = new Rigidbody();
 public InteractivityListener interactivityListener = new InteractivityListener();
 public Shape render = new Shape();
 public ControlP5 userInterface;
+public Level levelEditor = new Level();
 
 public Editor editor = new Editor();
 
@@ -93,7 +94,14 @@ public boolean DRAW_AABBS = false;
 public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
 public final float GRAVITY_MAG = 9.81f;
 
+public ArrayList<ForceRegistry> ALL_FORCES_ARRAYLIST = new ArrayList<ForceRegistry>();
 
+
+public static float VERTEX_SNAP_RADIUS = 0.25f;
+public float GUI_GROUP_POSITION_X;
+public float GUI_GROUP_POSITION_Y;
+public float GUI_GLOBAL_GROUP_WIDTH;
+public float GUI_GLOBAL_GROUP_HEIGHT;
 
 
 /*
@@ -493,6 +501,10 @@ public void BroadPhaseStep() {
 }
 
 public void NarrowPhaseStep() {
+    if(isPaused) {
+        return;
+    }
+    
     for (int i = 0; i < collisionPairs.size(); i++)
     {
         ArrayList<Integer> pair = collisionPairs.get(i);

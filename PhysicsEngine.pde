@@ -4,6 +4,7 @@ GUI gui;
 PShape background;
 Softbody softbody;
 Cloth cloth;
+boolean loadLevel = false;
 
 
 void setup() {
@@ -22,8 +23,12 @@ void setup() {
 /*------------------------------------------------------------*/
 
 /*---------------------------- UI ----------------------------*/
-  userInterface = new ControlP5(this);
-  gui = new GUI(userInterface);
+    userInterface = new ControlP5(this);
+    gui = new GUI(userInterface);
+    GUI_GROUP_POSITION_X = gui.calculateGroupPositionX();
+    GUI_GROUP_POSITION_Y = gui.calculateGroupPositionY();
+    GUI_GLOBAL_GROUP_WIDTH = gui.globalGroupWidth;
+    GUI_GLOBAL_GROUP_HEIGHT = gui.globalGroupHeight;
 /*------------------------------------------------------------*/
 
 /*------------------- Background ---------------------------*/
@@ -71,6 +76,11 @@ void setup() {
     AddBodyToBodyEntityList(floor);
     AddBodyToBodyEntityList(spinningBody);
 
+    //ALL_FORCES_ARRAYLIST.add(rod);
+    //ALL_FORCES_ARRAYLIST.add(springLeft);
+    //ALL_FORCES_ARRAYLIST.add(springRight);
+
+
     //softbody = new Softbody(new PVector(0, -50), 0, 2, 2);
     //softbody.CreateBoxSoftbody();
     //cloth = new Cloth(new PVector(-20, -50), new PVector(0, -50), 20);
@@ -79,6 +89,10 @@ void setup() {
 
 
 void draw() {
+    if(loadLevel) {
+        levelEditor.loadLevelState();
+        loadLevel = false;
+    }
   int currentFrameTime = millis();
 
   /*NEVER DELETE THIS */

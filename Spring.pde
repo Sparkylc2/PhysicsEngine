@@ -14,7 +14,6 @@ public class Spring implements ForceRegistry {
     private boolean lockTranslationToYAxis = false;
     
     private boolean isPerfectSpring = false;
-    private boolean isHingeable = true;
 
     private float equilibriumLength = 1f; //Equilibrium length is a percentage of the total magnitude of the length
     private float springConstant = 50;
@@ -23,9 +22,6 @@ public class Spring implements ForceRegistry {
     private float springLength;
 
     private boolean isTwoBodySpring;
-    //TODO: IMPLEMENT THIS
-    private float initialRotationA;
-    private float initialRotationB;
 
 
     /*--------------- Reusable --------------- */
@@ -48,7 +44,6 @@ public class Spring implements ForceRegistry {
         this.springLength = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle()).sub(anchorPoint).mag();
 
         this.isTwoBodySpring = false;
-        this.isHingeable = true;
 
     }
 
@@ -63,7 +58,6 @@ public class Spring implements ForceRegistry {
         this.springLength = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle()).sub(PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle())).mag();
 
         this.isTwoBodySpring = true;
-        this.isHingeable = true;
 
     }
 
@@ -247,10 +241,6 @@ public class Spring implements ForceRegistry {
     public void setRigidbodyA(Rigidbody rigidbody){
         this.rigidbodyA = rigidbody;
     }
-    public void setIsHingeable(boolean isHingeable) {
-        this.isHingeable = isHingeable;
-    }
-
     public void setSpringConstant(float springConstant) {
         this.springConstant = springConstant;
     }
@@ -278,7 +268,9 @@ public class Spring implements ForceRegistry {
     public void setPerfectSpring(boolean isPerfectSpring) {
         this.isPerfectSpring = isPerfectSpring;
     }
-
+    public void setDrawSpring(boolean drawSpring) {
+        this.drawSpring = drawSpring;
+    }
     public void setAnchorPoint(PVector anchorPoint) {
         this.anchorPoint.set(anchorPoint);
     }
@@ -301,10 +293,6 @@ public class Spring implements ForceRegistry {
 
     public void setLocalAnchorB(float x, float y) {
         this.localAnchorB.set(x, y);
-    }
-
-    public boolean getIsHingeable() {
-        return this.isHingeable;
     }
 
     public float getSpringConstant() {
@@ -347,12 +335,8 @@ public class Spring implements ForceRegistry {
         return this.localAnchorB;
     }
 
-    public float getInitialRotationA() {
-        return this.initialRotationA;
-    }
-
-    public float getInitialRotationB() {
-        return this.initialRotationB;
+    public boolean getDrawSpring() {
+        return this.drawSpring;
     }
     @Override
     public Rigidbody getRigidbodyA() {

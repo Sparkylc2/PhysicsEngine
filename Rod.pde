@@ -1,6 +1,6 @@
 public class Rod implements ForceRegistry {
 /*-------------------------------------------------------------------------------------------------*/
-    private float length;
+    private float length = 0f;
     private float stiffness = 250000.0f;
     private float damping = 1.0f;
 
@@ -8,10 +8,6 @@ public class Rod implements ForceRegistry {
     private PVector localAnchorB = new PVector();
     private PVector anchorPoint = new PVector();
 
-    private float initialAngleA = 0f;
-    private float initialAngleB = 0f;
-
-    private boolean isHingeable;
     private boolean isTwoBodyRod;
     private boolean isJoint;
 
@@ -54,6 +50,10 @@ public class Rod implements ForceRegistry {
 
         this.isTwoBodyRod = false;
 
+        if(rigidbodyA == null) {
+            throw new NullPointerException("Rigidbody A is null");
+        }
+        
         this.length = PVector.sub(PhysEngMath.Transform(this.localAnchorA, this.rigidbodyA.getPosition(), this.rigidbodyA.getAngle()), 
                                   this.anchorPoint)
                                   .mag();
@@ -68,6 +68,13 @@ public class Rod implements ForceRegistry {
         this.localAnchorB.set(localAnchorB);
 
         this.isTwoBodyRod = true;
+
+        if(rigidbodyA == null) {
+            throw new NullPointerException("Rigidbody A is null");
+        } else if(rigidbodyB == null) {
+            throw new NullPointerException("Rigidbody B is null");
+        }
+
         this.length = PVector.sub(PhysEngMath.Transform(this.localAnchorB, this.rigidbodyB.getPosition(), this.rigidbodyB.getAngle()), 
                                   PhysEngMath.Transform(this.localAnchorA, this.rigidbodyA.getPosition(), this.rigidbodyA.getAngle()))
                                   .mag();
@@ -203,9 +210,6 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
 public void setLength(float length) {
     this.length = length;
   }
-public void setIsHingeable(boolean isHingeable) {
-    this.isHingeable = isHingeable;
-  }
 
 public void setAnchorPoint(PVector anchorPoint) {
     this.anchorPoint.set(anchorPoint);
@@ -251,10 +255,6 @@ public float getLength() {
     return length;
   }
 
-public boolean getIsHingeable() {
-    return isHingeable;
-  }
-
 public PVector getAnchorPoint() {
     return anchorPoint;
   }
@@ -278,6 +278,10 @@ public float getDamping() {
 public boolean getTwoBodyRod() {
     return isTwoBodyRod;
   }
+
+public boolean getIsJoint() {
+    return this.isJoint;
+}
 @Override
 public Rigidbody getRigidbodyA() {
     return rigidbodyA;
@@ -289,6 +293,8 @@ public Rigidbody getRigidbodyB() {
     }
     return this.rigidbodyA;
   }
+
+
 
 }
 

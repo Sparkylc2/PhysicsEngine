@@ -136,12 +136,6 @@ public static void FindCollisionPoints(Rigidbody rigidbodyA, Rigidbody rigidbody
  private static PVector[] FindCirclesCollisionPoint(PVector centerA, float radiusA,
                                                          PVector centerB, float radiusB) {
     
-    /*
-    PVector direction = PVector.sub(centerB, centerA).normalize();
-    PVector collisionPoint = PVector.add(centerA, PVector.mult(direction, radiusA));
-    return new PVector[] {collisionPoint};
-    */
-
 
     return new PVector[] {PVector.add(centerA, PVector.sub(centerB, centerA).normalize().mult(radiusA))};
     }
@@ -152,78 +146,6 @@ public static void FindCollisionPoints(Rigidbody rigidbodyA, Rigidbody rigidbody
 ====================================================================================================
 */
 
-/*
-private static PVector[] FindPolygonsCollisionPoints(PVector[] transformedVerticesA,
-                                                           PVector[] transformedVerticesB) {
-  PVector contactPointA = new PVector();
-  PVector contactPointB = new PVector();
-  int contactCount = 0;
-
-  float minDistanceSquared = Float.MAX_VALUE;
-
-  for(int i = 0; i < transformedVerticesA.length; i++) {
-
-      PVector point = transformedVerticesA[i];
-
-      for(int j = 0; j < transformedVerticesB.length; j++) {
-          
-          PVector vertexA = transformedVerticesB[j];
-          PVector vertexB = transformedVerticesB[(j + 1) % transformedVerticesB.length];
-  
-          CollisionResult pointSegmentDistanceResult = PointSegmentDistance(point, vertexA, vertexB);
-
-        if(PhysEngMath.Equals(pointSegmentDistanceResult.getDistanceSquared(),minDistanceSquared)) {
-
-            if(!PhysEngMath.Equals(pointSegmentDistanceResult.getPointsOfContact()[0], contactPointA)) {
-
-              contactPointB = pointSegmentDistanceResult.getPointsOfContact()[0];
-              contactCount = 2;
-
-            }
-        } else if(pointSegmentDistanceResult.getDistanceSquared() < minDistanceSquared) {
-
-            minDistanceSquared = pointSegmentDistanceResult.getDistanceSquared();
-            contactPointA = pointSegmentDistanceResult.getPointsOfContact()[0];
-            contactCount = 1;
-        }
-      }
-    }
-
-  for(int i = 0; i < transformedVerticesB.length; i++) {
-
-      PVector point = transformedVerticesB[i];
-
-      for(int j = 0; j < transformedVerticesA.length; j++) {
-          
-          PVector vertexA = transformedVerticesA[j];
-          PVector vertexB = transformedVerticesA[(j + 1) % transformedVerticesA.length];
-  
-          CollisionResult pointSegmentDistanceResult = PointSegmentDistance(point, vertexA, vertexB);
-
-        if(PhysEngMath.Equals(pointSegmentDistanceResult.getDistanceSquared(),minDistanceSquared)) {
-
-            if(!PhysEngMath.Equals(pointSegmentDistanceResult.getPointsOfContact()[0], contactPointA)) {
-
-              contactPointB = pointSegmentDistanceResult.getPointsOfContact()[0];
-              contactCount = 2;
-
-            }
-        } else if(pointSegmentDistanceResult.getDistanceSquared() < minDistanceSquared) {
-
-            minDistanceSquared = pointSegmentDistanceResult.getDistanceSquared();
-            contactPointA = pointSegmentDistanceResult.getPointsOfContact()[0];
-            contactCount = 1;
-        }
-      }
-    }
-
-    if(contactCount == 1){
-      return new PVector[] {contactPointA};
-    }
-  return new PVector[] {contactPointA, contactPointB};
-  
-}
-*/
 
 private static PVector[] FindPolygonsCollisionPoints(PVector[] transformedVerticesA,
                                                            PVector[] transformedVerticesB) {
@@ -530,13 +452,12 @@ public static CollisionResult IntersectCirclePolygon(PVector circleCenter, float
         }
   }
 
-    /*
-    int closestPointIndex = FindClosestPointOnPolygon(circleCenter, transformedVertices);
-    PVector closestPoint = transformedVertices[closestPointIndex];
-    axis = PVector.sub(closestPoint, circleCenter).normalize();
-    */
-
-    axis.set(PVector.sub(transformedVertices[FindClosestPointOnPolygon(circleCenter, transformedVertices)], circleCenter).normalize());
+    int index = FindClosestPointOnPolygon(circleCenter, transformedVertices);
+    
+    if(index == -1) {
+      return physicsEngine.new CollisionResult();
+    }
+    axis.set(PVector.sub(transformedVertices[index], circleCenter).normalize());
 
      //Projects the vertices of polygon A onto the axis. Format is [min, max]
       float[] minMaxA = ProjectVertices(transformedVertices, axis);
@@ -613,40 +534,33 @@ private static float[] ProjectCircle(PVector center, PVector axis, float radius)
 }
 
 private static int FindClosestPointOnPolygon(PVector circleCenter, PVector[] transformedVertices) {
-/*
-  int result = -1;
-  float minDistance = Float.MAX_VALUE;
+    int result = -1;
+    float minDistanceSq = Float.MAX_VALUE;
 
-  for(int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
-
-    float distance = PVector.sub(circleCenter, transformedVertices[vertexIndex]).magSq();
-
-    if(distance < minDistance) {
-      minDistance = distance;
-      result = vertexIndex;
+    // Check for null or empty input
+    if (transformedVertices == null || transformedVertices.length == 0 || circleCenter == null) {
+        System.out.println("Input is null or empty");
+        return result; // Return -1 to indicate error
     }
 
-  }
+    for (int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
+        // Additional check for null vertices, if necessary
+        if (transformedVertices[vertexIndex] == null) {
+            continue; // Skip this iteration
+        }
 
-  return result;
-  */
+        float distanceSq = PVector.sub(circleCenter, transformedVertices[vertexIndex]).magSq();
 
-  int result = -1;
-  float minDistanceSq = Float.MAX_VALUE;
-
-  for(int vertexIndex = 0; vertexIndex < transformedVertices.length; vertexIndex++) {
-
-    float distanceSq = PVector.sub(circleCenter, transformedVertices[vertexIndex]).magSq();
-
-    if(distanceSq < minDistanceSq) {
-      minDistanceSq = distanceSq;
-      result = vertexIndex;
+        if (distanceSq < minDistanceSq) {
+            minDistanceSq = distanceSq;
+            result = vertexIndex;
+        }
     }
 
-  }
-
-  return result;
+    return result;
 }
+
+
 
 public static CollisionResult PointSegmentDistance(PVector point, PVector lineSegmentStart, PVector lineSegmentEnd) {
     //PVector.sub(point, lineSegmentStart) is equivalent to pointToLineSegment

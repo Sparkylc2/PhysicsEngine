@@ -15,6 +15,7 @@ public boolean mouseDown = false;
 
 public boolean shiftPressed = false;
 public boolean tabPressed = false;
+public boolean deletePressed = false;
 public boolean ctrlEPressed = false;
 public boolean ctrlCPressed = false;
 public boolean ctrlVPressed = false;
@@ -38,6 +39,9 @@ public boolean ePressed = false;
 public boolean vPressed = false;
 
 public void keyPressed() {
+    if(keyCode == BACKSPACE) {
+        deletePressed = true;
+    }
     if(key == 'c' || key == 'C') {
         cPressed = true;
     }
@@ -77,12 +81,18 @@ public void keyPressed() {
     }
     if(key == 'r') {
         rigidbodyList.clear();
+        ALL_FORCES_ARRAYLIST.clear();
         softbodyList.clear();
     }
     if(keyCode == BACKSPACE || keyCode == DELETE) {
         Rigidbody rigidbody = interactivityListener.getClickedRigidbody();
 
         if(rigidbody != null) {
+            ArrayList<ForceRegistry> forceRegistry = rigidbody.getForceRegistry();
+            
+            for(ForceRegistry force : forceRegistry) {
+                ALL_FORCES_ARRAYLIST.remove(force);
+            }
             rigidbodyList.remove(rigidbody);
         }
     }
@@ -97,16 +107,17 @@ public void keyPressed() {
     }
 
 
+    if(key == 'f') {
+        levelEditor.saveLevelState();
+    }
+    if(key == 'g') {
+        loadLevel = true;
+    }
+
     if(key == 'm') {
         interactivityListener.position = new PVector(-50, -50);
         interactivityListener.zoom = 10f;
     }
-    /*
-    if((key == 'b' || key == 'B') && (userInterface.getController("Box").getValue() == 1)) {
-        Softbody softbody = new Softbody(interactivityListener.screenToWorld(mouseX, mouseY), 0, interactivityListener.getWidth(), interactivityListener.getHeight());
-        softbody.CreateBoxSoftbody();
-    }
-    */
 
     if(key == 'z' || key == 'Z') {
             qCount++;
@@ -178,6 +189,7 @@ public void keyPressed() {
     } else
 */
     /* ------------ FIX THIS ---------------- */
+
    if(ePressed) {
         if(shiftPressed){
             if(userInterface.getTab("Rigidbodies").isActive()) {
@@ -199,7 +211,7 @@ public void keyPressed() {
     } 
 /*----------------------------------------------------------------------------------- */
 
- 
+    
 
     if(key == '1') {
         if(userInterface.getTab("Forces").isActive()) {
@@ -465,9 +477,19 @@ public void keyPressed() {
         //interactivityListener.GenerateRigidbody();
     }
 
+    if(deletePressed) {
+        if(isInEditMode) {
+            editor.whileEditorSelect(2);
+        }
+    }
+
 }
 
 void keyReleased() {
+
+    if(keyCode == BACKSPACE) {
+        deletePressed = false;
+    }
     if (key == 'd' || key == 'D') {
         dPressed = false;
     }
@@ -514,12 +536,6 @@ void keyReleased() {
 
 public void mousePressed(){
     if(mouseButton == LEFT){
-
-        /* Velocity Calculation Stuff */
-        interactivityListener.mouseDown = true;
-        interactivityListener.initialMousePosition.set(interactivityListener.screenToWorld());
-        /* Velocity Calculation Stuff */
-
         if(shiftPressed) {
             clickedRigidbody = interactivityListener.getClickedRigidbody();
 
@@ -538,7 +554,7 @@ public void mousePressed(){
                 } else {
                     mouseSpringAdded = true;
                     PVector mouseCoordinates = interactivityListener.screenToWorld();
-                    PVector localAnchorA = PhysEngMath.Transform(PVector.sub(mouseCoordinates, clickedRigidbody.getPosition()), -clickedRigidbody.getAngle());
+                    PVector localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(interactivityListener, this.clickedRigidbody, mouseCoordinates), -clickedRigidbody.getAngle());
 
                     mouseSpring.setRigidbodyA(clickedRigidbody);
                     mouseSpring.setLocalAnchorA(localAnchorA.x, localAnchorA.y);
@@ -546,23 +562,31 @@ public void mousePressed(){
                     clickedRigidbody.addForceToForceRegistry(mouseSpring);
                 }
             }
+        } else {
+            /* Velocity Calculation Stuff */
+            interactivityListener.mouseDown = true;
+            interactivityListener.initialMousePosition.set(interactivityListener.screenToWorld());
+            /* Velocity Calculation Stuff */
         } 
     }
 }
 
 public void mouseReleased(){
     if(mouseButton == LEFT){
+
         interactivityListener.mouseDown = false;
 
         if(mouseSpringAdded && clickedRigidbody != null){
+            mouseSpringAdded = false;
             clickedRigidbody.removeForceFromForceRegistry(mouseSpring);
-        }
-        if(userInterface.getTab("Rigidbodies").isActive() && !userInterface.getTab("Forces").isActive()) {
-            interactivityListener.GenerateRigidbody();
-        } else if(userInterface.getTab("Forces").isActive() && !userInterface.getTab("Rigidbodies").isActive()) {
-            interactivityListener.addSelectedRigidbody();
-            interactivityListener.updateSelectedRigidbodies();
-            interactivityListener.createForces();
+        } else {
+            if(userInterface.getTab("Rigidbodies").isActive() && !userInterface.getTab("Forces").isActive()) {
+                interactivityListener.GenerateRigidbody();
+            } else if(userInterface.getTab("Forces").isActive() && !userInterface.getTab("Rigidbodies").isActive()) {
+                interactivityListener.addSelectedRigidbody();
+                interactivityListener.updateSelectedRigidbodies();
+                interactivityListener.createForces();
+            }
         }
     }
 }
@@ -571,7 +595,6 @@ public void mouseClicked() {
     if(mouseButton == LEFT) {
         if(ctrlVPressed) {
             Rigidbody rigidbody = interactivityListener.getClickedRigidbody();
-            
             if(!isInEditMode && rigidbody != null) {
                 isInEditMode = true;
                 editor.onEditorSelect(rigidbody);

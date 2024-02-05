@@ -165,6 +165,22 @@ public static PVector Clamp(PVector vector, float min, float max) {
     
     return new PVector(vertex.x * cos - vertex.y * sin + position.x, vertex.x * sin + vertex.y * cos + position.y);
   }
+
+  public static PVector ReverseTransform(PVector vertex, PVector position, float angle){
+  // Translate the vertex by the position first
+  PVector translatedVertex = new PVector(vertex.x + position.x, vertex.y + position.y);
+
+  // Then, calculate sine and cosine for the angle to rotate the translated vertex
+  float sin = (float) Math.sin(angle); // Use Math.sin for Java
+  float cos = (float) Math.cos(angle); // Use Math.cos for Java
+
+  // Rotate the translated vertex
+  return new PVector(
+    translatedVertex.x * cos - translatedVertex.y * sin, // Rotate x
+    translatedVertex.x * sin + translatedVertex.y * cos  // Rotate y
+  );
+}
+
   
   //Overloaded method for Transform
     public static PVector Transform(float x, float y, float angle) {
@@ -188,26 +204,23 @@ public static boolean Equals(PVector a, PVector b) {
     return PVector.sub(a, b).magSq() < precision * precision; //magSq is faster than mag
   }
 
-
+    
 
 public static PVector SnapController(InteractivityListener interactivityListener, Rigidbody rigidbody, PVector point) {
     if(rigidbody == null) {
         return point;
     }
-    if (rigidbody.getShapeType() == ShapeType.CIRCLE) {
-        if (interactivityListener.getSnapToCenter()) {
-            return new PVector(0, 0);
-        } else if (interactivityListener.getSnapToEdge()) {
-            return point.sub(rigidbody.getPosition()).normalize().mult(rigidbody.getRadius()).copy();
-        } else {
-            return PVector.sub(point, rigidbody.getPosition());
-        }
-    } else {
-        if (interactivityListener.getSnapToCenter()) {
-            return new PVector(0, 0);
 
-        } else if (interactivityListener.getSnapToEdge()) {
+    if(interactivityListener.getSnapGeneral()) {
+        if(rigidbody.getShapeType() == ShapeType.BOX) {
             PVector[] vertices = rigidbody.GetTransformedVertices();
+
+            for(int i = 0; i < vertices.length; i++) {
+                if(PVector.sub(vertices[i], point).magSq() < VERTEX_SNAP_RADIUS) {
+                    return PVector.sub(vertices[i], rigidbody.getPosition());
+                }
+            }
+
             PVector closestPoint = new PVector();
             float minDistanceSq = Float.MAX_VALUE;
 
@@ -223,10 +236,75 @@ public static PVector SnapController(InteractivityListener interactivityListener
                     closestPoint = closestOnEdge;
                 }
             }
-            return PVector.sub(closestPoint, rigidbody.getPosition());
+
+            if(PVector.sub(closestPoint, rigidbody.getPosition()).magSq() / 2 > PVector.sub(point, rigidbody.getPosition()).magSq()) {
+                return new PVector();
+            } else {
+                return PVector.sub(closestPoint, rigidbody.getPosition());
+            }
+
+        } else if(rigidbody.getShapeType() == ShapeType.CIRCLE) {
+            if(PVector.sub(point, rigidbody.getPosition()).magSq() < rigidbody.getRadius()/2) {
+                return new PVector();
+            } else {
+                return point.sub(rigidbody.getPosition()).normalize().mult(rigidbody.getRadius()).copy();
+            }
         } else {
-            return PVector.sub(point, rigidbody.getPosition());
+            throw new IllegalArgumentException("Rigidbody is not a circle or box");
         }
+    } else {
+        return PVector.sub(point, rigidbody.getPosition());
+    }
+}
+
+public static PVector WorldSnapController(InteractivityListener interactivityListener, Rigidbody rigidbody, PVector point) {
+    if(rigidbody == null) {
+        return point;
+    }
+
+    if(interactivityListener.getSnapGeneral()) {
+        if(rigidbody.getShapeType() == ShapeType.BOX) {
+            PVector[] vertices = rigidbody.GetTransformedVertices();
+
+            for(int i = 0; i < vertices.length; i++) {
+                if(PVector.sub(vertices[i], point).magSq() < VERTEX_SNAP_RADIUS) {
+                    return vertices[i];
+                }
+            }
+
+            PVector closestPoint = new PVector();
+            float minDistanceSq = Float.MAX_VALUE;
+
+            for (int i = 0; i < vertices.length; i++) {
+                PVector start = vertices[i];
+                PVector end = vertices[(i + 1) % vertices.length]; // Loop back to the first vertex
+
+                PVector closestOnEdge = getClosestPointOnLine(start, end, point);
+                float distanceSq = PVector.dist(closestOnEdge, point);
+
+                if (distanceSq < minDistanceSq) {
+                    minDistanceSq = distanceSq;
+                    closestPoint = closestOnEdge;
+                }
+            }
+
+            if(PVector.sub(closestPoint, rigidbody.getPosition()).magSq() / 2 > PVector.sub(point, rigidbody.getPosition()).magSq()) {
+                return rigidbody.getPosition();
+            } else {
+                return closestPoint;
+            }
+
+        } else if(rigidbody.getShapeType() == ShapeType.CIRCLE) {
+            if(PVector.sub(point, rigidbody.getPosition()).magSq() < rigidbody.getRadius()/2) {
+                return rigidbody.getPosition();
+            } else {
+                return point.sub(rigidbody.getPosition()).normalize().mult(rigidbody.getRadius()).add(rigidbody.getPosition());
+            }
+        } else {
+            throw new IllegalArgumentException("Rigidbody is not a circle or box");
+        }
+    } else {
+        return point;
     }
 }
 

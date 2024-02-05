@@ -1,9 +1,9 @@
 public class Rigidbody {
 
   //Capital letter denotes read only
-
+  private String ID;
   private PVector position;
-  private PVector previousPosition;
+  public PVector previousPosition;
   private PVector linearVelocity;
   private float angle;
   private float angularVelocity;
@@ -23,12 +23,11 @@ public class Rigidbody {
   private float coefficientOfKineticFriction;
   
 
-  private PVector[] Vertices;
+  private PVector[] Vertices = new PVector[0];
   private AABB aabb;
-  private PVector[] transformedVertices;
+  private PVector[] transformedVertices = new PVector[0];
 
   private ArrayList<Rigidbody> collisionExclusionList = new ArrayList<Rigidbody>();
-  private ArrayList<ForceRegistry> rodList = new ArrayList<ForceRegistry>();
 
   private Shape shapeRenderer;
   private float strokeWeight;
@@ -45,8 +44,6 @@ public class Rigidbody {
   private boolean isCollidable;
 
 
-  public boolean useVerletIntegration = false;
-  public boolean useRK4Integration = true;
   
   private float netTorque = 0f;
   private PVector netForce = new PVector();
@@ -64,13 +61,15 @@ public class Rigidbody {
   ==================================================================================================
   */
   public Rigidbody() {
-    //do nothing
+      //this.aabbUpdateRequired = true;
+      //this.transformUpdateRequired = true;
   }
   
   private Rigidbody(float density, float mass, float rotationalIntertia, float restitution,
     float area, float radius, float width, float height, PVector[] vertices, boolean isStatic,
     boolean isCollidable, float strokeWeight, PVector strokeColour, PVector fillColour, ShapeType shapeType)
   {
+    this.ID = UUID.randomUUID().toString();
     this.Mass = mass;
     this.RotationalInertia = rotationalIntertia;
     this.InvMass = mass > 0 ? 1 / mass : 0;
@@ -110,12 +109,6 @@ public class Rigidbody {
       this.transformedVertices = new PVector[this.Vertices.length];
       this.aabb = this.GetAABB();
       
-    } else if(shapeType == ShapeType.POLYGON){
-
-        this.Vertices = vertices;
-        this.transformedVertices = new PVector[this.Vertices.length];
-        this.aabb = this.GetAABB();
-      
     } else {
 
         this.Vertices = null;
@@ -128,6 +121,8 @@ public class Rigidbody {
     this.aabbUpdateRequired = true;
     this.transformUpdateRequired = true;
   }
+
+
 
 
 
@@ -205,7 +200,7 @@ public class Rigidbody {
 
     if(!isStatic) {
       mass = area * density;
-      rotationalIntertia =  0.5f * mass * radius * radius;
+      rotationalIntertia =  abs(0.5f * mass * radius * radius);
     }
     
 
@@ -217,6 +212,8 @@ public class Rigidbody {
     return rigidbody;
   }
   
+
+
   public Rigidbody CreateBoxBody(float width, float height, float density,
     float restitution, boolean isStatic, boolean isCollidable, float strokeWeight,
     PVector strokeColour, PVector fillColour) {
@@ -255,6 +252,57 @@ public class Rigidbody {
     
     return rigidbody;
   }
+
+
+  public Rigidbody CreatePolygon(PVector[] vertices, float density,
+    float restitution, boolean isStatic, boolean isTranslationallyStatic,
+    boolean isRotationallyStatic, boolean isCollidable, float strokeWeight,
+    PVector strokeColour, PVector fillColour) {
+
+    Rigidbody rigidbody;
+
+    float area = this.calculateArea(vertices);
+    
+    //Argument exceptions for area and density
+    if (area < MIN_BODY_AREA || area > MAX_BODY_AREA) {
+
+      throw new IllegalArgumentException("Body area is too small or large");
+    }
+
+    if (density < MIN_BODY_DENSITY || density > MAX_BODY_DENSITY) {
+
+      throw new IllegalArgumentException("Density is too small or large");
+    } 
+    
+    //Clamps restitution between 0 and 1
+    restitution = PhysEngMath.Clamp(restitution, 0, 1);
+    
+    //calculates mass from density and area
+    float mass = 0f;
+    float rotationalIntertia = 0f;
+
+    if(isStatic) {
+      mass = 0f;
+      rotationalIntertia = 0f;
+    } else if(isTranslationallyStatic) {
+      mass = 0f;
+      rotationalIntertia = calculateMomentOfInertia(vertices, mass);
+    } else if(isRotationallyStatic) {
+      mass = area * density;
+      rotationalIntertia = 0f;
+    } else {
+      mass = area * density;
+      rotationalIntertia = calculateMomentOfInertia(vertices, mass);
+    }
+
+    
+    rigidbody = new Rigidbody(density, mass, rotationalIntertia, restitution, area, 0, width,
+                              height, vertices, isStatic, isCollidable, strokeWeight, strokeColour,
+                              fillColour, ShapeType.BOX);
+    
+    return rigidbody;
+  }
+
 
   public AABB GetAABB() {
     if(this.aabbUpdateRequired) {
@@ -320,7 +368,7 @@ public float calculateMomentOfInertia(PVector[] vertices, float mass) {
   float I = 0;
   float area = calculateArea(vertices);
   int n = vertices.length;
-  PVector centroid = calculateCentroid(vertices); // Use the calculateCentroid method provided earlier
+  PVector centroid = calculateCentroid(vertices);
 
   for (int i = 0, j = n - 1; i < n; j = i++) {
     float xi = vertices[i].x - centroid.x, yi = vertices[i].y - centroid.y;
@@ -353,8 +401,9 @@ public PVector calculateCentroid(PVector[] vertices) {
 public void adjustRigidbodyPosition(PVector[] vertices) {
     PVector newCOM = calculateCentroid(vertices);
 
-    PVector offset = PVector.sub(newCOM, this.position);
-    this.position.add(offset);
+    for(PVector vertex : vertices) {
+        vertex.sub(newCOM);
+    }
 }
 
 private boolean doEdgesIntersect(PVector p1, PVector p2, PVector p3, PVector p4) {
@@ -390,6 +439,35 @@ private boolean validatePolygonVertices(PVector[] vertices) {
     return true;
 }
 
+
+public void updateCircle(float radius) {
+
+    this.Radius = radius;
+    this.Area = (float) PI * this.Radius * this.Radius;
+    this.Vertices = null;
+
+    this.transformedVertices = null;
+
+    if(this.isStatic) {
+      this.Mass = 0f;
+      this.InvMass = 0f;
+      this.RotationalInertia = 0f;
+      this.InvRotationalInertia = 0f;
+    } else if(this.isTranslationallyStatic) {
+      this.Mass = this.Density * this.Area;
+      this.InvMass = 0f;
+      this.RotationalInertia = 0.5f * this.Mass * this.Radius * this.Radius;
+      this.InvRotationalInertia = 1 / this.RotationalInertia;
+    } else if(this.isRotationallyStatic) {
+      this.Mass = this.Area * this.Density;
+      this.InvMass = this.Mass;
+      this.RotationalInertia = 0f;
+      this.InvRotationalInertia = 0f;
+    }
+
+    this.transformUpdateRequired = true;
+    this.aabbUpdateRequired = true;
+}
 public void updatePolygon(PVector[] newVertices) {
 
     newVertices = PhysEngMath.OrderVerticesClockwise(newVertices);
@@ -402,27 +480,89 @@ public void updatePolygon(PVector[] newVertices) {
     this.Vertices = newVertices;
     this.transformedVertices = new PVector[this.Vertices.length];
     PVector newCOM = calculateCentroid(this.Vertices);
-    float newArea = calculateArea(this.Vertices);
+
+    for(int i = 0; i < this.Vertices.length; i++) {
+          this.Vertices[i].sub(newCOM);
+    }
+
     float newMass = calculateMass(this.Vertices);
     float newMomentOfInertia = calculateMomentOfInertia(this.Vertices, newMass);
 
+    if(this.isStatic) {
+      this.Mass = 0f;
+      this.InvMass = 0f;
+      this.RotationalInertia = 0f;
+      this.InvRotationalInertia = 0f;
+    } else if(this.isTranslationallyStatic) {
+      this.Mass = newMass;
+      this.InvMass = 0f;
+      this.RotationalInertia = newMomentOfInertia;
+      this.InvRotationalInertia = this.RotationalInertia > 0 ? 1 / this.RotationalInertia : 0;
+    } else if(this.isRotationallyStatic) {
+      this.Mass = newMass;
+      this.InvMass = this.Mass > 0f ? 1 / this.Mass : 0f;
+      this.InvRotationalInertia = 0f;
+      this.RotationalInertia = newMomentOfInertia;
+    } else {
+      this.Mass = newMass;
+      this.InvMass = this.Mass > 0 ? 1 / this.Mass : 0;
+      this.RotationalInertia = newMomentOfInertia;
+      this.InvRotationalInertia = this.RotationalInertia > 0 ? 1 / this.RotationalInertia : 0;
+    }
 
-    PVector offset = PVector.sub(newCOM, calculateCentroid(this.Vertices));
-    this.position.add(offset);
+    float newArea = calculateArea(this.Vertices);
+
     this.Area = newArea;
-
-    if (!isStatic && !isTranslationallyStatic) {
-        this.Mass = newMass;
-        this.InvMass = this.Mass > 0 ? 1 / this.Mass : 0;
-    }
-    if (!isStatic && !isRotationallyStatic) {
-        this.RotationalInertia = newMomentOfInertia;
-        this.InvRotationalInertia = this.RotationalInertia > 0 ? 1 / this.RotationalInertia : 0;
-    }
 
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
 }
+
+
+public void deserializeRigidbody(String ID, ShapeType ShapeType, PVector position, PVector linearVelocity, float angle, 
+                                 float angularVelocity, float Density, float Restitution, float radius, float width, 
+                                 float height, float coefficientOfStaticFriction, float coefficientOfKineticFriction,
+                                 PVector[] vertices, boolean isStatic, boolean isTranslationallyStatic, boolean isRotationallyStatic,
+                                 boolean isCollidable, boolean isVisible, float strokeWeight, PVector strokeColour, PVector fillColour) {
+    this.ID = ID; 
+
+    this.position = position;
+    this.linearVelocity = linearVelocity;
+    this.angle = angle;
+    this.angularVelocity = angularVelocity;
+
+    this.Density = Density;
+    this.Restitution = Restitution;
+    this.ShapeType = ShapeType;
+
+    this.isStatic = isStatic;
+    this.isTranslationallyStatic = isTranslationallyStatic;
+    this.isRotationallyStatic = isRotationallyStatic;
+
+    this.isCollidable = isCollidable;
+    this.isVisible = isVisible;
+
+    this.strokeWeight = strokeWeight;
+    this.strokeColour = strokeColour;
+    this.fillColour = fillColour;
+
+    this.coefficientOfStaticFriction = coefficientOfStaticFriction;
+    this.coefficientOfKineticFriction = coefficientOfKineticFriction;
+
+    if(ShapeType == ShapeType.POLYGON || ShapeType == ShapeType.BOX) {
+
+        this.updatePolygon(vertices);
+        this.Width = width;
+        this.Height = height;
+
+    } else if(ShapeType == ShapeType.CIRCLE) {
+        this.updateCircle(radius);
+    }
+  }
+
+
+
+
 
   /*
   ==================================================================================================
@@ -445,7 +585,7 @@ public void updatePolygon(PVector[] newVertices) {
 
   public void SetInitialPosition(PVector position) {
     this.position = position;
-    this.previousPosition = position.copy();
+    this.previousPosition = position;
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
   }
@@ -578,51 +718,10 @@ public boolean containsPolygon(float x, float y) {
 
 
 
-    public PVector calculateeration(PVector position) {
-
-        /*--------------- Force Reset --------------*/
-        this.rodList.clear();
-        this.netForce.set(0,0,0);
-        this.netTorque = 0f;
-        /*------------------------------------------*/
-
-        /*------------ Net Force Calculation ------------*/
-        for (ForceRegistry force : this.forceRegistry) {
-
-            if(force instanceof Rod){
-              rodList.add(force);
-              continue;
-            }
-
-            PVector currentForce = force.getForce(this, position);
-            this.netForce.add(currentForce);
-
-            PVector leverArm = PVector.sub(force.getApplicationPoint(this, this.position), this.position);
-            this.netTorque += leverArm.cross(currentForce).z;
-
-        }
-        PVector rodForce = new PVector();
-
-        for(ForceRegistry rod : rodList) {
-            PVector currentForce = rod.getForce(this, position);
-            rodForce.add(currentForce);
-
-            PVector leverArm = PVector.sub(rod.getApplicationPoint(this, this.position), this.position);
-            this.netTorque += leverArm.cross(currentForce).z;
-
-        }
-        /*-----------------------------------------------*/
-
-        /*------------ Acceleration Calculation ------------*/
-        return this.netForce.mult(this.InvMass).add(rodForce);
-        /*--------------------------------------------------*/
-
-    }
 
     public PVector calculateAcceleration(PVector position) {
 
         /*--------------- Force Reset --------------*/
-        this.rodList.clear();
         this.netForce.set(0,0,0);
         this.netTorque = 0f;
         /*------------------------------------------*/
@@ -663,6 +762,7 @@ public boolean containsPolygon(float x, float y) {
     this.InvRotationalInertia = (this.RotationalInertia > 0) ? 1 / this.RotationalInertia : 0;
   }
 
+
   public float getDensity() {
     return this.Density;
   }
@@ -680,6 +780,10 @@ public boolean containsPolygon(float x, float y) {
     this.Restitution = restitution;
   }
   
+  public void setArea(float area) {
+    this.Area = area;
+  }
+
   public float getArea() {
     return this.Area;
   }
@@ -699,11 +803,13 @@ public boolean containsPolygon(float x, float y) {
   }
 
   public void setWidth(float width) {
-    this.Width = width;
-    this.Area = this.Width*this.Height;
-    setDensity(this.Density);
-    this.Vertices = CreateBoxVertices(this.Width, this.Height);
-    this.transformUpdateRequired = true;
+    if(this.ShapeType == ShapeType.BOX) {
+      this.Width = width;
+      this.Area = this.Width*this.Height;
+      setDensity(this.Density);
+      this.Vertices = CreateBoxVertices(this.Width, this.Height);
+      this.transformUpdateRequired = true;
+    }
   }
 
   public float getHeight() {
@@ -759,7 +865,14 @@ public boolean containsPolygon(float x, float y) {
   ==================================GETTERS & SETTERS===============================================
   ==================================================================================================
   */
-  
+  public String getID(){
+    return this.ID;
+  }
+
+  public void setID(String ID) {
+    this.ID = ID;
+  }
+
   public boolean getTransformUpdateRequired() {
     return this.transformUpdateRequired;
   }

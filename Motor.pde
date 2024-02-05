@@ -88,28 +88,28 @@ public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {
 ======================================== Getters and Setters ========================================
 ====================================================================================================
 */
-    public void setDrawMotor(boolean drawMotor) {
-        this.drawMotor = drawMotor;
-    }
-
-    public void setDrawMotorForce(boolean drawMotorForce) {
-        this.drawMotorForce = drawMotorForce;
-    }
-
     public void setTargetAngularVelocity(float targetAngularVelocity) {
         this.targetAngularVelocity = targetAngularVelocity;
     }
 
     public void setLocalAnchor(PVector localAnchor) {
         this.localAnchor = localAnchor;
+    } 
+    public void setDrawMotor(boolean drawMotor) {
+        this.drawMotor = drawMotor;
     }
 
     public boolean getDrawMotor() {
         return drawMotor;
     }
 
+
     public boolean getDrawMotorForce() {
         return drawMotorForce;
+    }
+
+    public void setDrawMotorForce(boolean drawMotorForce) {
+        this.drawMotorForce = drawMotorForce;
     }
 
     public float getTargetAngularVelocity() {
