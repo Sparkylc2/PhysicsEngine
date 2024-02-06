@@ -121,293 +121,43 @@ public class InteractionCache {
 
 
     public void keyPressedResponse() {
-        if(isKeyDown(KeyEvent.VK_A)) {
-            aPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_B)) {
-            bPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_C)) {
-            cPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_D)) {
-            dPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_E)) {
-            ePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_F)) {
-            fPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_G)) {
-            gPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_H)) {
-            hPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_I)) {
-            iPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_J)) {
-            jPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_K)) {
-            kPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_L)) {
-            lPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_M)) {
-            mPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_N)) {
-            nPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_O)) {
-            oPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_P)) {
-            pPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_Q)) {
-            qPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_R)) {
-            rPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_S)) {
-            sPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_T)) {
-            tPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_U)) {
-            uPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_V)) {
-            vPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_W)) {
-            wPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_X)) {
-            xPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_Y)) {
-            yPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_Z)) {
-            zPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_0)) {
-            zeroPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_1)) {
-            onePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_2)) {
-            twoPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_3)) {
-            threePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_4)) {
-            fourPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_5)) {
-            fivePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_6)) {
-            sixPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_7)) {
-            sevenPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_8)) {
-            eightPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_9)) {
-            ninePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_SPACE)) {
-            spacePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_SHIFT)) {
-            shiftPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_CONTROL)) {
-            ctrlPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_ALT)) {
-            altPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_TAB)) {
-            tabPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_ESCAPE)) {
-            escPressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_DELETE)) {
-            deletePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_BACK_SPACE)) {
-            backspacePressedResponse();
-        }
-        if(isKeyDown(KeyEvent.VK_ENTER)) {
-            enterPressedResponse();
+        switch(activeTabID) {
+            case 0:
+                rigidbodyTabPressedResponse();
+                return;
+            case 1:
+                forceTabPressedResponse();
+                return;
+            case 2:
+                editorTabPressedResponse();
+                return;
+            case 3:
+                creationsTabPressedResponse();
+                return;
+            case 4:
+                settingsTabPressedResponse();
+                return;
+            case 5:
+                helpTabPressedResponse();
+                return;
         }
     }
 
 
-    private void aPressedResponse() {
-
+    public void rigidbodyTabPressedResponse() {
+        switch(isKeyDown(VK_SHIFT)) {
+            case true:
+                switch()
+        }
+        switch(activeShapeSelectedID) {
+            case 0:
+                circlePressedResponse();
+                return;
+            case 1:
+                rectanglePressedResponse();
+                return;
+        }
     }
-
-    private void bPressedResponse() {
-
-    }
-
-    private void cPressedResponse() {
-
-    }
-
-    private void dPressedResponse() {
-
-    }
-
-    private void ePressedResponse() {
-
-    }
-
-    private void fPressedResponse() {
-
-    }
-
-    private void gPressedResponse() {
-
-    }
-
-    private void hPressedResponse() {
-
-    }
-
-    private void iPressedResponse() {
-
-    }
-
-    private void jPressedResponse() {
-
-    }
-
-    private void kPressedResponse() {
-
-    }
-
-    private void lPressedResponse() {
-
-    }
-
-    private void mPressedResponse() {
-
-    }
-
-    private void nPressedResponse() {
-
-    }
-
-    private void oPressedResponse() {
-
-    }
-
-    private void pPressedResponse() {
-
-    }
-
-    private void qPressedResponse() {
-
-    }
-
-    private void rPressedResponse() {
-
-    }
-
-    private void sPressedResponse() {
-
-    }
-
-    private void tPressedResponse() {
-
-    }
-
-    private void uPressedResponse() {
-
-    }
-
-    private void vPressedResponse() {
-
-    }
-
-    private void wPressedResponse() {
-
-    }
-
-    private void xPressedResponse() {
-
-    }
-
-    private void yPressedResponse() {
-
-    }
-
-    private void zPressedResponse() {
-
-    }
-
-
-
-
-    private void zeroPressedResponse() {
-
-    }
-
-    private void onePressedResponse() {
-
-    }
-
-    private void twoPressedResponse() {
-
-    }
-
-    private void threePressedResponse() {
-
-    }
-
-    private void fourPressedResponse() {
-
-    }
-
-    private void fivePressedResponse() {
-
-    }
-
-    private void sixPressedResponse() {
-
-    }
-
-    private void sevenPressedResponse() {
-
-    }
-
-    private void eightPressedResponse() {
-
-    }
-
-    private void ninePressedResponse() {
-
-    }
-
-
-
 
 
     private void spacePressedResponse() {
