@@ -1,10 +1,19 @@
-/*
+
 public class MouseObject {
 
 	private ArrayList<MouseObjectResult> interactionResults = new ArrayList<MouseObjectResult>();
 
 	private PVector mouseCoordinates = new PVector();
-	private Rigidbody currentMouseOverRigidbody;
+    private PVector previousMouseCoordinates = new PVector();
+
+
+    private boolean mLeft, mRight, mCenter;
+    private boolean isMouseDown = false;
+    private PVector mouseDownCoordinates = new PVector();
+    private boolean isMouseUp = false;
+    private PVector mouseUpCoordinates = new PVector();
+
+	private Rigidbody currentRigidbodyUnderMouse;
 
 
 	private boolean isMouseOverUI = false;
@@ -13,10 +22,18 @@ public class MouseObject {
 
 
 	public MouseObject() {
-		//Do nothing
-		
+        //do nothing
 	}
 
+
+    public void updateMouse() {
+        this.updateMouseCoordinates();
+        this.currentRigidbodyUnderMouse = this.getRigidbodyUnderMouse();
+        this.isMouseOverUI = this.IsMouseOverUI();
+    }
+
+    public void updateMouseClick() {
+    }
 
 	public boolean IsMouseOverUI() {
   		if(GUI_GROUP_POSITION_X < mouseX && mouseX < GUI_GROUP_POSITION_X + GUI_GLOBAL_GROUP_WIDTH &&  GUI_GROUP_POSITION_Y < mouseY && mouseY <  GUI_GROUP_POSITION_Y + GUI_GLOBAL_GROUP_HEIGHT) {
@@ -26,206 +43,116 @@ public class MouseObject {
     	}
 	}
 
+
 	public Rigidbody getRigidbodyUnderMouse() {
+        PVector mouseCoordinates = interactivityListener.screenToWorld();
     	for (Rigidbody rigidbody : rigidbodyList) {
-       		if(this.tempBody == rigidbody) {
+            if(!Collisions.IntersectAABBWithPoint(rigidbody.GetAABB(), mouseCoordinates)) {
            		continue;
-       		}
-       		if(!Collisions.IntersectAABBWithPoint(rigidbody.GetAABB(), mousePosition)){
-           		continue;
-       		}
-			if (rigidbody.contains(this.mouseCoordinates.x, this.mouseCoordinates.y)) {
+            }
+            if (rigidbody.contains(mouseCoordinates.x, mouseCoordinates.y)) {
            		return rigidbody;
-       		}
+            }
     	}
     	return null;
 	}	
 
+
 	public void addSelectedRigidbody() {
-
 		if(this.interactionResults.size() > 2) {
-			this.interactionResults.clear();
+            this.interactionResults.clear();
 		}
+		this.interactionResults.add(new MouseObjectResult(this.currentRigidbodyUnderMouse, this.mouseCoordinates));
+        if(this.interactionResults.size() == 2) {
+            if(this.interactionResults.get(0).getSelectedRigidbody() == null && this.interactionResults.get(1).getSelectedRigidbody() == null) {
+                this.interactionResults.clear();
+            }
+        }
 
-		//Maybe instead of this.mouseCoordinates, call this.updateMouseCoordinates and then this.mouseCoordinates;
-		this.interactionResults.add(new MouseObjectResult(this.getRigidbodyUnderMouse(), this.mouseCoordinates);
 	}
 
 	public void updateMouseCoordinates() {
-		this.isMouseOverUI = this.IsMouseOverUI();
-
-		if(!this.isMouseOverUI) {
-			this.currentMouseOverRigidbody = this.getRigidbodyUnderMouse();
-		} else {
-			this.currentMouseOverRigidbody = null;
-		}
-
-		mouseCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.getRigidbodyUnderMouse(), interactivityListener.screenToWorld()));
+        this.previousMouseCoordinates.set(this.mouseCoordinates);
+		this.mouseCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.currentRigidbodyUnderMouse, interactivityListener.screenToWorld()));
 	}
 
+    public void updateMouseDownCoordinates() {
+        this.isMouseDown = true;
+        this.isMouseUp = false;
+        this.mouseDownCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.currentRigidbodyUnderMouse, interactivityListener.screenToWorld()));
+    }
+
+    public void updateMouseUpCoordinates() {
+        this.isMouseUp = true;
+        this.isMouseDown = false;
+        this.addSelectedRigidbody();
+        this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.currentRigidbodyUnderMouse, interactivityListener.screenToWorld()));
+    }
 
 
 
 
-public void drawMouseOverRigidbody() {
 
-    fill(255, 0, 0);
-    strokeWeight(0.1f);
-    stroke(255, 0, 0);
-    ellipse(this.mouseCoordinates.x, this.mouseCoordinates.y, 0.1f, 0.1f);
-
-
-    if(this.showCursorTrail) {
-    	if(cursorTrailArrayList.size() < 20) {
-    		cursorTrailArrayList.add(new PVector(mouseCoordinates.x, mouseCoordinates.y));
-    	} else {
-    		cursorTrailArrayList.set(cursorTrailArrayList.size()-1, cursorTrailArrayList.get(0).set).
-    		cursorTrailArrayList.remove(0);
-    		newCoordinate.set(this.mouseCoordinates.x, this.mouseCoordinates.y);
-    		cursorTrailArrayList.add(newCoordinate);
-    	}
-    	PVector newCoordinate = cursorTrailArrayList.get(0);
-
-        cursorTrailArrayList.add(new PVector(coordinate.x, coordinate.y));
-        if (trail.size() > 20) {
-            trail.remove(0);
-        }
-    
-        noFill();
-        stroke(255, 0, 0);
-        strokeWeight(0.1f);
-        beginShape();
-
-        for (int i = 0; i < trail.size(); i++) {
-            if (i == 0 || i == trail.size() - 1) {
-                // The first and last points are control points and are not part of the actual curve
-                curveVertex(trail.get(i).x, trail.get(i).y);
-            } else {
-                curveVertex(trail.get(i).x, trail.get(i).y);
-            }
-        }
-        endShape();
-    
-        // Draw the current mouse position
+    public void DrawMouseCursor() {
         fill(255, 0, 0);
-        ellipse(coordinate.x, coordinate.y, 0.1f, 0.1f);
-    }
-}
+        strokeWeight(0.1f);
+        stroke(255, 0, 0);
+        ellipse(this.mouseCoordinates.x, this.mouseCoordinates.y, 0.1f, 0.1f);
 
+        if(this.showCursorTrail) {
+        	if(cursorTrailArrayList.size() < 20) {
+        		cursorTrailArrayList.add(new PVector(mouseCoordinates.x, mouseCoordinates.y));
+        	} else {
+                cursorTrailArrayList.add(cursorTrailArrayList.get(0).set(this.mouseCoordinates.x, this.mouseCoordinates.y));
+                cursorTrailArrayList.remove(0);
+        	}
 
-
-
-
-
-public void updateSelectedRigidbodies() {
-    if(this.selectedRigidbodies.size() == 2) {
-
-        //For one body selected
-        if(this.selectedRigidbodies.get(0) != null && this.selectedRigidbodies.get(1) == null) {
-
-            this.selectedRigidbody = this.selectedRigidbodies.get(0);
-
-            this.selectedRigidbody1 = null;
-            this.selectedRigidbody2 = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = true;
-            this.twoRigidbodiesSelected = false;
-
-        } else if(this.selectedRigidbodies.get(0) == null && this.selectedRigidbodies.get(1) != null){
-            
-            this.selectedRigidbody = this.selectedRigidbodies.get(1);
-
-            this.selectedRigidbody1 = null;
-            this.selectedRigidbody2 = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = true;
-            this.twoRigidbodiesSelected = false;
-        
-        }else if(this.selectedRigidbodies.get(0) != null && this.selectedRigidbodies.get(1) != null) {
-
-            this.selectedRigidbody1 = this.selectedRigidbodies.get(0);
-            this.selectedRigidbody2 = this.selectedRigidbodies.get(1);
-
-            this.selectedRigidbody = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = false;
-            this.twoRigidbodiesSelected = true;
-
-        } else if(this.selectedRigidbodies.get(0) == null && this.selectedRigidbodies.get(1) == null) {
-
-            this.selectedRigidbody = null;
-            this.selectedRigidbody1 = null;
-            this.selectedRigidbody2 = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = false;
-            this.twoRigidbodiesSelected = false;
+            noFill();
+            beginShape();
+                for(PVector cursorTrailVertex : cursorTrailArrayList) {
+                    curveVertex(cursorTrailVertex.x, cursorTrailVertex.y);
+                }
+            endShape();
         }
-        this.selectedRigidbodies.clear();
-
-    } else if(this.selectedRigidbodies.size() == 1) {
-            
-            if(this.selectedRigidbodies.get(0) != null) {
-    
-                this.tempBody = this.selectedRigidbodies.get(0);
-
-                this.selectedRigidbody = null;
-                this.selectedRigidbody1 = null;
-                this.selectedRigidbody2 = null;
-    
-                this.oneRigidbodySelected = true;
-                this.twoRigidbodiesSelected = false;
-    
-            } else if(this.selectedRigidbodies.get(0) == null) {
-                
-                this.tempBody = null;
-                this.selectedRigidbody = null;
-                this.selectedRigidbody1 = null;
-                this.selectedRigidbody2 = null;
-    
-                this.oneRigidbodySelected = false;
-                this.twoRigidbodiesSelected = false;
-            }
     }
-}
 
 
-public void firstMouseClickInformation() {
-    Rigidbody clickedBody = getClickedRigidbody();
-    PVector mousePos = screenToWorld();
-
-    if(clickedBody != null) {        
-        this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, clickedBody, mousePos), -clickedBody.getAngle());
-        this.anchorPoint = mousePos;
-        this.isFirstClickOnRigidbody = true;
-    } else {
-        this.anchorPoint = mousePos;
-        this.isFirstClickOnRigidbody = false;
+    public void setMouseCoordinates(PVector mouseCoordinates) {
+        this.mouseCoordinates.set(mouseCoordinates);
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public PVector getMouseCoordinates() {
-		return mouseCoordinates;
+		return this.mouseCoordinates;
 	}
 
+    public PVector getPreviousMouseCoordinates() {
+        return this.previousMouseCoordinates;
+    }
+    
+    public boolean getIsMouseDown() {
+        return this.isMouseDown;
+    }
+
+    public PVector getMouseDownCoordinates() {
+        return this.mouseDownCoordinates;
+    }
+
+    public boolean getIsMouseUp() {
+        return this.isMouseUp;
+    }
+    public PVector getMouseUpCoordinates() {
+        return this.mouseUpCoordinates;
+    }
+
 	public boolean getIsMouseOverUI() {
-		return isMouseOverUI;
+		return this.isMouseOverUI;
 	}
+
+    public Rigidbody getCurrentRigidbodyUnderMouse() {
+        return this.currentRigidbodyUnderMouse;
+    }
+
+    public ArrayList<MouseObjectResult> getMouseObjectResults() {
+        return this.interactionResults;
+    }
 }
-*/

@@ -1,5 +1,5 @@
     public class GUI {
-        
+        public RadioButton ShapeSelector;
         //The size of the group
         public int globalGroupHeight = 225;
         public int globalGroupWidth = 230;
@@ -94,6 +94,7 @@
 */
         public GUI(ControlP5 userInterface) {
     /*---------------------- Interactivity Listener Initialization -----------------*/
+
         if(defaultCircleSelector == true){
             interactivityListener.setShapeType(ShapeType.CIRCLE);
         } else if(defaultRectangleSelector == true){
@@ -161,7 +162,7 @@
                                 .setLabel("Rigidbodies")
                                 .setId(0)
                                 .activateEvent(true)
-                                .addListener(new ControlListener() {
+                                .addListener(new ControlListener(){
                                     void controlEvent(ControlEvent theEvent) {
                                         if(theEvent.isTab() && theEvent.getTab().getId() == 0) {
                                             interactivityListener.setGenerateRigidbodies(true);
@@ -187,13 +188,34 @@
                                 })
                                 ;
 
-                //Tab Editor = userInterface.addTab("Editor")
-                //                .setLabel("Editor")
-                //                .setId(2);
+                Tab Editor = userInterface.addTab("Editor")
+                                .setLabel("Editor")
+                                .setId(2)
+                                .activateEvent(true);
+                Tab Creations = userInterface.addTab("Creations")
+                                .setLabel("Creations")
+                                .setId(3)
+                                .activateEvent(true)
+                                ;
 
+                Tab Settings = userInterface.addTab("Settings")
+                                .setLabel("Settings")
+                                .setId(4)
+                                .activateEvent(true)
+                                ;
+                Tab Help = userInterface.addTab("Help")
+                                .setLabel("Help")
+                                .setId(5)
+                                .activateEvent(true)
+                                ;
+                                
                 Tab Debug = userInterface.addTab("Debug")
                                 .setLabel("Debug")
-                                .setId(2);
+                                .setId(6)
+                                .activateEvent(true)
+                                ;
+                
+                                
 
 /*----------------------------------- Rigidbodies Tab ------------------------------------------*/
                 Group RigidbodyGeneration = userInterface.addGroup("Rigidbody")
@@ -205,36 +227,17 @@
                                  //.disableCollapse()
                                 .setTab("Rigidbodies")
                                 ;
+                        ShapeSelector = userInterface.addRadioButton("ShapeSelector")
+                                .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                                .setGroup(RigidbodyGeneration)
+                                .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
+                                .setItemsPerRow(2)
+                                .addItem("Circle", 0)
+                                .addItem("Rectangle", 1)
+                                .setSpacingColumn(this.globalInterElementPaddingX)
+                                .plugTo(InteractionCache, "onShapeChange")
+                                ;
 
-                        Toggle Circle = userInterface.addToggle("Circle")
-                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
-                                        .setLabel("Circle")
-                                        .setGroup(RigidbodyGeneration)
-                                        .setValue(defaultCircleSelector)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-
-                                                        CircleShapeSelectorOnChange();
-                                                    }
-                                                })
-                                            ;
-
-                        Toggle Rectangle = userInterface.addToggle("Box")
-                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
-                                        .setLabel("Rectangle")
-                                        .setGroup(RigidbodyGeneration)
-                                        .setValue(defaultRectangleSelector)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-
-                                                        RectangleShapeSelectorOnChange();
-                                                    }
-                                                })
-                                            ;
-
-                                        
                         Slider Density = userInterface.addSlider("Density")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
@@ -243,13 +246,8 @@
                                         .setRange(MIN_BODY_DENSITY, MAX_BODY_DENSITY)
                                         .setValue(defaultDensity)
                                         .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-
-                                                        DensityElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(interactivityListener, "setDensity")
+                                        ;
 
                         Slider Restitution = userInterface.addSlider("Restitution")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
@@ -259,13 +257,8 @@
                                         .setRange(0.01, 1)
                                         .setValue(defaultRestitution)
                                         .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-
-                                                        RestitutionElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(interactivityListener, "setRestitution")
+                                        ;
 
                         Slider RectangleWidth = userInterface.addSlider("RectangleWidth")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
@@ -275,12 +268,8 @@
                                         .setRange(MIN_BODY_WIDTH, MAX_BODY_WIDTH)
                                         .setValue(defaultRectangleWidth)
                                         .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        RectangleWidthElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(interactivityListener, "setWidth")
+                                        ;
 
                         Slider RectangleHeight = userInterface.addSlider("RectangleHeight")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
@@ -290,13 +279,8 @@
                                         .setRange(MIN_BODY_HEIGHT, MAX_BODY_HEIGHT)
                                         .setValue(defaultRectangleHeight)
                                         .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-
-                                                        RectangleHeightElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(interactivityListener, "setHeight")
+                                        ;
 
                         Slider CircleRadius = userInterface.addSlider("CircleRadius")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
@@ -306,13 +290,8 @@
                                         .setRange(MIN_BODY_RADIUS, MAX_BODY_RADIUS)
                                         .setValue(defaultCircleRadius)
                                         .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-
-                                                        CircleRadiusElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(interactivityListener, "setRadius")
+                                        ;
 
                         Toggle fillColour = userInterface.addToggle("FillColour")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
@@ -876,8 +855,8 @@
 ====================================================================================================
 */
 
-userInterface.getController("Circle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("Box").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("Circle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("Box").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 userInterface.getController("RectangleWidth").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("RectangleHeight").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);

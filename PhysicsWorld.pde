@@ -1,3 +1,4 @@
+
 /*------------------------Related to Timekeeping Debugging ---------------------------------------*/
 public long totalWorldStepTime;
 public long subWorldStepTime;
@@ -35,13 +36,16 @@ public static boolean isPaused = false;
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
 
+public InteractionCache InteractionCache = new InteractionCache();
+public InteractivityListener interactivityListener = new InteractivityListener();
+public MouseObject Mouse = new MouseObject();
+public ControlP5 userInterface;
+
 
 public Rigidbody RigidbodyGenerator = new Rigidbody();
-public InteractivityListener interactivityListener = new InteractivityListener();
 public Shape render = new Shape();
-public ControlP5 userInterface;
-public Level levelEditor = new Level();
 
+public Level levelEditor = new Level();
 public Editor editor = new Editor();
 
 public static ArrayList<Rigidbody> rigidbodyList = new ArrayList<Rigidbody>();

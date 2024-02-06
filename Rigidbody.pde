@@ -2,9 +2,9 @@ public class Rigidbody {
 
   //Capital letter denotes read only
   private String ID;
-  private PVector position;
-  public PVector previousPosition;
-  private PVector linearVelocity;
+  private PVector position = new PVector();
+  private PVector previousPosition = new PVector();
+  private PVector linearVelocity = new PVector();
   private float angle;
   private float angularVelocity;
     
@@ -31,8 +31,8 @@ public class Rigidbody {
 
   private Shape shapeRenderer;
   private float strokeWeight;
-  private PVector strokeColour;
-  private PVector fillColour;
+  private PVector strokeColour = new PVector();
+  private PVector fillColour = new PVector();
   
   private boolean transformUpdateRequired;
   private boolean aabbUpdateRequired;
@@ -179,7 +179,7 @@ public class Rigidbody {
     
     float area = (float) PI * radius * radius;
     
-    //Argument exceptions for area and density
+
     if (area < MIN_BODY_AREA || area > MAX_BODY_AREA) {
 
       throw new IllegalArgumentException("Body area is too small or large");
@@ -190,8 +190,6 @@ public class Rigidbody {
       throw new IllegalArgumentException("Density is too small or large");
     } 
 
-    
-    //Clamps restitution between 0 and 1
     restitution = PhysEngMath.Clamp(restitution, 0, 1);
 
 
@@ -468,6 +466,7 @@ public void updateCircle(float radius) {
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
 }
+
 public void updatePolygon(PVector[] newVertices) {
 
     newVertices = PhysEngMath.OrderVerticesClockwise(newVertices);
@@ -526,8 +525,8 @@ public void deserializeRigidbody(String ID, ShapeType ShapeType, PVector positio
                                  boolean isCollidable, boolean isVisible, float strokeWeight, PVector strokeColour, PVector fillColour) {
     this.ID = ID; 
 
-    this.position = position;
-    this.linearVelocity = linearVelocity;
+    this.position.set(position);
+    this.linearVelocity.set(linearVelocity);
     this.angle = angle;
     this.angularVelocity = angularVelocity;
 
@@ -584,8 +583,8 @@ public void deserializeRigidbody(String ID, ShapeType ShapeType, PVector positio
   }
 
   public void SetInitialPosition(PVector position) {
-    this.position = position;
-    this.previousPosition = position;
+    this.position.set(position);
+    this.previousPosition.set(position);
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
   }
@@ -896,7 +895,7 @@ public boolean containsPolygon(float x, float y) {
   public void setPosition(PVector position) {
     this.transformUpdateRequired = true;
     this.aabbUpdateRequired = true;
-    this.position = position;
+    this.position.set(position);
   }
   public PVector getVelocity() {
     return this.linearVelocity;

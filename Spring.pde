@@ -140,6 +140,7 @@ public class Spring implements ForceRegistry {
 
 //TODO: IMPLEMENT A WAY TO MAKE THE SPRING SCALE WITH ITS LENGTH, SO THAT VISUALLY A LARGE SPRING
 //WILL HAVE THICKER LINES, AND MORE OFFSET, ETC
+   /*
     @Override
     public void draw() {
         if(this.drawSpring) {
@@ -223,6 +224,81 @@ public class Spring implements ForceRegistry {
             return;
         }
     }
+    */
+public void draw() {
+    if(this.drawSpring) {
+        PVector worldAnchorA;
+        PVector worldAnchorB;
+        PVector direction;
+        float length;
+
+        if(isTwoBodySpring) {
+            worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+            worldAnchorB = PhysEngMath.Transform(localAnchorB, rigidbodyB.getPosition(), rigidbodyB.getAngle());
+        } else {
+            worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbodyA.getPosition(), rigidbodyA.getAngle());
+            worldAnchorB = this.anchorPoint;
+        }
+
+        direction = PVector.sub(worldAnchorA, worldAnchorB);
+        length = direction.mag();
+        direction.normalize();
+
+        fill(255);
+
+        float segments = 5;
+        float segmentLength = length / segments;
+
+        // Set the offset to a constant value
+        float offsetMagnitude = 0.5; // Adjust this value to change the size of the zigzags
+
+        // Draw the rod
+        strokeWeight(0.3);
+        stroke(0); // Black
+        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        stroke(255); // White
+        strokeWeight(0.1);
+        line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
+        
+        PVector segmentStart = new PVector();
+        PVector segmentEnd = new PVector();
+        PVector midPoint = new PVector();
+        PVector offset = new PVector();
+        PVector directionSegmentLength = PVector.mult(direction, segmentLength);
+
+        for(int i = 0; i < segments; i++) {
+
+            segmentStart.set(PVector.add(worldAnchorB, PVector.mult(directionSegmentLength, i)));
+            segmentEnd.set(PVector.add(worldAnchorB, PVector.mult(directionSegmentLength, i + 1)));
+
+            // Calculate the midpoint of the segment
+            midPoint.set(PVector.lerp(segmentStart, segmentEnd, 0.5f));
+
+            // Alternate the offset direction to give appearance of spring
+            if(i % 2 == 0) {
+                offset.set(new PVector(-direction.y, direction.x).mult(offsetMagnitude));
+            } else {
+                offset.set(new PVector(direction.y, -direction.x).mult(offsetMagnitude));
+            }
+
+            // Add the offset to the midpoint
+            PVector midPointOffset = PVector.add(midPoint, offset);
+
+            // Draw the lines
+            strokeWeight(0.2);
+            stroke(0);
+            line(segmentStart.x, segmentStart.y, midPointOffset.x, midPointOffset.y);
+            line(midPointOffset.x, midPointOffset.y, segmentEnd.x, segmentEnd.y);
+            strokeWeight(0.1);
+            stroke(255);
+            line(segmentStart.x, segmentStart.y, midPointOffset.x, midPointOffset.y);
+            line(midPointOffset.x, midPointOffset.y, segmentEnd.x, segmentEnd.y);
+        }
+    } else {
+        return;
+    }
+}
+    
 
     @Override
     public PVector getApplicationPoint(Rigidbody rigidbody, PVector position) {

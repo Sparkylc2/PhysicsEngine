@@ -2,8 +2,11 @@ public class Editor {
 
 
 	private Rigidbody rigidbody;
- 	
 
+    private PVector dragStart = null;
+    private PVector dragEnd = null;
+
+    private ArrayList<Rigidbody> selectedRigidbodies = new ArrayList<Rigidbody>();
  	private boolean inEditMode = false;
 	private int count = 0;
 
@@ -19,6 +22,58 @@ public class Editor {
 		this.inEditMode = true;
 	}
 
+    public void onDrag() {
+        if(dragStart == null) {
+            dragStart = Mouse.getMouseCoordinates();
+        } else {
+            dragEnd = Mouse.getMouseCoordinates();
+        }
+    }
+
+    public void onRelease() {
+        if(dragStart != null && dragEnd != null) {
+            selectRigidbodiesInDragArea();
+        }
+        dragStart = null;
+        dragEnd = null;
+    }
+
+    public void dragSnap() {
+        if(selectedRigidbodies.size() > 0){
+            updateRigidbodiesInDragArea();
+        }
+    }
+
+    public void onClick() {
+        this.selectedRigidbodies.clear();
+    }
+
+private void selectRigidbodiesInDragArea() {
+    selectedRigidbodies.clear();
+
+    float minX = min(Mouse.getMouseDownCoordinates().x, Mouse.getMouseCoordinates().x);
+    float maxX = max(Mouse.getMouseDownCoordinates().x, Mouse.getMouseCoordinates().x);
+    float minY = min(Mouse.getMouseDownCoordinates().y, Mouse.getMouseCoordinates().y);
+    float maxY = max(Mouse.getMouseDownCoordinates().y, Mouse.getMouseCoordinates().y);
+    
+    for (Rigidbody rb : rigidbodyList) { 
+        PVector pos = rb.getPosition();
+        if (pos.x >= minX && pos.x <= maxX && pos.y >= minY && pos.y <= maxY) {
+            selectedRigidbodies.add(rb);
+        }
+    }
+}
+
+    private void updateRigidbodiesInDragArea() {
+        PVector dragVector = PVector.sub(Mouse.getMouseCoordinates(), Mouse.getPreviousMouseCoordinates());
+
+        if(selectedRigidbodies.size() > 0){
+            for(Rigidbody rigidbody : selectedRigidbodies) {
+                rigidbody.setPosition(PVector.add(rigidbody.getPosition(), dragVector));
+            }
+        }
+
+    }
 
 	//ID -1 corresponds to drawing the vertices in the main draw loop
 	//ID 0 corresponds to a click
@@ -44,7 +99,7 @@ public class Editor {
 				if(index != -1) {
 					this.deleteVertex(index);
 				}
-			}
+            }
 		}
 	}
 
@@ -96,6 +151,7 @@ public class Editor {
 		}
 	}
 
+
 	public void moveVertex(int index) {
 		PVector vertex = interactivityListener.screenToWorld();
 		PVector[] rigidbodyCoreVertices = this.rigidbody.getVertices();
@@ -112,20 +168,7 @@ public class Editor {
 		this.inEditMode = false;
 	}
 
-	public void onClick() {
-
-	}
-
-	public void onDrag() {
-
-	}
-
 	public void onSelection() {
-
-	}
-
-
-	public void onRelease(){
 
 	}
 

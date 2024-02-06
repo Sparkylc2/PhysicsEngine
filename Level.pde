@@ -8,7 +8,7 @@ public class Level {
 
 	public void loadLevelState() {
 		isPaused = true;
-		JSONArray rigidbodyArray = loadJSONArray("test.json");
+		JSONArray rigidbodyArray = loadJSONArray("TRAIN.json");
 		ALL_FORCES_ARRAYLIST.clear();
 		rigidbodyList.clear();
 
@@ -30,6 +30,7 @@ public class Level {
 
 			JSONObject forceJSON = forcesArray.getJSONObject(i);
 
+            System.out.println(forceJSON.getString("ForceType"));
 			if(forceJSON.getString("ForceType").equals("Spring")){
 				spring = this.deserializeSpring(forceJSON);
 			} else if (forceJSON.getString("ForceType").equals("Rod")) {
@@ -286,12 +287,10 @@ public class Level {
 	private Motor deserializeMotor(JSONObject motorJSON) {
 			Rigidbody rigidbody = this.getRigidbodyByID(motorJSON.getString("rigidbodyID"));
 
-			Motor motor = new Motor(rigidbody);
+			Motor motor = new Motor(rigidbody, motorJSON.getFloat("targetAngularVelocity"));
 			motor.setLocalAnchor(this.deserialize2DPVector(motorJSON.getJSONObject("localAnchor")));
-			motor.setTargetAngularVelocity(motorJSON.getFloat("targetAngularVelocity"));
 			motor.setDrawMotor(motorJSON.getBoolean("drawMotor"));
 			motor.setDrawMotorForce(motorJSON.getBoolean("drawMotorForce"));
-
 			return motor;
 
 		}

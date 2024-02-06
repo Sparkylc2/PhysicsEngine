@@ -199,33 +199,7 @@ public PVector[] getWorldBoundsWithPadding(float padding) {
   return new PVector[] {topLeft, topRight, bottomLeft, bottomRight};
 }
 
-public Rigidbody getClickedRigidbody() {
-    PVector mousePosition = screenToWorld();
 
-    for (Rigidbody rigidbody : rigidbodyList) {
-        if(this.tempBody == rigidbody) {
-            continue;
-        }
-        
-        if(!Collisions.IntersectAABBWithPoint(rigidbody.GetAABB(), mousePosition)){
-            continue;
-        }
-        if (rigidbody.contains(mousePosition.x, mousePosition.y)) {
-            return rigidbody;
-        }
-    }
-    return null;
-}
-
-
-
-
-
-/*
-====================================================================================================
-======================================= Generation Methods =========================================
-====================================================================================================
-*/
 
 /*
 ====================================================================================================
@@ -242,13 +216,11 @@ public void updateGUIValues(Rigidbody rigidbody) {
         return;
     }
     if(this.currentlySelectedRigidbody.getShapeType() == ShapeType.CIRCLE) {
-        userInterface.getController("Circle").setValue(1);
-        userInterface.getController("Box").setValue(0);
+        userInterface.getController("ShapeSelector").setValue(0);
 
         userInterface.getController("CircleRadius").setValue(this.currentlySelectedRigidbody.getRadius());
     } else if(this.currentlySelectedRigidbody.getShapeType() == ShapeType.BOX) {
-        userInterface.getController("Circle").setValue(0);
-        userInterface.getController("Box").setValue(1);
+        userInterface.getController("ShapeSelector").setValue(1);
 
         userInterface.getController("RectangleWidth").setValue(this.currentlySelectedRigidbody.getWidth());
         userInterface.getController("RectangleHeight").setValue(this.currentlySelectedRigidbody.getHeight());
@@ -301,33 +273,27 @@ public void updateRigidbodyValues(){
 
 
 public void GenerateRigidbody() {
-    if(userInterface.getController("Circle").getValue() == 0 && userInterface.getController("Box").getValue() == 0) {
+    if(InteractionCache.getActiveShapeSelectedID() == -1) {
         return;
     }
-    if(!isPaused && getClickedRigidbody() != null) {
+    if(!isPaused && Mouse.getRigidbodyUnderMouse() != null) {
         return;
     }
     if(isInEditMode) {
         return;
     }
 
-    if(!IsMouseOverUI()){
-     if(this.shapeType == ShapeType.BOX) {
-            PVector coordinate;
+    if(!Mouse.getIsMouseOverUI()){
+        if(InteractionCache.getActiveShapeSelectedID() == 0) {
+
             Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody( this.width, this.height,
                                                                     this.density, this.restitution,
                                                                     this.isStatic, this.isCollidable,
                                                                     this.strokeWeight, this.strokeColor,
                                                                     this.fillColor);
 
-            if(this.velocity.mag() < 0.1f){
-                coordinate = getMouseCoordinatesOverRigidbody();
-            } else {
-                coordinate = this.endPoint;
-            }
-
             rigidbody.setVelocity(PhysEngMath.SquareVelocity(this.velocity).mult(-1));
-            rigidbody.SetInitialPosition(coordinate);
+            rigidbody.SetInitialPosition(Mouse.getMouseCoordinates());
             rigidbody.setIsTranslationallyStatic(this.isTranslationallyStatic);
             rigidbody.setCollidability(this.isCollidable);
             rigidbody.setIsRotationallyStatic(this.isRotationallyStatic);
@@ -347,21 +313,13 @@ public void GenerateRigidbody() {
             AddBodyToBodyEntityList(rigidbody);
         }
 
-        if(this.shapeType == ShapeType.CIRCLE) {
-            PVector coordinate;
+        if(InteractionCache.getActiveShapeSelectedID() == 1){
             Rigidbody rigidbody = RigidbodyGenerator.CreateCircleBody(this.radius, this.density,
                                                                       this.restitution, this.isStatic,
                                                                       this.isCollidable, this.strokeWeight,
                                                                       this.strokeColor, this.fillColor);
-
-                                        
-            if(this.velocity.mag() < 0.1f){
-                coordinate = getMouseCoordinatesOverRigidbody();
-            } else {
-                coordinate = this.endPoint;
-            }
-
-            rigidbody.SetInitialPosition(coordinate);
+              
+            rigidbody.SetInitialPosition(Mouse.getMouseCoordinates());
             rigidbody.setVelocity(PhysEngMath.SquareVelocity(this.velocity).mult(-1));
             rigidbody.setIsTranslationallyStatic(this.isTranslationallyStatic);
             rigidbody.setIsRotationallyStatic(this.isRotationallyStatic);
@@ -388,91 +346,24 @@ public void GenerateRigidbody() {
 */
 
 
-public void addSelectedRigidbody() {
-    //Just in case
-    if(this.selectedRigidbodies.size() > 2) {
-        this.selectedRigidbodies.clear();
-    }
-    this.selectedRigidbodies.add(getClickedRigidbody());
-
-    if(this.selectedRigidbodies.size() == 1) {
-        firstMouseClickInformation();
-    }
-}
-
-public PVector getMouseCoordinatesOverRigidbody() {
-    if(!IsMouseOverUI()) {
-        Rigidbody rigidbody = getClickedRigidbody();
-        PVector mousePos = screenToWorld();
-
-        if(rigidbody == null) {
-            return mousePos;
-        } else {
-            PVector localAnchorA = PhysEngMath.SnapController(this, rigidbody, mousePos);
-            PVector worldAnchorA = PhysEngMath.Transform(localAnchorA, rigidbody.getPosition(), 0f);
-            return worldAnchorA.copy();
-
-        }
-
-    } else {
-        return null;
-    }
-}
-
-public void drawMouseOverRigidbody() {
-    
-    Rigidbody rigidbody = getClickedRigidbody();
-    PVector coordinate = getMouseCoordinatesOverRigidbody();
-
-    fill(255, 0, 0);
-    strokeWeight(0.1f);
-    stroke(255, 0, 0);
-    ellipse(coordinate.x, coordinate.y, 0.1f, 0.1f);
-
-    if(showCursorTrail) {
-        trail.add(new PVector(coordinate.x, coordinate.y));
-        if (trail.size() > 20) {
-            trail.remove(0);
-        }
-    
-        noFill();
-        stroke(255, 0, 0);
-        strokeWeight(0.1f);
-        beginShape();
-
-        for (int i = 0; i < trail.size(); i++) {
-            if (i == 0 || i == trail.size() - 1) {
-                // The first and last points are control points and are not part of the actual curve
-                curveVertex(trail.get(i).x, trail.get(i).y);
-            } else {
-                curveVertex(trail.get(i).x, trail.get(i).y);
-            }
-        }
-        endShape();
-    
-        // Draw the current mouse position
-        fill(255, 0, 0);
-        ellipse(coordinate.x, coordinate.y, 0.1f, 0.1f);
-    }
-}
-
 public void drawInteractions() {
-    drawMouseOverRigidbody();
-    if(userInterface.getTab("Forces").isActive()){
+    Mouse.DrawMouseCursor();
+
+    if(InteractionCache.getActiveTabID() == 1){
         if(userInterface.getController("AddSpring").getValue() == 0 && userInterface.getController("AddRod").getValue() == 0 && userInterface.getController("AddMotor").getValue() == 0) {
             return;
         }
         drawForces();
-    } else if(userInterface.getTab("Rigidbodies").isActive() && (userInterface.getController("Circle").getValue() == 1 || userInterface.getController("Box").getValue() == 1)) {
-        if(this.mouseDown && !isInEditMode){
+    } else if(InteractionCache.getActiveTabID() == 0 && InteractionCache.getActiveShapeSelectedID() != -1) {
+        if(Mouse.getIsMouseDown() && !isInEditMode && !shiftPressed){
             drawVelocityLine();
         }
-        if(userInterface.getController("Circle").getValue() == 0 && userInterface.getController("Box").getValue() == 0) {
+        if(InteractionCache.getActiveShapeSelectedID() != -1) {
             return;
         }
-        if(userInterface.getTab("Rigidbodies").isActive()){
+        if(InteractionCache.getActiveTabID() == 0){
             if(editRigidbody) {
-                updateRigidbodyValues();
+
             } else if(!mouseSpringAdded && !isInEditMode) {
                 drawBodies();
             }
@@ -484,28 +375,26 @@ public void drawInteractions() {
 public void drawVelocityLine() {
 
     /*This takes care of updating the new velocity values and endpoint values for the rigidbodies */
-    this.velocity.set(PhysEngMath.MouseVelocityCalculationAndClamp(this.initialMousePosition, screenToWorld(), MIN_MOUSE_VELOCITY_MAG, MAX_MOUSE_VELOCITY_MAG));
-    endPoint.set(PVector.add(this.initialMousePosition, this.velocity));
+    PVector mouseDownCoordinates = Mouse.getMouseDownCoordinates();
+    PVector currentMouseCoordinates = Mouse.getMouseCoordinates();
 
-    if(PVector.sub(this.initialMousePosition, this.endPoint).magSq() > 0.1f){
+    this.velocity.set(PhysEngMath.MouseVelocityCalculationAndClamp(mouseDownCoordinates, currentMouseCoordinates, MIN_MOUSE_VELOCITY_MAG, MAX_MOUSE_VELOCITY_MAG));
+    PVector endPoint = PVector.add(mouseDownCoordinates, this.velocity);
+    
+    if(PVector.sub(mouseDownCoordinates, endPoint).magSq() > 0.1f){
         float lerpVal = map(this.velocity.mag(), MIN_MOUSE_VELOCITY_MAG, MAX_MOUSE_VELOCITY_MAG, 0, 1);
         lerpVal = lerpVal * lerpVal; // This creates a quadratic effect
 
         int colour = lerpColor(color(0, 255, 0), color(255, 0, 0), lerpVal);
         stroke(colour);
-        line(this.initialMousePosition.x, this.initialMousePosition.y, endPoint.x, endPoint.y);
+        line(mouseDownCoordinates.x, mouseDownCoordinates.y, endPoint.x, endPoint.y);
     }
 }
 
 
 
 public void drawBodies() {
-    PVector mouseCoordinates = new PVector();
-    if(this.velocity.magSq() > 0.1f){
-        mouseCoordinates.set(this.endPoint);
-    } else {
-        mouseCoordinates.set(getMouseCoordinatesOverRigidbody());
-    }
+    PVector mouseCoordinates = Mouse.getMouseCoordinates();
 
     pushMatrix();
     translate(mouseCoordinates.x, mouseCoordinates.y);
@@ -549,18 +438,26 @@ public void drawBodies() {
 
 
 public void drawForces() {
+    if(isInEditMode) {
+        return;
+    }
+
+    Rigidbody rigidbodyToDrawFrom;
     PVector worldAnchorA;
     PVector worldAnchorB;
+    ArrayList<MouseObjectResult> mouseObjectResults = Mouse.getMouseObjectResults();
+    if(mouseObjectResults.size() == 0 || mouseObjectResults.size() > 1) {
+        return;
+    }
+        rigidbodyToDrawFrom = mouseObjectResults.get(0).getSelectedRigidbody();
 
-    if(selectedRigidbodies.size() > 0) {
-        if(isFirstClickOnRigidbody) {
-            worldAnchorA = PhysEngMath.Transform(this.localAnchorA, this.tempBody.getPosition(), tempBody.getAngle());
-            worldAnchorB = getMouseCoordinatesOverRigidbody();
+        if(rigidbodyToDrawFrom != null) {
+            worldAnchorA = PhysEngMath.Transform(mouseObjectResults.get(0).getTransformedLocalCoordinate(), rigidbodyToDrawFrom.getPosition(), rigidbodyToDrawFrom.getAngle());
+            worldAnchorB = Mouse.getMouseCoordinates();
         } else {
-            worldAnchorA = this.anchorPoint;
-            worldAnchorB = getMouseCoordinatesOverRigidbody();        
+            worldAnchorA = mouseObjectResults.get(0).getWorldCoordinate();
+            worldAnchorB = Mouse.getMouseCoordinates();
         }
-
         if(this.forceType == ForceType.SPRING) {
             fill(255, 255, 255, opacity);
             PVector direction = PVector.sub(worldAnchorA, worldAnchorB);
@@ -627,18 +524,22 @@ public void drawForces() {
             line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
 
         } else if(this.forceType == ForceType.MOTOR) {
-            if(this.tempBody != null) {
-            PVector position = this.tempBody.getPosition();
+
+            if(rigidbodyToDrawFrom == null) {
+                return;
+            }
+
+            PVector position = rigidbodyToDrawFrom.getPosition();
             boolean isClockwise = this.motorTargetAngularVelocity > 0;
 
-            float size = this.tempBody.getRadius() * 0.5f;
+            float size = rigidbodyToDrawFrom.getRadius() * 0.5f;
             float arrowSize = size * 0.15f;
             float startAngle = 0;
             float endAngle = 3 * PI/2;// Change this to control the curvature of the arrow
             
             pushMatrix();
             translate(position.x, position.y);
-            rotate(this.tempBody.getAngle() + PI/6);
+            rotate(rigidbodyToDrawFrom.getAngle() + PI/6);
 
             noFill();
             strokeWeight(0.1f);
@@ -650,8 +551,7 @@ public void drawForces() {
             float startY = size * sin(startAngle)/2;
             float endX = size * cos(endAngle)/2;
             float endY = size * sin(endAngle)/2;
-
-
+            
             if(isClockwise) {
                 strokeWeight(0.1f);
                 stroke(255, 0, 0, opacity);
@@ -662,244 +562,121 @@ public void drawForces() {
                 triangle(startX-arrowSize, startY, startX + arrowSize, startY, startX, startY - 2 * arrowSize);
             }
             popMatrix();
-            }
         }
     }
-}
 
-public void updateSelectedRigidbodies() {
-    if(this.selectedRigidbodies.size() == 2) {
-
-        //For one body selected
-        if(this.selectedRigidbodies.get(0) != null && this.selectedRigidbodies.get(1) == null) {
-
-            this.selectedRigidbody = this.selectedRigidbodies.get(0);
-
-            this.selectedRigidbody1 = null;
-            this.selectedRigidbody2 = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = true;
-            this.twoRigidbodiesSelected = false;
-
-        } else if(this.selectedRigidbodies.get(0) == null && this.selectedRigidbodies.get(1) != null){
-            
-            this.selectedRigidbody = this.selectedRigidbodies.get(1);
-
-            this.selectedRigidbody1 = null;
-            this.selectedRigidbody2 = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = true;
-            this.twoRigidbodiesSelected = false;
-        
-        }else if(this.selectedRigidbodies.get(0) != null && this.selectedRigidbodies.get(1) != null) {
-
-            this.selectedRigidbody1 = this.selectedRigidbodies.get(0);
-            this.selectedRigidbody2 = this.selectedRigidbodies.get(1);
-
-            this.selectedRigidbody = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = false;
-            this.twoRigidbodiesSelected = true;
-
-        } else if(this.selectedRigidbodies.get(0) == null && this.selectedRigidbodies.get(1) == null) {
-
-            this.selectedRigidbody = null;
-            this.selectedRigidbody1 = null;
-            this.selectedRigidbody2 = null;
-            this.tempBody = null;
-
-            this.oneRigidbodySelected = false;
-            this.twoRigidbodiesSelected = false;
-        }
-        this.selectedRigidbodies.clear();
-
-    } else if(this.selectedRigidbodies.size() == 1) {
-            
-            if(this.selectedRigidbodies.get(0) != null) {
-    
-                this.tempBody = this.selectedRigidbodies.get(0);
-
-                this.selectedRigidbody = null;
-                this.selectedRigidbody1 = null;
-                this.selectedRigidbody2 = null;
-    
-                this.oneRigidbodySelected = true;
-                this.twoRigidbodiesSelected = false;
-    
-            } else if(this.selectedRigidbodies.get(0) == null) {
-                
-                this.tempBody = null;
-                this.selectedRigidbody = null;
-                this.selectedRigidbody1 = null;
-                this.selectedRigidbody2 = null;
-    
-                this.oneRigidbodySelected = false;
-                this.twoRigidbodiesSelected = false;
-            }
-    }
-}
 
 
 public void createForces() {
 
-    if(userInterface.getController("AddSpring").getValue() == 0 && userInterface.getController("AddRod").getValue() == 0 && userInterface.getController("AddMotor").getValue() == 0){
+    if(InteractionCache.getActiveForceSelectedID() == -1 || InteractionCache.getActiveTabID() != 1) {
+        return;
+    }
+    if(isInEditMode) {
         return;
     }
 
-    if(this.selectedRigidbody != null && this.selectedRigidbody1 == null && this.selectedRigidbody2 == null) {
-        if(this.forceType == ForceType.SPRING) {
-
-            Spring spring;
-            PVector mouseCoordinates = screenToWorld();
-            if(isFirstClickOnRigidbody) {
-                spring = new Spring(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
-            } else {
-
-                this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates), -this.selectedRigidbody.getAngle());
-                spring = new Spring(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
-            }
-
-            spring.setPerfectSpring(this.isPerfectSpring);
-            spring.setLockTranslationToXAxis(this.lockTranslationToXAxis);
-            spring.setLockTranslationToYAxis(this.lockTranslationToYAxis);
-
-            spring.setEquilibriumLength(this.equilibriumLength);
-            spring.setSpringConstant(this.springConstant);
-
-            spring.setDamping(this.springDamping);
-
-            ALL_FORCES_ARRAYLIST.add(spring);
-            this.selectedRigidbody.addForceToForceRegistry(spring);
-
-        } else if(this.forceType == ForceType.ROD) {
-
-            Rod rod;
-            PVector mouseCoordinates = screenToWorld();
-
-            if(isFirstClickOnRigidbody) {
-                rod = new Rod(this.selectedRigidbody, this.localAnchorA, mouseCoordinates);
-            } else {
-                this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates), -this.selectedRigidbody.getAngle());
-                rod = new Rod(this.selectedRigidbody, this.localAnchorA, this.anchorPoint);
-            }
-
-            rod.setIsJoint(this.isJoint);
-
-
-            ALL_FORCES_ARRAYLIST.add(rod);
-            this.selectedRigidbody.addForceToForceRegistry(rod);
-
-        } else if(this.forceType == ForceType.MOTOR) {
-            Motor motor = new Motor(this.selectedRigidbody, this.motorTargetAngularVelocity);
-            motor.setDrawMotor(this.motorDrawMotor);
-            motor.setDrawMotorForce(this.motorDrawMotorForce);
-            
-            Iterator<ForceRegistry> iterator = this.selectedRigidbody.getForceRegistry().iterator();
-            
-            while (iterator.hasNext()) {
-                ForceRegistry force = iterator.next();
-                
-                if (force instanceof Motor) {
-                    iterator.remove();
-                }
-            }
-            ALL_FORCES_ARRAYLIST.add(motor);
-            this.selectedRigidbody.addForceToForceRegistry(motor);
-        }
-
-    } else if(this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody == null && this.selectedRigidbody1 != this.selectedRigidbody2) {
-        if(this.forceType == ForceType.SPRING) {
-
-
-            PVector localAnchorB = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld()), -this.selectedRigidbody2.getAngle());
-
-            Spring spring = new Spring(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
-
-            spring.setPerfectSpring(this.isPerfectSpring);
-
-            spring.setLockTranslationToXAxis(this.lockTranslationToXAxis);
-            spring.setLockTranslationToYAxis(this.lockTranslationToYAxis);
-
-            spring.setEquilibriumLength(this.equilibriumLength);
-
-            spring.setSpringConstant(this.springConstant);
-
-            spring.setDamping(this.springDamping);
-
-
-            ALL_FORCES_ARRAYLIST.add(spring);
-            this.selectedRigidbody1.addForceToForceRegistry(spring);
-            this.selectedRigidbody2.addForceToForceRegistry(spring);
-
-        } else if(this.forceType == ForceType.ROD) {
-            Rod rod;
-
-            PVector localAnchorB = PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody2, screenToWorld()), -this.selectedRigidbody2.getAngle());
-
-            rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody2, this.localAnchorA, localAnchorB);
-
-            rod.setIsJoint(this.isJoint);
-
-            ALL_FORCES_ARRAYLIST.add(rod);
-            this.selectedRigidbody1.addForceToForceRegistry(rod);
-            this.selectedRigidbody2.addForceToForceRegistry(rod);
-        }
-
-} else if((this.selectedRigidbody1 != null && this.selectedRigidbody2 != null && this.selectedRigidbody1 == this.selectedRigidbody2) || (this.selectedRigidbody1 != null && this.selectedRigidbody2 == null))
-
-        if(this.forceType == ForceType.ROD) {
-            Rod rod;
-
-            if(this.isJoint){
-                rod = new Rod(this.selectedRigidbody1, this.selectedRigidbody1.getPosition(), this.selectedRigidbody1.getPosition());
-                rod.setIsJoint(true);
-            } else {
-                rod = new Rod(this.selectedRigidbody1, this.localAnchorA, screenToWorld());
-            }
-
-            ALL_FORCES_ARRAYLIST.add(rod);
-            this.selectedRigidbody1.addForceToForceRegistry(rod);
-        }
-
-        else if(this.forceType == ForceType.MOTOR) {
-
-            Motor motor = new Motor(this.selectedRigidbody1, this.motorTargetAngularVelocity);
-            motor.setDrawMotor(this.motorDrawMotor);
-            motor.setDrawMotorForce(this.motorDrawMotorForce);
-            
-            Iterator<ForceRegistry> iterator = this.selectedRigidbody1.getForceRegistry().iterator();
-            
-            while (iterator.hasNext()) {
-                ForceRegistry force = iterator.next();
-                
-                if (force instanceof Motor) {
-                    iterator.remove();
-                    ALL_FORCES_ARRAYLIST.remove(force);
-                }
-            }
-            ALL_FORCES_ARRAYLIST.add(motor);
-            this.selectedRigidbody1.addForceToForceRegistry(motor);
-        }
+    ArrayList<MouseObjectResult> mouseObjectResults = Mouse.getMouseObjectResults();
+    if(mouseObjectResults.size() == 0 || mouseObjectResults.size() == 1){
+        return;
     }
 
+    PVector mouseCoordinates = Mouse.getMouseCoordinates();
 
-public void firstMouseClickInformation() {
-    Rigidbody clickedBody = getClickedRigidbody();
-    PVector mousePos = screenToWorld();
+    Rigidbody rigidbody1 = mouseObjectResults.get(0).getSelectedRigidbody();
+    Rigidbody rigidbody2 = mouseObjectResults.get(1).getSelectedRigidbody();
+    PVector anchor1 = mouseObjectResults.get(0).getTransformedLocalCoordinate();
+    PVector anchor2 = mouseObjectResults.get(1).getTransformedLocalCoordinate();
 
-    if(clickedBody != null) {        
-        this.localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(this, clickedBody, mousePos), -clickedBody.getAngle());
-        this.anchorPoint = mousePos;
-        this.isFirstClickOnRigidbody = true;
-    } else {
-        this.anchorPoint = mousePos;
-        this.isFirstClickOnRigidbody = false;
+    Rigidbody[] rigidbodyArray = new Rigidbody[0];
+    PVector[] anchorArray = new PVector[0];
+
+    if(rigidbody1 != null && rigidbody2 == null) {
+        rigidbodyArray = new Rigidbody[]{rigidbody1};
+        anchorArray = new PVector[]{anchor1};
+    } else if(rigidbody1 == null && rigidbody2 != null){
+        rigidbodyArray = new Rigidbody[]{rigidbody2};
+        anchorArray = new PVector[]{anchor2};
+    } else if(rigidbody1 != null && rigidbody2 != null) {
+        rigidbodyArray = new Rigidbody[]{rigidbody1, rigidbody2};
+        anchorArray = new PVector[]{anchor1, anchor2};
+    } else if(rigidbody1 == null && rigidbody2 == null) {
+        return;
+    }
+
+    mouseObjectResults.clear();
+
+    if(InteractionCache.getActiveForceSelectedID() == 0) {
+        Spring spring;
+            if(rigidbodyArray.length == 1) {
+                spring = new Spring(rigidbodyArray[0], anchorArray[0], mouseCoordinates);
+
+                ALL_FORCES_ARRAYLIST.add(spring);
+                rigidbodyArray[0].addForceToForceRegistry(spring);
+
+            } else if(rigidbodyArray.length == 2) {
+                spring = new Spring(rigidbodyArray[0], rigidbodyArray[1], anchorArray[0], anchorArray[1]);
+
+                ALL_FORCES_ARRAYLIST.add(spring);
+                rigidbodyArray[0].addForceToForceRegistry(spring);
+                rigidbodyArray[1].addForceToForceRegistry(spring);
+            } else {
+                throw new IllegalArgumentException("RigidbodyArray is 0");
+            }
+
+            spring.setEquilibriumLength(this.equilibriumLength);
+            spring.setSpringConstant(this.springConstant);
+            spring.setDamping(this.springDamping);
+
+            spring.setLockTranslationToXAxis(this.lockTranslationToXAxis);
+            spring.setLockTranslationToYAxis(this.lockTranslationToYAxis);
+            spring.setPerfectSpring(this.isPerfectSpring);
+
+    } else if(InteractionCache.getActiveForceSelectedID() == 1){
+
+        Rod rod;
+        if(rigidbodyArray.length == 1) {
+
+            rod = new Rod(rigidbodyArray[0], anchorArray[0], mouseCoordinates);
+            ALL_FORCES_ARRAYLIST.add(rod);
+            
+            rigidbodyArray[0].addForceToForceRegistry(rod);
+
+        } else if(rigidbodyArray.length == 2) {
+
+            rod = new Rod(rigidbodyArray[0], rigidbodyArray[1], anchorArray[0], anchorArray[1]);
+
+            ALL_FORCES_ARRAYLIST.add(rod);
+            rigidbodyArray[0].addForceToForceRegistry(rod);
+            rigidbodyArray[1].addForceToForceRegistry(rod);
+        } else {
+            throw new IllegalArgumentException("RigidbodyArray is 0");
+        }
+        
+        rod.setIsJoint(this.isJoint);
+
+    } else if(InteractionCache.getActiveForceSelectedID() == 2) {
+
+        Motor motor = new Motor(rigidbodyArray[0], this.motorTargetAngularVelocity);
+
+        motor.setDrawMotor(this.motorDrawMotor);
+        motor.setDrawMotorForce(this.motorDrawMotorForce);
+        
+        Iterator<ForceRegistry> iterator = rigidbodyArray[0].getForceRegistry().iterator();
+
+        while (iterator.hasNext()) {
+            ForceRegistry force = iterator.next();
+            if (force instanceof Motor) {
+                iterator.remove();
+                ALL_FORCES_ARRAYLIST.remove(force);
+            }
+        }
+
+        ALL_FORCES_ARRAYLIST.add(motor);
+        rigidbodyArray[0].addForceToForceRegistry(motor);
     }
 }
-
+    
 
 
 
@@ -946,10 +723,20 @@ public void setFillColor(PVector fillColor) {
   this.fillColor = fillColor;
 }
 
-public void setShapeType(ShapeType shapeType) {
-  this.shapeType = shapeType;
+public void setShapeType(int ID) {
+    switch(ID) {
+        case 0:
+            this.shapeType = ShapeType.CIRCLE;
+            break;
+        case 1:
+            this.shapeType = ShapeType.BOX;
+            break;
+    }
 }
 
+public void setShapeType(ShapeType shapeType) {
+    this.shapeType = shapeType;
+}
 public void setIsTranslationallyStatic(boolean isTranslationallyStatic) {
   this.isTranslationallyStatic = isTranslationallyStatic;
 }

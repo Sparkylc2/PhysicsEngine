@@ -15,7 +15,6 @@ void setup() {
 
 /*--------------------- Camera Utilities ---------------------*/
     size(1500, 1000);
-    
     windowMove(10, 4);
     frameRate(300);
     interactivityListener = new InteractivityListener();
@@ -34,7 +33,7 @@ void setup() {
 /*------------------- Background ---------------------------*/
     background = loadShape("background.svg");
 /*-------------------------- Rigidbodies ------------------------*/
-  rigidbodyList = new ArrayList<Rigidbody>();
+    rigidbodyList = new ArrayList<Rigidbody>();
 /*------------------------------------------------------------*/
 
 
@@ -89,6 +88,8 @@ void setup() {
 
 
 void draw() {
+    Mouse.updateMouse();
+
     if(loadLevel) {
         levelEditor.loadLevelState();
         loadLevel = false;
@@ -102,13 +103,22 @@ void draw() {
   interactivityListener.applyTransform();
   render.draw();
     editor.whileEditorSelect(-1);
-  
-  //for(Softbody softbody : softbodyList) {
-  //  softbody.draw();
-  //}
-  //cloth.updateCloth();
+
 
   /*--------------------- Cursor Trail ---------------------*/
+
+    /*
+    float minX = min(Mouse.getMouseDownCoordinates().x, Mouse.getMouseCoordinates().x);
+    float maxX = max(Mouse.getMouseDownCoordinates().x, Mouse.getMouseCoordinates().x);
+    float minY = min(Mouse.getMouseDownCoordinates().y, Mouse.getMouseCoordinates().y);
+    float maxY = max(Mouse.getMouseDownCoordinates().y, Mouse.getMouseCoordinates().y);
+
+    beginShape();
+    noFill();
+    stroke(255, 0, 0);
+    rect(minX, minY, maxX - minX, maxY - minY);
+    endShape();
+    */
 
   if(IsMouseOverUI()) {
     interactivityListener.setDrawCursorTrail(false);
@@ -131,5 +141,9 @@ void draw() {
 
 }
 
-
-
+public void controlEvent(ControlEvent theEvent) {
+    if(theEvent.isTab()) {
+        InteractionCache.onTabChange(theEvent.getTab().getId());
+        System.out.println("Tab event: " + theEvent.getTab().getName());
+    }
+}

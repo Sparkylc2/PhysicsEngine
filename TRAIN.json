@@ -92,12 +92,12 @@
     },
     "positionAndVelocity": {
       "position": {
-        "x": -0.6705880165100098,
+        "x": -0.6661719083786011,
         "y": 6.5
       },
       "velocity": {
-        "x": -0.2594938278198242,
-        "y": -0.0013901530764997005
+        "x": -0.22369937598705292,
+        "y": 6.042943568900228E-4
       }
     },
     "visibilityAndCollidability": {
@@ -105,8 +105,8 @@
       "visibility": true
     },
     "angleAndAngularVelocity": {
-      "angle": 0.1594749391078949,
-      "angularVelocity": -0.2656283378601074
+      "angle": 0.16389809548854828,
+      "angularVelocity": -0.23924687504768372
     },
     "geometry": {
       "vertices": [],
@@ -146,12 +146,12 @@
     },
     "positionAndVelocity": {
       "position": {
-        "x": 3.8117527961730957,
+        "x": 3.7896738052368164,
         "y": 6.5
       },
       "velocity": {
-        "x": 1.2436643838882446,
-        "y": -0.0013935146853327751
+        "x": 1.213811993598938,
+        "y": 0.0075995889492332935
       }
     },
     "visibilityAndCollidability": {
@@ -159,8 +159,8 @@
       "visibility": true
     },
     "angleAndAngularVelocity": {
-      "angle": 7.98028039932251,
-      "angularVelocity": 1.2419837713241577
+      "angle": 7.958174228668213,
+      "angularVelocity": 1.2037537097930908
     },
     "geometry": {
       "vertices": [],
