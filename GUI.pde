@@ -1,5 +1,36 @@
     public class GUI {
+
         public RadioButton ShapeSelector;
+        public RadioButton ColourSelector;
+        public Slider Density;
+        public Slider Restitution;
+        public Slider RectangleWidth;
+        public Slider RectangleHeight;
+        public Slider CircleRadius;
+        public Toggle fillColour;
+        public Toggle strokeColour;
+        public Slider strokeWeight;
+        public Slider redSliderFill;
+        public Slider greenSliderFill;
+        public Slider blueSliderFill;
+        public Slider redSliderStroke;
+        public Slider greenSliderStroke;
+        public Slider blueSliderStroke;
+        public Bang colorBox;
+        public Slider angle;
+        public Slider angularVelocity;
+        public Toggle isStatic;
+        public Toggle isTranslationallyStatic;
+        public Toggle isRotationallyStatic;
+        public Toggle addGravity;
+        public Toggle isCollidable;
+
+
+        public Slider springConstant;
+        public Slider springEquilibriumLength;
+
+
+
         //The size of the group
         public int globalGroupHeight = 225;
         public int globalGroupWidth = 230;
@@ -235,10 +266,10 @@
                                 .addItem("Circle", 0)
                                 .addItem("Rectangle", 1)
                                 .setSpacingColumn(this.globalInterElementPaddingX)
-                                .plugTo(InteractionCache, "onShapeChange")
+                                .plugTo(InteractionCache, "shapeSelectorListener")
                                 ;
 
-                        Slider Density = userInterface.addSlider("Density")
+                        Density = userInterface.addSlider("Density")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Density")
@@ -249,7 +280,7 @@
                                         .plugTo(interactivityListener, "setDensity")
                                         ;
 
-                        Slider Restitution = userInterface.addSlider("Restitution")
+                        Restitution = userInterface.addSlider("Restitution")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Restitution")
@@ -260,7 +291,7 @@
                                         .plugTo(interactivityListener, "setRestitution")
                                         ;
 
-                        Slider RectangleWidth = userInterface.addSlider("RectangleWidth")
+                        RectangleWidth = userInterface.addSlider("RectangleWidth")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Width")
@@ -271,7 +302,7 @@
                                         .plugTo(interactivityListener, "setWidth")
                                         ;
 
-                        Slider RectangleHeight = userInterface.addSlider("RectangleHeight")
+                        RectangleHeight = userInterface.addSlider("RectangleHeight")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Height")
@@ -282,52 +313,56 @@
                                         .plugTo(interactivityListener, "setHeight")
                                         ;
 
-                        Slider CircleRadius = userInterface.addSlider("CircleRadius")
+                        CircleRadius = userInterface.addSlider("CircleRadius")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Radius")
-                                        .setVisible(false)
+                                        .setVisible(true)
                                         .setRange(MIN_BODY_RADIUS, MAX_BODY_RADIUS)
                                         .setValue(defaultCircleRadius)
                                         .setGroup(RigidbodyGeneration)
                                         .plugTo(interactivityListener, "setRadius")
                                         ;
 
-                        Toggle fillColour = userInterface.addToggle("FillColour")
+
+                        fillColour = userInterface.addToggle("FillColour")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Fill Colour")
                                         .setVisible(false)
                                         .setGroup(RigidbodyGeneration)
                                         .setValue(false)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
+                                        .plugTo(InteractionCache, "colourCustomizationSelectorListener")
+                                        ;
+                                  //.onChange(new CallbackListener() {
+                                  //        void controlEvent(CallbackEvent theEvent) {
 
-                                                       FillColourSelectorOnChange();
-                                                    }
-                                                })
-                                            ;
-
-                        Toggle strokeColour = userInterface.addToggle("StrokeColour")
+                                  //               FillColourSelectorOnChange();
+                                  //            }
+                                  //        })
+                                      //
+                        strokeColour = userInterface.addToggle("StrokeColour")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Stroke Colour")
                                         .setVisible(false)
                                         .setGroup(RigidbodyGeneration)
                                         .setValue(false)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
+                                        .plugTo(InteractionCache, "colourCustomizationSelectorListener")
+                                        ;
+                                        //.onChange(new CallbackListener() {
+                                        //        void controlEvent(CallbackEvent theEvent) {
+//
+                                        //                StrokeColourSelectorOnChange();
+                                        //            }
+                                        //        })
+                                        //    ;
 
-                                                        StrokeColourSelectorOnChange();
-                                                    }
-                                                })
-                                            ;
-
-                        Slider strokeWeight = userInterface.addSlider("StrokeWeight")
+                        strokeWeight = userInterface.addSlider("StrokeWeight")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Stroke")
-                                        .setVisible(false)
+                                        .setVisible(true)
                                         .setRange(0, 0.5f)
                                         .setValue(0.05f)
                                         .setGroup(RigidbodyGeneration)
@@ -339,7 +374,7 @@
                                                 })
                                             ;
 
-                        Slider redSliderFill = userInterface.addSlider("RedFill")
+                        redSliderFill = userInterface.addSlider("RedFill")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Red")
@@ -355,7 +390,7 @@
                                                 })
                                             ;
 
-                        Slider greenSliderFill = userInterface.addSlider("GreenFill")
+                        greenSliderFill = userInterface.addSlider("GreenFill")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Green")
@@ -371,7 +406,7 @@
                                                 })
                                             ;
 
-                        Slider blueSliderFill = userInterface.addSlider("BlueFill")
+                        blueSliderFill = userInterface.addSlider("BlueFill")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Blue")
@@ -387,7 +422,7 @@
                                                 })
                                             ;
 
-                        Slider redSliderStroke = userInterface.addSlider("RedStroke")
+                        redSliderStroke = userInterface.addSlider("RedStroke")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Red")
@@ -403,7 +438,7 @@
                                                 })
                                             ;
 
-                        Slider greenSliderStroke = userInterface.addSlider("GreenStroke")
+                        greenSliderStroke = userInterface.addSlider("GreenStroke")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Green")
@@ -419,7 +454,7 @@
                                                 })
                                             ;
 
-                        Slider blueSliderStroke = userInterface.addSlider("BlueStroke")
+                        blueSliderStroke = userInterface.addSlider("BlueStroke")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Blue")
@@ -435,7 +470,7 @@
                                                 })
                                             ;
 
-                        Bang colorBox = userInterface.addBang("ColorBox")
+                        colorBox = userInterface.addBang("ColorBox")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(6, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Color")
@@ -446,7 +481,7 @@
                                         .setGroup(RigidbodyGeneration)
                                         ;
 
-                        Toggle isStatic = userInterface.addToggle("isStatic")
+                        isStatic = userInterface.addToggle("isStatic")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Static")
@@ -460,7 +495,7 @@
                                                 })
                                             ;
 
-                        Toggle isTranslationallyStatic = userInterface.addToggle("transStatic")
+                        isTranslationallyStatic = userInterface.addToggle("transStatic")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("TransStatic")
@@ -474,7 +509,7 @@
                                                 })
                                             ;
 
-                        Toggle isRotationallyStatic = userInterface.addToggle("rotStatic")
+                        isRotationallyStatic = userInterface.addToggle("rotStatic")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("RotStatic")
@@ -488,7 +523,7 @@
                                                 })
                                             ;
 
-                        Slider angle = userInterface.addSlider("Angle")
+                        angle = userInterface.addSlider("Angle")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Angle")
@@ -504,7 +539,7 @@
                                                 })
                                             ;
 
-                        Slider angularVelocity = userInterface.addSlider("AngularVelocity")
+                        angularVelocity = userInterface.addSlider("AngularVelocity")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Angular Vel")
@@ -519,7 +554,7 @@
                                                     }
                                                 })
                                         ;
-                        Toggle addGravity = userInterface.addToggle("AddGravity")
+                        addGravity = userInterface.addToggle("AddGravity")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Add Gravity")
@@ -532,7 +567,7 @@
                                                     }
                                                 })
                                             ;
-                        Toggle isCollidable = userInterface.addToggle("IsCollidable") 
+                        isCollidable = userInterface.addToggle("IsCollidable") 
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Collidable")
@@ -866,8 +901,8 @@ userInterface.getController("Density").getCaptionLabel().align(ControlP5.CENTER,
 userInterface.getController("Restitution").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 userInterface.getController("StrokeWeight").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("FillColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("StrokeColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("FillColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("StrokeColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
 userInterface.getController("RedStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 userInterface.getController("GreenStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);

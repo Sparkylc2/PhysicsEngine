@@ -1,6 +1,26 @@
 public class InteractionCache {
 
+    /*
+    How this is going to work:
+    Basically what your doing at the moment is trying to update the gui using a much neater, more modular,
+    and efficient system. Your using the plugTo in conjunction with the eventListener to get which
+    button is being pressed etc, and you want to have this all update in here. You want to only
+    rely on this class to update values for everything, that includes mouse down,
+    key down, and the gui. You want to have a method for each type of input, and then you want to
+    update stuff like the editor, interactivity listener, etc, using these values. This should be
+    the central hub for basically every interaction the user makes with the system, and this should
+    be more effective.
 
+    On your list of other things your doing, you need to implement drag and dropping of multi shape
+    selections, including being able to copy and paste a selection. you want to maybe implement the rod
+    gravity idea, and you also want to add convex polygon decomposition. you are also going to make
+    a seperate editor tab, settings tab, help tab, etc. and importing custom creations. remember the id
+    system, and how you are coordinating that. Also review how you treat keydown inputs, and remember to use
+    switch cases when possible. Also remember to use the keylistener and mouselistener classes to
+    update the interaction cache, and then use the interaction cache to update the gui and the editor.
+    */
+
+    
     private boolean[] keyDownCache = new boolean[256];
 
 
@@ -29,6 +49,11 @@ public class InteractionCache {
     */
     private int activeShapeSelectedID= -1;
 
+    /*
+    ID 0: Fill Colour
+    ID 1: Stroke Colour
+    */
+    private int activeColourCustomizationSelectedID = -1;
 
     /*
     ID 0: Force Spring
@@ -43,39 +68,73 @@ public class InteractionCache {
         this.activeTabID = activeTabID;
     }
 
-    public void onShapeChange(int activeShapeSelectedID) {
-        this.activeShapeSelectedID = activeShapeSelectedID;
 
-        switch(this.activeShapeSelectedID) {
-            case 0:
-                interactivityListener.setShapeType(ShapeType.CIRCLE);
-                return;
-            case 1:
-                interactivityListener.setShapeType(ShapeType.BOX);
-                return;
+
+
+/*
+====================================================================================================
+====================================== Rigidbody Generation ========================================
+====================================================================================================
+*/
+    public void shapeSelectorListener() {
+        if(gui.ShapeSelector.getState(0)) {
+            this.activeShapeSelectedID = 0;
+        } else if(gui.ShapeSelector.getState(1)) {
+            this.activeShapeSelectedID = 1;
+        } else {
+            this.activeShapeSelectedID = -1;
         }
-
-        this.activeShapeSelectedID = -1;
+        onShapeSelectorChange();
     }
 
-    public void onForceChange(int activeForceSelectedID) {
-        this.activeForceSelectedID = activeForceSelectedID;
+    public void onShapeSelectorChange() {
+        gui.RectangleWidth.setVisible(this.activeShapeSelectedID == 1);
+        gui.RectangleHeight.setVisible(this.activeShapeSelectedID == 1);
 
-        switch(this.activeForceSelectedID) {
-            case 0:
-                interactivityListener.setForceType(ForceType.SPRING);
-                return;
-            case 1:
-                interactivityListener.setForceType(ForceType.ROD);
-                return;
-            case 2:
-                interactivityListener.setForceType(ForceType.MOTOR);
-                return;
+        gui.CircleRadius.setVisible(this.activeShapeSelectedID == 0);
+
+        gui.Density.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.Restitution.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+
+        //gui.ColourSelector.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.fillColour.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.strokeColour.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.strokeWeight.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+                                        
+        gui.isStatic.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.isTranslationallyStatic.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.isRotationallyStatic.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+
+        gui.angle.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.angularVelocity.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+
+        gui.addGravity.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.isCollidable.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+    }   
+
+    public void colourCustomizationSelectorListener(ControlEvent theEvent) {
+        if (theEvent.getController().getName().equals("FillColour") && theEvent.getController().getValue() == 1){
+            gui.strokeColour.setValue(false);
+            this.activeColourCustomizationSelectedID = 0;
+        } else if (theEvent.getController().getName().equals("StrokeColour") && theEvent.getController().getValue() == 1) {
+            gui.fillColour.setValue(false);
+            this.activeColourCustomizationSelectedID = 1;
+        } else {
+            this.activeColourCustomizationSelectedID = -1;
         }
+}
 
-        this.activeForceSelectedID = -1;
+
+
+
+    public void onColourCustomizationSelectorChange() {
+
     }
-
+/*
+====================================================================================================
+====================================== Key & Mouse Listeners =======================================
+====================================================================================================
+*/
     public void onMousePressed(int button) {
         if(button < mouseDownCache.length) {
             mouseDownCache[button] = true;
@@ -119,7 +178,11 @@ public class InteractionCache {
     }
 
 
-
+/*
+====================================================================================================
+====================================== Key Pressed Responses =======================================
+====================================================================================================
+*/
     public void keyPressedResponse() {
         switch(activeTabID) {
             case 0:
@@ -145,21 +208,154 @@ public class InteractionCache {
 
 
     public void rigidbodyTabPressedResponse() {
-        switch(isKeyDown(VK_SHIFT)) {
-            case true:
-                switch()
-        }
-        switch(activeShapeSelectedID) {
-            case 0:
-                circlePressedResponse();
-                return;
-            case 1:
-                rectanglePressedResponse();
-                return;
-        }
+        if(isKeyDown(KeyEvent.VK_SHIFT)) {
+                        if(isKeyDown(KeyEvent.VK_W)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.5f);
+                                    return;
+                                case 1:
+                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() + 1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_S)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.5f);
+                                    return;
+                                case 1:
+                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() - 1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_A)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.5f);
+                                    return;
+                                case 1:
+                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() - 1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_D)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.5f);
+                                    return;
+                                case 1:
+                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() + 1f);
+                                    return;
+                            }
+                        }
+
+
+        } else {
+
+
+                        if(isKeyDown(KeyEvent.VK_W)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.05f);
+                                    return;
+                                case 1:
+                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() + 0.1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_S)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.05f);
+                                    return;
+                                case 1:
+                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() - 0.1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_A)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.05f);
+                                    return;
+                                case 1:
+                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() - 0.1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_D)) {
+                            switch(this.activeShapeSelectedID) {
+                                case 0:
+                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.05f);
+                                    return;
+                                case 1:
+                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() + 0.1f);
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_1)) {
+                            switch(this.activeShapeSelectedID) {
+                                case -1:
+                                    gui.ShapeSelector.activate(0);
+                                    this.shapeSelectorListener();
+                                    return;
+                                case 0:
+                                    gui.ShapeSelector.deactivateAll();
+                                    this.shapeSelectorListener();
+                                    return;
+                                case 1:
+                                    gui.ShapeSelector.activate(0);
+                                    this.shapeSelectorListener();
+                                    return;
+                            }
+                        }
+
+                        if(isKeyDown(KeyEvent.VK_2)) {
+                            switch(this.activeShapeSelectedID) {
+                                case -1:
+                                    gui.ShapeSelector.activate(1);
+                                    this.shapeSelectorListener();
+                                    return;
+                                case 0:
+                                    gui.ShapeSelector.activate(1);
+                                    this.shapeSelectorListener();
+                                    return;
+                                case 1:
+                                    gui.ShapeSelector.deactivateAll();
+                                    this.shapeSelectorListener();
+                                    return;
+                            }
+                        }
+            } 
+    }  
+
+
+   public void forceTabPressedResponse() {
+
+   }
+
+   public void editorTabPressedResponse() {
+   }
+
+    public void creationsTabPressedResponse() {
+    }
+
+    public void settingsTabPressedResponse() {
+    }
+
+    public void helpTabPressedResponse() {
     }
 
 
+    
     private void spacePressedResponse() {
 
     }

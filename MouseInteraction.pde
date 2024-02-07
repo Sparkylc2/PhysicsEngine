@@ -229,7 +229,7 @@ public void keyPressed() {
 /*----------------------------------------------------------------------------------- */
 
     
-
+/*
     if(key == '1') {
         if(InteractionCache.getActiveTabID() == 1){
             if(userInterface.getController("AddSpring").getValue() == 0){
@@ -345,7 +345,7 @@ public void keyPressed() {
             userInterface.getController("transStatic").setValue(0);
         }
     }
-
+*/
     if(key == TAB) {
         if(switchTab) {
             userInterface.getTab("Rigidbodies").bringToFront();
@@ -429,49 +429,8 @@ public void keyPressed() {
     }
 
    
-    if(wPressed) {
-        if(shiftPressed){
-            if(userInterface.getTab("Rigidbodies").isActive()) {
-                if(InteractionCache.getActiveShapeSelectedID() == 0) {
-                    userInterface.getController("CircleRadius").setValue(userInterface.getController("CircleRadius").getValue() + 0.5f);
-                }
-                if(InteractionCache.getActiveShapeSelectedID() == 0) {
-                    userInterface.getController("RectangleHeight").setValue(userInterface.getController("RectangleHeight").getValue() + 1f);
-                }
-            }
-        } else {
-            if(userInterface.getTab("Rigidbodies").isActive()) {
-                if(InteractionCache.getActiveShapeSelectedID() == 0) {
-                    userInterface.getController("CircleRadius").setValue(userInterface.getController("CircleRadius").getValue() + 0.05f);
-                }
-                if(InteractionCache.getActiveShapeSelectedID() == 1) {
-                    userInterface.getController("RectangleHeight").setValue(userInterface.getController("RectangleHeight").getValue() + 0.1f);
-                }
-            }
-        }
-    }
 
-    if(sPressed) {
-        if(shiftPressed){
-            if(userInterface.getTab("Rigidbodies").isActive()) {
-                if(InteractionCache.getActiveShapeSelectedID() == 0) {
-                    userInterface.getController("CircleRadius").setValue(userInterface.getController("CircleRadius").getValue() - 0.5f);
-                }
-                if(InteractionCache.getActiveShapeSelectedID() == 1) {
-                    userInterface.getController("RectangleHeight").setValue(userInterface.getController("RectangleHeight").getValue() - 1f);
-                }
-            }
-        } else {
-            if(userInterface.getTab("Rigidbodies").isActive()) {
-                if(InteractionCache.getActiveShapeSelectedID() == 0) {
-                    userInterface.getController("CircleRadius").setValue(userInterface.getController("CircleRadius").getValue() - 0.05f);
-                }
-                if(InteractionCache.getActiveShapeSelectedID() == 1) {
-                    userInterface.getController("RectangleHeight").setValue(userInterface.getController("RectangleHeight").getValue() - 0.1f);
-                }
-            }
-        }
-    }
+
 
 
 

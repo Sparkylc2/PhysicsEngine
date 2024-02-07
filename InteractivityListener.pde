@@ -284,7 +284,29 @@ public void GenerateRigidbody() {
     }
 
     if(!Mouse.getIsMouseOverUI()){
-        if(InteractionCache.getActiveShapeSelectedID() == 0) {
+        
+        if(InteractionCache.getActiveShapeSelectedID() == 0){
+            Rigidbody rigidbody = RigidbodyGenerator.CreateCircleBody(this.radius, this.density,
+                                                                      this.restitution, this.isStatic,
+                                                                      this.isCollidable, this.strokeWeight,
+                                                                      this.strokeColor, this.fillColor);
+              
+            rigidbody.SetInitialPosition(Mouse.getMouseCoordinates());
+            rigidbody.setVelocity(PhysEngMath.SquareVelocity(this.velocity).mult(-1));
+            rigidbody.setIsTranslationallyStatic(this.isTranslationallyStatic);
+            rigidbody.setIsRotationallyStatic(this.isRotationallyStatic);
+            rigidbody.setCollidability(this.isCollidable);
+            rigidbody.RotateTo(this.angle);
+            rigidbody.setAngularVelocity(this.angularVelocity);
+
+            if(this.addGravity) {
+                rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
+            }
+
+            AddBodyToBodyEntityList(rigidbody);
+        }
+
+        if(InteractionCache.getActiveShapeSelectedID() == 1) {
 
             Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody( this.width, this.height,
                                                                     this.density, this.restitution,
@@ -305,27 +327,6 @@ public void GenerateRigidbody() {
                 this.pasted = true;
                 this.copied = false;
             }
-
-            if(this.addGravity) {
-                rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
-            }
-
-            AddBodyToBodyEntityList(rigidbody);
-        }
-
-        if(InteractionCache.getActiveShapeSelectedID() == 1){
-            Rigidbody rigidbody = RigidbodyGenerator.CreateCircleBody(this.radius, this.density,
-                                                                      this.restitution, this.isStatic,
-                                                                      this.isCollidable, this.strokeWeight,
-                                                                      this.strokeColor, this.fillColor);
-              
-            rigidbody.SetInitialPosition(Mouse.getMouseCoordinates());
-            rigidbody.setVelocity(PhysEngMath.SquareVelocity(this.velocity).mult(-1));
-            rigidbody.setIsTranslationallyStatic(this.isTranslationallyStatic);
-            rigidbody.setIsRotationallyStatic(this.isRotationallyStatic);
-            rigidbody.setCollidability(this.isCollidable);
-            rigidbody.RotateTo(this.angle);
-            rigidbody.setAngularVelocity(this.angularVelocity);
 
             if(this.addGravity) {
                 rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
