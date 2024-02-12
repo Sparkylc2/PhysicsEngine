@@ -164,68 +164,68 @@ public class GUI {
 */
         public GUI(ControlP5 userInterface) {
     /*---------------------- Interactivity Listener Initialization -----------------*/
-
+/*
         if(defaultCircleSelector == true){
-            interactivityListener.setShapeType(ShapeType.CIRCLE);
+            //interactivityListener.setShapeType(ShapeType.CIRCLE);
         } else if(defaultRectangleSelector == true){
 
-            interactivityListener.setShapeType(ShapeType.BOX);
+            //interactivityListener.setShapeType(ShapeType.BOX);
         } else if(defaultPolygonSelector == true){
 
-            interactivityListener.setShapeType(ShapeType.POLYGON);
+            //interactivityListener.setShapeType(ShapeType.POLYGON);
         }
 
         if(defaultSpringSelector) {
-            interactivityListener.setForceType(ForceType.SPRING);
+            //interactivityListener.setForceType(ForceType.SPRING);
         } else if(defaultRodSelector) {
 
-            interactivityListener.setForceType(ForceType.ROD);
+            //interactivityListener.setForceType(ForceType.ROD);
         } else if(defaultMotorSelector) {
-            interactivityListener.setForceType(ForceType.MOTOR);
+            //interactivityListener.setForceType(ForceType.MOTOR);
         }
 
 
 
-        interactivityListener.setWidth(defaultRectangleWidth);
-        interactivityListener.setHeight(defaultRectangleHeight);
-        interactivityListener.setRadius(defaultCircleRadius);
+        //interactivityListener.setWidth(defaultRectangleWidth);
+        //interactivityListener.setHeight(defaultRectangleHeight);
+        //interactivityListener.setRadius(defaultCircleRadius);
 
-        interactivityListener.setDensity(defaultDensity);
-        interactivityListener.setRestitution(defaultRestitution);
+        //interactivityListener.setDensity(defaultDensity);
+        //interactivityListener.setRestitution(defaultRestitution);
 
-        interactivityListener.setFillColor(defaultFillColour);
-        interactivityListener.setStrokeColor(defaultStrokeColour);
-        interactivityListener.setStrokeWeight(defaultStrokeWeight);
+        //interactivityListener.setFillColor(defaultFillColour);
+        //interactivityListener.setStrokeColor(defaultStrokeColour);
+        //interactivityListener.setStrokeWeight(defaultStrokeWeight);
 
-        interactivityListener.setAngle(defaultAngle);
-        interactivityListener.setAngularVelocity(defaultAngularVelocity);
+        //interactivityListener.setAngle(defaultAngle);
+        //interactivityListener.setAngularVelocity(defaultAngularVelocity);
 
-        interactivityListener.setIsStatic(defaultIsStatic);
-        interactivityListener.setIsTranslationallyStatic(defaultIsTransStatic);
-        interactivityListener.setIsRotationallyStatic(defaultIsRotStatic);
-        interactivityListener.setAddGravity(defaultAddGravity);
-        interactivityListener.setCollidability(defaultIsCollidable);
+        //interactivityListener.setIsStatic(defaultIsStatic);
+        //interactivityListener.setIsTranslationallyStatic(defaultIsTransStatic);
+        //interactivityListener.setIsRotationallyStatic(defaultIsRotStatic);
+        //interactivityListener.setAddGravity(defaultAddGravity);
+        //interactivityListener.setCollidability(defaultIsCollidable);
         
-        interactivityListener.setSpringConstant(defaultSpringConstant);
-        interactivityListener.setSpringDamping(defaultSpringDamping);
-        interactivityListener.setSpringEquilibriumLength(defaultSpringEquilibriumLength);
+        //interactivityListener.setSpringConstant(defaultSpringConstant);
+        //interactivityListener.setSpringDamping(defaultSpringDamping);
+        //interactivityListener.setSpringEquilibriumLength(defaultSpringEquilibriumLength);
 
-        interactivityListener.setLockToXAxis(defaultLockToXAxis);
-        interactivityListener.setLockToYAxis(defaultLockToYAxis);
+        //interactivityListener.setLockToXAxis(defaultLockToXAxis);
+        //interactivityListener.setLockToYAxis(defaultLockToYAxis);
 
-        interactivityListener.setSpringIsPerfect(defaultSpringIsPerfect);
-        interactivityListener.setSpringIsHingeable(defaultSpringIsHingeable);
-        interactivityListener.setRodIsHingeable(defaultRodIsHingeable);
-        interactivityListener.setRodIsJoint(defaultRodIsJoint);
+        //interactivityListener.setSpringIsPerfect(defaultSpringIsPerfect);
+        //interactivityListener.setSpringIsHingeable(defaultSpringIsHingeable);
+        //interactivityListener.setRodIsHingeable(defaultRodIsHingeable);
+        //interactivityListener.setRodIsJoint(defaultRodIsJoint);
         
-        interactivityListener.setSnapToCenter(defaultSnapToCenter);
-        interactivityListener.setSnapToEdge(defaultSnapToEdge);
+        //interactivityListener.setSnapToCenter(defaultSnapToCenter);
+        //interactivityListener.setSnapToEdge(defaultSnapToEdge);
 
 
-        interactivityListener.setMotorTargetAngularVelocity(defaultMotorTargetAngularVelocity);
-        interactivityListener.setMotorDrawMotor(defaultMotorDrawMotor);
-        interactivityListener.setMotorDrawMotorForce(defaultMotorDrawMotorForce);
-
+        //interactivityListener.setMotorTargetAngularVelocity(defaultMotorTargetAngularVelocity);
+        //interactivityListener.setMotorDrawMotor(defaultMotorDrawMotor);
+        //interactivityListener.setMotorDrawMotorForce(defaultMotorDrawMotorForce);
+        */
     /*----------------------------------------------------------------------------*/
 
                     RigidbodyTab = userInterface.addTab("RigidbodyTab")
@@ -288,7 +288,7 @@ public class GUI {
                                         .setVisible(true)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(defaultCircleSelector)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
                                     
                         RT_RectangleToggle = userInterface.addToggle("RT_RectangleToggle")
@@ -298,7 +298,7 @@ public class GUI {
                                         .setVisible(true)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(defaultRectangleSelector)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
 
@@ -385,7 +385,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(false)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
                         RT_StrokeColourToggle = userInterface.addToggle("RT_StrokeColourToggle")
@@ -395,7 +395,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(false)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
                         RT_StrokeWeightSlider = userInterface.addSlider("RT_StrokeWeightSlider")
@@ -521,7 +521,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(defaultIsStatic)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
                         RT_IsTranslationallyStaticToggle = userInterface.addToggle("RT_IsTranslationallyStaticToggle")
@@ -531,7 +531,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(defaultIsTransStatic)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
                         RT_IsRotationallyStaticToggle = userInterface.addToggle("RT_IsRotationallyStaticToggle")
@@ -541,7 +541,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setGroup(RigidbodyGroup)
                                         .setValue(defaultIsRotStatic)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
                         RT_AngleSlider = userInterface.addSlider("RT_AngleSlider")
@@ -581,7 +581,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setValue(defaultAddGravity)
                                         .setGroup(RigidbodyGroup)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
 
                         RT_CollidabilityToggle = userInterface.addToggle("RT_CollidabilityToggle") 
@@ -591,7 +591,7 @@ public class GUI {
                                         .setVisible(false)
                                         .setValue(defaultIsCollidable)
                                         .setGroup(RigidbodyGroup)
-                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        .plugTo(RT_InteractionHandler, "ToggleListener")
                                         ;
                         
 
@@ -893,10 +893,13 @@ public class GUI {
                                             ;
 
 
-
-
+RT_InteractionHandler.setToggles( new Toggle[] {RT_CircleToggle, RT_RectangleToggle, RT_FillColourToggle, RT_StrokeColourToggle, RT_IsStaticToggle, RT_IsTranslationallyStaticToggle, RT_IsRotationallyStaticToggle, RT_AddGravityToggle, RT_CollidabilityToggle});
+RT_InteractionHandler.setCircleRectangleGroup(new Toggle[] {RT_CircleToggle, RT_RectangleToggle});
+RT_InteractionHandler.setFillStrokeGroup(new Toggle[] {RT_FillColourToggle, RT_StrokeColourToggle});
+RT_InteractionHandler.setStaticGroup(new Toggle[] {RT_IsStaticToggle, RT_IsTranslationallyStaticToggle, RT_IsRotationallyStaticToggle});
 
 /*
+
 ====================================================================================================
 ======================================== Formatting ================================================
 ====================================================================================================
@@ -1002,20 +1005,20 @@ userInterface.getTab("default").hide();
     public int calculateGroupPositionY() {
      return globalScreenGroupPaddingY;
     }
-
+    /*
     public void getActiveTab() {
         if(userInterface.getTab("default").isActive()) {
-            interactivityListener.setGenerateRigidbodies(false);
-            interactivityListener.setGenerateForces(false);
+            //interactivityListener.setGenerateRigidbodies(false);
+            //interactivityListener.setGenerateForces(false);
         } else if(userInterface.getTab("Rigidbodies").isActive()) {
-            interactivityListener.setGenerateRigidbodies(true);
-            interactivityListener.setGenerateForces(false);
+            //interactivityListener.setGenerateRigidbodies(true);
+            //interactivityListener.setGenerateForces(false);
         } else if(userInterface.getTab("Forces").isActive()) {
-            interactivityListener.setGenerateRigidbodies(false);
-            interactivityListener.setGenerateForces(true);
+            //interactivityListener.setGenerateRigidbodies(false);
+            //interactivityListener.setGenerateForces(true);
         }
     }
-
+*/
 /*
 ====================================================================================================
 ======================================= Element Interactivity ======================================
@@ -1025,8 +1028,8 @@ userInterface.getTab("default").hide();
 /*------------------------------ Global Shape Selector Methods -----------------------------------*/
 private void ShapeSelectorElementOnSelect() {
 
-    interactivityListener.setGenerateRigidbodies(true);
-    interactivityListener.setGenerateForces(false);
+    ////interactivityListener.setGenerateRigidbodies(true);
+    ////interactivityListener.setGenerateForces(false);
 
 
     userInterface.getController("Density").setVisible(true);
@@ -1151,7 +1154,7 @@ private void CircleShapeSelectorElementOnSelect() {
 
 private void CircleShapeSelectorInteractivityListener() {
 
-    interactivityListener.setShapeType(ShapeType.CIRCLE);
+    //interactivityListener.setShapeType(ShapeType.CIRCLE);
 }
 
 /* --------------------------------- Rectangle Shape Selector Element ----------------------------*/
@@ -1182,7 +1185,7 @@ private void RectangleShapeSelectorElementOnSelect() {
 
 private void RectangleShapeSelectorElementInteractivityListener() {
 
-    interactivityListener.setShapeType(ShapeType.BOX);
+    //interactivityListener.setShapeType(ShapeType.BOX);
 
 }
 
@@ -1190,14 +1193,14 @@ private void RectangleShapeSelectorElementInteractivityListener() {
 private void DensityElementOnChange() {
 
     float density = userInterface.getController("Density").getValue();
-    interactivityListener.setDensity(density);
+    //interactivityListener.setDensity(density);
 }
 
 /*-------------------------------------- Restitution Element -------------------------------------*/
 private void RestitutionElementOnChange() {
 
     float restitution = userInterface.getController("Restitution").getValue();
-    interactivityListener.setRestitution(restitution);
+    //interactivityListener.setRestitution(restitution);
 }
 
 /*-------------------------------------- Box Width Element ---------------------------------------*/
@@ -1205,7 +1208,7 @@ private void RectangleWidthElementOnChange() {
     if(userInterface.getController("Box").getValue() == 1){
 
         float width = userInterface.getController("RectangleWidth").getValue();
-        interactivityListener.setWidth(width);
+        //interactivityListener.setWidth(width);
     }
 }
 
@@ -1214,7 +1217,7 @@ private void RectangleHeightElementOnChange() {
     if(userInterface.getController("Box").getValue() == 1) {
 
         float height = userInterface.getController("RectangleHeight").getValue();
-        interactivityListener.setHeight(height);
+        //interactivityListener.setHeight(height);
     }
 }
 
@@ -1223,7 +1226,7 @@ private void CircleRadiusElementOnChange() {
     if(userInterface.getController("Circle").getValue() == 1) {
 
         float radius = userInterface.getController("CircleRadius").getValue();
-        interactivityListener.setRadius(radius);
+        //interactivityListener.setRadius(radius);
     }
 }
 
@@ -1291,7 +1294,7 @@ private void FillSliderElementOnChange() {
     userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
     userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
 
-    interactivityListener.setFillColor(new PVector(red, green, blue));
+    //interactivityListener.setFillColor(new PVector(red, green, blue));
 }
 
 /*--------------------------------- Stroke Slider Elements ------------------------------------*/
@@ -1303,7 +1306,7 @@ private void StrokeSliderElementOnChange() {
     
     userInterface.getController("ColorBox").setColorForeground(color(red, green, blue));
     userInterface.getController("ColorBox").setColorActive(color(red, green, blue));
-    interactivityListener.setStrokeColor(new PVector(red, green, blue));
+    //interactivityListener.setStrokeColor(new PVector(red, green, blue));
 }
 
 
@@ -1311,7 +1314,7 @@ private void StrokeSliderElementOnChange() {
 private void StrokeWeightElementOnChange() {
 
     float strokeWeight = userInterface.getController("StrokeWeight").getValue();
-    interactivityListener.setStrokeWeight(strokeWeight);
+    //interactivityListener.setStrokeWeight(strokeWeight);
 }
 
 /*--------------------------------- IsStatic Selector Element ------------------------------------*/
@@ -1322,15 +1325,15 @@ private void IsStaticSelectorElementOnChange() {
         userInterface.getController("transStatic").setValue(0);
         userInterface.getController("rotStatic").setValue(0);
 
-        interactivityListener.setIsTranslationallyStatic(false);
-        interactivityListener.setIsRotationallyStatic(false);
+        //interactivityListener.setIsTranslationallyStatic(false);
+        //interactivityListener.setIsRotationallyStatic(false);
 
-        interactivityListener.setIsStatic(true);
+        //interactivityListener.setIsStatic(true);
 
     }
     else {
 
-        interactivityListener.setIsStatic(false);
+        //interactivityListener.setIsStatic(false);
     }
 }
 /*--------------------------------- IsTransStatic Selector Element --------------------------------*/
@@ -1341,14 +1344,14 @@ private void IsTransStaticSelectorElementOnChange() {
         userInterface.getController("rotStatic").setValue(0);
         userInterface.getController("isStatic").setValue(0);
 
-        interactivityListener.setIsStatic(false);
-        interactivityListener.setIsRotationallyStatic(false);
+        //interactivityListener.setIsStatic(false);
+        //interactivityListener.setIsRotationallyStatic(false);
 
-        interactivityListener.setIsTranslationallyStatic(true);
+        //interactivityListener.setIsTranslationallyStatic(true);
 
     } else {
         
-        interactivityListener.setIsTranslationallyStatic(false);
+        //interactivityListener.setIsTranslationallyStatic(false);
     }
 }
 
@@ -1360,14 +1363,14 @@ private void IsRotStaticSelectorElementOnChange() {
         userInterface.getController("transStatic").setValue(0);
         userInterface.getController("isStatic").setValue(0);
 
-        interactivityListener.setIsTranslationallyStatic(false);
-        interactivityListener.setIsStatic(false);
+        //interactivityListener.setIsTranslationallyStatic(false);
+        //interactivityListener.setIsStatic(false);
 
-        interactivityListener.setIsRotationallyStatic(true);
+        //interactivityListener.setIsRotationallyStatic(true);
 
     } else {
         
-        interactivityListener.setIsRotationallyStatic(false);
+        //interactivityListener.setIsRotationallyStatic(false);
     }
 }
 
@@ -1375,33 +1378,33 @@ private void IsRotStaticSelectorElementOnChange() {
 private void AngleSliderElementOnChange() {
 
     float angle = userInterface.getController("Angle").getValue();
-    interactivityListener.setAngle(radians(angle));
+    //interactivityListener.setAngle(radians(angle));
 }
 
 /*--------------------------------- Angular Velocity Slider Element -------------------------------*/
 private void AngularVelocitySliderElementOnChange() {
 
     float angularVelocity = userInterface.getController("AngularVelocity").getValue();
-    interactivityListener.setAngularVelocity(angularVelocity);
+    //interactivityListener.setAngularVelocity(angularVelocity);
 }
 /*--------------------------------- Add Gravity Selector Element ----------------------------------*/
 private void AddGravitySelectorElementOnChange() {
     
         if(userInterface.getController("AddGravity").getValue() == 1) {
     
-            interactivityListener.setAddGravity(true);
+            //interactivityListener.setAddGravity(true);
         } else {
     
-            interactivityListener.setAddGravity(false);
+            //interactivityListener.setAddGravity(false);
         }
 }
 /*--------------------------------- IsCollidable Selector Element ---------------------------------*/
 private void IsCollidableSelectorElementOnChange() {
 
         if(userInterface.getController("IsCollidable").getValue() == 1) {
-                interactivityListener.setCollidability(true);
+                //interactivityListener.setCollidability(true);
         } else {
-                interactivityListener.setCollidability(false);
+                //interactivityListener.setCollidability(false);
         }
 }
 
@@ -1439,9 +1442,9 @@ private void SpringForceSelectorOnChange() {
     if(userInterface.getController("AddSpring").getValue() == 1) {
 
         ForceSelectorElementDeselect();
-        interactivityListener.setForceType(ForceType.SPRING);
-        interactivityListener.setGenerateRigidbodies(false);
-        interactivityListener.setGenerateForces(true);
+        //interactivityListener.setForceType(ForceType.SPRING);
+        //interactivityListener.setGenerateRigidbodies(false);
+        //interactivityListener.setGenerateForces(true);
 
         userInterface.getController("AddRod").setValue(0);
         userInterface.getController("AddMotor").setValue(0);
@@ -1462,8 +1465,8 @@ private void SpringForceSelectorOnChange() {
     } else if(userInterface.getController("AddSpring").getValue() == 0 && userInterface.getController("AddRod").getValue() == 0 && userInterface.getController("AddMotor").getValue() == 0) {
 
             ForceSelectorElementDeselect();
-            interactivityListener.setGenerateRigidbodies(false);
-            interactivityListener.setGenerateForces(false);
+            //interactivityListener.setGenerateRigidbodies(false);
+            //interactivityListener.setGenerateForces(false);
     }
 }
 /*--------------------------------- Rod Force Selector Element -----------------------------------*/
@@ -1472,9 +1475,9 @@ private void RodForceSelectorOnChange() {
         if(userInterface.getController("AddRod").getValue() == 1) {
         
         ForceSelectorElementDeselect();
-        interactivityListener.setForceType(ForceType.ROD);
-        interactivityListener.setGenerateRigidbodies(false);
-        interactivityListener.setGenerateForces(true);
+        //interactivityListener.setForceType(ForceType.ROD);
+        //interactivityListener.setGenerateRigidbodies(false);
+        //interactivityListener.setGenerateForces(true);
 
         userInterface.getController("AddSpring").setValue(0);
         userInterface.getController("AddMotor").setValue(0);
@@ -1486,8 +1489,8 @@ private void RodForceSelectorOnChange() {
     } else if(userInterface.getController("AddSpring").getValue() == 0 && userInterface.getController("AddRod").getValue() == 0 && userInterface.getController("AddMotor").getValue() == 0) {
 
             ForceSelectorElementDeselect();
-            interactivityListener.setGenerateRigidbodies(false);
-            interactivityListener.setGenerateForces(false);
+            //interactivityListener.setGenerateRigidbodies(false);
+            //interactivityListener.setGenerateForces(false);
     }
 }
 /*--------------------------------- Motor Force Selector Element ---------------------------------*/
@@ -1495,12 +1498,12 @@ private void MotorForceSelectorOnChange() {
     if(userInterface.getController("AddMotor").getValue() == 1) {
 
         ForceSelectorElementDeselect();
-        interactivityListener.setForceType(ForceType.MOTOR);
-        interactivityListener.setGenerateRigidbodies(false);
-        interactivityListener.setGenerateForces(true);
+        //interactivityListener.setForceType(ForceType.MOTOR);
+        //interactivityListener.setGenerateRigidbodies(false);
+        //interactivityListener.setGenerateForces(true);
 
-        interactivityListener.setSnapToCenter(true);
-        interactivityListener.setSnapToEdge(false);
+        //interactivityListener.setSnapToCenter(true);
+        //interactivityListener.setSnapToEdge(false);
 
         userInterface.getController("AddSpring").setValue(0);
         userInterface.getController("AddRod").setValue(0);
@@ -1511,47 +1514,47 @@ private void MotorForceSelectorOnChange() {
 
     } else if(userInterface.getController("AddSpring").getValue() == 0 && userInterface.getController("AddRod").getValue() == 0 && userInterface.getController("AddMotor").getValue() == 0) {
             ForceSelectorElementDeselect();
-            interactivityListener.setGenerateRigidbodies(false);
-            interactivityListener.setGenerateForces(false);
+            //interactivityListener.setGenerateRigidbodies(false);
+            //interactivityListener.setGenerateForces(false);
     }
 
 }
 /*--------------------------------- Spring Constant Slider Element --------------------------------*/
 private void SpringConstantSliderElementOnChange() {
     float springConstant = userInterface.getController("SpringConstant").getValue();
-    interactivityListener.setSpringConstant(springConstant);
+    //interactivityListener.setSpringConstant(springConstant);
 }
 /*--------------------------------- Spring Equilibrium Length Slider Element ----------------------*/
 private void SpringEquilibriumLengthSliderElementOnChange() {
     float springEquilibriumLength = userInterface.getController("SpringEquilibriumLength").getValue();
-    interactivityListener.setSpringEquilibriumLength(springEquilibriumLength);
+    //interactivityListener.setSpringEquilibriumLength(springEquilibriumLength);
 }
 /*--------------------------------- Spring Damping Slider Element --------------------------------*/
 private void SpringDampingSliderElementOnChange() {
     float springDamping = userInterface.getController("SpringDamping").getValue();
-    interactivityListener.setSpringDamping(springDamping);
+    //interactivityListener.setSpringDamping(springDamping);
 }
 /*--------------------------------- Spring Lock To X Selector Element -----------------------------*/
 private void SpringLockToXSelectorElementOnChange() {
     boolean lockToX = userInterface.getController("SpringLockToX").getValue() == 1 ? true : false;
-    interactivityListener.setLockToXAxis(lockToX);
+    //interactivityListener.setLockToXAxis(lockToX);
 }
 /*--------------------------------- Spring Lock To Y Selector Element -----------------------------*/
 private void SpringLockToYSelectorElementOnChange() {
     boolean lockToY = userInterface.getController("SpringLockToY").getValue() == 1 ? true : false;
-    interactivityListener.setLockToYAxis(lockToY);
+    //interactivityListener.setLockToYAxis(lockToY);
 }
 
 /*--------------------------------- Spring Is Perfect Selector Element ----------------------------*/
 private void SpringIsPerfectSelectorElementOnChange() {
     boolean isPerfect = userInterface.getController("SpringIsPerfect").getValue() == 1 ? true : false;
-    interactivityListener.setSpringIsPerfect(isPerfect);
+    //interactivityListener.setSpringIsPerfect(isPerfect);
 }
 
 /*--------------------------------- Spring Is Hingeable Selector Element --------------------------*/
 private void SpringIsHingeableSelectorElementOnChange() {
     boolean isHingeable = userInterface.getController("SpringIsHingeable").getValue() == 1 ? true : false;
-    interactivityListener.setSpringIsHingeable(isHingeable);
+    //interactivityListener.setSpringIsHingeable(isHingeable);
 }
 /*--------------------------------- Spring Snap To Center Selector Element ------------------------*/
 private void SpringSnapToCenterSelectorElementOnChange() {
@@ -1559,7 +1562,7 @@ private void SpringSnapToCenterSelectorElementOnChange() {
         userInterface.getController("SpringSnapToEdge").setValue(0);
     }
     boolean snapToCenter = userInterface.getController("SpringSnapToCenter").getValue() == 1 ? true : false;
-    interactivityListener.setSnapToCenter(snapToCenter);
+    //interactivityListener.setSnapToCenter(snapToCenter);
 }
 
 /*--------------------------------- Spring Snap To Edge Selector Element --------------------------*/
@@ -1569,7 +1572,7 @@ private void SpringSnapToEdgeSelectorElementOnChange() {
         userInterface.getController("SpringSnapToCenter").setValue(0);
     }
     boolean snapToEdge = userInterface.getController("SpringSnapToEdge").getValue() == 1 ? true : false;
-    interactivityListener.setSnapToEdge(snapToEdge);
+    //interactivityListener.setSnapToEdge(snapToEdge);
 }
 
 
@@ -1577,7 +1580,7 @@ private void SpringSnapToEdgeSelectorElementOnChange() {
 /*--------------------------------- Rod Is Hingeable Selector Element -----------------------------*/
 private void RodIsHingeableSelectorElementOnChange() {
     boolean isHingeable = userInterface.getController("RodIsHingeable").getValue() == 1 ? true : false;
-    interactivityListener.setRodIsHingeable(isHingeable);
+    //interactivityListener.setRodIsHingeable(isHingeable);
 }
 
 /*--------------------------------- Rod Snap To Center Selector Element ---------------------------*/
@@ -1586,7 +1589,7 @@ private void RodSnapToCenterSelectorElementOnChange() {
         userInterface.getController("RodSnapToEdge").setValue(0);
     }
     boolean snapToCenter = userInterface.getController("RodSnapToCenter").getValue() == 1 ? true : false;
-    interactivityListener.setSnapToCenter(snapToCenter);
+    //interactivityListener.setSnapToCenter(snapToCenter);
 
 }
 
@@ -1598,16 +1601,16 @@ private void RodSnapToEdgeSelectorElementOnChange() {
     }
 
     boolean snapToEdge = userInterface.getController("RodSnapToEdge").getValue() == 1 ? true : false;
-    interactivityListener.setSnapToEdge(snapToEdge);
+    //interactivityListener.setSnapToEdge(snapToEdge);
 
 }
 
 private void RodIsJointSelectorElementOnChange() {
 
         if(userInterface.getController("RodIsJoint").getValue() == 1) {
-                interactivityListener.setRodIsJoint(true);
+                //interactivityListener.setRodIsJoint(true);
         } else {
-                interactivityListener.setRodIsJoint(false);
+                //interactivityListener.setRodIsJoint(false);
         }
 }
 
@@ -1616,26 +1619,26 @@ private void RodIsJointSelectorElementOnChange() {
 /*--------------------------------- Motor Target Angular Velocity Slider Element -------------------*/
 private void MotorTargetAngularVelocitySliderElementOnChange() {
     float targetAngularVelocity = userInterface.getController("MotorTargetAngularVelocity").getValue();
-    interactivityListener.setMotorTargetAngularVelocity(targetAngularVelocity);
+    //interactivityListener.setMotorTargetAngularVelocity(targetAngularVelocity);
 }
 
 /*--------------------------------- Motor Draw Motor Selector Element -----------------------------*/
 private void MotorDrawMotorSelectorElementOnChange() {
     boolean drawMotor = userInterface.getController("MotorDrawMotor").getValue() == 1 ? true : false;
-    interactivityListener.setMotorDrawMotor(drawMotor);
+    //interactivityListener.setMotorDrawMotor(drawMotor);
 }
 /*--------------------------------- Motor Draw Motor Force Selector Element -----------------------*/
 private void MotorDrawMotorForceSelectorElementOnChange() {
     boolean drawMotorForce = userInterface.getController("MotorDrawMotorForce").getValue() == 1 ? true : false;
-    interactivityListener.setMotorDrawMotorForce(drawMotorForce);
+    //interactivityListener.setMotorDrawMotorForce(drawMotorForce);
 }
 
 /* --------------------------------- Editor Tab --------------------------------------------------*/
 private void EditorEnableEditorSelectorElementOnChange() {
     if(userInterface.getController("EditorEnableEditor").getValue() == 1) {
-        interactivityListener.setEnableEditor(true);
+        //interactivityListener.setEnableEditor(true);
     } else {
-        interactivityListener.setEnableEditor(false);
+        //interactivityListener.setEnableEditor(false);
     }
 }
 

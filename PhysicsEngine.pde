@@ -17,7 +17,7 @@ void setup() {
     size(1500, 1000);
     windowMove(10, 4);
     frameRate(300);
-    interactivityListener = new InteractivityListener();
+    Camera = new Camera();
     
 /*------------------------------------------------------------*/
 
@@ -97,12 +97,12 @@ void draw() {
   int currentFrameTime = millis();
 
   /*NEVER DELETE THIS */
-  gui.getActiveTab();
+  //gui.getActiveTab();
   /* PLEASE */
 
-  interactivityListener.applyTransform();
+  Camera.applyTransform();
   render.draw();
-    editor.whileEditorSelect(-1);
+   //editor.whileEditorSelect(-1);
 
 
   /*--------------------- Cursor Trail ---------------------*/
@@ -119,20 +119,20 @@ void draw() {
     rect(minX, minY, maxX - minX, maxY - minY);
     endShape();
     */
-
+/*
   if(IsMouseOverUI()) {
-    interactivityListener.setDrawCursorTrail(false);
+    .setDrawCursorTrail(false);
     cursor();
 } else {
     interactivityListener.setDrawCursorTrail(true);
     interactivityListener.drawInteractions();
     noCursor();
   }
-
+*/
   dt = (currentFrameTime - lastFrameTime) / 1000f;
   Step(dt, SUB_STEP_COUNT);
 
-  interactivityListener.resetTransform();
+  Camera.resetTransform();
 
   displayTimings();
 
@@ -143,7 +143,9 @@ void draw() {
 
 public void controlEvent(ControlEvent theEvent) {
     if(theEvent.isTab()) {
-        InteractionCache.onTabChange(theEvent.getTab().getId());
-        System.out.println("Tab event: " + theEvent.getTab().getName());
+        switch(theEvent.getTab().getId()) {
+            case 0:
+                currentTabInteractionHandler = (TabInteractionHandler)RT_InteractionHandler;
+        }
     }
 }

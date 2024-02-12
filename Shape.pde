@@ -2,7 +2,7 @@
 public class Shape {
 
 
-  private int opacity = interactivityListener.getOpacity();
+  private int opacity = 166;
 
 
   private PVector fill = new PVector();
@@ -38,8 +38,8 @@ public class Shape {
 ====================================================================================================
 */
   public void drawRigidbodies() {
-    boolean inEditMode = editor.getInEditMode();
-    Rigidbody selectedRigidbody = editor.getSelectedRigidbody();
+    boolean inEditMode = true;//editor.getInEditMode();
+    Rigidbody selectedRigidbody = null; //editor.getSelectedRigidbody();
 
     for(int body = 0; body < rigidbodyList.size(); body++) {
 

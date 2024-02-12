@@ -45,7 +45,7 @@ public class MouseObject {
 
 
 	public Rigidbody getRigidbodyUnderMouse() {
-        PVector mouseCoordinates = interactivityListener.screenToWorld();
+        PVector mouseCoordinates = Camera.screenToWorld();
     	for (Rigidbody rigidbody : rigidbodyList) {
             if(!Collisions.IntersectAABBWithPoint(rigidbody.GetAABB(), mouseCoordinates)) {
            		continue;
@@ -73,20 +73,20 @@ public class MouseObject {
 
 	public void updateMouseCoordinates() {
         this.previousMouseCoordinates.set(this.mouseCoordinates);
-		this.mouseCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.currentRigidbodyUnderMouse, interactivityListener.screenToWorld()));
+		this.mouseCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
 	}
 
     public void updateMouseDownCoordinates() {
         this.isMouseDown = true;
         this.isMouseUp = false;
-        this.mouseDownCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.currentRigidbodyUnderMouse, interactivityListener.screenToWorld()));
+        this.mouseDownCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
 
     public void updateMouseUpCoordinates() {
         this.isMouseUp = true;
         this.isMouseDown = false;
         this.addSelectedRigidbody();
-        this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(interactivityListener, this.currentRigidbodyUnderMouse, interactivityListener.screenToWorld()));
+        this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
 
 

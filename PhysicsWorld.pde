@@ -36,18 +36,6 @@ public static boolean isPaused = false;
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
 
-public InteractionCache InteractionCache = new InteractionCache();
-public InteractivityListener interactivityListener = new InteractivityListener();
-public MouseObject Mouse = new MouseObject();
-public ControlP5 userInterface;
-
-
-public Rigidbody RigidbodyGenerator = new Rigidbody();
-public Shape render = new Shape();
-
-public Level levelEditor = new Level();
-public Editor editor = new Editor();
-
 public static ArrayList<Rigidbody> rigidbodyList = new ArrayList<Rigidbody>();
 public static ArrayList<Softbody> softbodyList = new ArrayList<Softbody>();
 

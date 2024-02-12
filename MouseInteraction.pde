@@ -39,8 +39,7 @@ public boolean ePressed = false;
 public boolean vPressed = false;
 
 public void keyPressed() {
-    InteractionCache.onKeyPressed(keyCode);
-    InteractionCache.keyPressedResponse();
+    KeyAndTabHandler.onKeyPressed(keyCode);
     
     if(keyCode == ENTER) {
         Mouse.getMouseObjectResults().clear();
@@ -132,8 +131,8 @@ public void keyPressed() {
     }
 
     if(key == 'm') {
-        interactivityListener.position = new PVector(-50, -50);
-        interactivityListener.zoom = 10f;
+        Camera.position = new PVector(-50, -50);
+        Camera.zoom = 10f;
     }
 
     /*
@@ -348,10 +347,10 @@ public void keyPressed() {
 */
     if(key == TAB) {
         if(switchTab) {
-            userInterface.getTab("Rigidbodies").bringToFront();
+            userInterface.getTab("RigidbodyTab").bringToFront();
 
         } else {
-            userInterface.getTab("Forces").bringToFront();
+            userInterface.getTab("ForceTab").bringToFront();
         }   
         switchTab = !switchTab;
     }
@@ -453,7 +452,7 @@ public void keyPressed() {
 }
 
 void keyReleased() {  
-    InteractionCache.onKeyReleased(keyCode);
+    KeyAndTabHandler.onKeyReleased(keyCode);
     if(keyCode == BACKSPACE) {
         deletePressed = false;
     }
@@ -503,7 +502,10 @@ void keyReleased() {
 
 public void mousePressed(){
     if(mouseButton == LEFT){
+
         Mouse.updateMouseDownCoordinates();
+        currentTabInteractionHandler.onMousePressed();
+        /*
         if(shiftPressed) {
             clickedRigidbody = Mouse.getCurrentRigidbodyUnderMouse();
 
@@ -530,14 +532,18 @@ public void mousePressed(){
                     clickedRigidbody.addForceToForceRegistry(mouseSpring);
                 }
             }
+            
         } else {
             /* Velocity Calculation Stuff */
-            Mouse.updateMouseDownCoordinates();
+            //Mouse.updateMouseDownCoordinates();
             /* Velocity Calculation Stuff */
         } 
+    /*
     }
+    */
 }
 
+/*
 public void mouseReleased(){
     if(mouseButton == LEFT){
         Mouse.updateMouseUpCoordinates();
@@ -555,8 +561,15 @@ public void mouseReleased(){
         }
     }
 }
+*/
+
+public void mouseReleased() {
+    currentTabInteractionHandler.onMouseReleased();
+}
 
 public void mouseClicked() {
+    currentTabInteractionHandler.onMouseClicked();
+    /*
     if(mouseButton == LEFT){
         if(ctrlVPressed) {
             Rigidbody rigidbody = Mouse.getCurrentRigidbodyUnderMouse();
@@ -573,19 +586,21 @@ public void mouseClicked() {
         editor.whileEditorSelect(0);
         //editor.onClick();
     }
+    */
 } 
 
 public void mouseWheel(MouseEvent event) {
     if(!userInterface.isMouseOver()) {
         float e = -event.getCount();
-        interactivityListener.zoom(pow(1.1f, e), mouseX, mouseY);
+        Camera.zoom(pow(1.1f, e), mouseX, mouseY);
     }
 }
 
 public void mouseDragged() {
     if(!userInterface.isMouseOver() && mouseButton == RIGHT){
-        interactivityListener.move(pmouseX - mouseX, pmouseY - mouseY);
+        Camera.move(pmouseX - mouseX, pmouseY - mouseY);
     }
+    /*
     if(!userInterface.isMouseOver() && mouseButton == LEFT) {
         if(mouseSpringAdded){
             PVector mousePos = Mouse.getMouseCoordinates();
@@ -596,6 +611,7 @@ public void mouseDragged() {
         
         //editor.onDrag();
     }
+    */
 }
 
 public void mouseMoved() {

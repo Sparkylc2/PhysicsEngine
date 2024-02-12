@@ -1,3 +1,4 @@
+/*
 public class Editor {
 
 
@@ -180,3 +181,4 @@ private void selectRigidbodiesInDragArea() {
 		return this.rigidbody;
 	}
 }
+*/
