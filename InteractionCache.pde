@@ -36,100 +36,516 @@ public class InteractionCache {
     ID 0: RigidbodyTab
     ID 1: ForceTab
     ID 2: EditorTab
-    ID 3: CreationsTab
+    ID 3: CreationTab
     ID 4: SettingsTab
     ID 5: HelpTab
     */
     private int activeTabID = 0;
 
 
+/*-------------------------------------- Rigidbody Tab -------------------------------------------*/
     /*
-    ID 0: Shape Circle
-    ID 1: Shape Rectangle
+    ID 0: RT_CircleToggle
+    ID 1: RT_RectangleToggle
+    ID 2: RT_FillColour
+    ID 3: RT_StrokeColour
+    ID 4: RT_IsStatic
+    ID 5: RT_IsTranslationallyStatic
+    ID 6: RT_IsRotationallyStatic
+    ID 7: RT_AddGravity
+    ID 8: RT_Collidability
     */
-    private int activeShapeSelectedID= -1;
+    private boolean[] RT_TOGGLE_STATES = new boolean[9];
+
 
     /*
-    ID 0: Fill Colour
-    ID 1: Stroke Colour
+    ID 0: RT_DensitySlider
+    ID 1: RT_RestitutionSlider
+    ID 2: RT_RectangleWidthSlider
+    ID 3: RT_RectangleHeightSlider
+    ID 4: RT_CircleRadiusSlider
+    ID 5: RT_StrokeWeightSlider
+    ID 6: RT_RedFillSlider
+    ID 7: RT_GreenFillSlider
+    ID 8: RT_BlueFillSlider
+    ID 9: RT_RedStrokeSlider
+    ID 10: RT_GreenStrokeSlider
+    ID 11: RT_BlueStrokeSlider
+    ID 12: RT_AngleSlider
+    ID 13: RT_AngularVelocitySlider
     */
-    private int activeColourCustomizationSelectedID = -1;
-
-    /*
-    ID 0: Force Spring
-    ID 1: Force Rod
-    ID 2: Force Motor
-    */
-    private int activeForceSelectedID = -1;
-
+    private float[] RT_SLIDER_VALUES = new float[14];
 
 
     public void onTabChange(int activeTabID) {
         this.activeTabID = activeTabID;
     }
 
-
-
-
 /*
 ====================================================================================================
 ====================================== Rigidbody Generation ========================================
 ====================================================================================================
 */
-    public void shapeSelectorListener() {
-        if(gui.ShapeSelector.getState(0)) {
-            this.activeShapeSelectedID = 0;
-        } else if(gui.ShapeSelector.getState(1)) {
-            this.activeShapeSelectedID = 1;
-        } else {
-            this.activeShapeSelectedID = -1;
-        }
-        onShapeSelectorChange();
+
+    public void RT_ToggleListener(ControlEvent RT_ToggleEvent) {
+        Controller RT_ToggleEvent_Controller = RT_ToggleEvent.getController();
+            int value = (int)RT_ToggleEvent_Controller.getValue();
+            String RT_ToggleEvent_Controller_Name = RT_ToggleEvent_Controller.getName();
+
+            switch(RT_ToggleEvent_Controller_Name) {
+                case "RT_CircleToggle":
+                    this.RT_TOGGLE_STATES[0] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[0], 0);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[0], 0);
+                    break;
+                case "RT_RectangleToggle":
+                    this.RT_TOGGLE_STATES[1] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[1], 1);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[1], 1);
+                    break;
+                case "RT_FillColourToggle":
+                    this.RT_TOGGLE_STATES[2] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[2], 2);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[2], 2);
+                    break;
+                case "RT_StrokeColourToggle":
+                    this.RT_TOGGLE_STATES[3] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[3], 3);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[3], 3);
+                    break;
+                case "RT_IsStaticToggle":
+                    this.RT_TOGGLE_STATES[4] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[4], 4);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[4], 4);
+                    break;
+                case "RT_IsTranslationallyStaticToggle":
+                    this.RT_TOGGLE_STATES[5] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[5], 5);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[5], 5);
+                    break;
+                case "RT_IsRotationallyStaticToggle":
+                    this.RT_TOGGLE_STATES[6] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[6], 6);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[6], 6);
+                    break;
+                case "RT_AddGravityToggle":
+                    this.RT_TOGGLE_STATES[7] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[7], 7);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[7], 7);
+                    break;
+                case "RT_CollidabilityToggle":
+                    this.RT_TOGGLE_STATES[8] = (value == 1) ? true : false;
+                    this.RT_ToggleResponse(this.RT_TOGGLE_STATES[8], 8);
+                    this.RT_ToggleInteractivityListenerResponse(this.RT_TOGGLE_STATES[8], 8);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid toggle event controller name: " + RT_ToggleEvent_Controller_Name);
+            }
     }
 
-    public void onShapeSelectorChange() {
-        gui.RectangleWidth.setVisible(this.activeShapeSelectedID == 1);
-        gui.RectangleHeight.setVisible(this.activeShapeSelectedID == 1);
 
-        gui.CircleRadius.setVisible(this.activeShapeSelectedID == 0);
+    public void RT_ToggleInteractivityListenerResponse(boolean value, int ID) {
+        switch(ID) {
+            case 0:
+                if(value) {
+                    interactivityListener.setShapeType(ShapeType.CIRCLE);
+                }
+                break
+            case 1:
+                if(value) {
+                    interactivityListener.setShapeType(ShapeType.BOX);
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break:
+            case 4: 
+                interactivityListener.setIsStatic(value);
+                break;
+            case 5:
+                interactivityListener.setIsTranslationallyStatic(value);
+                break;
+            case 6:
+                interactivityListener.setIsRotationallyStatic(value);
+                break;
+            case 7:
+                interactivityListener.setAddGravity(value);
+            case 8:
+                interactivityListener.setCollidability(value);
+        }
+    }
 
-        gui.Density.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.Restitution.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
 
-        //gui.ColourSelector.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.fillColour.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.strokeColour.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.strokeWeight.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+    public void RT_ToggleResponse(boolean value, int ID) {
+        switch(ID) {
+            case 0:
+                if(value) {
+                    gui.RT_RectangleToggle.setBroadcast(false);
+                    gui.RT_CircleToggle.setBroadcast(false);
+
+                    gui.RT_RectangleToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[1] = false;
+
+                    gui.RT_CircleToggle.setValue(1);
+
+                    gui.RT_RectangleToggle.setBroadcast(true);
+                    gui.RT_CircleToggle.setBroadcast(true);
+                } else {
+                    gui.RT_CircleToggle.setBroadcast(false);
+
+                    gui.RT_CircleToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[0] = false;
+
+                    gui.RT_CircleToggle.setBroadcast(true);
+                }
+                break;
+            case 1:
+                if(value) {
+                    gui.RT_CircleToggle.setBroadcast(false);
+                    gui.RT_RectangleToggle.setBroadcast(false);
+
+                    gui.RT_CircleToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[0] = false;
+
+                    gui.RT_RectangleToggle.setValue(1);
+
+                    gui.RT_CircleToggle.setBroadcast(true);
+                    gui.RT_RectangleToggle.setBroadcast(true);
+                } else {
+                    gui.RT_RectangleToggle.setBroadcast(false);
+
+                    gui.RT_RectangleToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[1] = false;
+
+                    gui.RT_RectangleToggle.setBroadcast(true);
+                }
+                break;
+            case 2:
+                if(value) {
+
+                    gui.RT_StrokeColourToggle.setBroadcast(false);
+                    gui.RT_FillColourToggle.setBroadcast(false);
+
+                    gui.RT_StrokeColourToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[3] = false;
+
+                    gui.RT_FillColourToggle.setValue(1);
+
+                    gui.RT_StrokeColourToggle.setBroadcast(true);
+                    gui.RT_FillColourToggle.setBroadcast(true);
+                } else {
+                    gui.RT_FillColourToggle.setBroadcast(false);
+
+                    gui.RT_FillColourToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[2] = false;
+
+                    gui.RT_FillColourToggle.setBroadcast(true);
+                }
+                break;
+            case 3:
+                if(value) {
+                    gui.RT_StrokeColourToggle.setBroadcast(false);
+                    gui.RT_FillColourToggle.setBroadcast(false);
+
+                    gui.RT_FillColourToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[2] = false;
+
+                    gui.RT_StrokeColourToggle.setValue(1);
+
+                    gui.RT_StrokeColourToggle.setBroadcast(true);
+                    gui.RT_FillColourToggle.setBroadcast(true);
+
+                } else {
+                    gui.RT_StrokeColourToggle.setBroadcast(false);
+
+                    gui.RT_StrokeColourToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[3] = false;
+
+                    gui.RT_StrokeColourToggle.setBroadcast(true);
+                }
+                break;
+            case 4:
+                if(value) {
+                    gui.RT_IsStaticToggle.setBroadcast(false);
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(false);
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(false);
+
+                    gui.RT_IsTranslationallyStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[5] = false;
+
+                    gui.RT_IsRotationallyStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[6] = false;
+                    
+                    gui.RT_IsStaticToggle.setValue(1);
+
+                    gui.RT_IsStaticToggle.setBroadcast(true);
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(true);
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(true);
+
+                } else {
+                    gui.RT_IsStaticToggle.setBroadcast(false);
+
+                    gui.RT_IsStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[4] = false;
+
+                    gui.RT_IsStaticToggle.setBroadcast(true);
+                }
+                break;
+            case 5:
+                if(value) {
+                    gui.RT_IsStaticToggle.setBroadcast(false);
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(false);
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(false);
+
+                    gui.RT_IsStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[4] = false;
+
+                    gui.RT_IsRotationallyStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[6] = false;
+
+                    gui.RT_IsTranslationallyStaticToggle.setValue(1);
+
+                    gui.RT_IsStaticToggle.setBroadcast(true);
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(true);
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(true);
+                } else {
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(false);
+
+                    gui.RT_IsTranslationallyStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[5] = false;
+
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(true);
+                }
+                break;
+            case 6:
+                if(value) {
+                    gui.RT_IsStaticToggle.setBroadcast(false);
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(false);
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(false);
+
+                    gui.RT_IsStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[4] = false;
+
+                    gui.RT_IsTranslationallyStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[5] = false;
+
+                    gui.RT_IsRotationallyStaticToggle.setValue(1);
+
+                    gui.RT_IsStaticToggle.setBroadcast(true);
+                    gui.RT_IsTranslationallyStaticToggle.setBroadcast(true);
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(true);
+                } else {
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(false);
+
+                    gui.RT_IsRotationallyStaticToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[6] = false;
+
+                    gui.RT_IsRotationallyStaticToggle.setBroadcast(true);
+                }
+                break;
+            case 7:
+                if(value) {
+                    gui.RT_AddGravityToggle.setBroadcast(false);
+
+                    gui.RT_AddGravityToggle.setValue(1);
+                    this.RT_TOGGLE_STATES[7] = true;
+
+                    gui.RT_AddGravityToggle.setBroadcast(true);
+                } else {
+                    gui.RT_AddGravityToggle.setBroadcast(false);
+
+                    gui.RT_AddGravityToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[7] = false;
+
+                    gui.RT_AddGravityToggle.setBroadcast(true);
+                }
+                break;
+            case 8:
+                if(value) {
+                    gui.RT_CollidabilityToggle.setBroadcast(false);
+
+                    gui.RT_CollidabilityToggle.setValue(1);
+                    this.RT_TOGGLE_STATES[8] = true;
+
+                    gui.RT_CollidabilityToggle.setBroadcast(true);
+                } else {
+                    gui.RT_CollidabilityToggle.setBroadcast(false);
+
+                    gui.RT_CollidabilityToggle.setValue(0);
+                    this.RT_TOGGLE_STATES[8] = false;
+
+                    gui.RT_CollidabilityToggle.setBroadcast(true);
+                }
+                break;
+        }
+        
+        switch(ID) {
+            case 0:
+                this.RT_Visibility_Response();
+                break;
+            case 1:
+                this.RT_Visibility_Response();
+                break;
+            case 2:
+                this.RT_Visibility_Response();
+                break;
+            case 3:
+                this.RT_Visibility_Response();
+                break;
+        }
+    }
+
+        /*
+    ID 0: RT_DensitySlider
+    ID 1: RT_RestitutionSlider
+    ID 2: RT_RectangleWidthSlider
+    ID 3: RT_RectangleHeightSlider
+    ID 4: RT_CircleRadiusSlider
+    ID 5: RT_StrokeWeightSlider
+    ID 6: RT_RedFillSlider
+    ID 7: RT_GreenFillSlider
+    ID 8: RT_BlueFillSlider
+    ID 9: RT_RedStrokeSlider
+    ID 10: RT_GreenStrokeSlider
+    ID 11: RT_BlueStrokeSlider
+    ID 12: RT_AngleSlider
+    ID 13: RT_AngularVelocitySlider
+    */
+
+    public void RT_SliderListener(ControlEvent RT_SliderEvent) {
+        Controller RT_SliderEvent_Controller = RT_SliderEvent.getController();
+        float value = (int)RT_SliderEvent_Controller.getValue();
+        String RT_SliderEvent_Controller_Name = RT_SliderEvent_Controller.getName();
+
+        switch(RT_SliderEvent_Controller_Name) {
+            case "RT_DensitySlider":
+                this.RT_SLIDER_VALUES[0] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[0], 0);
+                break;
+            case "RT_RestitutionSlider":
+                this.RT_SLIDER_VALUES[1] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[1], 1);
+                break;
+            case "RT_RectangleWidthSlider":
+                this.RT_SLIDER_VALUES[2] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[2], 2);
+                break;
+            case "RT_RectangleHeightSlider":
+                this.RT_SLIDER_VALUES[3] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[3], 3);
+                break;
+            case "RT_CircleRadiusSlider":
+                this.RT_SLIDER_VALUES[4] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[4], 4);
+                break;
+            case "RT_StrokeWeightSlider":
+                this.RT_SLIDER_VALUES[5] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[5], 5);
+                break;
+            case "RT_RedFillSlider":
+                this.RT_SLIDER_VALUES[6] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[6], 6);
+                break;
+            case "RT_GreenFillSlider":
+                this.RT_SLIDER_VALUES[7] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[7], 7);
+                break;
+            case "RT_BlueFillSlider":
+                this.RT_SLIDER_VALUES[8] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[8], 8);
+                break;
+            case "RT_RedStrokeSlider":
+                this.RT_SLIDER_VALUES[9] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[9], 9);
+                break;
+            case "RT_GreenStrokeSlider":
+                this.RT_SLIDER_VALUES[10] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[10], 10);
+                break;
+            case "RT_BlueStrokeSlider":
+                this.RT_SLIDER_VALUES[11] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[11], 11);
+                break;
+            case "RT_AngleSlider":
+                this.RT_SLIDER_VALUES[12] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[12], 12);
+            case "RT_AngularVelocitySlider":
+                this.RT_SLIDER_VALUES[13] = value;
+                this.RT_SliderInteractivityListenerResponse(this.RT_SLIDER_VALUES[13], 13);
+        }
+    }
+
+    public void RT_SliderResponse(){
+    }
+
+    public void RT_SliderInteractivityListenerResponse(float value, int ID){
+        switch (ID) {
+            case 0:
+                interactivityListener.setDensity(value);
+            case 1:
+                interactivityListener.setRestitution(value);
+            case 2:
+                interactivityListener.setWidth(value);
+            case 3:
+                interactivityListener.setHeight(value);
+            case 4:
+                interactivityListener.setRadius(value);
+            case 5:
+                interactivityListener.setStrokeWeight(value);
+            case 6:
+                interacitivity
+        }
+
+    }
+
+
+    public void RT_Visibility_Response() {
+        gui.RT_RectangleWidthSlider.setVisible(this.RT_TOGGLE_STATES[1]);
+        gui.RT_RectangleHeightSlider.setVisible(this.RT_TOGGLE_STATES[1]);
+
+        gui.RT_CircleRadiusSlider.setVisible(this.RT_TOGGLE_STATES[0]);
+
+        gui.RT_DensitySlider.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_RestitutionSlider.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+
+        gui.RT_FillColourToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_StrokeColourToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_StrokeWeightSlider.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+
+        gui.RT_RedFillSlider.setVisible(this.RT_TOGGLE_STATES[2] && this.getRT_OR_ToggleState(0, 1));
+        gui.RT_GreenFillSlider.setVisible(this.RT_TOGGLE_STATES[2] && this.getRT_OR_ToggleState(0, 1));
+        gui.RT_BlueFillSlider.setVisible(this.RT_TOGGLE_STATES[2] && this.getRT_OR_ToggleState(0, 1));
+
+        gui.RT_RedStrokeSlider.setVisible(this.RT_TOGGLE_STATES[3] && this.getRT_OR_ToggleState(0, 1));
+        gui.RT_GreenStrokeSlider.setVisible(this.RT_TOGGLE_STATES[3] && this.getRT_OR_ToggleState(0, 1));
+        gui.RT_BlueStrokeSlider.setVisible(this.RT_TOGGLE_STATES[3] && this.getRT_OR_ToggleState(0, 1));
+
+        gui.RT_ColorBang.setVisible(this.RT_TOGGLE_STATES[2] || this.RT_TOGGLE_STATES[3]);
                                         
-        gui.isStatic.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.isTranslationallyStatic.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.isRotationallyStatic.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.RT_IsStaticToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_IsTranslationallyStaticToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_IsRotationallyStaticToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
 
-        gui.angle.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.angularVelocity.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
+        gui.RT_AngleSlider.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_AngularVelocitySlider.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
 
-        gui.addGravity.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-        gui.isCollidable.setVisible(this.activeShapeSelectedID == 0 || this.activeShapeSelectedID == 1);
-    }   
+        gui.RT_AddGravityToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
+        gui.RT_CollidabilityToggle.setVisible(this.RT_TOGGLE_STATES[0] || this.RT_TOGGLE_STATES[1]);
 
-    public void colourCustomizationSelectorListener(ControlEvent theEvent) {
-        if (theEvent.getController().getName().equals("FillColour") && theEvent.getController().getValue() == 1){
-            gui.strokeColour.setValue(false);
-            this.activeColourCustomizationSelectedID = 0;
-        } else if (theEvent.getController().getName().equals("StrokeColour") && theEvent.getController().getValue() == 1) {
-            gui.fillColour.setValue(false);
-            this.activeColourCustomizationSelectedID = 1;
-        } else {
-            this.activeColourCustomizationSelectedID = -1;
-        }
-}
-
-
-
-
-    public void onColourCustomizationSelectorChange() {
 
     }
+
+
+
+
+
+
+
+
+
+
+
 /*
 ====================================================================================================
 ====================================== Key & Mouse Listeners =======================================
@@ -210,132 +626,97 @@ public class InteractionCache {
     public void rigidbodyTabPressedResponse() {
         if(isKeyDown(KeyEvent.VK_SHIFT)) {
                         if(isKeyDown(KeyEvent.VK_W)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.5f);
-                                    return;
-                                case 1:
-                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() + 1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() + 0.5f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleHeightSlider.setValue(gui.RT_RectangleHeightSlider.getValue() + 1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_S)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.5f);
-                                    return;
-                                case 1:
-                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() - 1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() - 0.5f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleHeightSlider.setValue(gui.RT_RectangleHeightSlider.getValue() - 1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_A)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.5f);
-                                    return;
-                                case 1:
-                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() - 1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() - 0.5f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleWidthSlider.setValue(gui.RT_RectangleWidthSlider.getValue() - 1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_D)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.5f);
-                                    return;
-                                case 1:
-                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() + 1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() + 0.5f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleWidthSlider.setValue(gui.RT_RectangleWidthSlider.getValue() + 1f);
+                                return;
                             }
                         }
-
-
         } else {
-
-
                         if(isKeyDown(KeyEvent.VK_W)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.05f);
-                                    return;
-                                case 1:
-                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() + 0.1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() + 0.05f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleHeightSlider.setValue(gui.RT_RectangleHeightSlider.getValue() + 0.1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_S)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.05f);
-                                    return;
-                                case 1:
-                                    gui.RectangleHeight.setValue(gui.RectangleHeight.getValue() - 0.1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() - 0.05f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleHeightSlider.setValue(gui.RT_RectangleHeightSlider.getValue() - 0.1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_A)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() - 0.05f);
-                                    return;
-                                case 1:
-                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() - 0.1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() - 0.05f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleWidthSlider.setValue(gui.RT_RectangleWidthSlider.getValue() - 0.1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_D)) {
-                            switch(this.activeShapeSelectedID) {
-                                case 0:
-                                    gui.CircleRadius.setValue(gui.CircleRadius.getValue() + 0.05f);
-                                    return;
-                                case 1:
-                                    gui.RectangleWidth.setValue(gui.RectangleWidth.getValue() + 0.1f);
-                                    return;
+                            if(this.RT_TOGGLE_STATES[0]) {
+                                gui.RT_CircleRadiusSlider.setValue(gui.RT_CircleRadiusSlider.getValue() + 0.05f);
+                                return;
+                            } else if(this.RT_TOGGLE_STATES[1]) {
+                                gui.RT_RectangleWidthSlider.setValue(gui.RT_RectangleWidthSlider.getValue() + 0.1f);
+                                return;
                             }
                         }
 
                         if(isKeyDown(KeyEvent.VK_1)) {
-                            switch(this.activeShapeSelectedID) {
-                                case -1:
-                                    gui.ShapeSelector.activate(0);
-                                    this.shapeSelectorListener();
-                                    return;
-                                case 0:
-                                    gui.ShapeSelector.deactivateAll();
-                                    this.shapeSelectorListener();
-                                    return;
-                                case 1:
-                                    gui.ShapeSelector.activate(0);
-                                    this.shapeSelectorListener();
-                                    return;
-                            }
+                            this.RT_TOGGLE_STATES[0] = !this.RT_TOGGLE_STATES[0];
+                            this.RT_ToggleResponse(this.RT_TOGGLE_STATES[0], 0);
+                        } 
+                        
+                        if(isKeyDown(KeyEvent.VK_2)) {
+                            this.RT_TOGGLE_STATES[1] = !this.RT_TOGGLE_STATES[1];
+                            this.RT_ToggleResponse(this.RT_TOGGLE_STATES[1], 1);
                         }
 
-                        if(isKeyDown(KeyEvent.VK_2)) {
-                            switch(this.activeShapeSelectedID) {
-                                case -1:
-                                    gui.ShapeSelector.activate(1);
-                                    this.shapeSelectorListener();
-                                    return;
-                                case 0:
-                                    gui.ShapeSelector.activate(1);
-                                    this.shapeSelectorListener();
-                                    return;
-                                case 1:
-                                    gui.ShapeSelector.deactivateAll();
-                                    this.shapeSelectorListener();
-                                    return;
-                            }
-                        }
-            } 
-    }  
+                }  
+    }
 
 
    public void forceTabPressedResponse() {
@@ -355,14 +736,6 @@ public class InteractionCache {
     }
 
 
-    
-    private void spacePressedResponse() {
-
-    }
-
-    public void enterPressedResponse(){
-        Mouse.getMouseObjectResults().clear();
-    }
 
     public void deletePressedResponse(){
         Rigidbody rigidbody = Mouse.getRigidbodyUnderMouse();
@@ -445,11 +818,16 @@ public class InteractionCache {
         return activeTabID;
     }
 
-    public int getActiveShapeSelectedID() {
-        return activeShapeSelectedID;
+    public boolean getRT_ToggleState(int ID) {
+        return RT_TOGGLE_STATES[ID];
     }
 
-    public int getActiveForceSelectedID() {
-        return activeForceSelectedID;
+    public boolean getRT_AND_ToggleState(int ID1, int ID2) {
+        return RT_TOGGLE_STATES[ID1] && RT_TOGGLE_STATES[ID2];
     }
+
+    public boolean getRT_OR_ToggleState(int ID1, int ID2) {
+        return RT_TOGGLE_STATES[ID1] || RT_TOGGLE_STATES[ID2];
+    }
+    
 }

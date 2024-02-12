@@ -136,6 +136,7 @@ public void keyPressed() {
         interactivityListener.zoom = 10f;
     }
 
+    /*
     if(key == 'z' || key == 'Z') {
             qCount++;
             if(qCount == 1) {
@@ -195,7 +196,7 @@ public void keyPressed() {
         }
     }
 
-    /*
+    
 
       if(ctrlEPressed) {
         Rigidbody newClickedRigidbody = interactivityListener.getClickedRigidbody();
@@ -204,8 +205,7 @@ public void keyPressed() {
             interactivityListener.editRigidbody = true;
         }
     } else
-*/
-    /* ------------ FIX THIS ---------------- */
+
 
    if(ePressed) {
         if(shiftPressed){
@@ -226,10 +226,10 @@ public void keyPressed() {
             }
         }
     } 
-/*----------------------------------------------------------------------------------- */
+
 
     
-/*
+
     if(key == '1') {
         if(InteractionCache.getActiveTabID() == 1){
             if(userInterface.getController("AddSpring").getValue() == 0){
@@ -355,7 +355,7 @@ public void keyPressed() {
         }   
         switchTab = !switchTab;
     }
-
+/*
     if(aPressed) {
         if(shiftPressed) {
             if(userInterface.getTab("Rigidbodies").isActive()) {
@@ -448,6 +448,7 @@ public void keyPressed() {
             editor.whileEditorSelect(2);
         }
     }
+    */
 
 }
 
@@ -545,7 +546,7 @@ public void mouseReleased(){
             mouseSpringAdded = false;
             clickedRigidbody.removeForceFromForceRegistry(mouseSpring);
         } else {
-            if(userInterface.getTab("Rigidbodies").isActive() && !userInterface.getTab("Forces").isActive()) {
+            if(InteractionCache.getActiveTabID() == 0) {
                 interactivityListener.GenerateRigidbody();
             } else if(userInterface.getTab("Forces").isActive() && !userInterface.getTab("Rigidbodies").isActive()) {
                 //interactivityListener.updateSelectedRigidbodies();
@@ -557,9 +558,6 @@ public void mouseReleased(){
 
 public void mouseClicked() {
     if(mouseButton == LEFT){
-        if(!userInterface.getTab("Rigidbodies").isActive()) {
-            Mouse.updateMouseClick();
-        }
         if(ctrlVPressed) {
             Rigidbody rigidbody = Mouse.getCurrentRigidbodyUnderMouse();
             if(!isInEditMode && rigidbody != null) {

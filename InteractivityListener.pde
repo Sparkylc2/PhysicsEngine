@@ -273,9 +273,10 @@ public void updateRigidbodyValues(){
 
 
 public void GenerateRigidbody() {
-    if(InteractionCache.getActiveShapeSelectedID() == -1) {
+    if(!InteractionCache.getRT_OR_ToggleState(0, 1)) {
         return;
     }
+
     if(!isPaused && Mouse.getRigidbodyUnderMouse() != null) {
         return;
     }
@@ -285,7 +286,7 @@ public void GenerateRigidbody() {
 
     if(!Mouse.getIsMouseOverUI()){
         
-        if(InteractionCache.getActiveShapeSelectedID() == 0){
+        if(InteractionCache.getRT_ToggleState(0)){
             Rigidbody rigidbody = RigidbodyGenerator.CreateCircleBody(this.radius, this.density,
                                                                       this.restitution, this.isStatic,
                                                                       this.isCollidable, this.strokeWeight,
@@ -298,7 +299,6 @@ public void GenerateRigidbody() {
             rigidbody.setCollidability(this.isCollidable);
             rigidbody.RotateTo(this.angle);
             rigidbody.setAngularVelocity(this.angularVelocity);
-
             if(this.addGravity) {
                 rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
             }
@@ -306,7 +306,7 @@ public void GenerateRigidbody() {
             AddBodyToBodyEntityList(rigidbody);
         }
 
-        if(InteractionCache.getActiveShapeSelectedID() == 1) {
+        if(InteractionCache.getRT_ToggleState(1)) {
 
             Rigidbody rigidbody = RigidbodyGenerator.CreateBoxBody( this.width, this.height,
                                                                     this.density, this.restitution,
@@ -355,12 +355,9 @@ public void drawInteractions() {
             return;
         }
         drawForces();
-    } else if(InteractionCache.getActiveTabID() == 0 && InteractionCache.getActiveShapeSelectedID() != -1) {
+    } else if(InteractionCache.getActiveTabID() == 0 && InteractionCache.getRT_OR_ToggleState(0,1)) {
         if(Mouse.getIsMouseDown() && !isInEditMode && !shiftPressed){
             drawVelocityLine();
-        }
-        if(InteractionCache.getActiveShapeSelectedID() != -1) {
-            return;
         }
         if(InteractionCache.getActiveTabID() == 0){
             if(editRigidbody) {
@@ -569,8 +566,12 @@ public void drawForces() {
 
 
 public void createForces() {
-
+    /*
     if(InteractionCache.getActiveForceSelectedID() == -1 || InteractionCache.getActiveTabID() != 1) {
+        return;
+    }
+    
+    if(true) {
         return;
     }
     if(isInEditMode) {
@@ -676,6 +677,7 @@ public void createForces() {
         ALL_FORCES_ARRAYLIST.add(motor);
         rigidbodyArray[0].addForceToForceRegistry(motor);
     }
+    */
 }
     
 
@@ -724,15 +726,16 @@ public void setFillColor(PVector fillColor) {
   this.fillColor = fillColor;
 }
 
-public void setShapeType(int ID) {
-    switch(ID) {
-        case 0:
-            this.shapeType = ShapeType.CIRCLE;
-            break;
-        case 1:
-            this.shapeType = ShapeType.BOX;
-            break;
-    }
+public void setRedFillColour(int fillRed) {
+    this.fillColor.set(fillRed, this.fillColor.y, this.fillColor.z);
+}
+
+public void setGreenFillColour(int fillGreen) {
+    this.fillColor.set(this.fillColor.x, fillGreen, this.fillColor.z);
+}
+
+public void setBlueFillColour(int fillGreen) {
+    this.fillColor.set(this.fillColor.x, fillGreen, this.fillColor.z);
 }
 
 public void setShapeType(ShapeType shapeType) {

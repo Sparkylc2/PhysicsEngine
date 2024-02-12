@@ -1,69 +1,108 @@
-    public class GUI {
+public class GUI {
 
-        public RadioButton ShapeSelector;
-        public RadioButton ColourSelector;
-        public Slider Density;
-        public Slider Restitution;
-        public Slider RectangleWidth;
-        public Slider RectangleHeight;
-        public Slider CircleRadius;
-        public Toggle fillColour;
-        public Toggle strokeColour;
-        public Slider strokeWeight;
-        public Slider redSliderFill;
-        public Slider greenSliderFill;
-        public Slider blueSliderFill;
-        public Slider redSliderStroke;
-        public Slider greenSliderStroke;
-        public Slider blueSliderStroke;
-        public Bang colorBox;
-        public Slider angle;
-        public Slider angularVelocity;
-        public Toggle isStatic;
-        public Toggle isTranslationallyStatic;
-        public Toggle isRotationallyStatic;
-        public Toggle addGravity;
-        public Toggle isCollidable;
+/*
+====================================================================================================
+========================================= GUI Tab Elements =========================================
+====================================================================================================
+*/
+    /*----- Tabs -----*/
+    public Tab RigidbodyTab;
+    public Tab ForceTab;
+    public Tab EditorTab;
+    public Tab CreationTab;
+    public Tab SettingsTab;
+    public Tab HelpTab;
+    public Tab DebugTab;
+
+/*
+====================================================================================================
+========================================= Group Elements ===========================================
+====================================================================================================
+*/
+    /*----- Groups -----*/
+    public Group RigidbodyGroup;
+    public Group ForceGroup;
+    public Group EditorGroup;
+    public Group CreationGroup;
+    public Group SettingsGroup;
+    public Group HelpGroup;
+    public Group DebugGroup;
+
+/*
+====================================================================================================
+==================================== Rigidbody Tab Elements ========================================
+====================================================================================================
+*/
+    /*----- Toggle Buttons -----*/
+    public Toggle RT_CircleToggle;
+    public Toggle RT_RectangleToggle;
+    public Toggle RT_FillColourToggle;
+    public Toggle RT_StrokeColourToggle;
+    public Toggle RT_IsStaticToggle;
+    public Toggle RT_IsTranslationallyStaticToggle;
+    public Toggle RT_IsRotationallyStaticToggle;
+    public Toggle RT_AddGravityToggle;
+    public Toggle RT_CollidabilityToggle;
+
+    /*----- Sliders -----*/
+    public Slider RT_DensitySlider;
+    public Slider RT_RestitutionSlider;
+    public Slider RT_RectangleWidthSlider;
+    public Slider RT_RectangleHeightSlider;
+    public Slider RT_CircleRadiusSlider;
+    public Slider RT_StrokeWeightSlider;
+    public Slider RT_RedFillSlider;
+    public Slider RT_GreenFillSlider;
+    public Slider RT_BlueFillSlider;
+    public Slider RT_RedStrokeSlider;
+    public Slider RT_GreenStrokeSlider;
+    public Slider RT_BlueStrokeSlider;
+    public Slider RT_AngleSlider;
+    public Slider RT_AngularVelocitySlider;
+
+    /*----- Bangs -----*/
+    public Bang RT_ColorBang;
 
 
-        public Slider springConstant;
-        public Slider springEquilibriumLength;
 
 
 
-        //The size of the group
-        public int globalGroupHeight = 225;
-        public int globalGroupWidth = 230;
-        private int globalGroupBarHeight = 20;
+/*
+====================================================================================================
+========================================= Formatting ===============================================
+====================================================================================================
+*/
+    //The size of the group
+    public int globalGroupHeight = 225;
+    public int globalGroupWidth = 230;
+    private int globalGroupBarHeight = 20;
 
-        //The padding of the group from the edges of the screen
-        public int globalScreenGroupPaddingX = 40;
-        public int globalScreenGroupPaddingY = 40;
+    //The padding of the group from the edges of the screen
+    public int globalScreenGroupPaddingX = 40;
+    public int globalScreenGroupPaddingY = 40;
 
-
-        
-        //The padding for elements from the edge of the group
-        private int globalGroupPaddingX = 10;
-        private int globalGroupPaddingY = 10;
-        
-        //The padding between elements in the group
-        private int globalInterElementPaddingX = 10;
-        private int globalInterElementPaddingY = 10;
-
+    //The padding for elements from the edge of the group
+    private int globalGroupPaddingX = 10;
+    private int globalGroupPaddingY = 10;
     
-        //the group background color
-        private int globalGroupColor = color(250, 50);
+    //The padding between elements in the group
+    private int globalInterElementPaddingX = 10;
+    private int globalInterElementPaddingY = 10;
 
-        private int rowCount = 10;
+    //the group background color
+    private int globalGroupColor = color(250, 50);
+    private int rowCount = 10;
 
-        //Checks which tab is open
-        private boolean isRigidbodiesTabOpen;
-        private boolean isForcesTabOpen;
-     
-        /*---------------------------- Default Values Initialization ------------------------*/
-        private Tab defaultTab = userInterface.getTab("Rigidbodies");
-        private Tab currentTab = defaultTab;
-        /*---------------------------- Rigidbodies Tab -------------------------------------*/
+/*
+====================================================================================================
+=================================== Default Value Initialization ===================================
+====================================================================================================
+*/
+/*---------------------------- Default Values Initialization ------------------------*/
+    private Tab defaultTab = userInterface.getTab("RigidbodyTab");
+
+
+        /*---------------------------- Rigidbody Tab -------------------------------------*/
         private boolean defaultCircleSelector = false;
         private boolean defaultRectangleSelector = false;
         private boolean defaultPolygonSelector = false;
@@ -189,58 +228,43 @@
 
     /*----------------------------------------------------------------------------*/
 
-                Tab Rigidbodies = userInterface.addTab("Rigidbodies")
-                                .setLabel("Rigidbodies")
+                    RigidbodyTab = userInterface.addTab("RigidbodyTab")
+                                .setLabel("Rigidbody")
                                 .setId(0)
                                 .activateEvent(true)
-                                .addListener(new ControlListener(){
-                                    void controlEvent(ControlEvent theEvent) {
-                                        if(theEvent.isTab() && theEvent.getTab().getId() == 0) {
-                                            interactivityListener.setGenerateRigidbodies(true);
-                                            interactivityListener.setGenerateForces(false);
-                                        }
-                                    }
-                                })
                                 ;
-                
-  
 
-                Tab Forces = userInterface.addTab("Forces")
+                    ForceTab = userInterface.addTab("ForceTab")
                                 .setLabel("Forces")
                                 .setId(1)
                                 .activateEvent(true)
-                                .addListener(new ControlListener() {
-                                    void controlEvent(ControlEvent theEvent) {
-                                        if(theEvent.isTab() && theEvent.getTab().getId() == 1) {
-                                            interactivityListener.setGenerateRigidbodies(false);
-                                            interactivityListener.setGenerateForces(true);
-                                        }
-                                    }
-                                })
                                 ;
 
-                Tab Editor = userInterface.addTab("Editor")
+                    EditorTab = userInterface.addTab("EditorTab")
                                 .setLabel("Editor")
                                 .setId(2)
-                                .activateEvent(true);
-                Tab Creations = userInterface.addTab("Creations")
+                                .activateEvent(true)
+                                ;
+
+                    CreationTab = userInterface.addTab("CreationTab")
                                 .setLabel("Creations")
                                 .setId(3)
                                 .activateEvent(true)
                                 ;
 
-                Tab Settings = userInterface.addTab("Settings")
+                    SettingsTab = userInterface.addTab("SettingsTab")
                                 .setLabel("Settings")
                                 .setId(4)
                                 .activateEvent(true)
                                 ;
-                Tab Help = userInterface.addTab("Help")
+
+                    HelpTab = userInterface.addTab("HelpTab")
                                 .setLabel("Help")
                                 .setId(5)
                                 .activateEvent(true)
                                 ;
                                 
-                Tab Debug = userInterface.addTab("Debug")
+                    DebugTab = userInterface.addTab("DebugTab")
                                 .setLabel("Debug")
                                 .setId(6)
                                 .activateEvent(true)
@@ -249,228 +273,237 @@
                                 
 
 /*----------------------------------- Rigidbodies Tab ------------------------------------------*/
-                Group RigidbodyGeneration = userInterface.addGroup("Rigidbody")
+                    RigidbodyGroup = userInterface.addGroup("RigidbodyGroup")
                                 .setPosition(calculateGroupPositionX(), calculateGroupPositionY())
                                 .setBackgroundHeight(globalGroupHeight)
                                 .setBarHeight(globalGroupBarHeight)
                                 .setBackgroundColor(globalGroupColor)
                                 .setWidth(globalGroupWidth)
-                                 //.disableCollapse()
-                                .setTab("Rigidbodies")
+                                .setTab("RigidbodyTab")
                                 ;
-                        ShapeSelector = userInterface.addRadioButton("ShapeSelector")
-                                .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
-                                .setGroup(RigidbodyGeneration)
-                                .setSize(calculateButtonWidth(2), calculateButtonHeight(rowCount))
-                                .setItemsPerRow(2)
-                                .addItem("Circle", 0)
-                                .addItem("Rectangle", 1)
-                                .setSpacingColumn(this.globalInterElementPaddingX)
-                                .plugTo(InteractionCache, "shapeSelectorListener")
-                                ;
+                        RT_CircleToggle = userInterface.addToggle("RT_CircleToggle")
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setLabel("Circle")
+                                        .setVisible(true)
+                                        .setGroup(RigidbodyGroup)
+                                        .setValue(defaultCircleSelector)
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
+                                    
+                        RT_RectangleToggle = userInterface.addToggle("RT_RectangleToggle")
+                                        .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
+                                        .setLabel("Rectangle")
+                                        .setVisible(true)
+                                        .setGroup(RigidbodyGroup)
+                                        .setValue(defaultRectangleSelector)
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
 
-                        Density = userInterface.addSlider("Density")
+
+                        RT_DensitySlider = userInterface.addSlider("RT_DensitySlider")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Density")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_DENSITY, MAX_BODY_DENSITY)
                                         .setValue(defaultDensity)
-                                        .setGroup(RigidbodyGeneration)
-                                        .plugTo(interactivityListener, "setDensity")
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        RT_DensitySlider.setValue(defaultDensity);
+                                                    }
+                                                })
                                         ;
 
-                        Restitution = userInterface.addSlider("Restitution")
+                        RT_RestitutionSlider = userInterface.addSlider("RT_RestitutionSlider")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Restitution")
                                         .setVisible(false)
                                         .setRange(0.01, 1)
                                         .setValue(defaultRestitution)
-                                        .setGroup(RigidbodyGeneration)
-                                        .plugTo(interactivityListener, "setRestitution")
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        RT_RestitutionSlider.setValue(defaultRestitution);
+                                                    }
+                                                })
                                         ;
 
-                        RectangleWidth = userInterface.addSlider("RectangleWidth")
+                        RT_RectangleWidthSlider = userInterface.addSlider("RT_RectangleWidthSlider")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Width")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_WIDTH, MAX_BODY_WIDTH)
                                         .setValue(defaultRectangleWidth)
-                                        .setGroup(RigidbodyGeneration)
-                                        .plugTo(interactivityListener, "setWidth")
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        RT_RectangleWidthSlider.setValue(defaultRectangleWidth);
+                                                    }
+                                                })
                                         ;
 
-                        RectangleHeight = userInterface.addSlider("RectangleHeight")
+                        RT_RectangleHeightSlider = userInterface.addSlider("RT_RectangleHeightSlider")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Height")
                                         .setVisible(false)
                                         .setRange(MIN_BODY_HEIGHT, MAX_BODY_HEIGHT)
                                         .setValue(defaultRectangleHeight)
-                                        .setGroup(RigidbodyGeneration)
-                                        .plugTo(interactivityListener, "setHeight")
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        RT_RectangleHeightSlider.setValue(defaultRectangleHeight);
+                                                    }
+                                                })
                                         ;
 
-                        CircleRadius = userInterface.addSlider("CircleRadius")
+                        RT_CircleRadiusSlider = userInterface.addSlider("RT_CircleRadiusSlider")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(3, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Radius")
                                         .setVisible(true)
                                         .setRange(MIN_BODY_RADIUS, MAX_BODY_RADIUS)
                                         .setValue(defaultCircleRadius)
-                                        .setGroup(RigidbodyGeneration)
-                                        .plugTo(interactivityListener, "setRadius")
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
+                                                void controlEvent(CallbackEvent theEvent) {
+                                                        RT_CircleRadiusSlider.setValue(defaultCircleRadius);
+                                                    }
+                                                })
                                         ;
 
 
-                        fillColour = userInterface.addToggle("FillColour")
+                        RT_FillColourToggle = userInterface.addToggle("RT_FillColourToggle")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Fill Colour")
                                         .setVisible(false)
-                                        .setGroup(RigidbodyGeneration)
+                                        .setGroup(RigidbodyGroup)
                                         .setValue(false)
-                                        .plugTo(InteractionCache, "colourCustomizationSelectorListener")
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
                                         ;
-                                  //.onChange(new CallbackListener() {
-                                  //        void controlEvent(CallbackEvent theEvent) {
 
-                                  //               FillColourSelectorOnChange();
-                                  //            }
-                                  //        })
-                                      //
-                        strokeColour = userInterface.addToggle("StrokeColour")
+                        RT_StrokeColourToggle = userInterface.addToggle("RT_StrokeColourToggle")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Stroke Colour")
                                         .setVisible(false)
-                                        .setGroup(RigidbodyGeneration)
+                                        .setGroup(RigidbodyGroup)
                                         .setValue(false)
-                                        .plugTo(InteractionCache, "colourCustomizationSelectorListener")
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
                                         ;
-                                        //.onChange(new CallbackListener() {
-                                        //        void controlEvent(CallbackEvent theEvent) {
-//
-                                        //                StrokeColourSelectorOnChange();
-                                        //            }
-                                        //        })
-                                        //    ;
 
-                        strokeWeight = userInterface.addSlider("StrokeWeight")
+                        RT_StrokeWeightSlider = userInterface.addSlider("RT_StrokeWeightSlider")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(4, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Stroke")
                                         .setVisible(true)
                                         .setRange(0, 0.5f)
                                         .setValue(0.05f)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-
-                                                        StrokeWeightElementOnChange();
+                                                        RT_StrokeWeightSlider.setValue(0.05f);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        redSliderFill = userInterface.addSlider("RedFill")
+                        RT_RedFillSlider = userInterface.addSlider("RT_RedFillSlider")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Red")
                                         .setVisible(false)
                                         .setRange(0, 255)
                                         .setValue(defaultFillColour.x)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                        
-                                                        FillSliderElementOnChange();
+                                                        RT_RedFillSlider.setValue(defaultFillColour.x);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        greenSliderFill = userInterface.addSlider("GreenFill")
+                        RT_GreenFillSlider = userInterface.addSlider("RT_GreenFillSlider")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Green")
                                         .setVisible(false)
                                         .setRange(0, 255)
                                         .setValue(defaultFillColour.y)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-
-                                                        FillSliderElementOnChange();
+                                                        RT_GreenFillSlider.setValue(defaultFillColour.y);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        blueSliderFill = userInterface.addSlider("BlueFill")
+                        RT_BlueFillSlider = userInterface.addSlider("RT_BlueFillSliders")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Blue")
                                         .setVisible(false)
                                         .setRange(0, 255)
                                         .setValue(defaultFillColour.z)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        
-                                                        FillSliderElementOnChange();
+                                                        RT_BlueFillSlider.setValue(defaultFillColour.z);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        redSliderStroke = userInterface.addSlider("RedStroke")
+                        RT_RedStrokeSlider = userInterface.addSlider("RT_RedStrokeSlider")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Red")
                                         .setVisible(false)
                                         .setRange(0, 255)
                                         .setValue(defaultStrokeColour.x)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-
-                                                        StrokeSliderElementOnChange();
+                                                        RT_RedStrokeSlider.setValue(defaultStrokeColour.x);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        greenSliderStroke = userInterface.addSlider("GreenStroke")
+                        RT_GreenStrokeSlider = userInterface.addSlider("RT_GreenStrokeSlider")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Green")
                                         .setVisible(false)
                                         .setRange(0, 255)
                                         .setValue(defaultStrokeColour.y)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        
-                                                        StrokeSliderElementOnChange();
+                                                        RT_GreenStrokeSlider.setValue(defaultStrokeColour.y);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        blueSliderStroke = userInterface.addSlider("BlueStroke")
+                        RT_BlueStrokeSlider = userInterface.addSlider("RT_BlueStrokeSlider")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(5, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Blue")
                                         .setVisible(false)
                                         .setRange(0, 255)
                                         .setValue(defaultStrokeColour.z)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                        
-                                                        StrokeSliderElementOnChange();
+                                                        RT_BlueStrokeSlider.setValue(defaultStrokeColour.z);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        colorBox = userInterface.addBang("ColorBox")
+                        RT_ColorBang = userInterface.addBang("RT_ColorBang")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(6, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Color")
@@ -478,120 +511,99 @@
                                         .setColorActive(color(defaultFillColour.x, defaultFillColour.y, defaultFillColour.z))
                                         .setVisible(false)
                                         .setLabelVisible(false)
-                                        .setGroup(RigidbodyGeneration)
+                                        .setGroup(RigidbodyGroup)
                                         ;
 
-                        isStatic = userInterface.addToggle("isStatic")
+                        RT_IsStaticToggle = userInterface.addToggle("RT_IsStaticToggle")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("Static")
                                         .setVisible(false)
-                                        .setGroup(RigidbodyGeneration)
+                                        .setGroup(RigidbodyGroup)
                                         .setValue(defaultIsStatic)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        IsStaticSelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
 
-                        isTranslationallyStatic = userInterface.addToggle("transStatic")
+                        RT_IsTranslationallyStaticToggle = userInterface.addToggle("RT_IsTranslationallyStaticToggle")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(3)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("TransStatic")
                                         .setVisible(false)
-                                        .setGroup(RigidbodyGeneration)
+                                        .setGroup(RigidbodyGroup)
                                         .setValue(defaultIsTransStatic)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        IsTransStaticSelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
 
-                        isRotationallyStatic = userInterface.addToggle("rotStatic")
+                        RT_IsRotationallyStaticToggle = userInterface.addToggle("RT_IsRotationallyStaticToggle")
                                         .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(7, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
                                         .setLabel("RotStatic")
                                         .setVisible(false)
-                                        .setGroup(RigidbodyGeneration)
+                                        .setGroup(RigidbodyGroup)
                                         .setValue(defaultIsRotStatic)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        IsRotStaticSelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
 
-                        angle = userInterface.addSlider("Angle")
+                        RT_AngleSlider = userInterface.addSlider("RT_AngleSlider")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Angle")
                                         .setVisible(false)
                                         .setRange(-360, 360)
                                         .setValue(defaultAngle)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-
-                                                       AngleSliderElementOnChange();
+                                                        RT_AngleSlider.setValue(defaultAngle);
                                                     }
                                                 })
-                                            ;
+                                        ;
 
-                        angularVelocity = userInterface.addSlider("AngularVelocity")
+                        RT_AngularVelocitySlider = userInterface.addSlider("RT_AngularVelocitySlider")
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(8, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Angular Vel")
                                         .setVisible(false)
                                         .setRange(-10, 10)
                                         .setValue(defaultAngularVelocity)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
+                                        .setGroup(RigidbodyGroup)
+                                        .onDoublePress(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
-                                                            
-                                                        AngularVelocitySliderElementOnChange();
+                                                        RT_AngularVelocitySlider.setValue(defaultAngularVelocity);
                                                     }
                                                 })
                                         ;
-                        addGravity = userInterface.addToggle("AddGravity")
+
+                        RT_AddGravityToggle = userInterface.addToggle("RT_AddGravityToggle")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(2)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Add Gravity")
                                         .setVisible(false)
                                         .setValue(defaultAddGravity)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        AddGravitySelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
-                        isCollidable = userInterface.addToggle("IsCollidable") 
+                                        .setGroup(RigidbodyGroup)
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
+
+                        RT_CollidabilityToggle = userInterface.addToggle("RT_CollidabilityToggle") 
                                         .setPosition(calculateButtonPositionX(2, calculateButtonWidth(2)), calculateButtonPositionY(9, calculateButtonHeight(rowCount)))
                                         .setSize(calculateButtonWidth(2),calculateButtonHeight(rowCount))
                                         .setLabel("Collidable")
                                         .setVisible(false)
                                         .setValue(defaultIsCollidable)
-                                        .setGroup(RigidbodyGeneration)
-                                        .onChange(new CallbackListener() {
-                                                void controlEvent(CallbackEvent theEvent) {
-                                                        IsCollidableSelectorElementOnChange();
-                                                    }
-                                                })
-                                            ;
-
+                                        .setGroup(RigidbodyGroup)
+                                        .plugTo(InteractionCache, "RT_ToggleListener")
+                                        ;
                         
 
 /*----------------------------------- Forces Tab ------------------------------------------*/
-            Group ForceGeneration = userInterface.addGroup("Force")
+                ForceGroup = userInterface.addGroup("ForceGroup")
                             .setPosition(calculateGroupPositionX(), calculateGroupPositionY())
                             .setBackgroundHeight(globalGroupHeight)
                             .setBarHeight(globalGroupBarHeight)
                             .setBackgroundColor(globalGroupColor)
                             .setWidth(globalGroupWidth)
                              //.disableCollapse()
-                            .setTab("Forces")
+                            .setTab("ForceTab")
                             ;
                         Toggle addSpring = userInterface.addToggle("AddSpring")
                                         .setPosition(calculateButtonPositionX(1, calculateButtonWidth(3)), calculateButtonPositionY(1, calculateButtonHeight(rowCount)))
@@ -599,7 +611,7 @@
                                         .setLabel("Spring")
                                         .setValue(defaultSpringSelector)
                                         .setVisible(true)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringForceSelectorOnChange();
@@ -612,7 +624,7 @@
                                         .setLabel("Rod")
                                         .setValue(defaultRodSelector)
                                         .setVisible(true)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         RodForceSelectorOnChange();
@@ -625,7 +637,7 @@
                                         .setLabel("Motor")
                                         .setValue(defaultMotorSelector)
                                         .setVisible(true)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         MotorForceSelectorOnChange();
@@ -639,7 +651,7 @@
                                         .setVisible(false)
                                         .setRange(0, 300)
                                         .setValue(defaultSpringConstant)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringConstantSliderElementOnChange();
@@ -653,7 +665,7 @@
                                         .setVisible(false)
                                         .setRange(0, 5)
                                         .setValue(defaultSpringEquilibriumLength)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringEquilibriumLengthSliderElementOnChange();
@@ -668,7 +680,7 @@
                                         .setVisible(false)
                                         .setRange(0, 1)
                                         .setValue(defaultSpringDamping)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringDampingSliderElementOnChange();
@@ -682,7 +694,7 @@
                                         .setLabel("Lock translation to x-axis")
                                         .setVisible(false)
                                         .setValue(defaultLockToXAxis)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringLockToXSelectorElementOnChange();
@@ -695,7 +707,7 @@
                                         .setLabel("Lock translation to y-axis")
                                         .setVisible(false)
                                         .setValue(defaultLockToYAxis)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringLockToYSelectorElementOnChange();
@@ -708,7 +720,7 @@
                                         .setLabel("Perfect Spring")
                                         .setVisible(false)
                                         .setValue(defaultSpringIsPerfect)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringIsPerfectSelectorElementOnChange();
@@ -721,7 +733,7 @@
                                         .setLabel("Snap to Center")
                                         .setVisible(false)
                                         .setValue(defaultSnapToCenter)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringSnapToCenterSelectorElementOnChange();
@@ -735,7 +747,7 @@
                                         .setLabel("Snap to Edge")
                                         .setVisible(false)
                                         .setValue(defaultSnapToEdge)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         SpringSnapToEdgeSelectorElementOnChange();
@@ -748,7 +760,7 @@
                                         .setLabel("Snap to Center")
                                         .setVisible(false)
                                         .setValue(defaultSnapToCenter)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         RodSnapToCenterSelectorElementOnChange();
@@ -762,7 +774,7 @@
                                         .setLabel("Snap to Edge")
                                         .setVisible(false)
                                         .setValue(defaultSnapToEdge)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         RodSnapToEdgeSelectorElementOnChange();
@@ -775,7 +787,7 @@
                                         .setLabel("Joint")
                                         .setVisible(false)
                                         .setValue(defaultRodIsJoint)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         RodIsJointSelectorElementOnChange();
@@ -791,7 +803,7 @@
                                         .setVisible(false)
                                         .setRange(-10, 10)
                                         .setValue(defaultMotorTargetAngularVelocity)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         MotorTargetAngularVelocitySliderElementOnChange();
@@ -804,7 +816,7 @@
                                         .setLabel("Draw Motor")
                                         .setVisible(false)
                                         .setValue(defaultMotorDrawMotor)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         MotorDrawMotorSelectorElementOnChange();
@@ -817,7 +829,7 @@
                                         .setLabel("Draw Motor Force")
                                         .setVisible(false)
                                         .setValue(defaultMotorDrawMotorForce)
-                                        .setGroup(ForceGeneration)
+                                        .setGroup(ForceGroup)
                                         .onChange(new CallbackListener() {
                                                 void controlEvent(CallbackEvent theEvent) {
                                                         MotorDrawMotorForceSelectorElementOnChange();
@@ -825,7 +837,7 @@
                                                 })
                                             ;
 /*------------------------------------ Debug Tab ----------------------------------------------- */
-                Group DebugGroup = userInterface.addGroup("DebugGroup")
+                    DebugGroup = userInterface.addGroup("DebugGroup")
                         .setPosition(calculateGroupPositionX(), calculateGroupPositionY())
                         .setBackgroundHeight(globalGroupHeight)
                         .setBarHeight(globalGroupBarHeight)
@@ -833,7 +845,7 @@
                         .setWidth(globalGroupWidth)
                         .setLabel("Debug")
                          //.disableCollapse()
-                        .setTab("Debug")
+                        .setTab("DebugTab")
                         ;
 
                         Slider subStepCount = userInterface.addSlider("SubStepCount")
@@ -893,37 +905,37 @@
 //userInterface.getController("Circle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 //userInterface.getController("Box").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 
-userInterface.getController("RectangleWidth").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("RectangleHeight").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("CircleRadius").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
-userInterface.getController("Density").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("Restitution").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
-userInterface.getController("StrokeWeight").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-//userInterface.getController("FillColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-//userInterface.getController("StrokeColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
-userInterface.getController("RedStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("GreenStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("BlueStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-
-userInterface.getController("RedFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("GreenFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("BlueFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-
-userInterface.getController("ColorBox").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-
-userInterface.getController("isStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("transStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-userInterface.getController("rotStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
-
-userInterface.getController("Angle").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("AngularVelocity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-
-userInterface.getController("AddGravity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-userInterface.getController("IsCollidable").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
-
+//userInterface.getController("RectangleWidth").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("RectangleHeight").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("CircleRadius").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//
+//userInterface.getController("Density").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("Restitution").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//
+//userInterface.getController("StrokeWeight").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+////userInterface.getController("FillColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+////userInterface.getController("StrokeColour").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//
+//userInterface.getController("RedStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//userInterface.getController("GreenStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//userInterface.getController("BlueStroke").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//
+//userInterface.getController("RedFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//userInterface.getController("GreenFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//userInterface.getController("BlueFill").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//
+//userInterface.getController("ColorBox").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//
+//userInterface.getController("isStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("transStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//userInterface.getController("rotStatic").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+//
+//userInterface.getController("Angle").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//userInterface.getController("AngularVelocity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//
+//userInterface.getController("AddGravity").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//userInterface.getController("IsCollidable").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
+//
 userInterface.getController("AddSpring").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("AddRod").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
 userInterface.getController("AddMotor").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
