@@ -1,138 +1,138 @@
 
 
-public class InteractivityListener {
+//public class InteractivityListener {
 
-  public PVector position;
-  public float zoom;
-
-  public boolean showCursorTrail = true;
-  public int lastTime;
-  public ArrayList<PVector> trail = new ArrayList<PVector>();
+  //public PVector position;
+  //public float zoom;
+//
+  //public boolean showCursorTrail = true;
+  //public int lastTime;
+  //public ArrayList<PVector> trail = new ArrayList<PVector>();
 
 
 /*--------- Stuff for the velocity calculation ----------------*/
-  public boolean mouseDown = false;
-  public PVector initialMousePosition = new PVector();
-  public PVector currentMousePosition = new PVector();
-  public PVector velocity = new PVector();
-  public PVector endPoint = new PVector();
+  //public boolean mouseDown = false;
+  //public PVector initialMousePosition = new PVector();
+  //public PVector currentMousePosition = new PVector();
+  //public PVector velocity = new PVector();
+  //public PVector endPoint = new PVector();
 /*---------- Stuff for mouse spring ----------- */
-  public Spring mouseSpring;
-  public boolean mouseSpringCreated = false;
+  //public Spring mouseSpring;
+  //public boolean mouseSpringCreated = false;
 
 
 /* Stuff for editing rigidbodies */
-  public boolean editRigidbody = false;
-  public boolean copied = false;
-  public boolean pasted = false;
+  //public boolean editRigidbody = false;
+  //public boolean copied = false;
+  //public boolean pasted = false;
 /*
 ====================================================================================================
 ================================= GUI Variables for Rigidbody Generation ===========================
 ====================================================================================================
 */
-  private Rigidbody currentlySelectedRigidbody;
-  private float width;
-  private float height;
-
-  private float softbodyWidth;
-  private float softbodyHeight;
-
-  private PVector[] vertices;
-
-  private float radius;
-  private PVector rigidbodyPosition;
-
-  private float density;
-  private float restitution;
-
-  
-  private float angle;
-  private float angularVelocity;
-
-  private boolean generateRigidbodies;
-  private boolean generateForces;
-
-    //TODO IMPLEMENT THIS
-  private boolean showObjectTrail;
-
-  private boolean isStatic;
-  private boolean isTranslationallyStatic;
-  private boolean isRotationallyStatic;
-
-  private boolean isCollidable;
-
-  private boolean addGravity;
-
-  private float strokeWeight;
-  private PVector strokeColor;
-  private PVector fillColor;
-
-  private ShapeType shapeType;
-  
-
-  public InteractivityListener() {
-    position = new PVector(-50, -50);
-    zoom = 10f;
-  }
+  //private Rigidbody currentlySelectedRigidbody;
+  //private float width;
+  //private float height;
+//
+  //private float softbodyWidth;
+  //private float softbodyHeight;
+//
+  //private PVector[] vertices;
+//
+  //private float radius;
+  //private PVector rigidbodyPosition;
+//
+  //private float density;
+  //private float restitution;
+//
+  //
+  //private float angle;
+  //private float angularVelocity;
+//
+  //private boolean generateRigidbodies;
+  //private boolean generateForces;
+//
+  //  //TODO IMPLEMENT THIS
+  //private boolean showObjectTrail;
+//
+  //private boolean isStatic;
+  //private boolean isTranslationallyStatic;
+  //private boolean isRotationallyStatic;
+//
+  //private boolean isCollidable;
+//
+  //private boolean addGravity;
+//
+  //private float strokeWeight;
+  //private PVector strokeColor;
+  //private PVector fillColor;
+//
+  //private ShapeType shapeType;
+  //
+//
+  //public InteractivityListener() {
+  //  position = new PVector(-50, -50);
+  //  zoom = 10f;
+  //}
 /*
 ====================================================================================================
 =============================== GUI Variables for Force Generation =================================
 ====================================================================================================
 */
 
-/*------------------------------ Global Variables ----------------------------*/
-    private ForceType forceType;
-
-
-    private ArrayList<Rigidbody> selectedRigidbodies = new ArrayList<Rigidbody>();
-
-    private boolean isFirstClickOnRigidbody = false;
-    private boolean drawForces = false;
-    private boolean oneRigidbodySelected = false;
-    private boolean twoRigidbodiesSelected = false;
-
-    private int opacity = 166;
-    private Rigidbody tempBody;
-
-    private Rigidbody selectedRigidbody;
-    private Rigidbody selectedRigidbody1;
-    private Rigidbody selectedRigidbody2;
-
-    private PVector anchorPoint;
-    private PVector localAnchorA;
-
-    private boolean snapToCenter;
-    private boolean snapToEdge;
-    private boolean snapToVertices;
-    private boolean snapGeneral = true;
-
-    private boolean enableEditor;
+/*------------------------------- Global Variables ----------------------------*/
+    //private ForceType forceType;
+//
+//
+    //private ArrayList<Rigidbody> selectedRigidbodies = new ArrayList<Rigidbody>();
+//
+    //private boolean isFirstClickOnRigidbody = false;
+    //private boolean drawForces = false;
+    //private boolean oneRigidbodySelected = false;
+    //private boolean twoRigidbodiesSelected = false;
+//
+    //private int opacity = 166;
+    //private Rigidbody tempBody;
+//
+    //private Rigidbody selectedRigidbody;
+    //private Rigidbody selectedRigidbody1;
+    //private Rigidbody selectedRigidbody2;
+//
+    //private PVector anchorPoint;
+    //private PVector localAnchorA;
+//
+    //private boolean snapToCenter;
+    //private boolean snapToEdge;
+    //private boolean snapToVertices;
+    //private boolean snapGeneral = true;
+//
+    //private boolean enableEditor;
 
 /*----------------------------- Spring Variables -----------------------------*/
-
-    private boolean lockTranslationToXAxis;
-    private boolean lockTranslationToYAxis;
-  
-    private boolean isPerfectSpring;
-
-    private float equilibriumLength;
-    private float springLength;
-    private float springConstant;
-    private float springDamping;
-
-    private boolean isSpringHingeable;
+//
+    //private boolean lockTranslationToXAxis;
+    //private boolean lockTranslationToYAxis;
+  //
+    //private boolean isPerfectSpring;
+//
+    //private float equilibriumLength;
+    //private float springLength;
+    //private float springConstant;
+    //private float springDamping;
+//
+    //private boolean isSpringHingeable;
 
 
 /*--------------------------- Rod Variables ---------------------------------*/
     
-    private boolean isRodHingeable;
-    private boolean isTwoBodyRod;
-    private boolean isJoint;
+    //private boolean isRodHingeable;
+    //private boolean isTwoBodyRod;
+    //private boolean isJoint;
 
 /*--------------------------- Motor Variables ----------------------------*/
-    private float motorTargetAngularVelocity;
-    private boolean motorDrawMotor;
-    private boolean motorDrawMotorForce;
+    //private float motorTargetAngularVelocity;
+    //private boolean motorDrawMotor;
+    //private boolean motorDrawMotorForce;
 
 /*
 ====================================================================================================
@@ -146,7 +146,7 @@ public class InteractivityListener {
 ======================================= Rigidbody Generation Methods ================================
 ====================================================================================================
 */
-
+/*
 
 public void GenerateRigidbody() {
     if(!InteractionCache.getRT_OR_ToggleState(0, 1)) {
@@ -215,13 +215,13 @@ public void GenerateRigidbody() {
 
    }
 }
-
+*/
 /*
 ====================================================================================================
 ======================================= Force Generation Methods ===================================
 ====================================================================================================
 */
-
+/*
 
 public void drawInteractions() {
     Mouse.DrawMouseCursor();
@@ -244,11 +244,11 @@ public void drawInteractions() {
         }
     }
 }
-
-
+*/
+/*
 public void drawVelocityLine() {
 
-    /*This takes care of updating the new velocity values and endpoint values for the rigidbodies */
+    //This takes care of updating the new velocity values and endpoint values for the rigidbodies 
     PVector mouseDownCoordinates = Mouse.getMouseDownCoordinates();
     PVector currentMouseCoordinates = Mouse.getMouseCoordinates();
 
@@ -264,9 +264,9 @@ public void drawVelocityLine() {
         line(mouseDownCoordinates.x, mouseDownCoordinates.y, endPoint.x, endPoint.y);
     }
 }
+*/
 
-
-
+/*
 public void drawBodies() {
     PVector mouseCoordinates = Mouse.getMouseCoordinates();
 
@@ -438,9 +438,9 @@ public void drawForces() {
             popMatrix();
         }
     }
+*/
 
-
-
+/*
 public void createForces() {
     /*
     if(InteractionCache.getActiveForceSelectedID() == -1 || InteractionCache.getActiveTabID() != 1) {
@@ -553,8 +553,9 @@ public void createForces() {
         ALL_FORCES_ARRAYLIST.add(motor);
         rigidbodyArray[0].addForceToForceRegistry(motor);
     }
-    */
+    
 }
+*/
     
 
 
@@ -564,7 +565,7 @@ public void createForces() {
 ======================================= Getters & Setters ==========================================
 ====================================================================================================
 */
-
+/*
 
 public void setWidth(float width) {
   this.width = width;
@@ -898,7 +899,7 @@ public void setSnapGeneral(boolean snapGeneral) {
 }
 
 }
-
+*/
 
 
 

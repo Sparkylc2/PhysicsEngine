@@ -40,6 +40,7 @@ public boolean vPressed = false;
 
 public void keyPressed() {
     KeyAndTabHandler.onKeyPressed(keyCode);
+    currentTabInteractionHandler.onKeyPressed();
     
     if(keyCode == ENTER) {
         Mouse.getMouseObjectResults().clear();
@@ -83,7 +84,7 @@ public void keyPressed() {
     }
 
     if(key == ' ') {
-        isPaused = !isPaused;
+        IS_PAUSED = !IS_PAUSED;
     }
     if(key == 'r') {
         rigidbodyList.clear();
@@ -347,9 +348,11 @@ public void keyPressed() {
 */
     if(key == TAB) {
         if(switchTab) {
+            KeyAndTabHandler.setActiveTabID(0);
             userInterface.getTab("RigidbodyTab").bringToFront();
 
         } else {
+            KeyAndTabHandler.setActiveTabID(1);
             userInterface.getTab("ForceTab").bringToFront();
         }   
         switchTab = !switchTab;
@@ -453,6 +456,7 @@ public void keyPressed() {
 
 void keyReleased() {  
     KeyAndTabHandler.onKeyReleased(keyCode);
+
     if(keyCode == BACKSPACE) {
         deletePressed = false;
     }
@@ -502,7 +506,6 @@ void keyReleased() {
 
 public void mousePressed(){
     if(mouseButton == LEFT){
-
         Mouse.updateMouseDownCoordinates();
         currentTabInteractionHandler.onMousePressed();
         /*
@@ -564,7 +567,10 @@ public void mouseReleased(){
 */
 
 public void mouseReleased() {
-    currentTabInteractionHandler.onMouseReleased();
+    if(mouseButton == LEFT) {
+        Mouse.updateMouseUpCoordinates();
+        currentTabInteractionHandler.onMouseReleased();
+    }
 }
 
 public void mouseClicked() {
@@ -599,6 +605,9 @@ public void mouseWheel(MouseEvent event) {
 public void mouseDragged() {
     if(!userInterface.isMouseOver() && mouseButton == RIGHT){
         Camera.move(pmouseX - mouseX, pmouseY - mouseY);
+    }
+    if(mouseButton == LEFT) {
+        currentTabInteractionHandler.onMouseDragged();
     }
     /*
     if(!userInterface.isMouseOver() && mouseButton == LEFT) {

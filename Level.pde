@@ -7,7 +7,7 @@ public class Level {
 
 
 	public void loadLevelState() {
-		isPaused = true;
+		IS_PAUSED = true;
 		JSONArray rigidbodyArray = loadJSONArray("TRAIN.json");
 		ALL_FORCES_ARRAYLIST.clear();
 		rigidbodyList.clear();
@@ -73,7 +73,7 @@ public class Level {
 				ALL_FORCES_ARRAYLIST.add(gravity);
 			}
 		}
-		isPaused = false;
+		IS_PAUSED = false;
 	}
 
 	public void saveLevelState() {

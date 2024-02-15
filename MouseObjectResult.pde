@@ -36,7 +36,7 @@ public class MouseObjectResult {
         if(this.SelectedRigidbody == null) {
             return this.Coordinate.copy();
         }
-        //PhysEngMath.Transform(PhysEngMath.SnapController(this, this.selectedRigidbody, mouseCoordinates), -this.selectedRigidbody.getAngle());
+        
         return PhysEngMath.Transform(this.LocalCoordinate, -this.SelectedRigidbody.getAngle());
     }
 

@@ -93,7 +93,7 @@ public class MouseObject {
 
 
 
-    public void DrawMouseCursor() {
+    public void drawCursor() {
         fill(255, 0, 0);
         strokeWeight(0.1f);
         stroke(255, 0, 0);
@@ -154,5 +154,9 @@ public class MouseObject {
 
     public ArrayList<MouseObjectResult> getMouseObjectResults() {
         return this.interactionResults;
+    }
+
+    public void clearMouseObjectResults() {
+        this.interactionResults.clear();
     }
 }

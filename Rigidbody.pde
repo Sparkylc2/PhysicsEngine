@@ -647,16 +647,18 @@ public boolean containsPolygon(float x, float y) {
   ==================================================================================================
   */
   public void update(float dt, int iterations) {
-    if(!isPaused) {
-          if(isStatic) {
-            return;
-          }
-            this.aabbUpdateRequired = true;
-            this.transformUpdateRequired = true;
-            dt /= (float)iterations;                
-            this.RK4Position(dt);
-            this.angularIntegration(dt);
-        }
+    if(IS_PAUSED) {
+      return;
+    }
+    if(isStatic) {
+        return;
+    }
+
+    this.aabbUpdateRequired = true;
+    this.transformUpdateRequired = true;
+    dt /= (float)iterations;                
+    this.RK4Position(dt);
+    this.angularIntegration(dt);
     }
 
 

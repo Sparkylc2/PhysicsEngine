@@ -38,7 +38,7 @@ public class Shape {
 ====================================================================================================
 */
   public void drawRigidbodies() {
-    boolean inEditMode = true;//editor.getInEditMode();
+    boolean inEditMode = false;//editor.getInEditMode();
     Rigidbody selectedRigidbody = null; //editor.getSelectedRigidbody();
 
     for(int body = 0; body < rigidbodyList.size(); body++) {

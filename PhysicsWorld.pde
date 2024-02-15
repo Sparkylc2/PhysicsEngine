@@ -21,9 +21,6 @@ int lastFrameTime;
 float dt;
 float fps;
 float displayTimeStep;
-
-public static boolean isPaused = false;
-
 /*------------------------------------------------------------------------------------------------*/
 
 
@@ -33,6 +30,8 @@ public static boolean isPaused = false;
 ====================================================================================================
 */
 /*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
+
+public static boolean IS_PAUSED = false;
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
 
@@ -452,10 +451,6 @@ public void ResolveCollisionRotationAndFriction(CollisionManifold contact) {
 */
 
 public void BroadPhaseStep() {
-    if(this.isPaused) {
-        return;
-    }
-
     for (int i = 0; i < rigidbodyList.size() - 1; i++) {
         
         Rigidbody rigidbodyA = rigidbodyList.get(i);
@@ -493,10 +488,6 @@ public void BroadPhaseStep() {
 }
 
 public void NarrowPhaseStep() {
-    if(isPaused) {
-        return;
-    }
-    
     for (int i = 0; i < collisionPairs.size(); i++)
     {
         ArrayList<Integer> pair = collisionPairs.get(i);
@@ -524,9 +515,13 @@ public void NarrowPhaseStep() {
     
 
 public void StepBodies(float dt, int totalIterations) {
+    if(IS_PAUSED) {
+        return;
+    }
+    
     for(Rigidbody rigidbody : rigidbodyList) {
 
-        if(rigidbody.getIsStatic()) {
+        if(rigidbody.getIsStatic() ) {
             continue;
         }
         rigidbody.update(dt, totalIterations);

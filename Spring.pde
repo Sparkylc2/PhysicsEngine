@@ -34,6 +34,11 @@ public class Spring implements ForceRegistry {
     private PVector direction = new PVector();
 
 
+    public Spring () {
+        this.rigidbodyA = null;
+        this.rigidbodyB = null;
+    }
+
 
     public Spring(Rigidbody rigidbody, PVector localAnchorA, PVector anchorPoint) {
 

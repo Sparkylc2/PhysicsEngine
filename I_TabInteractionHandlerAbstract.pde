@@ -23,16 +23,19 @@ public abstract class TabInteractionHandlerAbstract implements TabInteractionHan
         ToggleArray[ToggleID] = ToggleValue;
         ToggleController.setBroadcast(true);
     }
+
+
     @Override
-    public void HandleToggles(int ToggleIndex, boolean ToggleValue, Toggle[] ToggleGroupArray, int[] ToggleGroupIDArray, boolean[] ToggleArray) {
-        HandleToggle(ToggleGroupArray[ToggleIndex], ToggleGroupIDArray[ToggleIndex], ToggleValue, ToggleArray);
-        if(ToggleValue) {
-            for(int i = 0; i < ToggleGroupArray.length; i++) {
-                if(i != ToggleIndex) {
-                    HandleToggle(ToggleGroupArray[i], ToggleGroupIDArray[i], false, ToggleArray);
-                }
-            }
-        }
+    public void HandleSlider(Slider SliderController, int SliderID, float SliderValue, float[] SliderArray) {
+        SliderController.setBroadcast(false);
+        SliderController.setValue(SliderValue);
+        SliderArray[SliderID] = SliderValue;
+        SliderController.setBroadcast(true);
+    }
+    
+    @Override
+    public void DefaultValueInitialization() {
+        // do nothing
     }
     
     @Override
@@ -60,7 +63,7 @@ public abstract class TabInteractionHandlerAbstract implements TabInteractionHan
         // do nothing
     }
     @Override
-    public void keyPressedResponse() {
+    public void onKeyPressed() {
         // do nothing
     }
     @Override

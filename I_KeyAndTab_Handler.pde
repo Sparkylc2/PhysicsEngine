@@ -30,14 +30,12 @@ public class KeyAndTabHandler {
     public void onKeyPressed(int keyCode) {
         if(keyCode < keyDownCache.length) {
             keyDownCache[keyCode] = true;
-            System.out.println("Key " + keyCode + " pressed");
         }
     }
 
     public void onKeyReleased(int keyCode) {
         if(keyCode < keyDownCache.length) {
             keyDownCache[keyCode] = false;
-            System.out.println("Key " + keyCode + " released");
         }
     }
 
@@ -53,6 +51,33 @@ public class KeyAndTabHandler {
 ====================================== Getters and Setters =========================================
 ====================================================================================================
 */
+    public void setActiveTabID(int activeTabID) {
+        this.activeTabID = activeTabID;
+        Mouse.clearMouseObjectResults();
+        switch(activeTabID) {
+            case 0:
+                currentTabInteractionHandler = RT_InteractionHandler;
+                break;
+            case 1:
+                currentTabInteractionHandler = FT_InteractionHandler;
+                break;
+            case 2:
+                System.out.println("Editor Tab");
+                break;
+            case 3:
+                System.out.println("Creation Tab");
+                break;
+            case 4:
+                System.out.println("Settings Tab");
+                break;
+            case 5:
+                System.out.println("Help Tab");
+                break;
+            default:
+                System.out.println("Invalid Tab ID");
+                break;
+        }
+    }
 
     public int getActiveTabID() {
         return activeTabID;

@@ -14,15 +14,15 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "BOX"},
-    "RigidbodyID": {"ID": "9a7863f7-793b-4d6f-8968-0dcecadf9cb2"},
+    "RigidbodyID": {"ID": "236fce77-20fd-41dc-9a51-910f6494aea2"},
     "densityAndRestitution": {
-      "density": 1,
+      "density": 10,
       "restitution": 0.5
     },
     "positionAndVelocity": {
       "position": {
-        "x": 0,
-        "y": 10
+        "x": -2.0030932426452637,
+        "y": -4.292044162750244
       },
       "velocity": {
         "x": 0,
@@ -40,25 +40,25 @@
     "geometry": {
       "vertices": [
         {
-          "x": -500,
-          "y": 2.5
+          "x": -22.149999618530273,
+          "y": 1
         },
         {
-          "x": 500,
-          "y": 2.5
+          "x": 22.149999618530273,
+          "y": 1
         },
         {
-          "x": 500,
-          "y": -2.5
+          "x": 22.149999618530273,
+          "y": -1
         },
         {
-          "x": -500,
-          "y": -2.5
+          "x": -22.149999618530273,
+          "y": -1
         }
       ],
-      "width": 1500,
+      "width": 44.29999923706055,
       "radius": 0,
-      "height": 1000
+      "height": 2
     },
     "staticity": {
       "isStatic": true,
@@ -85,19 +85,19 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "CIRCLE"},
-    "RigidbodyID": {"ID": "4858e5e5-d71d-4d7e-b6c8-7335efff255c"},
+    "RigidbodyID": {"ID": "180246f7-0773-4407-9843-d9a1dca40734"},
     "densityAndRestitution": {
       "density": 10,
       "restitution": 0.5
     },
     "positionAndVelocity": {
       "position": {
-        "x": -0.6705880165100098,
-        "y": 6.5
+        "x": -9.552655220031738,
+        "y": -6.292043685913086
       },
       "velocity": {
-        "x": -0.2594938278198242,
-        "y": -0.0013901530764997005
+        "x": 8.913560304790735E-5,
+        "y": 0.001592509914189577
       }
     },
     "visibilityAndCollidability": {
@@ -105,8 +105,2006 @@
       "visibility": true
     },
     "angleAndAngularVelocity": {
-      "angle": 0.1594749391078949,
-      "angularVelocity": -0.2656283378601074
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b64aa724-d92a-4321-8385-32b5f8491a6e"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -13.661867141723633,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": 1.255145762115717E-4,
+        "y": 0.0017236537532880902
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "fa745571-01b1-4e0e-a1d0-1d93984fac0b"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -7.503638744354248,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": 1.621623960090801E-4,
+        "y": 2.3682303435634822E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "057be749-73c8-4e57-8199-f2be88638431"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -14.677403450012207,
+        "y": -8.015030860900879
+      },
+      "velocity": {
+        "x": -4.332061507739127E-5,
+        "y": 0.0013500266941264272
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "dfd3d97c-50f0-42c8-a3e8-7298400cd0f4"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -8.528146743774414,
+        "y": -8.009711265563965
+      },
+      "velocity": {
+        "x": 1.7785566160455346E-4,
+        "y": 0.0013333462411537766
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "023e64f2-10c3-4a91-93a9-8d3ff4402edb"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -12.661352157592773,
+        "y": -8.023797035217285
+      },
+      "velocity": {
+        "x": 5.522624996956438E-5,
+        "y": 0.001216395292431116
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "43482b90-b103-4469-b49b-5f900ba74fb4"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -11.66083812713623,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": 6.916008715052158E-5,
+        "y": 0.0011016931384801865
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "de754ed5-4332-4445-87a2-6b031bd0b269"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -10.606746673583984,
+        "y": -7.9917168617248535
+      },
+      "velocity": {
+        "x": 2.3988427710719407E-4,
+        "y": 7.766539929434657E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "e5533193-d24d-4e90-b659-0b03f093f3a0"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -15.692940711975098,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": -4.027889226563275E-4,
+        "y": 0.0012829783372581005
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "95f77917-e45f-455a-ac25-af2ef1ebd653"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 1.2839349508285522,
+        "y": -6.292043209075928
+      },
+      "velocity": {
+        "x": -2.0139313710387796E-4,
+        "y": 8.74233606737107E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "1e101550-e428-4f53-abe9-7c3abc6a88a7"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -17.693254470825195,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": -3.4144011442549527E-4,
+        "y": 5.255576688796282E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "f97bd795-c732-42c1-b770-8074b4dff690"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -3.320870876312256,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0.0018393753562122583
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "c600467d-63b4-452f-8f58-69018cd87b69"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -5.4376349449157715,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": 1.5136941510718316E-4,
+        "y": 1.6816484276205301E-6
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "ef20e72d-a07f-4111-8378-62c7425cd877"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 17.574066162109375,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": 1.8502469174563885E-5,
+        "y": 0.002759062685072422
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "bab8ba4e-9e82-4075-bc70-aefda428a289"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 37.04178237915039,
+        "y": 383.386962890625
+      },
+      "velocity": {
+        "x": 1.8525489568710327,
+        "y": 87.42649841308594
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "84667761-b1d8-457b-81b3-f38a54becb10"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -15.677572250366211,
+        "y": -9.746983528137207
+      },
+      "velocity": {
+        "x": -1.3075607421342283E-4,
+        "y": -7.898585317889228E-5
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "37a7e0ea-31b0-4857-9f0b-3fee2420e394"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 3.2842488288879395,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0.0018393753562122583
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "7577a302-c6df-4516-840d-e8c08aa5ecb5"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -19.807544708251953,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0.0018393753562122583
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "95a7d020-5e7f-4a81-b07f-8a9695cdbfae"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 5.2842488288879395,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": -9.579028119333088E-5,
+        "y": -7.515698962379247E-5
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "6bb966c4-0495-4dac-9b05-51399036fa2e"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -11.607260704040527,
+        "y": -9.723470687866211
+      },
+      "velocity": {
+        "x": 2.141511649824679E-4,
+        "y": 1.3158691581338644E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "179778ee-d455-4eb3-bc10-9d8b6e8d09b6"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 1.6628804206848145,
+        "y": -8.255815505981445
+      },
+      "velocity": {
+        "x": -2.475984219927341E-4,
+        "y": 3.650191647466272E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "f230351a-8eda-4de0-8d09-a1ab93195de9"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -9.58223819732666,
+        "y": -9.709383964538574
+      },
+      "velocity": {
+        "x": -3.2070130691863596E-4,
+        "y": 0.001331455074250698
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "40db2b12-c989-4b20-b19a-7fdd871f108a"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 11.53879165649414,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0.0018393753562122583
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "6397867a-e144-4edc-8d0b-8f1574f95aa8"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 9.316583633422852,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0.0018393753562122583
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "76cc1bda-aaa1-413b-b997-83e105e2af83"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 7.310455799102783,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": 3.059564623981714E-4,
+        "y": -2.2955879103392363E-5
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "e115a4d1-a76b-431a-9052-2511591b04e2"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -14.677058219909668,
+        "y": -11.478736877441406
+      },
+      "velocity": {
+        "x": 0.0011348540429025888,
+        "y": 3.341409610584378E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "bd809d12-e477-45ed-ab08-cf731c45f012"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -971.5773315429688,
+        "y": 1989.3487548828125
+      },
+      "velocity": {
+        "x": -49.20362854003906,
+        "y": 198.42776489257812
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "7638d0d9-f976-4e15-acfe-c864d43ce429"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -3569.113525390625,
+        "y": 2267.041259765625
+      },
+      "velocity": {
+        "x": -168.36199951171875,
+        "y": 211.76954650878906
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "49414a35-1da9-4589-aa49-7e270d93ff7e"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -1410.92919921875,
+        "y": 1818.711181640625
+      },
+      "velocity": {
+        "x": -71.37599182128906,
+        "y": 189.89126586914062
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "824a33e8-c2c2-4a5b-9366-505462db9316"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -10.582751274108887,
+        "y": -11.44113826751709
+      },
+      "velocity": {
+        "x": -5.911152111366391E-4,
+        "y": 8.634048863314092E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "f9caffbc-c9f3-45f7-8aa7-aa1a83e20f99"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -1139.286865234375,
+        "y": 1344.4599609375
+      },
+      "velocity": {
+        "x": -60.56617736816406,
+        "y": 164.50563049316406
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "0b48daad-c120-41b8-b87d-ff0a86ec9ba8"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -720.3409423828125,
+        "y": 1439.1998291015625
+      },
+      "velocity": {
+        "x": -38.700218200683594,
+        "y": 168.8861541748047
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "82841e13-4f79-45a9-9b01-d6db8465f5b3"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 81.95337677001953,
+        "y": 172.09461975097656
+      },
+      "velocity": {
+        "x": 11.56898307800293,
+        "y": 60.27668762207031
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "beaf481d-5c48-47f0-80a7-08880c21082f"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 14.53958797454834,
+        "y": -8.023636817932129
+      },
+      "velocity": {
+        "x": 3.115548170171678E-4,
+        "y": -9.623070945963264E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "134a0ac8-31bd-4df4-a6a2-aac3f0e8357b"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -16.694143295288086,
+        "y": -8.024606704711914
+      },
+      "velocity": {
+        "x": -3.4515472361817956E-4,
+        "y": 2.8426997596397996E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "e3105122-5ea8-4b1a-8cee-bb4d0d16cad5"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 44.05060577392578,
+        "y": 369.8619384765625
+      },
+      "velocity": {
+        "x": 2.764446973800659,
+        "y": 86.0770034790039
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "8985b27a-d8ea-4c50-9d5c-0b4efb707654"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 16.55723762512207,
+        "y": -8.01426887512207
+      },
+      "velocity": {
+        "x": -7.867790991440415E-4,
+        "y": 0.0013951389119029045
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": true
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "d5031ae5-aec0-4a2f-bc1d-3b4229adb32e"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 190.28334045410156,
+        "y": 3374.125
+      },
+      "velocity": {
+        "x": 6.482239246368408,
+        "y": 257.3479919433594
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 179.1424560546875,
+      "angularVelocity": 6.477220058441162
     },
     "geometry": {
       "vertices": [],
@@ -139,19 +2137,19 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "CIRCLE"},
-    "RigidbodyID": {"ID": "ee666b38-d67e-402c-9973-8cd7f92611b9"},
+    "RigidbodyID": {"ID": "7466cc93-dca2-4852-8753-3487cd62d4b4"},
     "densityAndRestitution": {
       "density": 10,
       "restitution": 0.5
     },
     "positionAndVelocity": {
       "position": {
-        "x": 3.8117527961730957,
-        "y": 6.5
+        "x": 244.05271911621094,
+        "y": 3194.1484375
       },
       "velocity": {
-        "x": 1.2436643838882446,
-        "y": -0.0013935146853327751
+        "x": 8.79845142364502,
+        "y": 250.43606567382812
       }
     },
     "visibilityAndCollidability": {
@@ -159,8 +2157,8 @@
       "visibility": true
     },
     "angleAndAngularVelocity": {
-      "angle": 7.98028039932251,
-      "angularVelocity": 1.2419837713241577
+      "angle": -210.45941162109375,
+      "angularVelocity": -8.09985637664795
     },
     "geometry": {
       "vertices": [],
@@ -178,30 +2176,2651 @@
       "coeffOfStaticFriction": 0.800000011920929
     }
   },
-  [{
-    "ForceType": "Spring",
-    "lockTranslationToYAxis": false,
-    "anchorPoint": {
-      "x": 0,
-      "y": 0
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
     },
-    "springLength": 2.3789291381835938,
-    "springConstant": 300,
-    "damping": 0.8095238208770752,
-    "rigidbodyAID": "4858e5e5-d71d-4d7e-b6c8-7335efff255c",
-    "isTwoBodySpring": true,
-    "rigidbodyBID": "ee666b38-d67e-402c-9973-8cd7f92611b9",
-    "drawSpring": true,
-    "lockTranslationToXAxis": false,
-    "equilibriumLength": 2,
-    "localAnchorA": {
-      "x": 0,
-      "y": 0
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "d21862d9-ed35-4a10-8883-79c78a129913"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
     },
-    "isPerfectSpring": false,
-    "localAnchorB": {
-      "x": 0,
-      "y": 0
+    "positionAndVelocity": {
+      "position": {
+        "x": 13.538795471191406,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": -5.514707299880683E-4,
+        "y": -2.679111494217068E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 5.839296817779541,
+      "angularVelocity": -0.0018820228287950158
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
     }
-  }]
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "fc09f97e-6770-4a93-8534-dc8e80c62d79"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 199.3597869873047,
+        "y": 3542.90673828125
+      },
+      "velocity": {
+        "x": 6.704660415649414,
+        "y": 263.7688293457031
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 204.53500366210938,
+      "angularVelocity": 7.406458854675293
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "ed6c4d6c-eb88-46b4-8728-a2f01726c158"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 223.03604125976562,
+        "y": 3434.2451171875
+      },
+      "velocity": {
+        "x": 7.652424335479736,
+        "y": 259.70794677734375
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -209.63064575195312,
+      "angularVelocity": -7.543776988983154
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "386ccc75-98be-4b4d-98b4-1e09fce366d6"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 220.16053771972656,
+        "y": 3140.215576171875
+      },
+      "velocity": {
+        "x": 7.939517974853516,
+        "y": 248.325439453125
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 229.4347381591797,
+      "angularVelocity": 8.694803237915039
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "cfa65f82-616d-4058-a330-e09b8f64d7df"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 180.08619689941406,
+        "y": 3376.957763671875
+      },
+      "velocity": {
+        "x": 6.125741004943848,
+        "y": 257.53228759765625
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -180.90953063964844,
+      "angularVelocity": -6.879550457000732
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "70af334f-1c90-480d-886b-e314715b8325"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 160.89633178710938,
+        "y": 2487.397216796875
+      },
+      "velocity": {
+        "x": 6.23979377746582,
+        "y": 221.08245849609375
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 151.33807373046875,
+      "angularVelocity": 6.2390265464782715
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "8e3b75ec-1ab1-443d-a844-6f4b93b72f85"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -0.8307931423187256,
+        "y": -6.292044162750244
+      },
+      "velocity": {
+        "x": -0.029814187437295914,
+        "y": 0.0018393851350992918
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 1.7566728591918945,
+      "angularVelocity": -0.029841303825378418
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b7e19ce4-b52e-41d3-9647-365efb8ec8a0"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 279.6465148925781,
+        "y": 3146.13330078125
+      },
+      "velocity": {
+        "x": 10.218149185180664,
+        "y": 248.6436309814453
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 111.8302001953125,
+      "angularVelocity": 4.112748622894287
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "979dcc4b-2240-4de0-91aa-6754b3a61b6d"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 209.34304809570312,
+        "y": 3246.3623046875
+      },
+      "velocity": {
+        "x": 7.374096393585205,
+        "y": 252.4541778564453
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 224.6019744873047,
+      "angularVelocity": 8.644433975219727
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "9e760957-4fe8-4aeb-9de3-43fc9f19f846"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 258.56561279296875,
+        "y": 3130.568359375
+      },
+      "velocity": {
+        "x": 9.463399887084961,
+        "y": 248.0293731689453
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -183.01019287109375,
+      "angularVelocity": -6.813685417175293
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "e7557343-af7c-40a4-a892-bcec54fba299"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 409.8704528808594,
+        "y": 3150.789306640625
+      },
+      "velocity": {
+        "x": 15.091411590576172,
+        "y": 248.85240173339844
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -29.016603469848633,
+      "angularVelocity": -1.6655114889144897
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "54f325d8-f64f-4aec-80ce-db13872e5046"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 419.52880859375,
+        "y": 3385.402587890625
+      },
+      "velocity": {
+        "x": 15.382942199707031,
+        "y": 257.96649169921875
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -218.0626983642578,
+      "angularVelocity": -7.953202247619629
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "6b10e1ec-269b-43ea-96b4-d8d320ee7faa"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 31.58501434326172,
+        "y": 217.97499084472656
+      },
+      "velocity": {
+        "x": 1.6286792755126953,
+        "y": 66.30231475830078
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 20.593053817749023,
+      "angularVelocity": 1.9794813394546509
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "5495bf9e-0f76-4359-abdc-257aebd84a06"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 44.045623779296875,
+        "y": 875.1273193359375
+      },
+      "velocity": {
+        "x": 1.7539762258529663,
+        "y": 131.5096435546875
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 50.74796676635742,
+      "angularVelocity": 2.089460849761963
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "70fdc4f7-b9d6-4b40-8397-a25e20846d61"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 233.3361358642578,
+        "y": 3126.32861328125
+      },
+      "velocity": {
+        "x": 8.443206787109375,
+        "y": 247.9392547607422
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 148.0242462158203,
+      "angularVelocity": 5.648295879364014
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "70e9eb33-7156-4af9-bd47-bd7b16fa8db8"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 260.5058288574219,
+        "y": 2945.9453125
+      },
+      "velocity": {
+        "x": 9.761754989624023,
+        "y": 240.52732849121094
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 254.71136474609375,
+      "angularVelocity": 10.0476655960083
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "576f2d84-a049-4782-a303-e04076ee77d8"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 157.3751678466797,
+        "y": 2573.447265625
+      },
+      "velocity": {
+        "x": 6.000988483428955,
+        "y": 224.887451171875
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 132.15719604492188,
+      "angularVelocity": 4.862825870513916
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "ff333ef4-ab99-4b81-a242-3fae3b1b87a7"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 241.52386474609375,
+        "y": 3069.05126953125
+      },
+      "velocity": {
+        "x": 8.90551471710205,
+        "y": 245.5255584716797
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 14.916399002075195,
+      "angularVelocity": 0.46001797914505005
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "1a6e28c1-e068-49ad-bfc1-568e5ffb1b89"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 226.84112548828125,
+        "y": 2964.841064453125
+      },
+      "velocity": {
+        "x": 8.425165176391602,
+        "y": 241.43270874023438
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -196.74815368652344,
+      "angularVelocity": -7.662409782409668
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "767fd107-9e2e-48cc-bc71-186829e6e5cd"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 183.0618438720703,
+        "y": 2605.226318359375
+      },
+      "velocity": {
+        "x": 7.06253719329834,
+        "y": 226.3073272705078
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -65.46430206298828,
+      "angularVelocity": -2.9663798809051514
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "5c42a16d-64ec-4bdd-8e38-2cc0eb893b52"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 212.9885711669922,
+        "y": 2902.2158203125
+      },
+      "velocity": {
+        "x": 7.921913146972656,
+        "y": 238.7413787841797
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -42.682369232177734,
+      "angularVelocity": -1.1246521472930908
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "79552130-6ef6-4c88-88a0-61f8d9a04ce4"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 56.301002502441406,
+        "y": 577.4857788085938
+      },
+      "velocity": {
+        "x": 3.31392502784729,
+        "y": 107.04000854492188
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 7.651040077209473,
+      "angularVelocity": 0.3487926721572876
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "f6066243-897c-4ca4-8615-ad16c2f451aa"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 15.540379524230957,
+        "y": -6.292043685913086
+      },
+      "velocity": {
+        "x": -3.166061360388994E-4,
+        "y": -4.1866779793053865E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 7.071712970733643,
+      "angularVelocity": 0.0014060679823160172
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "bfb212f7-0257-4709-a93a-6a19ef08a622"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 150.43544006347656,
+        "y": 2713.764892578125
+      },
+      "velocity": {
+        "x": 5.558019161224365,
+        "y": 230.88856506347656
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 148.33079528808594,
+      "angularVelocity": 5.808199882507324
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "91ca9959-e29d-44d5-880a-3efb6c0cd211"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 177.7554931640625,
+        "y": 2904.906005859375
+      },
+      "velocity": {
+        "x": 6.52515983581543,
+        "y": 238.9160919189453
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -11.566195487976074,
+      "angularVelocity": -0.4330345392227173
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b44fd939-12b7-49c2-8246-c6e2035a37ce"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 68.17892456054688,
+        "y": 1313.9617919921875
+      },
+      "velocity": {
+        "x": 2.927173614501953,
+        "y": 160.9870147705078
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 34.740726470947266,
+      "angularVelocity": 2.9307398796081543
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "5a3512a8-f0d1-4e9b-a7b7-89f8c03ff1d8"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 45.122589111328125,
+        "y": 499.9042663574219
+      },
+      "velocity": {
+        "x": 2.444650888442993,
+        "y": 99.67111206054688
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 41.854244232177734,
+      "angularVelocity": 2.631525993347168
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "44a29515-2e03-4de4-a724-294f608391da"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 227.464111328125,
+        "y": 2871.527587890625
+      },
+      "velocity": {
+        "x": 8.623373985290527,
+        "y": 237.60804748535156
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 87.32711791992188,
+      "angularVelocity": 3.4252474308013916
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "14501a8d-f7b2-4398-8034-3501fa182780"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 215.48020935058594,
+        "y": 2677.17724609375
+      },
+      "velocity": {
+        "x": 8.315793991088867,
+        "y": 229.424072265625
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -51.94413757324219,
+      "angularVelocity": -1.8998324871063232
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "87526a2e-cc01-45a1-9377-5a524e07f431"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 73.7916488647461,
+        "y": 821.1881103515625
+      },
+      "velocity": {
+        "x": 4.151923656463623,
+        "y": 127.43258666992188
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 26.12002182006836,
+      "angularVelocity": 2.5230860710144043
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "098ba2b4-88b1-47ea-93cc-cb9574b3860d"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 66.53645324707031,
+        "y": 1676.578369140625
+      },
+      "velocity": {
+        "x": 2.5006136894226074,
+        "y": 181.7327880859375
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 49.251399993896484,
+      "angularVelocity": 2.67515230178833
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "08b4f041-405b-4729-a653-0d7195fcfb6a"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 61.53329086303711,
+        "y": 1160.0738525390625
+      },
+      "velocity": {
+        "x": 2.6746795177459717,
+        "y": 151.2997589111328
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 32.109859466552734,
+      "angularVelocity": 2.0517022609710693
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "910610b7-8ab7-4bf9-a25d-fda83662463e"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 94.81470489501953,
+        "y": 2195.54296875
+      },
+      "velocity": {
+        "x": 3.527945041656494,
+        "y": 207.79019165039062
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 91.872802734375,
+      "angularVelocity": 3.5279295444488525
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "74890bb8-c55e-4044-b6ad-6594c7e928ee"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 139.45443725585938,
+        "y": 2509.766357421875
+      },
+      "velocity": {
+        "x": 5.3623738288879395,
+        "y": 222.15509033203125
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -136.49505615234375,
+      "angularVelocity": -5.590189456939697
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "0f82e258-4989-4650-ae65-5679e1c61890"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 68.54950714111328,
+        "y": 1826.0706787109375
+      },
+      "velocity": {
+        "x": 2.5017900466918945,
+        "y": 189.60585021972656
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 65.61962127685547,
+      "angularVelocity": 2.6743195056915283
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "72efc80c-f785-4b16-97f8-4db45f69fd6a"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 140.61959838867188,
+        "y": 2391.263916015625
+      },
+      "velocity": {
+        "x": 5.548050880432129,
+        "y": 216.88975524902344
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -30.078821182250977,
+      "angularVelocity": -1.100071668624878
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "7461904e-1a3c-41d1-be7b-d08e8a0b0bbe"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -976.0177612304688,
+        "y": 2177.381103515625
+      },
+      "velocity": {
+        "x": -46.157047271728516,
+        "y": 207.54428100585938
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -19.792268753051758,
+      "angularVelocity": -0.936310350894928
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "172e6630-7ed4-48df-b036-d5af7a89e840"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -2135.12060546875,
+        "y": 2152.1337890625
+      },
+      "velocity": {
+        "x": -114.01432800292969,
+        "y": 207.72555541992188
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -1449.0308837890625,
+      "angularVelocity": -77.14270782470703
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b75c5897-5d9b-4e9e-8fd2-f2ffcb2d1b77"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -13.676888465881348,
+        "y": -9.746784210205078
+      },
+      "velocity": {
+        "x": 3.2905867556110024E-4,
+        "y": 0.0011961827985942364
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 79.40037536621094,
+      "angularVelocity": 3.354021464474499E-4
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "cf09dbee-f705-4879-b6a5-f2b9dbbb7831"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -791.6543579101562,
+        "y": 1518.806884765625
+      },
+      "velocity": {
+        "x": -42.9338493347168,
+        "y": 173.59056091308594
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -98.01953887939453,
+      "angularVelocity": -3.123758316040039
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "ebbe997b-eab6-4278-b9e5-16d3b18fa5a7"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -3884.47216796875,
+        "y": 1116.9801025390625
+      },
+      "velocity": {
+        "x": -223.9710235595703,
+        "y": 150.56202697753906
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "7ad3ed11-e366-4daa-8bc7-070f8e6c4e98"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -3622.1630859375,
+        "y": 1450.3009033203125
+      },
+      "velocity": {
+        "x": -224.7768096923828,
+        "y": 170.09986877441406
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "9f9d9d74-6976-4271-b2c1-f711bd563fd4"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -1847.271240234375,
+        "y": 545.4447631835938
+      },
+      "velocity": {
+        "x": -122.89415740966797,
+        "y": 110.99568176269531
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -1395.712890625,
+      "angularVelocity": -92.80167388916016
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "6315017c-fa55-42fb-94a3-09e990ed5eaa"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -374.011962890625,
+        "y": 147.69769287109375
+      },
+      "velocity": {
+        "x": -30.475130081176758,
+        "y": 73.33995819091797
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -663.6619262695312,
+      "angularVelocity": -53.876739501953125
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "7ce15612-cbc7-4a84-9451-8eccbe884fdf"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -871.5272827148438,
+        "y": 730.1036987304688
+      },
+      "velocity": {
+        "x": -106.26165008544922,
+        "y": 133.05943298339844
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -617.08837890625,
+      "angularVelocity": -80.57982635498047
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b0a7e7c3-e5d7-4e05-b7e1-702004cc304d"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 6.297352313995361,
+        "y": -8.016462326049805
+      },
+      "velocity": {
+        "x": 3.061606839764863E-4,
+        "y": -4.482994554564357E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -39.701961517333984,
+      "angularVelocity": 3.0183803755789995E-4
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "118bbd57-515f-450c-96e8-6a0bf6e302be"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -1072.245849609375,
+        "y": -55.67217254638672
+      },
+      "velocity": {
+        "x": -131.76995849609375,
+        "y": 34.08635330200195
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -714.5931396484375,
+      "angularVelocity": -90.16800689697266
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b4064976-8c15-4de4-a661-d633178bab78"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -6.47063684463501,
+        "y": -8.004616737365723
+      },
+      "velocity": {
+        "x": 2.682956401258707E-4,
+        "y": -4.3939772876910865E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -1.8242971897125244,
+      "angularVelocity": 1.0731909424066544E-4
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "e16ebbf7-8227-4ea7-888a-2224a43838e2"},
+    "densityAndRestitution": {
+      "density": 10,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 2.4470624923706055,
+        "y": -10.095667839050293
+      },
+      "velocity": {
+        "x": 1.3489923477172852,
+        "y": 0.574950635433197
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.7386125326156616,
+      "angularVelocity": 1.4664362668991089
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  []
 ]

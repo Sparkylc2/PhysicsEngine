@@ -102,6 +102,8 @@ void draw() {
 
   Camera.applyTransform();
   render.draw();
+  Mouse.drawCursor();
+  currentTabInteractionHandler.passiveResponse();
    //editor.whileEditorSelect(-1);
 
 
@@ -145,7 +147,15 @@ public void controlEvent(ControlEvent theEvent) {
     if(theEvent.isTab()) {
         switch(theEvent.getTab().getId()) {
             case 0:
-                currentTabInteractionHandler = (TabInteractionHandler)RT_InteractionHandler;
+                currentTabInteractionHandler = RT_InteractionHandler;
+                currentTabInteractionHandler.VisibilityResponse();
+                this.Mouse.clearMouseObjectResults();
+                break;
+            case 1:
+                currentTabInteractionHandler = FT_InteractionHandler;
+                currentTabInteractionHandler.VisibilityResponse();
+                this.Mouse.clearMouseObjectResults();
+                break;
         }
     }
 }
