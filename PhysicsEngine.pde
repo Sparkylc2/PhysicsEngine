@@ -2,9 +2,8 @@
 
 GUI gui;
 PShape background;
-Softbody softbody;
-Cloth cloth;
 boolean loadLevel = false;
+Thread RT_InteractionHandlerThread;
 
 
 void setup() {
@@ -102,8 +101,10 @@ void draw() {
 
   Camera.applyTransform();
   render.draw();
-  Mouse.drawCursor();
+  Mouse.drawCursor(); 
+
   currentTabInteractionHandler.passiveResponse();
+  
    //editor.whileEditorSelect(-1);
 
 
@@ -139,8 +140,6 @@ void draw() {
   displayTimings();
 
   lastFrameTime = currentFrameTime;
-
-
 }
 
 public void controlEvent(ControlEvent theEvent) {

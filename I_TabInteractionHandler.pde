@@ -16,4 +16,5 @@ public interface TabInteractionHandler {
     public void onKeyPressed();
     public void passiveResponse();
     public boolean isKeyDown(int keyCode);
+
 }

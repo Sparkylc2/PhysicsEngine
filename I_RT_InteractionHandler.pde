@@ -1,4 +1,4 @@
-public class RT_InteractionHandler extends TabInteractionHandlerAbstract{
+public class RT_InteractionHandler extends TabInteractionHandlerAbstract {
 
     /*
     ID 0: RT_Circle_Toggle => Default: false
@@ -207,6 +207,7 @@ public class RT_InteractionHandler extends TabInteractionHandlerAbstract{
             this.drawVelocityLine();
         }
     } 
+
 
     @Override
     public void onMousePressed() {

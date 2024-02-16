@@ -1,9 +1,8 @@
-
-
 public KeyAndTabHandler KeyAndTabHandler = new KeyAndTabHandler();
     public RT_InteractionHandler RT_InteractionHandler = new RT_InteractionHandler();
     public FT_InteractionHandler FT_InteractionHandler = new FT_InteractionHandler();
     public BT_InteractionHandler BT_InteractionHandler = new BT_InteractionHandler();
+
 public TabInteractionHandler currentTabInteractionHandler = BT_InteractionHandler;
 
 
