@@ -167,8 +167,8 @@ public class RT_InteractionHandler extends TabInteractionHandlerAbstract {
 
             PVector va = new PVector();
             PVector vb = new  PVector(this.SLIDER_VALUES[4], 0);
-            va = PhysEngMath.Transform(va, new PVector(), this.SLIDER_VALUES[12]);
-            vb = PhysEngMath.Transform(vb, new PVector(), this.SLIDER_VALUES[12]);
+            va = PhysEngMath.Transform(va, new PVector(), radians(this.SLIDER_VALUES[12]));
+            vb = PhysEngMath.Transform(vb, new PVector(), radians(this.SLIDER_VALUES[12]));
             line(va.x, va.y, vb.x, vb.y);
 
             //this.TOGGLE_STATES[1] && !this.copied
@@ -628,7 +628,7 @@ public class RT_InteractionHandler extends TabInteractionHandlerAbstract {
                     this.HandleToggle(gui.RT_Rectangle_Toggle, 1, true, this.TOGGLE_STATES);
                     this.VisibilityResponse();
                 } else {
-                    this.HandleToggle(gui.RT_Rectangle_Toggle, 0, false, this.TOGGLE_STATES);
+                    this.HandleToggle(gui.RT_Rectangle_Toggle, 1, false, this.TOGGLE_STATES);
                     this.VisibilityResponse();
                 }
            } else if(this.isKeyDown(KeyEvent.VK_4)) {

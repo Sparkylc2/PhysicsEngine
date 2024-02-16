@@ -100,10 +100,17 @@ public class MouseObject {
             return;
         }
 
+        //scale(-Camera.zoom);
+        fill(255, 255, 255, 121);
+        stroke(0, 0, 0, 180);
+        strokeWeight(0.025);
+
+        ellipse(Camera.screenToWorld().x, Camera.screenToWorld().y, 0.175f, 0.175f);
         fill(255, 0, 0);
         strokeWeight(0.1f);
         stroke(255, 0, 0);
         ellipse(this.mouseCoordinates.x, this.mouseCoordinates.y, 0.1f, 0.1f);
+
 
         if(cursorTrailArrayList.size() < 20) {
             cursorTrailArrayList.add(new PVector(mouseCoordinates.x, mouseCoordinates.y));
