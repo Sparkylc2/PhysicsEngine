@@ -206,12 +206,11 @@ public static boolean Equals(PVector a, PVector b) {
 
     
 
-public static PVector SnapController(Rigidbody rigidbody, PVector point) {
+public static PVector SnapController(MouseObject Mouse, Rigidbody rigidbody, PVector point) {
     if(rigidbody == null) {
         return point;
     }
-    //if(interactivityListener.getSnapGeneral()) {
-    if(true) {
+    if(Mouse.getSnappingEnabled()) {
         if(rigidbody.getShapeType() == ShapeType.BOX) {
             PVector[] vertices = rigidbody.GetTransformedVertices();
 
@@ -257,12 +256,12 @@ public static PVector SnapController(Rigidbody rigidbody, PVector point) {
     }
 }
 
-public static PVector WorldSnapController(Rigidbody rigidbody, PVector point) {
+public static PVector WorldSnapController(MouseObject Mouse, Rigidbody rigidbody, PVector point) {
     if(rigidbody == null) {
         return point;
     }
     //interactivityListener.getSnapGeneral()
-    if(true) {
+    if(Mouse.getSnappingEnabled()) {
         if(rigidbody.getShapeType() == ShapeType.BOX) {
             PVector[] vertices = rigidbody.GetTransformedVertices();
 

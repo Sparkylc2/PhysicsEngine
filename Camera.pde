@@ -57,10 +57,6 @@ public class Camera {
         return new PVector((mouseX - width / 2) / zoom + position.x, (mouseY - height / 2) / zoom + position.y);
     }
 
-    public void zoom(float amount) {
-        zoom *= amount;
-    }
-
     public void move(float dx, float dy) {
         targetPosition.x += dx / zoom;
         targetPosition.y += dy / zoom;

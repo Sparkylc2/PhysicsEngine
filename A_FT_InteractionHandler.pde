@@ -302,15 +302,15 @@ public class FT_InteractionHandler extends TabInteractionHandlerAbstract{
 
             if(rigidbody != null){
                 PVector mouseCoordinates = Mouse.getMouseCoordinates();
-                PVector localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(rigidbody, mouseCoordinates), -rigidbody.getAngle());
+                PVector localAnchorA = PhysEngMath.Transform(PhysEngMath.SnapController(Mouse, rigidbody, mouseCoordinates), -rigidbody.getAngle());
 
                 mouseSpring.setRigidbodyA(rigidbody);
                 mouseSpring.setLocalAnchorA(localAnchorA);
                 mouseSpring.setAnchorPoint(mouseCoordinates);
-                rigidbody.addForceToForceRegistry(mouseSpring);
                 mouseSpring.setSpringConstant(200);
                 mouseSpring.setDamping(0.8f); 
                 mouseSpring.setEquilibriumLength(0.2);  
+                rigidbody.addForceToForceRegistry(mouseSpring);
                 this.MOUSE_SPRING_ADDED = true;
             } 
         }

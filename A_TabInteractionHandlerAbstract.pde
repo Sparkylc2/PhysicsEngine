@@ -1,4 +1,5 @@
 public abstract class TabInteractionHandlerAbstract implements TabInteractionHandler {
+
     @Override   
     public void ToggleListener(ControlEvent ToggleEvent) {
         // do nothing

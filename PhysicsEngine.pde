@@ -14,7 +14,8 @@ void setup() {
 
 
 /*--------------------- Camera Utilities ---------------------*/
-    size(1500, 1000, FX2D);
+    //size(1500, 1000, FX2D);
+    size(1500, 1000);
     windowMove(10, 4);
     frameRate(300);
     Camera = new Camera();
@@ -23,9 +24,9 @@ void setup() {
 
 /*---------------------------- UI ----------------------------*/
     userInterface = new ControlP5(this);
-    pfont = createFont("InterDisplay-SemiBold.ttf", 11, true);
-    textFont(pfont, 11);
-    font = new ControlFont(pfont, 11);
+    pfont = createFont("InterDisplay-SemiBold.ttf", 10, true);
+    textFont(pfont, 10);
+    font = new ControlFont(pfont, 10);
     userInterface.setFont(font);
 
     gui = new GUI(userInterface);

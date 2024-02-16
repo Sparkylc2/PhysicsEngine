@@ -13,7 +13,7 @@ public class KeyAndTabHandler {
     ID 5: HelpTab
     */
 
-    private int activeTabID = 0;
+    private int activeTabID = -1;
 
 
 /*-------------------------------------- Rigidbody Tab -------------------------------------------*/
@@ -51,6 +51,34 @@ public class KeyAndTabHandler {
 ====================================== Getters and Setters =========================================
 ====================================================================================================
 */
+    public void setActiveTabElement(int activeTabID) {
+        switch(activeTabID) {
+            case 0:
+                userInterface.getTab("RigidbodyTab").bringToFront();
+                break;
+            case 1:
+                userInterface.getTab("ForceTab").bringToFront();
+                break;
+            case 2:
+                userInterface.getTab("EditorTab").bringToFront();
+                break;
+            case 3:
+                userInterface.getTab("CreationTab").bringToFront();
+                break;
+            case 4:
+                userInterface.getTab("SettingsTab").bringToFront();
+                break;
+            case 5:
+                userInterface.getTab("HelpTab").bringToFront();
+                break;
+            case 6:
+                userInterface.getTab("DebugTab").bringToFront();
+                break;
+            default:
+                System.out.println("Invalid Tab ID");
+                break;
+        }
+    }
     public void setActiveTabID(int activeTabID) {
         this.activeTabID = activeTabID;
         Mouse.clearMouseObjectResults();
@@ -72,6 +100,9 @@ public class KeyAndTabHandler {
                 break;
             case 5:
                 System.out.println("Help Tab");
+                break;
+            case 6:
+                System.out.println("Debug Tab");
                 break;
             default:
                 System.out.println("Invalid Tab ID");

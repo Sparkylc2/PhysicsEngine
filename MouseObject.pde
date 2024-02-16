@@ -21,6 +21,9 @@ public class MouseObject {
   	private ArrayList<PVector> cursorTrailArrayList = new ArrayList<PVector>();
 
 
+    private boolean snappingEnabled = true;
+
+
 	public MouseObject() {
         //do nothing
 	}
@@ -30,9 +33,6 @@ public class MouseObject {
         this.updateMouseCoordinates();
         this.currentRigidbodyUnderMouse = this.getRigidbodyUnderMouse();
         this.isMouseOverUI = this.IsMouseOverUI();
-    }
-
-    public void updateMouseClick() {
     }
 
 	public boolean IsMouseOverUI() {
@@ -76,7 +76,7 @@ public class MouseObject {
 	}
 
 	public void updateMouseCoordinates() {
-        PVector snappedMouseCoordinates = PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld());
+        PVector snappedMouseCoordinates = PhysEngMath.WorldSnapController(this, this.currentRigidbodyUnderMouse, Camera.screenToWorld());
         this.previousMouseCoordinates.set(this.mouseCoordinates);
         this.mouseCoordinates.x = lerp(this.mouseCoordinates.x, snappedMouseCoordinates.x, this.easing);
         this.mouseCoordinates.y = lerp(this.mouseCoordinates.y, snappedMouseCoordinates.y, this.easing);
@@ -85,14 +85,14 @@ public class MouseObject {
     public void updateMouseDownCoordinates() {
         this.isMouseDown = true;
         this.isMouseUp = false;
-        this.mouseDownCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
+        this.mouseDownCoordinates.set(PhysEngMath.WorldSnapController(this, this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
 
     public void updateMouseUpCoordinates() {
         this.isMouseUp = true;
         this.isMouseDown = false;
         this.addSelectedRigidbody();
-        this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
+        this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(this, this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
     
     public void drawCursor() {
@@ -164,5 +164,13 @@ public class MouseObject {
 
     public void clearMouseObjectResults() {
         this.interactionResults.clear();
+    }
+    
+    public void setSnappingEnabled(boolean snappingEnabled) {
+        this.snappingEnabled = snappingEnabled;
+    }
+
+    public boolean getSnappingEnabled() {
+        return this.snappingEnabled;
     }
 }
