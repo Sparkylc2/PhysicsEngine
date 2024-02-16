@@ -6,7 +6,7 @@ public class MouseObject {
 	private PVector mouseCoordinates = new PVector();
     private PVector previousMouseCoordinates = new PVector();
 
-
+    private float easing = 0.175f;
     private boolean mLeft, mRight, mCenter;
     private boolean isMouseDown = false;
     private PVector mouseDownCoordinates = new PVector();
@@ -37,8 +37,12 @@ public class MouseObject {
 
 	public boolean IsMouseOverUI() {
   		if(GUI_GROUP_POSITION_X < mouseX && mouseX < GUI_GROUP_POSITION_X + GUI_GLOBAL_GROUP_WIDTH &&  GUI_GROUP_POSITION_Y < mouseY && mouseY <  GUI_GROUP_POSITION_Y + GUI_GLOBAL_GROUP_HEIGHT) {
+            showCursorTrail = false;
+            cursor();
     		return true;
     	} else {
+            showCursorTrail = true;
+            noCursor();
     		return false;
     	}
 	}
@@ -72,8 +76,10 @@ public class MouseObject {
 	}
 
 	public void updateMouseCoordinates() {
+        PVector snappedMouseCoordinates = PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld());
         this.previousMouseCoordinates.set(this.mouseCoordinates);
-		this.mouseCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
+        this.mouseCoordinates.x = lerp(this.mouseCoordinates.x, snappedMouseCoordinates.x, this.easing);
+        this.mouseCoordinates.y = lerp(this.mouseCoordinates.y, snappedMouseCoordinates.y, this.easing);
 	}
 
     public void updateMouseDownCoordinates() {
@@ -88,34 +94,34 @@ public class MouseObject {
         this.addSelectedRigidbody();
         this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
-
-
-
-
-
+    
     public void drawCursor() {
+        if(!showCursorTrail) {
+            return;
+        }
+
         fill(255, 0, 0);
         strokeWeight(0.1f);
         stroke(255, 0, 0);
         ellipse(this.mouseCoordinates.x, this.mouseCoordinates.y, 0.1f, 0.1f);
 
-        if(this.showCursorTrail) {
-        	if(cursorTrailArrayList.size() < 20) {
-        		cursorTrailArrayList.add(new PVector(mouseCoordinates.x, mouseCoordinates.y));
-        	} else {
-                cursorTrailArrayList.add(cursorTrailArrayList.get(0).set(this.mouseCoordinates.x, this.mouseCoordinates.y));
-                cursorTrailArrayList.remove(0);
-        	}
-
-            noFill();
-            beginShape();
-                for(PVector cursorTrailVertex : cursorTrailArrayList) {
-                    curveVertex(cursorTrailVertex.x, cursorTrailVertex.y);
-                }
-            endShape();
+        if(cursorTrailArrayList.size() < 20) {
+            cursorTrailArrayList.add(new PVector(mouseCoordinates.x, mouseCoordinates.y));
+        } else {
+            cursorTrailArrayList.add(cursorTrailArrayList.get(0).set(this.mouseCoordinates.x, this.mouseCoordinates.y));
+            cursorTrailArrayList.remove(0);
         }
+        noFill();
+        beginShape();
+            // Add the first point twice to guide the beginning of the curve
+            curveVertex(cursorTrailArrayList.get(0).x, cursorTrailArrayList.get(0).y);
+            for(PVector cursorTrailVertex : cursorTrailArrayList) {
+                curveVertex(cursorTrailVertex.x, cursorTrailVertex.y);
+            }
+            // Add the last point twice to guide the end of the curve
+            curveVertex(cursorTrailArrayList.get(cursorTrailArrayList.size() - 1).x, cursorTrailArrayList.get(cursorTrailArrayList.size() - 1).y);
+        endShape();
     }
-
 
     public void setMouseCoordinates(PVector mouseCoordinates) {
         this.mouseCoordinates.set(mouseCoordinates);

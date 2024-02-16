@@ -8,5 +8,7 @@ import java.lang.Enum;
 import controlP5.*;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
+import processing.core.*;
+import processing.javafx.*;
 import java.util.UUID;
 import java.util.concurrent.*;

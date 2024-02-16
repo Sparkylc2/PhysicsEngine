@@ -692,6 +692,8 @@ public class GUI {
     userInterface.getController("RT_Angle_Slider").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
     userInterface.getController("RT_AngularVelocity_Slider").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.CENTER);
 
+    userInterface.getController("RT_FillColour_Toggle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
+    userInterface.getController("RT_StrokeColour_Toggle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
     userInterface.getController("RT_Color_Bang").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
     userInterface.getController("RT_IsStatic_Toggle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);
     userInterface.getController("RT_IsTranslationallyStatic_Toggle").getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER);

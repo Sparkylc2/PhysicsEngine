@@ -2,21 +2,35 @@
 
 public class Camera {
 
-  public PVector position;
-  public float zoom;
+    public PVector position;
+    public PVector targetPosition;
+    public float zoom;
+    public float targetZoom;
+    float easing = 0.05f;
   
 
-  public Camera() {
-    position = new PVector(-50, -50);
-    zoom = 10f;
-  }
+    public Camera() {
+        position = new PVector(-50, -50);
+        targetPosition = new PVector(-50, -50);
+        zoom = 10f;
+        targetZoom = 10f;
 
-  public void zoom(float amount, float mouseX, float mouseY) {
+    }
+
+    public void update() {
+        position.x = lerp(position.x, targetPosition.x, easing);
+        position.y = lerp(position.y, targetPosition.y, easing);
+
+        // Smoothly change the zoom level towards the target zoom level
+        zoom = lerp(zoom, targetZoom, easing);
+    }
+    
+    public void zoom(float amount, float mouseX, float mouseY) {
         PVector mouseBeforeZoom = screenToWorld(mouseX, mouseY);
-        zoom *= amount;
+        targetZoom *= amount;
         PVector mouseAfterZoom = screenToWorld(mouseX, mouseY);
         PVector shift = PVector.sub(mouseBeforeZoom, mouseAfterZoom);
-        position.add(shift);
+        targetPosition.add(shift);
     }
 
 
@@ -48,8 +62,8 @@ public class Camera {
     }
 
     public void move(float dx, float dy) {
-        position.x += dx / zoom;
-        position.y += dy / zoom;
+        targetPosition.x += dx / zoom;
+        targetPosition.y += dy / zoom;
     }
 
     public float[] getCameraExtents(float padding) {

@@ -1,9 +1,10 @@
 
 
 GUI gui;
+PFont pfont;
+ControlFont font;
 PShape background;
 boolean loadLevel = false;
-Thread RT_InteractionHandlerThread;
 
 
 void setup() {
@@ -13,7 +14,7 @@ void setup() {
 
 
 /*--------------------- Camera Utilities ---------------------*/
-    size(1500, 1000);
+    size(1500, 1000, FX2D);
     windowMove(10, 4);
     frameRate(300);
     Camera = new Camera();
@@ -22,6 +23,11 @@ void setup() {
 
 /*---------------------------- UI ----------------------------*/
     userInterface = new ControlP5(this);
+    pfont = createFont("InterDisplay-SemiBold.ttf", 11, true);
+    textFont(pfont, 11);
+    font = new ControlFont(pfont, 11);
+    userInterface.setFont(font);
+
     gui = new GUI(userInterface);
     GUI_GROUP_POSITION_X = gui.calculateGroupPositionX();
     GUI_GROUP_POSITION_Y = gui.calculateGroupPositionY();
@@ -29,8 +35,6 @@ void setup() {
     GUI_GLOBAL_GROUP_HEIGHT = gui.globalGroupHeight;
 /*------------------------------------------------------------*/
 
-/*------------------- Background ---------------------------*/
-    background = loadShape("background.svg");
 /*-------------------------- Rigidbodies ------------------------*/
     rigidbodyList = new ArrayList<Rigidbody>();
 /*------------------------------------------------------------*/
@@ -86,26 +90,21 @@ void setup() {
 }
 
 
-void draw() {
+public void draw() {
     Mouse.updateMouse();
 
     if(loadLevel) {
         levelEditor.loadLevelState();
         loadLevel = false;
     }
-  int currentFrameTime = millis();
+    int currentFrameTime = millis();
+    Camera.update();
+    Camera.applyTransform();
+    render.draw();
+    Mouse.drawCursor(); 
 
-  /*NEVER DELETE THIS */
-  //gui.getActiveTab();
-  /* PLEASE */
-
-  Camera.applyTransform();
-  render.draw();
-  Mouse.drawCursor(); 
-
-  currentTabInteractionHandler.passiveResponse();
+    currentTabInteractionHandler.passiveResponse();
   
-   //editor.whileEditorSelect(-1);
 
 
   /*--------------------- Cursor Trail ---------------------*/

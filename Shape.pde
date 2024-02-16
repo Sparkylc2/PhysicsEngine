@@ -13,12 +13,6 @@ public class Shape {
   
   public void draw() {
     background(16, 18, 19);
-    pushMatrix();
-    translate(-1920/12.5, -1080/12.5);
-    scale(0.05f);
-    shape(background, 0, 0);
-    popMatrix();
-    
     drawRigidbodies();
   /*---------------------------------Collision Point Debugging--------------------------------------*/
     if(DRAW_AABBS) {
@@ -52,15 +46,10 @@ public class Shape {
           }
 
           if (rigidbody.getShapeType() == ShapeType.BOX) {
-            if(rigidbody == selectedRigidbody && inEditMode) {
+            
               drawPolygon(rigidbody.getPosition(), rigidbody.GetTransformedVertices(),
                           rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
                           rigidbody.getStrokeColour(), false);
-            } else {
-              drawPolygon(rigidbody.getPosition(), rigidbody.GetTransformedVertices(),
-                          rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
-                          rigidbody.getStrokeColour(), inEditMode);
-            }
           }
         }
       }
@@ -116,6 +105,7 @@ public class Shape {
     line(va.x, va.y, vb.x, vb.y);
   }
   
+
   public void drawBox(PVector position, float width, float height, float angle, float strokeWeight,
     PVector fillColour, PVector strokeColour, boolean inEditMode) {
 
@@ -155,6 +145,7 @@ public class Shape {
     rect(position.x, position.y, width, height);
     popMatrix();
   }
+
   
   public void drawPolygon(PVector position, PVector[] transformedVertices, float strokeWeight,
     PVector fillColour, PVector strokeColour, boolean inEditMode) {
@@ -180,23 +171,9 @@ public class Shape {
   }
 
 
-public void drawPolygon(PVector position, PVector[] transformedVertices, float strokeWeight,
-    PVector fillColour, PVector strokeColour, int opacity) {
-    
-    this.stroke.set(strokeColour);
-    this.fill.set(fillColour);
 
-    fill(this.fill.x, this.fill.y, this.fill.z, opacity);
-    stroke(this.stroke.x, this.stroke.y, this.stroke.z, opacity);
 
-    strokeWeight(strokeWeight);
 
-    beginShape();
-    for (PVector transformedVertex : transformedVertices) {
-      vertex(transformedVertex.x, transformedVertex.y);
-    }
-    endShape(CLOSE);
-  }
 
   public void drawAABB() {
     for(Rigidbody rigidbody : rigidbodyList) {
@@ -230,5 +207,76 @@ public void drawForces() {
 
   
 /*-----------------------------------------------------------------------------------------------*/
+
+/*
+public void drawGrid(){
+
+  float majorGridSize = 120;
+  float secondaryMajorGridSize = 60;
+  float minorGridSize = 30;
+
+  // Calculate the number of grid lines based on the screen size and grid size
+  int majorNumVerticalLines = min(ceil(width / majorGridSize), 1000);
+  int secondaryMajornumVerticalLines = min(ceil(width / secondaryMajorGridSize), 1000);
+  int minorNumVerticalLines = min(ceil(width / minorGridSize), 1000);
+
+  int majorNumHorizontalLines = min(ceil(height / majorGridSize), 1000);
+  int secondaryMajornumHorizontalLines = min(ceil(height / secondaryMajorGridSize), 1000);
+  int minorNumHorizontalLines = min(ceil(height / minorGridSize), 1000);
+
+  float majorOffsetX = ((Camera.position.x-width/2) * Camera.zoom) % majorGridSize;
+  float majorOffsetY = ((Camera.position.y-height/2) * Camera.zoom) % majorGridSize;
+
+  float secondaryMajorOffsetX = ((Camera.position.x-width/2)* Camera.zoom) % secondaryMajorGridSize;
+  float secondaryMajorOffsetY = ((Camera.position.y-height/2) * Camera.zoom) % secondaryMajorGridSize;
+
+  float minorOffsetX = ((Camera.position.x-width/2) * Camera.zoom) % minorGridSize;
+  float minorOffsetY = ((Camera.position.y-height/2) * Camera.zoom) % minorGridSize;
+
+// Draw the major vertical gridlines
+for (int i = 0; i <= majorNumVerticalLines; i++) {
+    float x = i * majorGridSize + majorOffsetX;
+    fill(#3f3f3f);
+    rect(x, 0, 1, height);
+}
+
+// Draw the major horizontal grid lines
+for (int i = 0; i <= majorNumHorizontalLines; i++) {
+    float y = i * majorGridSize + majorOffsetY;
+    fill(#3f3f3f);
+    rect(0, y, width, 0.25);
+}
+
+// Draw the secondary major vertical gridlines
+for (int i = 0; i <= secondaryMajornumVerticalLines; i++) {
+    float x = i * secondaryMajorGridSize + secondaryMajorOffsetX;
+    fill(#3f3f3f);
+    rect(x, 0, 0.5, height);
+}
+
+// Draw the secondary major horizontal grid lines
+for (int i = 0; i <= secondaryMajornumHorizontalLines; i++) {
+    float y = i * secondaryMajorGridSize + secondaryMajorOffsetY;
+    fill(#3f3f3f);
+    rect(0, y, width, 0.25);
+}
+
+//Draw the minor vertical gridlines
+for (int i = 0; i <= minorNumVerticalLines; i++) {
+    float x = i * minorGridSize + minorOffsetX;
+    fill(#3f3f3f);
+    rect(x, 0, 0.25, height);
+}
+
+// Draw the minor horizontal grid lines
+for (int i = 0; i <= minorNumHorizontalLines; i++) {
+    float y = i * minorGridSize + minorOffsetY;
+    fill(#3f3f3f);
+    rect(0, y, width, 0.25);
+}
+         
+}
+*/
+
 
 }
