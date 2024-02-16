@@ -86,61 +86,52 @@ public class FT_InteractionHandler extends TabInteractionHandlerAbstract{
                 break;
         }
     }   
-
-
-
     public void drawSpring(PVector worldAnchorA, PVector worldAnchorB, Rigidbody rigidbodyToDrawFrom) {
-
         PVector direction = PVector.sub(worldAnchorA, worldAnchorB);
-        fill(255, 255, 255, OPACITY);
         float length = direction.mag();
         direction.normalize();
-
-        float segments = 10;
+    
+        float segments = 5;
         float segmentLength = length / segments;
-        float offsetMagnitude = 0.5f;
-        
+        float offsetMagnitude = 0.5f; // Adjust this value to change the size of the zigzags
+    
+        // Draw the rod
         strokeWeight(0.3f);
-        stroke(0, 0, 0, OPACITY); 
+        stroke(0); // Black
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
-        stroke(255, 255, 255, OPACITY); 
+        stroke(255); // White
         strokeWeight(0.1f);
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
-            
+    
         for(int i = 0; i < segments; i++) {
             PVector segmentStart = PVector.add(worldAnchorB, PVector.mult(direction, segmentLength * i));
             PVector segmentEnd = PVector.add(worldAnchorB, PVector.mult(direction, segmentLength * (i + 1)));
-
+    
+            // Calculate the midpoint of the segment
             PVector midPoint = PVector.lerp(segmentStart, segmentEnd, 0.5f);
-
-            PVector offset1, offset2;
+    
+            // Alternate the offset direction to give appearance of spring
+            PVector offset;
             if(i % 2 == 0) {
-                offset1 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
-                offset2 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
+                offset = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
             } else {
-                offset1 = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
-                offset2 = PVector.mult(new PVector(-direction.y, direction.x), offsetMagnitude);
+                offset = PVector.mult(new PVector(direction.y, -direction.x), offsetMagnitude);
             }
-
-            PVector midPoint1 = PVector.add(midPoint, offset1);
-            PVector midPoint2 = PVector.add(midPoint, offset2);
-
+    
+            // Add the offset to the midpoint
+            PVector midPointOffset = PVector.add(midPoint, offset);
+    
             // Draw the lines
             strokeWeight(0.2f);
             stroke(0, 0, 0, OPACITY);
-            line(segmentStart.x, segmentStart.y, midPoint1.x, midPoint1.y);
-            line(midPoint1.x, midPoint1.y, segmentEnd.x, segmentEnd.y);
-            line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
-            line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
+            line(segmentStart.x, segmentStart.y, midPointOffset.x, midPointOffset.y);
+            line(midPointOffset.x, midPointOffset.y, segmentEnd.x, segmentEnd.y);
             strokeWeight(0.1f);
             stroke(255, 255, 255, OPACITY);
-            line(segmentStart.x, segmentStart.y, midPoint1.x, midPoint1.y);
-            line(midPoint1.x, midPoint1.y, segmentEnd.x, segmentEnd.y);
-            line(segmentStart.x, segmentStart.y, midPoint2.x, midPoint2.y);
-            line(midPoint2.x, midPoint2.y, segmentEnd.x, segmentEnd.y);
+            line(segmentStart.x, segmentStart.y, midPointOffset.x, midPointOffset.y);
+            line(midPointOffset.x, midPointOffset.y, segmentEnd.x, segmentEnd.y);
         }
     }
-
 
 
     public void drawRod(PVector worldAnchorA, PVector worldAnchorB, Rigidbody rigidbodyToDrawFrom) {
