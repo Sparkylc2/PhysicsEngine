@@ -541,7 +541,7 @@ public class RT_InteractionHandler extends TabInteractionHandlerAbstract {
                if(this.TOGGLE_STATES[0]) {
                     this.HandleSlider(gui.RT_Circle_Radius_Slider, 4, this.SLIDER_VALUES[4] + 0.5f, this.SLIDER_VALUES);
                } else if(this.TOGGLE_STATES[1]) {
-                    this.HandleSlider(gui.RT_Rectangle_Height_Slider, 3, this.SLIDER_VALUES[2] + 1f, this.SLIDER_VALUES);
+                    this.HandleSlider(gui.RT_Rectangle_Height_Slider, 3, this.SLIDER_VALUES[3] + 1f, this.SLIDER_VALUES);
                }
            } else if(this.isKeyDown(KeyEvent.VK_S)) {
                if(this.TOGGLE_STATES[0]) {  

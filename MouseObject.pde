@@ -99,8 +99,6 @@ public class MouseObject {
         if(!showCursorTrail) {
             return;
         }
-
-        //scale(-Camera.zoom);
         fill(255, 255, 255, 121);
         stroke(0, 0, 0, 180);
         strokeWeight(0.025);
