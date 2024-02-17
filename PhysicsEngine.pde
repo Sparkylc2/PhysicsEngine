@@ -7,8 +7,8 @@ public void setup() {
 
 
 /*--------------------- Camera Utilities ---------------------*/
-    size(1500, 1000, FX2D);
-    //size(1500, 1000);
+    //size(1500, 1000, FX2D);
+    size(1500, 1000);
     windowMove(10, 4);
     frameRate(300);
     Camera = new Camera();

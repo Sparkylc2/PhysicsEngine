@@ -29,7 +29,6 @@ public class Rigidbody {
 
   private ArrayList<Rigidbody> collisionExclusionList = new ArrayList<Rigidbody>();
 
-  private Shape shapeRenderer;
   private float strokeWeight;
   private PVector strokeColour = new PVector();
   private PVector fillColour = new PVector();
@@ -105,12 +104,10 @@ public class Rigidbody {
     
     if (shapeType == ShapeType.BOX) {
 
-      this.Vertices = vertices;
-      this.transformedVertices = new PVector[this.Vertices.length];
-      this.aabb = this.GetAABB();
-      
-    } else {
+        this.Vertices = vertices;
+        this.transformedVertices = new PVector[this.Vertices.length];
 
+    } else {
         this.Vertices = null;
         this.transformedVertices = null;
     }
@@ -861,203 +858,204 @@ public boolean containsPolygon(float x, float y) {
 
 
   
-  /*
-  ==================================================================================================
-  ==================================GETTERS & SETTERS===============================================
-  ==================================================================================================
-  */
-  public String getID(){
-    return this.ID;
-  }
-
-  public void setID(String ID) {
-    this.ID = ID;
-  }
-
-  public boolean getTransformUpdateRequired() {
-    return this.transformUpdateRequired;
-  }
-  
-  public void setTransformUpdateRequired(boolean transformUpdateRequired) {
-    this.transformUpdateRequired = transformUpdateRequired;
-  }
-
-  public boolean getAABBUpdateRequired() {
-    return this.aabbUpdateRequired;
-  }
-
-  public void setAABBUpdateRequired(boolean aabbUpdateRequired) {
-    this.aabbUpdateRequired = aabbUpdateRequired;
-  }
-  
-  public PVector getPosition() {
-    return this.position;
-  }
-  
-  public void setPosition(PVector position) {
-    this.transformUpdateRequired = true;
-    this.aabbUpdateRequired = true;
-    this.position.set(position);
-  }
-  public PVector getVelocity() {
-    return this.linearVelocity;
-  }
-  
-  public void setVelocity(PVector velocity) {
-    this.linearVelocity = velocity;
-  }
-  
-  public float getStrokeWeight() {
-    return this.strokeWeight;
-  }
-  
-  public void setStrokeWeight(float strokeWeight) {
-    this.strokeWeight = strokeWeight;
-  }
-  
-  public PVector getStrokeColour() {
-    return this.strokeColour;
-  }
-  
-  public void setStrokeColour(PVector strokeColour) {
-    this.strokeColour = strokeColour;
-  }
-  //Overloaded method for setting stroke colour with 3 floats
-  public void setStrokeColour(float r, float g, float b) {
-    this.strokeColour = new PVector(r, g, b);
-  }
-  
-  public PVector getFillColour() {
-    return this.fillColour;
-  }
-  
-  
-  public void setFillColour(PVector fillColour) {
-    this.fillColour = fillColour;
-  }
-  //Overloaded method for setting fill colour with 3 floats
-  public void setFillColour(float r, float g, float b) {
-    this.fillColour = new PVector(r, g, b);
-  }
-  
-  public ArrayList<ForceRegistry> getForceRegistry() {
-    return this.forceRegistry;
-  }
-  
-  public ForceRegistry getForceFromForceRegistry(int index) {
-    return this.forceRegistry.get(index);
-  }
-  
-  public int getForceRegistrySize() {
-    return this.forceRegistry.size();
-  }
-  
-  public void addForceToForceRegistry(ForceRegistry forceRegistry) {
-    this.forceRegistry.add(forceRegistry);
-  }
-
-  public void clearForceRegistry() {
-    this.forceRegistry.clear();
-  }
-
-  public void removeForceFromForceRegistry(ForceRegistry forceRegistry) {
-    this.forceRegistry.remove(forceRegistry);
-  }
-  
-  public void removeForceFromForceRegistry(int index) {
-    this.forceRegistry.remove(index);
-  }
-  
-  public boolean getIsStatic() {
-    return this.isStatic;
-  }
-  
-  public void setIsStatic(boolean isStatic) {
-    this.isStatic = isStatic;
-    if(isStatic) {
-      this.InvMass = 0f;
-      this.InvRotationalInertia = 0f;
+/*
+==================================================================================================
+==================================GETTERS & SETTERS===============================================
+==================================================================================================
+*/
+    public String getID(){
+      return this.ID;
     }
-  }
-
-  public boolean getIsVisible() {
-    return this.isVisible;
-  }
-
-  public void setIsVisible(boolean isVisible) {
-    this.isVisible = isVisible;
-  }
-    public float getAngle() {
-    return this.angle;
-  }
-
-  public void setAngle(float angle) {
-    this.transformUpdateRequired = true;
-    this.angle = angle;
-  }
-
-  public void addBodyToCollisionExclusionList(Rigidbody rigidbody) {
-    this.collisionExclusionList.add(rigidbody);
-  }
-
-  public ArrayList<Rigidbody> getCollisionExclusionList() {
-    return this.collisionExclusionList;
-  }
-
-  public float getAngularVelocity(){
-    return this.angularVelocity;
-  }
-
-  public void setAngularVelocity(float angularVelocity) {
-    this.angularVelocity = angularVelocity;
-  }
-
-
-public float getCoefficientOfKineticFriction() {
-    return this.coefficientOfKineticFriction;
-}
-
-public void setCoefficientOfKineticFriction(float coefficientOfKineticFriction) {
-    this.coefficientOfKineticFriction = coefficientOfKineticFriction;
-}
-
-public float getCoefficientOfStaticFriction() {
-    return this.coefficientOfStaticFriction;
-}
-
-public void setCoefficientOfStaticFriction(float coefficientOfStaticFriction) {
-    this.coefficientOfStaticFriction = coefficientOfStaticFriction;
-}
-
-public boolean getIsTranslationallyStatic() {
-    return this.isTranslationallyStatic;
-}
-
-public void setIsTranslationallyStatic(boolean isTranslationallyStatic) {
-    this.isTranslationallyStatic = isTranslationallyStatic;
-
-    if(this.isTranslationallyStatic) {
-      this.InvMass = 0f;
+    
+    public void setID(String ID) {
+      this.ID = ID;
     }
-}
-
-public boolean getIsRotationallyStatic() {
-    return this.isRotationallyStatic;
-}
-
-public void setIsRotationallyStatic(boolean isRotationallyStatic) {
-    this.isRotationallyStatic = isRotationallyStatic;
-    if(this.isRotationallyStatic) {
-      this.InvRotationalInertia = 0f;
+    
+    public boolean getTransformUpdateRequired() {
+      return this.transformUpdateRequired;
     }
-}
+    
+    public void setTransformUpdateRequired(boolean transformUpdateRequired) {
+      this.transformUpdateRequired = transformUpdateRequired;
+    }
+    
+    public boolean getAABBUpdateRequired() {
+      return this.aabbUpdateRequired;
+    }
+    
+    public void setAABBUpdateRequired(boolean aabbUpdateRequired) {
+      this.aabbUpdateRequired = aabbUpdateRequired;
+    }
+    
+    public PVector getPosition() {
+      return this.position;
+    }
+    
+    public void setPosition(PVector position) {
+      this.transformUpdateRequired = true;
+      this.aabbUpdateRequired = true;
+      this.position.set(position);
+    }
+    public PVector getVelocity() {
+      return this.linearVelocity;
+    }
+    
+    public void setVelocity(PVector velocity) {
+      this.linearVelocity = velocity;
+    }
+    
+    public float getStrokeWeight() {
+      return this.strokeWeight;
+    }
+    
+    public void setStrokeWeight(float strokeWeight) {
+      this.strokeWeight = strokeWeight;
+    }
+    
+    public PVector getStrokeColour() {
+      return this.strokeColour;
+    }
+    
+    public void setStrokeColour(PVector strokeColour) {
+      this.strokeColour = strokeColour;
+    }
+    //Overloaded method for setting stroke colour with 3 floats
+    public void setStrokeColour(float r, float g, float b) {
+      this.strokeColour = new PVector(r, g, b);
+    }
+    
+    public PVector getFillColour() {
+      return this.fillColour;
+    }
+    
+    
+    public void setFillColour(PVector fillColour) {
+      this.fillColour = fillColour;
+    }
+    //Overloaded method for setting fill colour with 3 floats
+    public void setFillColour(float r, float g, float b) {
+      this.fillColour = new PVector(r, g, b);
+    }
+    
+    public ArrayList<ForceRegistry> getForceRegistry() {
+      return this.forceRegistry;
+    }
+    
+    public ForceRegistry getForceFromForceRegistry(int index) {
+      return this.forceRegistry.get(index);
+    }
+    
+    public int getForceRegistrySize() {
+      return this.forceRegistry.size();
+    }
+    
+    public void addForceToForceRegistry(ForceRegistry forceRegistry) {
+      this.forceRegistry.add(forceRegistry);
+    }
+    
+    public void clearForceRegistry() {
+      this.forceRegistry.clear();
+    }
+    
+    public void removeForceFromForceRegistry(ForceRegistry forceRegistry) {
+      this.forceRegistry.remove(forceRegistry);
+    }
+    
+    public void removeForceFromForceRegistry(int index) {
+      this.forceRegistry.remove(index);
+    }
+    
+    public boolean getIsStatic() {
+      return this.isStatic;
+    }
+    
+    public void setIsStatic(boolean isStatic) {
+      this.isStatic = isStatic;
+      if(isStatic) {
+        this.InvMass = 0f;
+        this.InvRotationalInertia = 0f;
+      }
+    }
+    
+    public boolean getIsVisible() {
+      return this.isVisible;
+    }
+    
+    public void setIsVisible(boolean isVisible) {
+      this.isVisible = isVisible;
+    }
+      public float getAngle() {
+      return this.angle;
+    }
+    
+    public void setAngle(float angle) {
+      this.transformUpdateRequired = true;
+      this.angle = angle;
+    }
+    
+    public void addBodyToCollisionExclusionList(Rigidbody rigidbody) {
+      this.collisionExclusionList.add(rigidbody);
+    }
+    
+    public ArrayList<Rigidbody> getCollisionExclusionList() {
+      return this.collisionExclusionList;
+    }
+    
+    public float getAngularVelocity(){
+      return this.angularVelocity;
+    }
+    
+    public void setAngularVelocity(float angularVelocity) {
+      this.angularVelocity = angularVelocity;
+    }
 
-  
-public boolean getCollidability() {
-    return this.isCollidable;
-}
 
-public void setCollidability(boolean isCollidable) {
-    this.isCollidable = isCollidable;
-}
+    public float getCoefficientOfKineticFriction() {
+        return this.coefficientOfKineticFriction;
+    }
+
+    public void setCoefficientOfKineticFriction(float coefficientOfKineticFriction) {
+        this.coefficientOfKineticFriction = coefficientOfKineticFriction;
+    }
+
+    public float getCoefficientOfStaticFriction() {
+        return this.coefficientOfStaticFriction;
+    }
+
+    public void setCoefficientOfStaticFriction(float coefficientOfStaticFriction) {
+        this.coefficientOfStaticFriction = coefficientOfStaticFriction;
+    }
+
+    public boolean getIsTranslationallyStatic() {
+        return this.isTranslationallyStatic;
+    }
+
+    public void setIsTranslationallyStatic(boolean isTranslationallyStatic) {
+        this.isTranslationallyStatic = isTranslationallyStatic;
+
+        if(this.isTranslationallyStatic) {
+          this.InvMass = 0f;
+        }
+    }
+
+    public boolean getIsRotationallyStatic() {
+        return this.isRotationallyStatic;
+    }
+
+    public void setIsRotationallyStatic(boolean isRotationallyStatic) {
+        this.isRotationallyStatic = isRotationallyStatic;
+        if(this.isRotationallyStatic) {
+          this.InvRotationalInertia = 0f;
+        }
+    }
+
+    
+    public boolean getCollidability() {
+        return this.isCollidable;
+    }
+
+    public void setCollidability(boolean isCollidable) {
+        this.isCollidable = isCollidable;
+    }
+
 }
