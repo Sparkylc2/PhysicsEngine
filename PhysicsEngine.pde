@@ -1,15 +1,8 @@
 
 
-GUI gui;
-PFont pfont;
-ControlFont font;
-PShape background;
-boolean loadLevel = false;
-
-
-void setup() {
+public void setup() {
 /*--------------------- Timing Utilities ---------------------*/
-    lastFrameTime = millis();
+    FrameTimeUtility.init();
 /*------------------------------------------------------------*/
 
 
@@ -24,16 +17,9 @@ void setup() {
 
 /*---------------------------- UI ----------------------------*/
     userInterface = new ControlP5(this);
-    pfont = createFont("InterDisplay-SemiBold.ttf", 10, true);
-    textFont(pfont, 10);
-    font = new ControlFont(pfont, 10);
-    userInterface.setFont(font);
-
     gui = new GUI(userInterface);
-    GUI_GROUP_POSITION_X = gui.calculateGroupPositionX();
-    GUI_GROUP_POSITION_Y = gui.calculateGroupPositionY();
-    GUI_GLOBAL_GROUP_WIDTH = gui.globalGroupWidth;
-    GUI_GLOBAL_GROUP_HEIGHT = gui.globalGroupHeight;
+    gui.initialize();
+
 /*------------------------------------------------------------*/
 
 /*-------------------------- Rigidbodies ------------------------*/
@@ -79,80 +65,40 @@ void setup() {
     AddBodyToBodyEntityList(floor);
     AddBodyToBodyEntityList(spinningBody);
 
-    //ALL_FORCES_ARRAYLIST.add(rod);
-    //ALL_FORCES_ARRAYLIST.add(springLeft);
-    //ALL_FORCES_ARRAYLIST.add(springRight);
-
-
-    //softbody = new Softbody(new PVector(0, -50), 0, 2, 2);
-    //softbody.CreateBoxSoftbody();
-    //cloth = new Cloth(new PVector(-20, -50), new PVector(0, -50), 20);
-    //cloth.CreateCloth();
 }
 
 
 public void draw() {
-    Mouse.updateMouse();
+    FrameTimeUtility.calculateFrameTime();
 
-    if(loadLevel) {
-        levelEditor.loadLevelState();
-        loadLevel = false;
-    }
-    int currentFrameTime = millis();
-    Camera.update();
-    Camera.applyTransform();
-    render.draw();
-    Mouse.drawCursor(); 
-
-    currentTabInteractionHandler.passiveResponse();
-  
-
-
-  /*--------------------- Cursor Trail ---------------------*/
-
-    /*
-    float minX = min(Mouse.getMouseDownCoordinates().x, Mouse.getMouseCoordinates().x);
-    float maxX = max(Mouse.getMouseDownCoordinates().x, Mouse.getMouseCoordinates().x);
-    float minY = min(Mouse.getMouseDownCoordinates().y, Mouse.getMouseCoordinates().y);
-    float maxY = max(Mouse.getMouseDownCoordinates().y, Mouse.getMouseCoordinates().y);
-
-    beginShape();
-    noFill();
-    stroke(255, 0, 0);
-    rect(minX, minY, maxX - minX, maxY - minY);
-    endShape();
-    */
-/*
-  if(IsMouseOverUI()) {
-    .setDrawCursorTrail(false);
-    cursor();
-} else {
-    interactivityListener.setDrawCursorTrail(true);
-    interactivityListener.drawInteractions();
-    noCursor();
-  }
-*/
-  dt = (currentFrameTime - lastFrameTime) / 1000f;
-  Step(dt, SUB_STEP_COUNT);
-
-  Camera.resetTransform();
-
-  displayTimings();
-
-  lastFrameTime = currentFrameTime;
+        Camera.onFrameStart();
+        CurrentTabInteractionHandler.passiveResponse();
+        
+            /*--------------------- Main Methods ---------------------*/
+        
+            Step(FrameTimeUtility.DT, SUB_STEP_COUNT);
+        
+            /*--------------------------------------------------------*/
+        
+        gui.checkGUIRepositioning();
+        Camera.onFrameEnd();
+    
+    FrameTimeUtility.displayTimings();
+    FrameTimeUtility.updateFrameTime();
 }
+
 
 public void controlEvent(ControlEvent theEvent) {
     if(theEvent.isTab()) {
         switch(theEvent.getTab().getId()) {
             case 0:
-                currentTabInteractionHandler = RT_InteractionHandler;
-                currentTabInteractionHandler.VisibilityResponse();
+                CurrentTabInteractionHandler = RT_InteractionHandler;
+                CurrentTabInteractionHandler.VisibilityResponse();
                 this.Mouse.clearMouseObjectResults();
                 break;
             case 1:
-                currentTabInteractionHandler = FT_InteractionHandler;
-                currentTabInteractionHandler.VisibilityResponse();
+                CurrentTabInteractionHandler = FT_InteractionHandler;
+                CurrentTabInteractionHandler.VisibilityResponse();
                 this.Mouse.clearMouseObjectResults();
                 break;
         }

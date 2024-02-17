@@ -17,7 +17,7 @@ public class Camera {
 
     }
 
-    public void update() {
+    public void updateCamera() {
         position.x = lerp(position.x, targetPosition.x, easing);
         position.y = lerp(position.y, targetPosition.y, easing);
 
@@ -35,6 +35,7 @@ public class Camera {
 
 
     public void applyTransform() {
+        pushMatrix();
         translate(width/2, height/2);
         scale(zoom);
         translate(-position.x, -position.y);
@@ -79,5 +80,17 @@ public class Camera {
 
         return new PVector[] {topLeft, topRight, bottomLeft, bottomRight};
     }
+    
+    public void onFrameStart() {
+        Mouse.updateMouse();
+        this.updateCamera();
+        this.applyTransform();
+        Render.draw();
+        Mouse.drawCursor(); 
+    }
 
+    public void onFrameEnd() {
+        //resetTransform();
+        popMatrix();
+    }
 }

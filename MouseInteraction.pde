@@ -2,7 +2,7 @@
 public void mousePressed(){
     if(mouseButton == LEFT){
         Mouse.updateMouseDownCoordinates();
-        currentTabInteractionHandler.onMousePressed();
+        CurrentTabInteractionHandler.onMousePressed();
         return;
     }
 }
@@ -10,13 +10,13 @@ public void mousePressed(){
 public void mouseReleased() {
     if(mouseButton == LEFT) {
         Mouse.updateMouseUpCoordinates();
-        currentTabInteractionHandler.onMouseReleased();
+        CurrentTabInteractionHandler.onMouseReleased();
         return;
     }
 }
 
 public void mouseClicked() {
-    currentTabInteractionHandler.onMouseClicked();
+    CurrentTabInteractionHandler.onMouseClicked();
 } 
 
 public void mouseWheel(MouseEvent event) {
@@ -34,7 +34,7 @@ public void mouseDragged() {
         return;
     }
     if(mouseButton == LEFT) {
-        currentTabInteractionHandler.onMouseDragged();
+        CurrentTabInteractionHandler.onMouseDragged();
     }
 }
 

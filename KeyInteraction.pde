@@ -2,15 +2,15 @@
 
 public void keyPressed() {
     KeyAndTabHandler.onKeyPressed(keyCode);
-    currentTabInteractionHandler.onKeyPressed();
+    CurrentTabInteractionHandler.onKeyPressed();
 
     if(keyCode == LEFT) {
-        KeyAndTabHandler.setActiveTabID((KeyAndTabHandler.getActiveTabID() - 1) < 0 ? 6 : (KeyAndTabHandler.getActiveTabID() - 1));
+        KeyAndTabHandler.setActiveTabID((KeyAndTabHandler.getActiveTabID() - 1) < 0 ? gui.TabCount : (KeyAndTabHandler.getActiveTabID() - 1));
         KeyAndTabHandler.setActiveTabElement(KeyAndTabHandler.getActiveTabID());
 
     }
     if(keyCode == RIGHT) {
-        KeyAndTabHandler.setActiveTabID((KeyAndTabHandler.getActiveTabID() + 1) > 6 ? 0 : (KeyAndTabHandler.getActiveTabID() + 1));
+        KeyAndTabHandler.setActiveTabID((KeyAndTabHandler.getActiveTabID() + 1) > gui.TabCount ? 0 : (KeyAndTabHandler.getActiveTabID() + 1));
         KeyAndTabHandler.setActiveTabElement(KeyAndTabHandler.getActiveTabID());
     }
     if(keyCode == ENTER) {

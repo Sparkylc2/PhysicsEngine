@@ -79,15 +79,16 @@ public class KeyAndTabHandler {
                 break;
         }
     }
+    
     public void setActiveTabID(int activeTabID) {
         this.activeTabID = activeTabID;
         Mouse.clearMouseObjectResults();
         switch(activeTabID) {
             case 0:
-                currentTabInteractionHandler = RT_InteractionHandler;
+                CurrentTabInteractionHandler = RT_InteractionHandler;
                 break;
             case 1:
-                currentTabInteractionHandler = FT_InteractionHandler;
+                CurrentTabInteractionHandler = FT_InteractionHandler;
                 break;
             case 2:
                 System.out.println("Editor Tab");

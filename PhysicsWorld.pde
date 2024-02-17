@@ -1,29 +1,4 @@
 
-/*------------------------Related to Timekeeping Debugging ---------------------------------------*/
-public long totalWorldStepTime;
-public long subWorldStepTime;
-
-public int totalBodyCount;
-public double systemTime;
-
-public int totalSampleCount;
-public int subSampleCount;
-
-public double totalStepTime;
-public double subStepTime;
-public int bodyCount;
-
-String totalStepTimeUnit;
-String subStepTimeUnit;
-
-
-int lastFrameTime;
-float dt;
-float fps;
-float displayTimeStep;
-/*------------------------------------------------------------------------------------------------*/
-
-
 /*
 ====================================================================================================
 ===================================  PHYSICS ENGINE OBJECTS  =======================================
@@ -89,6 +64,9 @@ public ArrayList<ForceRegistry> ALL_FORCES_ARRAYLIST = new ArrayList<ForceRegist
 
 
 public static float VERTEX_SNAP_RADIUS = 0.25f;
+
+public float PREVIOUS_WIDTH = width;
+public float PREVIOUS_HEIGHT = height;
 public float GUI_GROUP_POSITION_X;
 public float GUI_GROUP_POSITION_Y;
 public float GUI_GLOBAL_GROUP_WIDTH;
@@ -107,7 +85,7 @@ public void Step(float dt, int totalIterations) {
     
     
     /*-----------------Related to Timekeeping Debugging -----------------*/
-    long totalWorldStepTimeStart = System.nanoTime();
+    FrameTimeUtility.startTotalWorldStepTime();
     /*-------------------------------------------------------------------*/
     
     
@@ -116,7 +94,7 @@ public void Step(float dt, int totalIterations) {
     for (int currentIteration = 0; currentIteration < totalIterations; currentIteration++) {
         
         /*-----------------Related to Timekeeping Debugging -----------------*/
-        long subWorldStepTimeStart = System.nanoTime();
+        FrameTimeUtility.startSubWorldStepTime();
         /*-------------------------------------------------------------------*/
         
         
@@ -127,13 +105,11 @@ public void Step(float dt, int totalIterations) {
         NarrowPhaseStep();
         
         /*-----------------Related to Timekeeping Debugging -----------------*/
-        subSampleCount++;
-        subWorldStepTime += System.nanoTime() - subWorldStepTimeStart;
+        FrameTimeUtility.updateSubWorldStepTime();
         /*-------------------------------------------------------------------*/
 }
     /*-----------------Related to Timekeeping Debugging -----------------*/
-    totalSampleCount++;
-    totalWorldStepTime += System.nanoTime() - totalWorldStepTimeStart;
+    FrameTimeUtility.updateTotalWorldStepTime();
     /*-------------------------------------------------------------------*/
 }
 
@@ -563,58 +539,7 @@ public void ClearBodyEntityList() {
     rigidbodyList.clear();
 }
 
-public void displayTimings() {
 
-if(millis() - systemTime>= 200) {
-  totalStepTime = ((totalWorldStepTime) / totalSampleCount);
-  subStepTime = ((subWorldStepTime) / subSampleCount);
-  bodyCount = rigidbodyList.size();
-  
-  totalStepTimeUnit = "ns";
-  subStepTimeUnit = "ns";
-
-  if(totalStepTime > 1000) {
-    totalStepTime /= 1000;
-    totalStepTime = new BigDecimal(totalStepTime).setScale(3, RoundingMode.HALF_UP).doubleValue();
-    totalStepTimeUnit = "μs";
-  }
-  if(subStepTime > 1000) {
-    subStepTime /= 1000;
-    subStepTime = new BigDecimal(subStepTime).setScale(3, RoundingMode.HALF_UP).doubleValue();
-    subStepTimeUnit = "μs";
-  }
-  if (totalStepTime > 1000) {
-    totalStepTime /= 1000;
-    totalStepTime = new BigDecimal(totalStepTime).setScale(3, RoundingMode.HALF_UP).doubleValue();
-    totalStepTimeUnit = "ms";
-  }
-  if (subStepTime > 1000) {
-    subStepTime /= 1000;
-    subStepTime = new BigDecimal(subStepTime).setScale(3, RoundingMode.HALF_UP).doubleValue();
-    subStepTimeUnit = "ms";
-  }
-
-  //updates the counter and resets values
-  totalWorldStepTime = 0;
-  subWorldStepTime = 0;
-  totalSampleCount = 0;
-  subSampleCount = 0;
-  systemTime = millis();
-
-  fps = frameRate;
-  displayTimeStep = dt;
-
-
-}
-stroke(255);
-fill(255);
-text("Total Step Time: " + totalStepTime + totalStepTimeUnit, 10, 20);
-text("Sub Step Time: " + subStepTime + subStepTimeUnit, 10, 40);
-text("Body Count: " + bodyCount, 10, 60);
-text("FPS: " + fps, 10, 80);
-text("dt: " + displayTimeStep, 10, 100);
-/*------------------------------------------------------------------------------------------------*/
-}
 
     
                                         

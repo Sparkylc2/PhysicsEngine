@@ -210,6 +210,7 @@ public static PVector SnapController(MouseObject Mouse, Rigidbody rigidbody, PVe
     if(rigidbody == null) {
         return point;
     }
+    
     if(Mouse.getSnappingEnabled()) {
         if(rigidbody.getShapeType() == ShapeType.BOX) {
             PVector[] vertices = rigidbody.GetTransformedVertices();
@@ -260,7 +261,7 @@ public static PVector WorldSnapController(MouseObject Mouse, Rigidbody rigidbody
     if(rigidbody == null) {
         return point;
     }
-    //interactivityListener.getSnapGeneral()
+
     if(Mouse.getSnappingEnabled()) {
         if(rigidbody.getShapeType() == ShapeType.BOX) {
             PVector[] vertices = rigidbody.GetTransformedVertices();

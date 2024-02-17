@@ -4,7 +4,7 @@ public class GUI {
 ====================================================================================================
 ========================================= GUI Tab Elements =========================================
 ====================================================================================================
-*/
+*/  
     /*----- Tabs -----*/
     public Tab RigidbodyTab;
     public Tab ForceTab;
@@ -13,6 +13,8 @@ public class GUI {
     public Tab SettingsTab;
     public Tab HelpTab;
     public Tab DebugTab;
+
+    public int TabCount = 6;
 
 /*
 ====================================================================================================
@@ -157,7 +159,6 @@ public class GUI {
 ====================================================================================================
 */
         public GUI(ControlP5 userInterface) {
-
                     RigidbodyTab = userInterface.addTab("RigidbodyTab")
                                 .setLabel("Rigidbody")
                                 .setId(0)
@@ -727,7 +728,7 @@ public class GUI {
 
 
     userInterface.getTab("default").hide();
-    currentTabInteractionHandler.VisibilityResponse();
+    CurrentTabInteractionHandler.VisibilityResponse();
 
 }
 
@@ -760,6 +761,38 @@ public class GUI {
     public int calculateGroupPositionY() {
      return globalScreenGroupPaddingY;
     }
+
+    public void checkGUIRepositioning() {
+        if(PREVIOUS_WIDTH != width || PREVIOUS_HEIGHT != height) {
+
+            PREVIOUS_WIDTH = width;
+            PREVIOUS_HEIGHT = height;
+            GUI_GROUP_POSITION_X = calculateGroupPositionX();
+            GUI_GROUP_POSITION_Y = calculateGroupPositionY();
+            updateGUIPositioning();
+        }
+    }
+
+    private void updateGUIPositioning() {
+        RigidbodyGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+        ForceGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+        //EditorGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+        //CreationGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+        //SettingsGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+        //HelpGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+        //DebugGroup.setPosition(GUI_GROUP_POSITION_X, GUI_GROUP_POSITION_Y);
+    }
+
+    public void initialize() {
+
+        GUI_GROUP_POSITION_X = this.calculateGroupPositionX();
+        GUI_GROUP_POSITION_Y = this.calculateGroupPositionY();
+        GUI_GLOBAL_GROUP_WIDTH = this.globalGroupWidth;
+        GUI_GLOBAL_GROUP_HEIGHT = this.globalGroupHeight;
+        PFont pFont = createFont("InterDisplay-SemiBold.ttf", 10, true);
+        textFont(pFont, 10);
+        userInterface.setFont(new ControlFont(pFont, 10));
+    }
 /*
 ====================================================================================================
 ======================================== Getters and Setters =======================================
@@ -772,5 +805,4 @@ public int getGroupHeight() {
 public int getGroupWidth() {
     return this.globalGroupWidth;
 }
-
-    }
+}
