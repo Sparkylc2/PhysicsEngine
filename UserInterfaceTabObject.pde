@@ -79,22 +79,14 @@ public void updateTabSelector() {
     PShape Tab_Selector = this.TabShape.getChild("Tab_Selector");
 
     float currentWidth = uiDraw.TAB_SELECTOR_WIDTH;
-    
-    // Calculate the target width
     float textWidth = textWidth(TabNames[this.activeTabID]);
-    float targetWidth = textWidth + 40; // Adjust the extra width as needed
+    float targetWidth = textWidth + 40;
     
-    // Calculate the new width with easing
-    //float newWidth = lerp(currentWidth, targetWidth, easing);
     float newWidth = targetWidth;
-    
-    // Calculate the scale factor
     float scaleFactor = newWidth / currentWidth;
     
-    // Calculate the adjustment for the position based on the change in width
     float adjustment = (newWidth - currentWidth) / 2;
     
-    // Update the scale of the Tab_Selector shape
     Tab_Selector.resetMatrix();
     Tab_Selector.translate(this.tabSelectorPositions[this.activeTabID] - adjustment, 0);
     Tab_Selector.scale(scaleFactor, 1);
