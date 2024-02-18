@@ -46,6 +46,13 @@ public class KeyAndTabHandler {
         return false;
     }
 
+    public boolean isKeyUp(int keyCode) {
+        if(keyCode < keyDownCache.length) {
+            return !keyDownCache[keyCode];
+        }
+        return false;
+    }
+
 /*
 ====================================================================================================
 ====================================== Getters and Setters =========================================

@@ -67,7 +67,13 @@ public class RT_InteractionHandler extends TabInteractionHandlerAbstract {
                                                                       new PVector(this.SLIDER_VALUES[6], 
                                                                                   this.SLIDER_VALUES[7], 
                                                                                   this.SLIDER_VALUES[8]));
-            rigidbody.SetInitialPosition(Mouse.getMouseCoordinates());
+            
+            
+            PVector clamped = PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), Mouse.getMouseCoordinates(), 
+                                                                        MIN_MOUSE_VELOCITY_MAG, MAX_MOUSE_VELOCITY_MAG);
+            PVector endPoint = PVector.add(Mouse.getMouseDownCoordinates(), clamped);
+
+            rigidbody.SetInitialPosition(endPoint);
             rigidbody.setVelocity(PhysEngMath.SquareVelocity(PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), 
                                                                                                           Mouse.getMouseCoordinates(), 
                                                                                                           MIN_MOUSE_VELOCITY_MAG, 

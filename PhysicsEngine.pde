@@ -7,9 +7,10 @@ public void setup() {
 
 
 /*--------------------- Camera Utilities ---------------------*/
-    //size(1500, 1000, FX2D);
-    size(1500, 1000);
-    windowMove(10, 4);
+    size(1500, 1000, FX2D);
+    //size(1920, 1080);
+    fullScreen();
+    //windowMove(10, 4);
     frameRate(300);
     Camera = new Camera();
     
@@ -20,6 +21,7 @@ public void setup() {
     gui = new GUI(userInterface);
     gui.initialize();
 
+    UserInterface.setup();
 /*------------------------------------------------------------*/
 
 /*-------------------------- Rigidbodies ------------------------*/

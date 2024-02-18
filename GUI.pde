@@ -8,6 +8,7 @@ public class GUI {
     /*----- Tabs -----*/
     public Tab RigidbodyTab;
     public Tab ForceTab;
+    public Toggle ForcesTabToggle;
     public Tab EditorTab;
     public Tab CreationTab;
     public Tab SettingsTab;
@@ -114,7 +115,7 @@ public class GUI {
     private int globalInterElementPaddingY = 10;
 
     //the group background color
-    private int globalGroupColor = color(250, 50);
+    private int globalGroupColor = color(60, 60, 60);
     private int rowCount = 10;
 
 /*
@@ -123,7 +124,8 @@ public class GUI {
 ====================================================================================================
 */
 /*---------------------------- Default Values Initialization ------------------------*/
-    private Tab defaultTab = userInterface.getTab("RigidbodyTab");
+    //private Tab defaultTab = userInterface.getTab("RigidbodyTab");
+    private Tab defaultTab = userInterface.getTab("SettingsTab");
 
     /*---------------------------- Forces Tab -------------------------------------*/
         private boolean defaultSpringSelector = false;
@@ -159,6 +161,7 @@ public class GUI {
 ====================================================================================================
 */
         public GUI(ControlP5 userInterface) {
+                    /*
                     RigidbodyTab = userInterface.addTab("RigidbodyTab")
                                 .setLabel("Rigidbody")
                                 .setId(0)
@@ -200,7 +203,44 @@ public class GUI {
                                 .setId(6)
                                 .activateEvent(true)
                                 ;
-                
+                            
+                    */
+                    SettingsTab = userInterface.addTab("SettingsTab")
+                                .setLabel("Settings")
+                                .setId(4)
+                                .hide()
+                                ;
+                    EditorTab = userInterface.addTab("EditorTab")
+                                .setLabel("Editor")
+                                .setId(2)
+                                .hide()
+                                ;
+                    CreationTab = userInterface.addTab("CreationTab")
+                                .setLabel("Creations")
+                                .setId(3)
+                                .hide()
+                                ;
+                    ForceTab = userInterface.addTab("ForceTab")
+                                .setLabel("Forces")
+                                .setId(1)
+                                .hide()
+                                ;
+                    RigidbodyTab = userInterface.addTab("RigidbodyTab")
+                                .setLabel("Rigidbody")
+                                .setId(0)
+                                .hide()
+                                ;
+                    HelpTab = userInterface.addTab("HelpTab")
+                                .setLabel("Help")
+                                .setId(5)
+                                .hide()
+                                ;
+                    DebugTab = userInterface.addTab("DebugTab")
+                                .setLabel("Debug")
+                                .setId(6)
+                                .hide()
+                                ;
+                    
                                 
 
 /*----------------------------------- Rigidbodies Tab ------------------------------------------*/
@@ -573,8 +613,8 @@ public class GUI {
                                         ;
 
                         FT_Rod_IsJoint_Toggle = userInterface.addToggle("FT_Rod_IsJoint_Toggle")
-                                        .setPosition(calculateButtonPositionX(3, calculateButtonWidth(3)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
-                                        .setSize(calculateButtonWidth(3),calculateButtonHeight(rowCount))
+                                        .setPosition(calculateButtonPositionX(1, calculateButtonWidth(1)), calculateButtonPositionY(2, calculateButtonHeight(rowCount)))
+                                        .setSize(calculateButtonWidth(1),calculateButtonHeight(rowCount))
                                         .setLabel("Joint")
                                         .setVisible(false)
                                         .setValue(false)
@@ -730,6 +770,8 @@ public class GUI {
     userInterface.getTab("default").hide();
     CurrentTabInteractionHandler.VisibilityResponse();
 
+    this.updateControllerColors();
+
 }
 
 /*
@@ -792,6 +834,51 @@ public class GUI {
         PFont pFont = createFont("InterDisplay-SemiBold.ttf", 10, true);
         textFont(pFont, 10);
         userInterface.setFont(new ControlFont(pFont, 10));
+    }
+
+    public void updateControllerColors() {
+        for(ControllerInterface<?> controller : userInterface.getAll()) {
+            controller.setColorForeground(color(82, 82, 82));
+            controller.setColorBackground(color(34, 35, 36));
+            controller.setColorActive(color(21, 121, 170));
+        }
+
+        userInterface.getTab("RigidbodyTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("RigidbodyTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("RigidbodyTab").setColorLabel(color(255, 255, 255));
+
+        userInterface.getTab("ForceTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("ForceTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("ForceTab").setColorLabel(color(255, 255, 255));
+
+        userInterface.getTab("EditorTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("EditorTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("EditorTab").setColorLabel(color(255, 255, 255));
+
+        userInterface.getTab("CreationTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("CreationTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("CreationTab").setColorLabel(color(255, 255, 255));
+
+        userInterface.getTab("SettingsTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("SettingsTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("SettingsTab").setColorLabel(color(255, 255, 255));
+
+        userInterface.getTab("HelpTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("HelpTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("HelpTab").setColorLabel(color(255, 255, 255));
+
+        userInterface.getTab("DebugTab").setColorBackground(color(34, 35, 36));
+        userInterface.getTab("DebugTab").setColorActive(color(21, 121, 170));
+        userInterface.getTab("DebugTab").setColorLabel(color(255, 255, 255));
+
+    }
+
+    public void customTab(ControlEvent theEvent) {
+        if(theEvent.getController().getName().equals("ForcesTabToggle") && theEvent.getController().getValue() == 1) {
+            ForceTab.show();
+        } else {
+            ForceTab.hide();
+        }
     }
 /*
 ====================================================================================================

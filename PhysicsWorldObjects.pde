@@ -19,6 +19,8 @@ public Shape Render = new Shape();
 
 public Level levelEditor = new Level();
 
+public UserInterface UserInterface = new UserInterface();
+
 
 
 
