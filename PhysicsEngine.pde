@@ -1,17 +1,8 @@
 
-public void settings() {
-    smooth(8);
-    if(System.getProperty("os.name").toLowerCase().contains("mac")) {
-        size(displayWidth, displayHeight - 125);
-    } else if(System.getProperty("os.name").toLowerCase().contains("windows")) {
-        size(displayWidth, displayHeight, FX2D);
-    } else {
-        throw new RuntimeException("OS not supported");
-    }
-}
-
 public void setup() {
-    windowMove(0, 22);
+    if(System.getProperty("os.name").toLowerCase().contains("mac")) {
+        windowMove(0, 22);
+    }
     textFont(createFont("InterDisplay-SemiBold.ttf", 128, true), 10);
 /*--------------------- Timing Utilities ---------------------*/
     FrameTimeUtility.init();

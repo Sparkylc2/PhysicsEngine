@@ -23,8 +23,7 @@ public class UI_TabBar {
 =========================================== Initialization =========================================
 */
     public void initializeTabBar() {   
-        textAlign(CENTER, CENTER);
-        textSize(UI_Constants.TAB_TEXT_SIZE);
+
         rectMode(CENTER);
 
         this.TEXT_POSITION = new float[UI_Constants.TAB_NAME.length];
@@ -80,10 +79,14 @@ public class UI_TabBar {
 
 
     public void initializeTextAndTabSelector() {
-        float totalTextWidth = 0;
+        textFont(UI_Constants.FONT[0]);
+        textAlign(CENTER, CENTER);
+        textSize(UI_Constants.TAB_TEXT_SIZE);
 
+        float totalTextWidth = 0;
         for(String text: UI_Constants.TAB_NAME) {
             totalTextWidth += textWidth(text);
+        
         }
 
         float padding = (UI_Constants.TAB_BAR_SHAPE_WIDTH - totalTextWidth) / (UI_Constants.TAB_NAME.length + 1);
@@ -160,12 +163,16 @@ public class UI_TabBar {
 */
     public void drawTabText() {
         fill(255);
+
+        textFont(UI_Constants.FONT[2]);
         textAlign(CENTER, CENTER);
         textSize(UI_Constants.TAB_TEXT_SIZE);
         text("Q", UI_Constants.TAB_BUTTON_Q_TEXT_POSITION_X, UI_Constants.TAB_BUTTON_TEXT_POSITION_Y);
         text("E", UI_Constants.TAB_BUTTON_E_TEXT_POSITION_X, UI_Constants.TAB_BUTTON_TEXT_POSITION_Y);
-        textAlign(CENTER, CENTER);
 
+        textFont(UI_Constants.FONT[0]);
+        textAlign(CENTER, CENTER);
+        textSize(UI_Constants.TAB_TEXT_SIZE);
         for(int i = 0; i < UI_Constants.TAB_NAME.length; i++) {
             text(UI_Constants.TAB_NAME[i], this.TEXT_POSITION[i], UI_Constants.TAB_TEXT_POSITION_Y);
         }

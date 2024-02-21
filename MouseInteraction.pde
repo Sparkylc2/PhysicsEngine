@@ -3,6 +3,7 @@ public void mousePressed(){
     if(mouseButton == LEFT){
         Mouse.updateMouseDownCoordinates();
         CurrentTabInteractionHandler.onMousePressed();
+        UI_Manager.getWindow().onMousePress();
         return;
     }
 }
@@ -11,8 +12,10 @@ public void mouseReleased() {
     if(mouseButton == LEFT) {
         Mouse.updateMouseUpCoordinates();
         CurrentTabInteractionHandler.onMouseReleased();
+         UI_Manager.getWindow().onMouseRelease();
         return;
     }
+
 }
 
 public void mouseClicked() {
@@ -34,6 +37,7 @@ public void mouseDragged() {
         return;
     }
     if(mouseButton == LEFT) {
+        //UI_Manager.getWindow().onMouseDrag();
         CurrentTabInteractionHandler.onMouseDragged();
     }
 }

@@ -1,21 +1,24 @@
 public class UI_Constants {
 
 /*
-======================================== Color Constants ===========================================
+======================================== Global Constants ==========================================
 */
-    public int BLUE_UNSELECTED = color(2, 60, 89);
-    public int BLUE_SELECTED = color(0, 123, 185);
-    public int GRAY_600 = color(22, 23, 23);
-    public int GRAY_500 = color(34, 35, 36);
-    public int GRAY_400 = color(42, 43, 43);
-    public int GRAY_300 = color(82, 82, 82);
-    public int GRAY_250 = color(107, 107, 107);
-    public int GRAY_200 = color(120, 120, 120);
-    public int GRAY_100 = color(150, 150, 150);
-    public int GRAY_PLACEHOLDER_TEXT = color(164, 164, 164);
-    public int GRAY_UNSELECTED_TEXT = color(183, 183, 183);
-    public int WHITE_TEXT = color(255, 255, 255);
-    public int TRANSPARENT = color(0, 0, 0, 0);
+    public final int BLUE_UNSELECTED = color(2, 60, 89);
+    public final int BLUE_SELECTED = color(0, 123, 185);
+    public final int GRAY_600 = color(22, 23, 23);
+    public final int GRAY_500 = color(34, 35, 36);
+    public final int GRAY_400 = color(42, 43, 43);
+    public final int GRAY_300 = color(82, 82, 82);
+    public final int GRAY_250 = color(107, 107, 107);
+    public final int GRAY_200 = color(120, 120, 120);
+    public final int GRAY_100 = color(150, 150, 150);
+    public final int GRAY_PLACEHOLDER_TEXT = color(164, 164, 164);
+    public final int GRAY_UNSELECTED_TEXT = color(183, 183, 183);
+    public final int WHITE_TEXT = color(255, 255, 255);
+    public final int TRANSPARENT = color(0, 0, 0, 0);
+
+    public final PFont[] FONT = {createFont("Inter-Bold.ttf", 48), createFont("Inter-Medium.ttf", 48), createFont("Inter-Regular.ttf", 48)};
+
     
 /*
 ======================================== Tab Constants =============================================
@@ -31,7 +34,7 @@ public class UI_Constants {
     public final float TAB_BAR_SHAPE_CENTER_POSITION_X;
     public final float TAB_BAR_SHAPE_CENTER_POSITION_Y;
 
-    public final int TAB_BAR_SHAPE_ROUNDING = 10;
+    public final int TAB_BAR_SHAPE_ROUNDING = 15;
 
 /*
 ======================================== Tab Selector Constants ====================================
@@ -40,7 +43,7 @@ public class UI_Constants {
     public final float TAB_SELECTOR_HEIGHT;
     public final float TAB_SELECTOR_CENTER_POSITION_Y;
 
-    public final int TAB_SELECTOR_ROUNDING = 10;
+    public final int TAB_SELECTOR_ROUNDING = 7;
 
 /*
 ======================================== Tab Button Constants ====================================
@@ -63,7 +66,7 @@ public class UI_Constants {
 
     public final float TAB_BUTTON_TEXT_POSITION_Y;
 
-    public final int TAB_BUTTON_ROUNDING = 10;
+    public final int TAB_BUTTON_ROUNDING = 15;
 
 /*
 ======================================== Tab Text Constants ========================================
@@ -72,7 +75,7 @@ public class UI_Constants {
     public final int TAB_TEXT_SIZE;
     public final String[] TAB_NAME = {"Settings", "Properties", "Creations", "Help"};
 
-    public final float TAB_TEXT_SIZE_PERCENTAGE_OF_TAB_BAR_HEIGHT = 0.4f;
+    public final float TAB_TEXT_SIZE_PERCENTAGE_OF_TAB_BAR_HEIGHT = 0.42f;
     public final float TAB_TEXT_POSITION_Y;
 
 
@@ -148,6 +151,7 @@ public class UI_Constants {
         this.TAB_BUTTON_E_TEXT_POSITION_X = this.TAB_BUTTON_E_POSITION_X;
 
         this.TAB_BUTTON_TEXT_POSITION_Y = this.TAB_BAR_SHAPE_CENTER_POSITION_Y;
+
         
         /*
         ======================================== HotBar Initialization =============================
@@ -167,6 +171,5 @@ public class UI_Constants {
 
         this.HOTBAR_SLOT_TEXT_PADDING_X = this.HOTBAR_SLOT_WIDTH * this.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_WIDTH;
         this.HOTBAR_SLOT_TEXT_PADDING_Y = this.HOTBAR_SLOT_HEIGHT * this.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_HEIGHT;
-
     }
 }

@@ -42,7 +42,7 @@ public class MouseObject {
     		return true;
     	} else {
             showCursorTrail = true;
-            noCursor();
+            //noCursor();
     		return false;
     	}
 	}

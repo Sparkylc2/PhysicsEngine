@@ -23,10 +23,7 @@ public class UI_HotBar {
 ======================================== Initialization ============================================
 */
     public void initializeHotbar() {
-        textAlign(CENTER, CENTER);
-        textSize(UI_Constants.TAB_TEXT_SIZE);
         rectMode(CENTER);
-        blendMode(BLEND);
 
         this.SLOT_POSITION = new float[UI_Constants.HOTBAR_SLOT_COUNT];
         this.TEXT_POSITION_X = new float[UI_Constants.HOTBAR_SLOT_COUNT];
@@ -70,6 +67,7 @@ public class UI_HotBar {
 
 
     public void initializeText() {
+        textFont(UI_Constants.FONT[0]);
         textSize(UI_Constants.HOTBAR_TEXT_SIZE);
         textAlign(CENTER, CENTER);
 
@@ -120,8 +118,9 @@ public class UI_HotBar {
 
 
     public void drawHotbarText() {
-        textSize(UI_Constants.HOTBAR_TEXT_SIZE);
+        textFont(UI_Constants.FONT[0]);
         textAlign(CENTER, CENTER);
+        textSize(UI_Constants.HOTBAR_TEXT_SIZE);
 
         for(int i = 0; i < UI_Constants.HOTBAR_SLOT_COUNT; i++) {
             text(i + 1, this.TEXT_POSITION_X[i], this.TEXT_POSITION_Y[i]);

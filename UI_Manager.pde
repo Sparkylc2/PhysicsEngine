@@ -8,7 +8,7 @@ public class UI_Manager {
         UI_Constants = new UI_Constants();
         this.TAB_BAR = new UI_TabBar();
         this.HOT_BAR = new UI_HotBar();
-        this.WINDOW = new UI_Window();
+        this.WINDOW = new UI_Window("Properties (rigidbody)", 0);
     }
 
     public void draw() {
@@ -23,15 +23,22 @@ public class UI_Manager {
 ====================================== Getters and Setters =========================================
 */
 
+    public UI_Window getWindow() {
+        return this.WINDOW;
+    }
+
     public UI_HotBar getHotBar() {
         return this.HOT_BAR;
     }
+
     public UI_TabBar getTabBar() {
         return this.TAB_BAR;
     }
+
     public int getActiveTabID() {
         return this.TAB_BAR.getActiveTabID();
     }
+    
     public void setActiveTabID(int id) {
         this.TAB_BAR.setActiveTabID(id);
     }
