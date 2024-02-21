@@ -1,4 +1,7 @@
-
+@Override
+void exit() {
+ java.lang.System.exit(0);
+}
 
 public void keyPressed() {
     KeyAndTabHandler.onKeyPressed(keyCode);
@@ -6,31 +9,52 @@ public void keyPressed() {
 
 
     if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_Q)) {
-        PShape TabShape = UserInterface.TabObject.getTabShape();
-        PShape Q = TabShape.getChild(1);
-        Q.setFill(color(82, 82, 82));
-        int newTabID = UserInterface.getActiveTabID() - 1;
-        if (newTabID < 0) {
-            newTabID = 3; // Wrap around to the highest tab id
-        }
-        UserInterface.setActiveTabID(newTabID);
+        UI_Manager.getTabBar().onQPressed();
     }
     
     if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_E)) {
-        PShape TabShape = UserInterface.TabObject.getTabShape();
-        PShape E = TabShape.getChild(2);
-        E.setFill(color(82, 82, 82));
-        UserInterface.setActiveTabID((UserInterface.getActiveTabID() + 1) % 4);
+        UI_Manager.getTabBar().onEPressed();
     }
 
-    if(keyCode == LEFT) {
-        KeyAndTabHandler.setActiveTabID((KeyAndTabHandler.getActiveTabID() - 1) < 0 ? gui.TabCount : (KeyAndTabHandler.getActiveTabID() - 1));
-        KeyAndTabHandler.setActiveTabElement(KeyAndTabHandler.getActiveTabID());
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_1)) {
+        UI_Manager.getHotBar().setActiveSlotID(0);
+        UI_Manager.getTabBar().setActiveTabID(1);
     }
-    if(keyCode == RIGHT) {
-        KeyAndTabHandler.setActiveTabID((KeyAndTabHandler.getActiveTabID() + 1) > gui.TabCount ? 0 : (KeyAndTabHandler.getActiveTabID() + 1));
-        KeyAndTabHandler.setActiveTabElement(KeyAndTabHandler.getActiveTabID());
+
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_2)) {
+        UI_Manager.getHotBar().setActiveSlotID(1);
+        UI_Manager.getTabBar().setActiveTabID(1);
     }
+
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_3)) {
+        UI_Manager.getHotBar().setActiveSlotID(2);
+        UI_Manager.getTabBar().setActiveTabID(1);
+    }
+
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_4)) {
+        UI_Manager.getHotBar().setActiveSlotID(3);
+        UI_Manager.getTabBar().setActiveTabID(1);
+    }
+
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_5)) {
+        UI_Manager.getHotBar().setActiveSlotID(4);
+        UI_Manager.getTabBar().setActiveTabID(1);
+    }
+
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_6)) {
+        UI_Manager.getHotBar().setActiveSlotID(5);
+        UI_Manager.getTabBar().setActiveTabID(1);
+    }
+
+    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_7)) {
+        UI_Manager.getHotBar().setActiveSlotID(6);
+        UI_Manager.getTabBar().setActiveTabID(1);
+    }
+
+    if(keyCode == ESC) {
+        exit();
+    }
+    
     if(keyCode == ENTER) {
         Mouse.getMouseObjectResults().clear();
     }
@@ -76,16 +100,11 @@ public void keyReleased() {
     KeyAndTabHandler.onKeyReleased(keyCode);
 
     if(!KeyAndTabHandler.isKeyDown(KeyEvent.VK_Q)) {
-        PShape TabShape = UserInterface.TabObject.getTabShape();
-        PShape Q = TabShape.getChild(1);
-        Q.setFill(color(22, 23, 23));
-
+        UI_Manager.getTabBar().onQReleased();
     }
 
     if(!KeyAndTabHandler.isKeyDown(KeyEvent.VK_E)) {
-        PShape TabShape = UserInterface.TabObject.getTabShape();
-        PShape E = TabShape.getChild(2);
-        E.setFill(color(22, 23, 23));
+        UI_Manager.getTabBar().onEReleased();
     }
 }
 

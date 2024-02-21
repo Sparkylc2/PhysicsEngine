@@ -1,27 +1,45 @@
 
+public void settings() {
+    smooth(8);
+    if(System.getProperty("os.name").toLowerCase().contains("mac")) {
+        size(displayWidth, displayHeight - 125);
+    } else if(System.getProperty("os.name").toLowerCase().contains("windows")) {
+        size(displayWidth, displayHeight, FX2D);
+    } else {
+        throw new RuntimeException("OS not supported");
+    }
+}
 
 public void setup() {
+    windowMove(0, 22);
+    textFont(createFont("InterDisplay-SemiBold.ttf", 128, true), 10);
 /*--------------------- Timing Utilities ---------------------*/
     FrameTimeUtility.init();
 /*------------------------------------------------------------*/
 
 
-/*--------------------- Camera Utilities ---------------------*/
-    size(1500, 1000, FX2D);
+/*
+--------------------- OS Screen Setup ------------------------*/
+
+
+    // Rest of your setup code...
+
+   //size(1500, 1000, FX2D);
+    //size(1250, 800);
     //size(1920, 1080);
-    fullScreen();
-    //windowMove(10, 4);
+    //fullScreen();
     frameRate(300);
+/*--------------------- Camera Utilities ---------------------*/
     Camera = new Camera();
     
 /*------------------------------------------------------------*/
 
 /*---------------------------- UI ----------------------------*/
-    userInterface = new ControlP5(this);
-    gui = new GUI(userInterface);
-    gui.initialize();
+    //userInterface = new ControlP5(this);
+    //gui = new GUI(userInterface);
+    //gui.initialize();
 
-    UserInterface.setup();
+    UI_Manager.init();
 /*------------------------------------------------------------*/
 
 /*-------------------------- Rigidbodies ------------------------*/
@@ -70,6 +88,7 @@ public void setup() {
 }
 
 
+
 public void draw() {
     FrameTimeUtility.calculateFrameTime();
 
@@ -82,14 +101,16 @@ public void draw() {
         
             /*--------------------------------------------------------*/
         
-        gui.checkGUIRepositioning();
+        //gui.checkGUIRepositioning();
         Camera.onFrameEnd();
+        UI_Manager.draw();
     
     FrameTimeUtility.displayTimings();
     FrameTimeUtility.updateFrameTime();
 }
 
 
+/*
 public void controlEvent(ControlEvent theEvent) {
     if(theEvent.isTab()) {
         switch(theEvent.getTab().getId()) {
@@ -106,3 +127,4 @@ public void controlEvent(ControlEvent theEvent) {
         }
     }
 }
+*/

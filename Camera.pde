@@ -92,6 +92,5 @@ public class Camera {
     public void onFrameEnd() {
         //resetTransform();
         popMatrix();
-        UserInterface.draw();
     }
 }

@@ -831,9 +831,7 @@ public class GUI {
         GUI_GROUP_POSITION_Y = this.calculateGroupPositionY();
         GUI_GLOBAL_GROUP_WIDTH = this.globalGroupWidth;
         GUI_GLOBAL_GROUP_HEIGHT = this.globalGroupHeight;
-        PFont pFont = createFont("InterDisplay-SemiBold.ttf", 10, true);
-        textFont(pFont, 10);
-        userInterface.setFont(new ControlFont(pFont, 10));
+        //userInterface.setFont(new ControlFont(pFont, 10));
     }
 
     public void updateControllerColors() {

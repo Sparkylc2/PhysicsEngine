@@ -495,7 +495,6 @@ public void StepBodies(float dt, int totalIterations) {
         return;
     }
     
-    List<Thread> threads = new ArrayList<Thread>();
 
     for(Rigidbody rigidbody : rigidbodyList) {
 
