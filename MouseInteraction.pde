@@ -3,7 +3,7 @@ public void mousePressed(){
     if(mouseButton == LEFT){
         Mouse.updateMouseDownCoordinates();
         CurrentTabInteractionHandler.onMousePressed();
-        UI_Manager.getWindow().onMousePress();
+        UI_Manager.onMousePress();
         return;
     }
 }
@@ -12,7 +12,7 @@ public void mouseReleased() {
     if(mouseButton == LEFT) {
         Mouse.updateMouseUpCoordinates();
         CurrentTabInteractionHandler.onMouseReleased();
-         UI_Manager.getWindow().onMouseRelease();
+        UI_Manager.onMouseRelease();
         return;
     }
 
@@ -37,7 +37,7 @@ public void mouseDragged() {
         return;
     }
     if(mouseButton == LEFT) {
-        //UI_Manager.getWindow().onMouseDrag();
+        UI_Manager.onMouseDrag();
         CurrentTabInteractionHandler.onMouseDragged();
     }
 }

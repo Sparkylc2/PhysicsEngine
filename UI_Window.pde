@@ -9,7 +9,6 @@ public class UI_Window {
 
     private PShape Window_Container;
 
-
     /*
     Visuals
     */
@@ -26,16 +25,18 @@ public class UI_Window {
     private ArrayList<UI_Element> Window_Elements = new ArrayList<UI_Element>();
 
 
+
     /*
     Interaction
     */
     private PVector initialMouseDragPosition = new PVector();
-    private boolean wasMousePressed = false;
 
     private boolean isMouseOverWindow = false;
+    private boolean isMouseOverWindowTextContainer = false;
+    private boolean isMouseOverWindowFormContainer = false;
+
     private boolean isDragging = false;
-    private boolean hasDragged = false;
-    private boolean isSelected = false;
+    private boolean wasMousePressedOverWindow = false;
     /*
     For Testing
     */
@@ -80,10 +81,25 @@ public class UI_Window {
             Window_Container_Stroke.setStroke(UI_Constants.GRAY_400);
             Window_Container_Stroke.setStrokeWeight(2);
             Window_Container_Stroke.setFill(false);
+        
+
+        PShape Window_Container_Listener = UI_Constants.createElementListener(Window_Container_Stroke);
+                Window_Container_Listener.setName("Window_Container_Listener");
+        PShape Window_Form_Container_Listener = UI_Constants.createElementListener(Window_Form_Container);
+                Window_Form_Container_Listener.setName("Window_Form_Container_Listener");
+        PShape Window_Text_Container_Listener = UI_Constants.createElementListener(Window_Text_Container);
+                Window_Text_Container_Listener.setName("Window_Text_Container_Listener");
 
         this.Window_Container.addChild(Window_Form_Container);
         this.Window_Container.addChild(Window_Text_Container);
         this.Window_Container.addChild(Window_Container_Stroke);
+        this.Window_Container.addChild(Window_Container_Listener);
+        this.Window_Container.addChild(Window_Form_Container_Listener);
+        this.Window_Container.addChild(Window_Text_Container_Listener);
+
+
+
+
         this.Window_Elements.add(new UI_Toggle("Test", 0, this));
         this.Window_Elements.add(new UI_Toggle("Test2", 1, this));
         this.Window_Container.addChild(this.Window_Elements.get(0).getShape());
@@ -115,55 +131,58 @@ public class UI_Window {
         scale(this.Window_Scale);
         text(this.Window_Name, this.Window_Text_Position.x, this.Window_Text_Position.y);
         popMatrix();
-
         this.updateIsMouseOverWindow();
-        this.onMouseDrag();
+        //this.onMouseDrag();
     }
 /*
 ============================================= Interaction ==========================================
 */
     public void onMouseRelease() {
         this.isDragging = false;
+        this.wasMousePressedOverWindow = false;
     }
-    public void onMouseDrag() {
-        if (mousePressed && mouseButton == LEFT && !this.wasMousePressed) {
-            if (this.isMouseOverWindow) {
-                this.onWindowSelect();
+
+    public boolean onMouseDrag() {
+        if (mousePressed && this.isMouseOverWindowTextContainer && this.wasMousePressedOverWindow) {
+            if (!this.isDragging) {
                 this.initialMouseDragPosition.set(mouseX, mouseY);
                 this.isDragging = true;
-            }
-        } else if(mousePressed && mouseButton == LEFT && this.isDragging) { 
-            PVector mouseDragDifference = PVector.sub(new PVector(mouseX, mouseY), this.initialMouseDragPosition);
-
-            this.Window_Position.add(mouseDragDifference);
-            this.Window_Container.resetMatrix();
-            this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
-            this.Window_Container.scale(this.Window_Scale);
-
-            this.initialMouseDragPosition.set(mouseX, mouseY);
-        } 
-        this.wasMousePressed = mousePressed;
-    }
-
-    public void onMousePress() {
-        if(mouseButton == LEFT) {
-            if(this.isMouseOverWindow) {
-                this.onWindowSelect();
             } else {
-                this.onWindowDeselect();
+                PVector mouseDragDifference = PVector.sub(new PVector(mouseX, mouseY), this.initialMouseDragPosition);
+                this.Window_Position.add(mouseDragDifference);
+                this.Window_Container.resetMatrix();
+                this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
+                this.initialMouseDragPosition.set(mouseX, mouseY);
             }
+            return true;
+        } else {
+            this.isDragging = false;
+            return false;
         }
     }
 
+    public boolean onMousePress() {
+        if(mouseButton == LEFT) {
+            if(this.isMouseOverWindow) {
+                this.wasMousePressedOverWindow = true;
+                this.deselectAllWindows();
+                this.onWindowSelect();
+                return true;
+            } else {
+                this.onWindowDeselect();
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
     public void onWindowSelect() {
-        this.isSelected = true;
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
     }
 
     public void onWindowDeselect() {
-        this.isSelected = false;
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.GRAY_400);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.GRAY_500);
     }
@@ -171,16 +190,33 @@ public class UI_Window {
     public void onWindowClose() {
         this.Window_Visibility = false;
     }
+
     public void updateIsMouseOverWindow() {
-        if (mouseX > this.Window_Position.x - this.Window_Container_Size.x / 2 * this.Window_Scale && 
-            mouseX < this.Window_Position.x + this.Window_Container_Size.x / 2 * this.Window_Scale && 
-            mouseY > this.Window_Position.y - this.Window_Container_Size.y / 2 * this.Window_Scale && 
-            mouseY < this.Window_Position.y + this.Window_Container_Size.y / 2 * this.Window_Scale) {
+        float x = mouseX - this.Window_Position.x;
+        float y = mouseY - this.Window_Position.y;
+
+        if(this.Window_Container.getChild("Window_Container_Listener").contains(x, y)) {
+            if(this.Window_Container.getChild("Window_Text_Container_Listener").contains(x, y)) {
+                this.isMouseOverWindowTextContainer = true;
+                this.isMouseOverWindowFormContainer = false;
+            } else {
+                this.isMouseOverWindowTextContainer = false;
+                this.isMouseOverWindowFormContainer = true;
+            }
             this.isMouseOverWindow = true;
         } else {
             this.isMouseOverWindow = false;
+            this.isMouseOverWindowTextContainer = false;
+            this.isMouseOverWindowFormContainer = false;
         }
     }
+
+    public void deselectAllWindows() {
+        for (int i = 0; i < UI_Manager.WINDOWS.size(); i++) {
+            UI_Manager.WINDOWS.get(i).onWindowDeselect();
+        }
+    }
+
 
 /*
 ============================================= Methods ==============================================

@@ -173,4 +173,25 @@ public class UI_Constants {
         this.HOTBAR_SLOT_TEXT_PADDING_X = this.HOTBAR_SLOT_WIDTH * this.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_WIDTH;
         this.HOTBAR_SLOT_TEXT_PADDING_Y = this.HOTBAR_SLOT_HEIGHT * this.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_HEIGHT;
     }
+
+
+    public PShape createElementListener(PShape Element_Shape) {
+        float elementX = Element_Shape.getParams()[0];
+        float elementY = Element_Shape.getParams()[1];
+        float elementWidth = Element_Shape.getParams()[2];
+        float elementHeight = Element_Shape.getParams()[3];
+
+        PShape Element_Listener = createShape();
+        Element_Listener.beginShape();
+        Element_Listener.vertex(elementX - elementWidth/2, elementY - elementHeight/2);
+        Element_Listener.vertex(elementX + elementWidth/2, elementY - elementHeight/2);
+        Element_Listener.vertex(elementX + elementWidth/2, elementY + elementHeight/2);
+        Element_Listener.vertex(elementX - elementWidth/2, elementY + elementHeight/2);
+        Element_Listener.endShape(CLOSE);
+
+        Element_Listener.setFill(false);
+        Element_Listener.setStroke(false);
+
+        return Element_Listener;
+    }
 }
