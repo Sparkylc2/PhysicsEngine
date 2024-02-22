@@ -30,7 +30,9 @@ public class UI_Window {
     Interaction
     */
     private PVector initialMouseDragPosition = new PVector();
+    
 
+    private boolean isActiveWindow = false;
     private boolean isMouseOverWindow = false;
     private boolean isMouseOverWindowTextContainer = false;
     private boolean isMouseOverWindowFormContainer = false;
@@ -167,6 +169,7 @@ public class UI_Window {
                 this.wasMousePressedOverWindow = true;
                 this.deselectAllWindows();
                 this.onWindowSelect();
+                this.elementOnMousePress();
                 return true;
             } else {
                 this.onWindowDeselect();
@@ -177,12 +180,21 @@ public class UI_Window {
         }
     }
 
+    public void elementOnMousePress() {
+        for(UI_Element element : this.Window_Elements) {
+                element.onMousePress();
+
+        }
+    }
+
     public void onWindowSelect() {
+        this.isActiveWindow = true;
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
     }
 
     public void onWindowDeselect() {
+        this.isActiveWindow = false;
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.GRAY_400);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.GRAY_500);
     }

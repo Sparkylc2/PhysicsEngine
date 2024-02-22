@@ -27,6 +27,8 @@ public class UI_Toggle extends UI_Element {
         this.initializeToggle();
     }
 
+
+    //REWRITE THIS JUST CHANGING THE Y COORD AND USING THE SAME LOGIC FOR EVERYTHING ELSE
     private void initializeToggle() {
         int numElements = this.Toggle_ParentWindow.getWindowElementArrayListSize();
         if(numElements == 0) {
@@ -35,17 +37,61 @@ public class UI_Toggle extends UI_Element {
                                                                    -this.Toggle_ParentWindow.getWindowFormContainerHeight() / 2 + this.Element_Container_Top_Padding_Y + this.Element_Height / 2,
                                                                    this.Element_Base_Unselected_Color, this.Element_Base_Unselected_Stroke_Color,
                                                                    this.Element_Stroke_Weight, this.Element_Rounding);
+                Toggle_Shape_Base.setName("Toggle_Shape_Base");
+                
+            PShape Toggle_TickBox = createShape(RECT, Toggle_Shape_Base.getParam(0) - Toggle_Shape_Base.getParam(2) / 2 + this.Element_Tickbox_Padding_X + this.Element_Tickbox_Width / 2, 
+                                                      Toggle_Shape_Base.getParam(1), this.Element_Tickbox_Width, this.Element_Tickbox_Height, this.Element_Rounding);
+                Toggle_TickBox.setName("TickBox");
+                Toggle_TickBox.setFill(UI_Constants.GRAY_600);
+                Toggle_TickBox.setStroke(UI_Constants.GRAY_600);
+                Toggle_TickBox.setStrokeWeight(this.Element_Stroke_Weight);
+
+            PShape Toggle_Shape_Base_Listener = this.createElementBaseListener(Toggle_Shape_Base);
+                Toggle_Shape_Base_Listener.setName("Toggle_Shape_Base_Listener");
+
+
             this.Toggle_Shape_Group.addChild(Toggle_Shape_Base);
+            this.Toggle_Shape_Group.addChild(Toggle_TickBox);
+            this.Toggle_Shape_Group.addChild(Toggle_Shape_Base_Listener);
+            
         } else {
             PShape Toggle_Shape_Base = this.createElementBaseShape(this.Toggle_Name, this.Element_Width, 
                                                                    this.Element_Height, 0, 
-                                                                   this.Element_Container_Top_Padding_Y + this.Element_Height * numElements + this.Element_Height / 2 + this.Element_Element_Padding_Y * (numElements - 1),
+                                                                   (this.Element_Height - this.Toggle_ParentWindow.getWindowFormContainerHeight()) /2 + (this.Element_Height + this.Element_Element_Padding_Y) * numElements + this.Element_Container_Top_Padding_Y,
                                                                    this.Element_Base_Unselected_Color, this.Element_Base_Unselected_Stroke_Color,
                                                                    this.Element_Stroke_Weight, this.Element_Rounding);
+                Toggle_Shape_Base.setName("Toggle_Shape_Base");
+            PShape Toggle_TickBox = createShape(RECT, Toggle_Shape_Base.getParam(0) - Toggle_Shape_Base.getParam(2) / 2 + this.Element_Tickbox_Padding_X + this.Element_Tickbox_Width / 2, 
+                                                      Toggle_Shape_Base.getParam(1), this.Element_Tickbox_Width, this.Element_Tickbox_Height, this.Element_Rounding);
+                Toggle_TickBox.setName("TickBox");
+                Toggle_TickBox.setFill(UI_Constants.GRAY_600);
+                Toggle_TickBox.setStroke(UI_Constants.GRAY_600);
+                Toggle_TickBox.setStrokeWeight(this.Element_Stroke_Weight);
+
+            PShape Toggle_Shape_Base_Listener = this.createElementBaseListener(Toggle_Shape_Base);
+                Toggle_Shape_Base_Listener.setName("Toggle_Shape_Base_Listener");
+
+
             this.Toggle_Shape_Group.addChild(Toggle_Shape_Base);
+            this.Toggle_Shape_Group.addChild(Toggle_TickBox);
+            this.Toggle_Shape_Group.addChild(Toggle_Shape_Base_Listener);
         }
     }
 
+    @Override
+    public void onMousePress() {
+        float x = mouseX - this.Toggle_ParentWindow.getWindowPosition().x;
+        float y = mouseY - this.Toggle_ParentWindow.getWindowPosition().y;
+
+        if(this.Toggle_Shape_Group.getChild("Toggle_Shape_Base_Listener").contains(x, y)) {
+            this.Toggle_State = !this.Toggle_State;
+            if(this.Toggle_State) {
+                this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setFill(UI_Constants.BLUE_SELECTED);
+            } else {
+                this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setFill(UI_Constants.BLUE_SELECTED);
+            }
+        }
+    }
     @Override
     public PShape getShape() {
         return this.Toggle_Shape_Group;

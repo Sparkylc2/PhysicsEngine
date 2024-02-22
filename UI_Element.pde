@@ -94,4 +94,8 @@ public abstract class UI_Element {
     public PShape getShape() {
         return null;
     }
+
+    public void onMousePress() {
+        return;
+    }
 }
