@@ -10,8 +10,6 @@ public class UI_Window {
     private PShape Window_Container;
 
 
-    //private UI_Form UI_Form;
-
     /*
     Visuals
     */
@@ -22,6 +20,10 @@ public class UI_Window {
     private float Window_Text_Width;
     private final float Window_Rounding = 7;
 
+    /*
+    Elements
+    */
+    private ArrayList<UI_Element> Window_Elements = new ArrayList<UI_Element>();
 
 
     /*
@@ -44,7 +46,9 @@ public class UI_Window {
     }
 
 
-
+/*
+============================================= Initialization =======================================
+*/
     private void initializeWindow() {
         textFont(UI_Constants.FONT[0]);
         textAlign(CENTER, CENTER);
@@ -80,6 +84,10 @@ public class UI_Window {
         this.Window_Container.addChild(Window_Form_Container);
         this.Window_Container.addChild(Window_Text_Container);
         this.Window_Container.addChild(Window_Container_Stroke);
+        this.Window_Elements.add(new UI_Toggle("Test", 0, this));
+        this.Window_Elements.add(new UI_Toggle("Test2", 1, this));
+        this.Window_Container.addChild(this.Window_Elements.get(0).getShape());
+        this.Window_Container.addChild(this.Window_Elements.get(1).getShape());
 
         this.Window_Container.resetMatrix();
         this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
@@ -90,6 +98,9 @@ public class UI_Window {
         this.Window_Text_Position.set(-this.Window_Text_Container_Size.x / 2 + textWidth(this.Window_Name) / 2 + 15, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2);
     }
 
+/*
+============================================= Draw =================================================
+*/
     public void draw() {
         fill(255);
         textFont(UI_Constants.FONT[0]);
@@ -108,7 +119,9 @@ public class UI_Window {
         this.updateIsMouseOverWindow();
         this.onMouseDrag();
     }
-
+/*
+============================================= Interaction ==========================================
+*/
     public void onMouseRelease() {
         this.isDragging = false;
     }
@@ -155,6 +168,9 @@ public class UI_Window {
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.GRAY_500);
     }
 
+    public void onWindowClose() {
+        this.Window_Visibility = false;
+    }
     public void updateIsMouseOverWindow() {
         if (mouseX > this.Window_Position.x - this.Window_Container_Size.x / 2 * this.Window_Scale && 
             mouseX < this.Window_Position.x + this.Window_Container_Size.x / 2 * this.Window_Scale && 
@@ -164,5 +180,70 @@ public class UI_Window {
         } else {
             this.isMouseOverWindow = false;
         }
+    }
+
+/*
+============================================= Methods ==============================================
+*/
+
+    public void addElement(UI_Element element) {
+        this.Window_Elements.add(element);
+    }
+
+    public void removeElement(UI_Element element) {
+        this.Window_Elements.remove(element);
+    }
+
+/*
+======================================== Getters & Setters =========================================
+*/
+
+    public float getWindowContainerWidth() {
+        return this.Window_Container_Size.x;
+    }
+    public float getWindowContainerHeight() {
+        return this.Window_Container_Size.y;
+    }
+    public PVector getWindowContainerDimensions() {
+        return this.Window_Container_Size;
+    }
+    public float getWindowTextContainerWidth() {
+        return this.Window_Text_Container_Size.x;
+    }
+    public float getWindowTextContainerHeight() {
+        return this.Window_Text_Container_Size.y;
+    }
+    public PVector getWindowTextContainerDimensions() {
+        return this.Window_Text_Container_Size;
+    }
+    public float getWindowFormContainerWidth() {
+        return this.Window_Form_Container_Size.x;
+    }
+    public float getWindowFormContainerHeight() {
+        return this.Window_Form_Container_Size.y;
+    }
+    public PVector getWindowFormContainerDimensions() {
+        return this.Window_Form_Container_Size;
+    }
+    public float getWindowContainerCenterPositionX () {
+        return this.Window_Position.x;
+    }
+    public float getWindowContainerCenterPositionY() {
+        return this.Window_Position.y;
+    }
+    public float getWindowPositionX() {
+        return this.Window_Position.x;
+    }
+    public float getWindowPositionY() {
+        return this.Window_Position.y;
+    }
+    public PVector getWindowPosition() {
+        return this.Window_Position;
+    }
+    public int getWindowElementArrayListSize() {
+        return this.Window_Elements.size();
+    }
+    public int getWindowID() {
+        return this.Window_ID;
     }
 }

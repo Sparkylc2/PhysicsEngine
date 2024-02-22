@@ -18,6 +18,7 @@ public class UI_Constants {
     public final int TRANSPARENT = color(0, 0, 0, 0);
 
     public final PFont[] FONT = {createFont("Inter-Bold.ttf", 48), createFont("Inter-Medium.ttf", 48), createFont("Inter-Regular.ttf", 48)};
+    public final float STROKE_WEIGHT = 1.5;
 
     
 /*
