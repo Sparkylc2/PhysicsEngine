@@ -11,15 +11,15 @@ public class UI_Manager {
         this.TAB_BAR = new UI_TabBar();
         this.HOT_BAR = new UI_HotBar();
         this.WINDOWS = new ArrayList<UI_Window>();
-        this.WINDOWS.add(new UI_Window("Properties (rigidbody)", 0));
-        this.WINDOWS.add(new UI_Window("Properties (forces)", 1));
+        this.WINDOWS.add((UI_Window) new UI_PropertiesRigidbodyWindow());
+        this.WINDOWS.add((UI_Window) new UI_PropertiesForceWindow());
     }
 
     public void draw() {
         this.TAB_BAR.draw();
         this.HOT_BAR.draw();
         for(UI_Window window : this.WINDOWS) {
-            window.draw();
+                window.draw();
         }
     }
 

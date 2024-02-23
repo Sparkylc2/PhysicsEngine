@@ -181,7 +181,6 @@ public class UI_TabBar {
     public void drawTabGraphics() {
         shape(this.TAB_SHAPE, 0, 0);
         this.drawTabText();
-        textSize(10);
     }
 
 /*
@@ -194,7 +193,6 @@ public class UI_TabBar {
     public int getActiveTabID() {
         return this.activeTabID;
     }
-
 
     public void setActiveTabID(int id) {
         this.activeTabID = id;

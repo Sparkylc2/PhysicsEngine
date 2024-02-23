@@ -1,44 +1,44 @@
 public class UI_Window {
     
-    private final String Window_Name;
-    private PVector Window_Position = new PVector(500, 400);
-    private final int Window_ID;
+    public final String Window_Name;
+    public PVector Window_Position = new PVector(500, 400);
+    public final int Window_ID;
 
-    private boolean Window_Visibility = true;
-    private float Window_Scale = displayWidth / 1512;
+    public boolean Window_Visibility = true;
+    public float Window_Scale = displayWidth / 1512;
 
-    private PShape Window_Container;
+    public PShape Window_Container;
 
     /*
     Visuals
     */
-    private final PVector Window_Container_Size = new PVector(285, 400);
-    private final PVector Window_Text_Container_Size = new PVector(285, 35);
-    private final PVector Window_Form_Container_Size = new PVector(285, 365);
-    private final PVector Window_Text_Position = new PVector();
-    private float Window_Text_Width;
-    private final float Window_Rounding = 7;
+    public final PVector Window_Container_Size = new PVector(285, 400);
+    public final PVector Window_Text_Container_Size = new PVector(285, 35);
+    public final PVector Window_Form_Container_Size = new PVector(285, 365);
+    public final PVector Window_Text_Position = new PVector();
+    public float Window_Text_Width;
+    public final float Window_Rounding = 7;
 
     /*
     Elements
     */
-    private ArrayList<UI_Element> Window_Elements = new ArrayList<UI_Element>();
+    public ArrayList<UI_Element> Window_Elements = new ArrayList<UI_Element>();
 
 
 
     /*
     Interaction
     */
-    private PVector initialMouseDragPosition = new PVector();
+    public PVector initialMouseDragPosition = new PVector();
     
 
-    private boolean isActiveWindow = false;
-    private boolean isMouseOverWindow = false;
-    private boolean isMouseOverWindowTextContainer = false;
-    private boolean isMouseOverWindowFormContainer = false;
+    public boolean isActiveWindow = false;
+    public boolean isMouseOverWindow = false;
+    public boolean isMouseOverWindowTextContainer = false;
+    public boolean isMouseOverWindowFormContainer = false;
 
-    private boolean isDragging = false;
-    private boolean wasMousePressedOverWindow = false;
+    public boolean isDragging = false;
+    public boolean wasMousePressedOverWindow = false;
     /*
     For Testing
     */
@@ -52,10 +52,11 @@ public class UI_Window {
 /*
 ============================================= Initialization =======================================
 */
-    private void initializeWindow() {
+    public void initializeWindow() {
         textFont(UI_Constants.FONT[0]);
+        textSize(UI_Constants.WINDOW_TITLE_TEXT_SIZE);
         textAlign(CENTER, CENTER);
-        textSize(18);
+
         rectMode(CENTER);
         this.Window_Container = createShape(GROUP);
 
@@ -84,6 +85,29 @@ public class UI_Window {
             Window_Container_Stroke.setStrokeWeight(2);
             Window_Container_Stroke.setFill(false);
         
+        PShape Window_Container_TickMark = createShape(GROUP);
+            Window_Container_TickMark.setName("Window_Container_TickMark");
+
+            PShape TickMark_LineOne = createShape();
+                TickMark_LineOne.beginShape();
+                    TickMark_LineOne.vertex(this.Window_Text_Container_Size.x / 2 - 17, Window_Text_Container.getParam(1) - 6);
+                    TickMark_LineOne.vertex(this.Window_Text_Container_Size.x / 2 - 29, Window_Text_Container.getParam(1) + 6);
+                TickMark_LineOne.endShape();
+                TickMark_LineOne.setFill(false);
+                TickMark_LineOne.setStrokeWeight(2);
+                TickMark_LineOne.setStroke(UI_Constants.GRAY_UNSELECTED_TEXT);
+
+            PShape TickMark_LineTwo = createShape();
+                TickMark_LineTwo.beginShape();
+                    TickMark_LineTwo.vertex(this.Window_Text_Container_Size.x / 2 - 29, Window_Text_Container.getParam(1) - 6);
+                    TickMark_LineTwo.vertex(this.Window_Text_Container_Size.x / 2 - 17, Window_Text_Container.getParam(1) + 6);
+                TickMark_LineTwo.endShape();
+                TickMark_LineTwo.setFill(false);
+                TickMark_LineTwo.setStrokeWeight(2);
+                TickMark_LineTwo.setStroke(UI_Constants.GRAY_UNSELECTED_TEXT);
+            
+            Window_Container_TickMark.addChild(TickMark_LineOne);
+            Window_Container_TickMark.addChild(TickMark_LineTwo);
 
         PShape Window_Container_Listener = UI_Constants.createElementListener(Window_Container_Stroke);
                 Window_Container_Listener.setName("Window_Container_Listener");
@@ -91,21 +115,26 @@ public class UI_Window {
                 Window_Form_Container_Listener.setName("Window_Form_Container_Listener");
         PShape Window_Text_Container_Listener = UI_Constants.createElementListener(Window_Text_Container);
                 Window_Text_Container_Listener.setName("Window_Text_Container_Listener");
-
+        PShape Window_Container_TickMark_Listener = createShape();
+                Window_Container_TickMark_Listener.beginShape();
+                    Window_Container_TickMark_Listener.vertex(this.Window_Text_Container_Size.x / 2 - 29, Window_Text_Container.getParam(1) - 6);
+                    Window_Container_TickMark_Listener.vertex(this.Window_Text_Container_Size.x / 2 - 17, Window_Text_Container.getParam(1) - 6);
+                    Window_Container_TickMark_Listener.vertex(this.Window_Text_Container_Size.x / 2 - 17, Window_Text_Container.getParam(1) + 6);
+                    Window_Container_TickMark_Listener.vertex(this.Window_Text_Container_Size.x / 2 - 29, Window_Text_Container.getParam(1) + 6);
+                Window_Container_TickMark_Listener.endShape(CLOSE);
+                Window_Container_TickMark_Listener.setName("Window_Container_TickMark_Listener");
+                Window_Container_TickMark_Listener.setFill(false);
+                Window_Container_TickMark_Listener.setStroke(false);
+            
         this.Window_Container.addChild(Window_Form_Container);
         this.Window_Container.addChild(Window_Text_Container);
         this.Window_Container.addChild(Window_Container_Stroke);
+        this.Window_Container.addChild(Window_Container_TickMark);
+
         this.Window_Container.addChild(Window_Container_Listener);
         this.Window_Container.addChild(Window_Form_Container_Listener);
         this.Window_Container.addChild(Window_Text_Container_Listener);
-
-
-
-
-        this.Window_Elements.add(new UI_Toggle("Test", 0, this));
-        this.Window_Elements.add(new UI_Toggle("Test2", 1, this));
-        this.Window_Container.addChild(this.Window_Elements.get(0).getShape());
-        this.Window_Container.addChild(this.Window_Elements.get(1).getShape());
+        this.Window_Container.addChild(Window_Container_TickMark_Listener);
 
         this.Window_Container.resetMatrix();
         this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
@@ -118,33 +147,64 @@ public class UI_Window {
 
 /*
 ============================================= Draw =================================================
-*/
+*/  
     public void draw() {
-        fill(255);
-        textFont(UI_Constants.FONT[0]);
-        textAlign(CENTER, CENTER);
-        textSize(18);
+        if(!this.Window_Visibility) {
+            return;
+        }
 
-
-        shape(this.Window_Container, 0, 0);
-
+        this.drawShape();
         pushMatrix();
         translate(this.Window_Position.x, this.Window_Position.y);
         scale(this.Window_Scale);
-        text(this.Window_Name, this.Window_Text_Position.x, this.Window_Text_Position.y);
+            this.drawText();
+            this.drawElementText();
         popMatrix();
+
         this.updateIsMouseOverWindow();
-        //this.onMouseDrag();
     }
+
+    public void drawElementText() {
+        for(UI_Element element : this.Window_Elements) {
+            element.drawText();
+        }
+    }
+
+    public void drawText() {
+        fill(UI_Constants.WINDOW_TITLE_TEXT_COLOR);
+        textFont(UI_Constants.FONT[0]);
+        textSize(UI_Constants.WINDOW_TITLE_TEXT_SIZE);
+        textAlign(CENTER, CENTER);
+
+        text(this.Window_Name, this.Window_Text_Position.x, this.Window_Text_Position.y);
+    }
+
+    public void drawShape() {
+        shape(this.Window_Container, 0, 0);
+    }
+
 /*
 ============================================= Interaction ==========================================
 */
     public void onMouseRelease() {
+        if(!this.Window_Visibility) {
+            return;
+        }
+        this.onElementMouseRelease();
         this.isDragging = false;
         this.wasMousePressedOverWindow = false;
     }
 
     public boolean onMouseDrag() {
+        if(!this.Window_Visibility) {
+            return false;
+        }
+
+        if(mousePressed && this.isMouseOverWindowFormContainer) {
+            this.onElementMouseDrag();
+            return true;
+        }
+        
         if (mousePressed && this.isMouseOverWindowTextContainer && this.wasMousePressedOverWindow) {
             if (!this.isDragging) {
                 this.initialMouseDragPosition.set(mouseX, mouseY);
@@ -164,12 +224,17 @@ public class UI_Window {
     }
 
     public boolean onMousePress() {
+        if(!this.Window_Visibility) {
+            return false;
+        }
+
         if(mouseButton == LEFT) {
             if(this.isMouseOverWindow) {
                 this.wasMousePressedOverWindow = true;
+                this.checkWindowClose();
                 this.deselectAllWindows();
                 this.onWindowSelect();
-                this.elementOnMousePress();
+                this.onElementMousePress();
                 return true;
             } else {
                 this.onWindowDeselect();
@@ -180,10 +245,31 @@ public class UI_Window {
         }
     }
 
-    public void elementOnMousePress() {
+    public void onElementMousePress() {
         for(UI_Element element : this.Window_Elements) {
-                element.onMousePress();
+            if(element.onMousePress()) {
+                if(element instanceof UI_Toggle) {
+                    if(element.getState()) {
+                        element.onDeselect();
+                    } else {
+                        element.onSelect();
+                    }
+                } else if(element instanceof UI_Slider) {
+                    element.onSelect();
+                }
+            }
+        }
+    }
 
+    public void onElementMouseDrag() {
+        for(UI_Element element : this.Window_Elements) {
+            element.onMouseDrag();
+        }
+    }
+
+    public void onElementMouseRelease() {
+        for(UI_Element element : this.Window_Elements) {
+            element.onMouseRelease();
         }
     }
 
@@ -229,6 +315,13 @@ public class UI_Window {
         }
     }
 
+    public void checkWindowClose() {
+        if(this.Window_Container.getChild("Window_Container_TickMark_Listener").contains(mouseX - this.Window_Position.x, mouseY - this.Window_Position.y)) {
+            this.onWindowClose();
+        } else {
+        }
+    }
+
 
 /*
 ============================================= Methods ==============================================
@@ -236,12 +329,8 @@ public class UI_Window {
 
     public void addElement(UI_Element element) {
         this.Window_Elements.add(element);
+        this.Window_Container.addChild(element.getShape());
     }
-
-    public void removeElement(UI_Element element) {
-        this.Window_Elements.remove(element);
-    }
-
 /*
 ======================================== Getters & Setters =========================================
 */

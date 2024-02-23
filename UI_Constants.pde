@@ -11,13 +11,20 @@ public class UI_Constants {
     public final int GRAY_300 = color(82, 82, 82);
     public final int GRAY_250 = color(107, 107, 107);
     public final int GRAY_200 = color(120, 120, 120);
-    public final int GRAY_100 = color(150, 150, 150);
+    public final int GRAY_100 = color(158, 158, 158);
     public final int GRAY_PLACEHOLDER_TEXT = color(164, 164, 164);
     public final int GRAY_UNSELECTED_TEXT = color(183, 183, 183);
     public final int WHITE_TEXT = color(255, 255, 255);
     public final int TRANSPARENT = color(0, 0, 0, 0);
 
     public final PFont[] FONT = {createFont("Inter-Bold.ttf", 48), createFont("Inter-Medium.ttf", 48), createFont("Inter-Regular.ttf", 48)};
+
+    public final int WINDOW_TITLE_TEXT_SIZE = 18;
+    public final int WINDOW_TITLE_TEXT_COLOR = color(255, 255, 255);
+
+    public final int ELEMENT_TITLE_TEXT_SIZE = 16;
+    public final int ELEMENT_TITLE_TEXT_COLOR = color(255, 255, 255);
+
     public final float STROKE_WEIGHT = 1.5;
 
     
@@ -176,22 +183,18 @@ public class UI_Constants {
 
 
     public PShape createElementListener(PShape Element_Shape) {
-        float elementX = Element_Shape.getParams()[0];
-        float elementY = Element_Shape.getParams()[1];
-        float elementWidth = Element_Shape.getParams()[2];
-        float elementHeight = Element_Shape.getParams()[3];
+        float[] Element_Params = Element_Shape.getParams();
 
         PShape Element_Listener = createShape();
         Element_Listener.beginShape();
-        Element_Listener.vertex(elementX - elementWidth/2, elementY - elementHeight/2);
-        Element_Listener.vertex(elementX + elementWidth/2, elementY - elementHeight/2);
-        Element_Listener.vertex(elementX + elementWidth/2, elementY + elementHeight/2);
-        Element_Listener.vertex(elementX - elementWidth/2, elementY + elementHeight/2);
+            Element_Listener.vertex(Element_Params[0] - Element_Params[2] / 2, Element_Params[1] - Element_Params[3] / 2);
+            Element_Listener.vertex(Element_Params[0] + Element_Params[2] / 2, Element_Params[1] - Element_Params[3] / 2);
+            Element_Listener.vertex(Element_Params[0] + Element_Params[2] / 2, Element_Params[1] + Element_Params[3] / 2);
+            Element_Listener.vertex(Element_Params[0] - Element_Params[2] / 2, Element_Params[1] + Element_Params[3] / 2);
         Element_Listener.endShape(CLOSE);
-
         Element_Listener.setFill(false);
         Element_Listener.setStroke(false);
-
+        Element_Listener.setName("Toggle_Shape_Base_Listener");
         return Element_Listener;
     }
 }
