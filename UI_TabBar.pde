@@ -6,7 +6,8 @@ public class UI_TabBar {
     private PShape[] TAB_SELECTOR;
     private float[] TEXT_POSITION;
     private float TEXT_POSITION_Y;
-
+    private float BUTTON_TEXT_POSITION_Y;
+    private float SCALE_FACTOR = width/1512f;
     private int activeTabID = 0;
 
 
@@ -16,6 +17,11 @@ public class UI_TabBar {
         textAlign(CENTER, CENTER);
         textSize(UI_Constants.TAB_TEXT_SIZE);
         this.TEXT_POSITION_Y = UI_Constants.TAB_TEXT_POSITION_Y - (textAscent() - textDescent()) / 8;
+
+        textFont(UI_Constants.FONT[2]);
+        textAlign(CENTER, CENTER);
+        textSize(UI_Constants.TAB_TEXT_SIZE);
+        this.BUTTON_TEXT_POSITION_Y = UI_Constants.TAB_BUTTON_TEXT_POSITION_Y - (textAscent() - textDescent()) / 8;
         this.initializeTabBar();
     }
 
@@ -79,6 +85,9 @@ public class UI_TabBar {
             this.TAB_SHAPE.addChild(E);
             this.TAB_SHAPE.addChild(TAB_SELECTOR_GROUP);
 
+        this.TAB_SHAPE.translate(UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_X, UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_Y - UI_Constants.TAB_BAR_SHAPE_PADDING_Y);
+        this.TAB_SHAPE.scale(SCALE_FACTOR);
+        this.TAB_SHAPE.translate(-UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_X, -UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_Y + UI_Constants.TAB_BAR_SHAPE_PADDING_Y);
         this.initializeTextAndTabSelector();
     }
 
@@ -167,13 +176,17 @@ public class UI_TabBar {
 =========================================== Drawing ================================================
 */
     public void drawTabText() {
+        pushMatrix();
+        translate(UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_X, UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_Y - UI_Constants.TAB_BAR_SHAPE_PADDING_Y);
+        scale(SCALE_FACTOR);
+        translate(-UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_X, -UI_Constants.TAB_BAR_SHAPE_CENTER_POSITION_Y + UI_Constants.TAB_BAR_SHAPE_PADDING_Y);
         fill(255);
 
         textFont(UI_Constants.FONT[2]);
         textAlign(CENTER, CENTER);
         textSize(UI_Constants.TAB_TEXT_SIZE);
-        text("Q", UI_Constants.TAB_BUTTON_Q_TEXT_POSITION_X, UI_Constants.TAB_BUTTON_TEXT_POSITION_Y);
-        text("E", UI_Constants.TAB_BUTTON_E_TEXT_POSITION_X, UI_Constants.TAB_BUTTON_TEXT_POSITION_Y);
+        text("Q", UI_Constants.TAB_BUTTON_Q_POSITION_X, this.BUTTON_TEXT_POSITION_Y);
+        text("E", UI_Constants.TAB_BUTTON_E_POSITION_X, this.BUTTON_TEXT_POSITION_Y);
 
         textFont(UI_Constants.FONT[0]);
         textAlign(CENTER, CENTER);
@@ -181,6 +194,7 @@ public class UI_TabBar {
         for(int i = 0; i < UI_Constants.TAB_NAME.length; i++) {
             text(UI_Constants.TAB_NAME[i], this.TEXT_POSITION[i], this.TEXT_POSITION_Y);
         }
+        popMatrix();
     }
 
     public void drawTabGraphics() {

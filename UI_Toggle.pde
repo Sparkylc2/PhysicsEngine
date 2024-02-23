@@ -104,7 +104,7 @@ public class UI_Toggle extends UI_Element {
 
             Toggle_TickMark.setName("Toggle_Shape_TickMark");
             Toggle_TickMark.setFill(false);
-            Toggle_TickMark.setStroke(false);
+            Toggle_TickMark.setVisible(false);
             Toggle_TickMark.setStroke(UI_Constants.GRAY_100);
             Toggle_TickMark.setStrokeWeight(2);
 
@@ -158,7 +158,7 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_State = true;
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setStroke(this.Element_Base_Selected_Stroke_Color);
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setFill(this.Element_Base_Selected_Color);
-        this.Toggle_Shape_Group.getChild("Toggle_Shape_TickMark").setStroke(true);
+        this.Toggle_Shape_Group.getChild("Toggle_Shape_TickMark").setVisible(true);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_State = false;
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setStroke(this.Element_Base_Unselected_Stroke_Color);
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setFill(this.Element_Base_Unselected_Color);
-        this.Toggle_Shape_Group.getChild("Toggle_Shape_TickMark").setStroke(false);
+        this.Toggle_Shape_Group.getChild("Toggle_Shape_TickMark").setVisible(false);
     }
 
 /*
