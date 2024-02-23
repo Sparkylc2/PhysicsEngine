@@ -6,10 +6,10 @@ public abstract class UI_Element {
     public int Element_Container_Padding_X = 10;
 
     /* Represents the padding of the topmost element shape from the top of the window */
-    public int Element_Container_Top_Padding_Y = 20;
+    public int Element_Container_Top_Padding_Y = 19;
 
     /* Represents the padding of a shape from a previous shapes edge element */
-    public int Element_Element_Padding_Y = 12;
+    public int Element_Element_Padding_Y = 13;
 
     /* Represents the padding of the text from either the edge of a shape, or the edge of a subelement */
     public int Element_Text_Padding_X = 10;
@@ -21,7 +21,7 @@ public abstract class UI_Element {
 
     /* This is for regular toggles and sliders, there will be different dimensions for other elements */
     public int Element_Width = 265;
-    public int Element_Height = 33;
+    public int Element_Height = 31;
 
     public int Element_Tickbox_Width = 23;
     public int Element_Tickbox_Height = 23;

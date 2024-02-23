@@ -31,11 +31,15 @@ public class UI_Slider extends UI_Element {
     }
 
 
-    public UI_Slider(String Slider_Name, UI_Window Slider_ParentWindow, String Slider_GroupName) {
+    public UI_Slider(String Slider_Name, UI_Window Slider_ParentWindow, String Slider_GroupName, float Slider_Min_Value, float Slider_Max_Value, float Slider_Current_Value) {
 
         this.Slider_Name = Slider_Name;
         this.Slider_ParentWindow = Slider_ParentWindow;
         this.Slider_GroupName = Slider_GroupName;
+
+        this.Slider_Min_Value = Slider_Min_Value;
+        this.Slider_Max_Value = Slider_Max_Value;
+        this.Slider_Current_Value = Slider_Current_Value;
 
         this.initializeSlider();
     }
@@ -100,10 +104,10 @@ public class UI_Slider extends UI_Element {
         float[] sliderShapeParams = this.Slider_Shape_Group.getChild("Slider_Shape_Base").getParams();
 
         this.Slider_Name_Position_X = sliderShapeParams[0] - sliderShapeParams[2] / 2 + textWidth(this.Slider_Name) / 2 + 10;
-        this.Slider_Name_Position_Y = sliderShapeParams[1];
+        this.Slider_Name_Position_Y = sliderShapeParams[1] - (textAscent() - textDescent()) / 8;
 
         this.Slider_Value_Position_X = sliderShapeParams[0] + sliderShapeParams[2] / 2 - textWidth(nf(this.Slider_Current_Value, 0, 2)) / 2 - 10;
-        this.Slider_Value_Position_Y = sliderShapeParams[1];
+        this.Slider_Value_Position_Y = sliderShapeParams[1] - (textAscent() - textDescent()) / 8;
 
 
 

@@ -12,9 +12,9 @@ public class UI_Window {
     /*
     Visuals
     */
-    public final PVector Window_Container_Size = new PVector(285, 400);
+    public final PVector Window_Container_Size = new PVector(285, 407);
     public final PVector Window_Text_Container_Size = new PVector(285, 35);
-    public final PVector Window_Form_Container_Size = new PVector(285, 365);
+    public final PVector Window_Form_Container_Size = new PVector(285, 407-35);
     public final PVector Window_Text_Position = new PVector();
     public float Window_Text_Width;
     public final float Window_Rounding = 7;
@@ -247,20 +247,38 @@ public class UI_Window {
 
     public void onElementMousePress() {
         for(UI_Element element : this.Window_Elements) {
-            if(element.onMousePress()) {
-                if(element instanceof UI_Toggle) {
-                    if(element.getState()) {
-                        element.onDeselect();
-                    } else {
-                        element.onSelect();
-                    }
-                } else if(element instanceof UI_Slider) {
-                    element.onSelect();
-                }
+            if(!element.onMousePress()) {
+                continue;
+            }
+
+            if(element instanceof UI_Toggle) {
+                handleToggleElement((UI_Toggle)element);
+            } else if(element instanceof UI_Slider) {
+                element.onSelect();
             }
         }
     }
 
+    private void handleToggleElement(UI_Toggle toggleElement) {
+        if(toggleElement.getState()) {
+            toggleElement.onDeselect();
+        } else {
+            deselectGroupElements(toggleElement.getGroupName(), toggleElement);
+            toggleElement.onSelect();
+        }
+    }
+
+    private void deselectGroupElements(String groupName, UI_Element selectedElement) {
+        if(groupName == null) {
+            return;
+        }
+
+        for(UI_Element element : this.Window_Elements) {
+            if(element != selectedElement && groupName.equals(element.getGroupName())) {
+                element.onDeselect();
+            }
+        }
+    }
     public void onElementMouseDrag() {
         for(UI_Element element : this.Window_Elements) {
             element.onMouseDrag();

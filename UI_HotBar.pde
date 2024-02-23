@@ -74,7 +74,7 @@ public class UI_HotBar {
         for(int i = 0; i < UI_Constants.HOTBAR_SLOT_COUNT; i++) {
             float textEdgePadding = UI_Constants.HOTBAR_SLOT_WIDTH / 2 - textWidth(String.valueOf(i + 1)) / 2 - UI_Constants.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_WIDTH * UI_Constants.HOTBAR_SLOT_WIDTH;
             float textXPos = this.SLOT_POSITION[i] + textEdgePadding;
-            float textYPos = UI_Constants.HOTBAR_CONTAINER_CENTER_POSITION_Y + textEdgePadding;
+            float textYPos = UI_Constants.HOTBAR_CONTAINER_CENTER_POSITION_Y + textEdgePadding - (textAscent() - textDescent()) / 8;
 
             this.TEXT_POSITION_X[i] = textXPos;
             this.TEXT_POSITION_Y[i] = textYPos;

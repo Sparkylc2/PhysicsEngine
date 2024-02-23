@@ -34,15 +34,20 @@ public final float MAX_BODY_AREA = 300f * 300f; // m^2
 
 public final float MIN_BODY_DENSITY = 0.01f; //g/cm^3
 public final float MAX_BODY_DENSITY = 300.0f; //g/cm^3
+public final float DEFAULT_BODY_DENSITY = 1.0f; //g/cm^3
 
 public final float MIN_BODY_WIDTH = 0.01f; // m
 public final float MAX_BODY_WIDTH = 300; // m
+public final float DEFAULT_BODY_WIDTH = 1.0f; // m
 
 public final float MIN_BODY_HEIGHT = 0.01f; // m
 public final float MAX_BODY_HEIGHT = 300.0f; // m
+public final float DEFAULT_BODY_HEIGHT = 1.0f; // m
 
 public final float MIN_BODY_RADIUS = 0.01f;
 public final float MAX_BODY_RADIUS = 300.0f;
+public final float DEFAULT_BODY_RADIUS = 1.0f;
+
 
 public final float MIN_MOUSE_VELOCITY_MAG = 0.0f;
 public final float MAX_MOUSE_VELOCITY_MAG = 15.0f;

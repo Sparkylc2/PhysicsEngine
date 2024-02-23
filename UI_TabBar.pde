@@ -5,12 +5,17 @@ public class UI_TabBar {
     private final String[] TAB_NAME = {"Settings", "Properties", "Creations", "Help"};
     private PShape[] TAB_SELECTOR;
     private float[] TEXT_POSITION;
+    private float TEXT_POSITION_Y;
 
     private int activeTabID = 0;
 
 
 
     public UI_TabBar() {
+        textFont(UI_Constants.FONT[0]);
+        textAlign(CENTER, CENTER);
+        textSize(UI_Constants.TAB_TEXT_SIZE);
+        this.TEXT_POSITION_Y = UI_Constants.TAB_TEXT_POSITION_Y - (textAscent() - textDescent()) / 8;
         this.initializeTabBar();
     }
 
@@ -174,7 +179,7 @@ public class UI_TabBar {
         textAlign(CENTER, CENTER);
         textSize(UI_Constants.TAB_TEXT_SIZE);
         for(int i = 0; i < UI_Constants.TAB_NAME.length; i++) {
-            text(UI_Constants.TAB_NAME[i], this.TEXT_POSITION[i], UI_Constants.TAB_TEXT_POSITION_Y);
+            text(UI_Constants.TAB_NAME[i], this.TEXT_POSITION[i], this.TEXT_POSITION_Y);
         }
     }
 

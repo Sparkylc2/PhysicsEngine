@@ -125,8 +125,8 @@ public class UI_Toggle extends UI_Element {
         textAlign(CENTER, CENTER);
 
         float[] TickboxParams = this.Toggle_Shape_Group.getChild("Toggle_Shape_TickBox").getParams();
-        this.Toggle_Name_Position_X = TickboxParams[0] + TickboxParams[2] / 2 + 10 + textWidth(this.Toggle_Name) / 2;
-        this.Toggle_Name_Position_Y = this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").getParam(1);
+        this.Toggle_Name_Position_X = TickboxParams[0] + TickboxParams[2] / 2 + 10 + textWidth(this.Toggle_Name) / 2 + 5;
+        this.Toggle_Name_Position_Y = this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").getParam(1) - (textAscent() - textDescent()) / 8;
     }
 
     
