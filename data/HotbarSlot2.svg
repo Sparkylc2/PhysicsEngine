@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="71"
+   height="71"
+   viewBox="0 0 71 71"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   sodipodi:docname="HotbarSlot2.svg"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#161717"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="3.1481629"
+     inkscape:cx="13.817582"
+     inkscape:cy="14.929342"
+     inkscape:window-width="1312"
+     inkscape:window-height="449"
+     inkscape:window-x="99"
+     inkscape:window-y="258"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showguides="false"
+     labelstyle="default"><sodipodi:guide
+       position="70.938082,70.852212"
+       orientation="0,-1"
+       id="guide1"
+       inkscape:locked="false" /><sodipodi:guide
+       position="0.23562957,71"
+       orientation="1,0"
+       id="guide2"
+       inkscape:locked="false" /><sodipodi:guide
+       position="74.673337,146.54163"
+       orientation="0,-1"
+       id="guide3"
+       inkscape:locked="false" /></sodipodi:namedview><defs
+     id="defs1" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><path
+       d="m -14.216889,14.216889 h 2.823437 L 7.9743506,-5.1509112 5.1509116,-7.9743505 -14.216889,11.39345 Z m -3.962721,3.962722 V 9.7588282 L 7.9743506,-16.345598 q 0.5944083,-0.544876 1.3126518,-0.842078 0.7182436,-0.297206 1.5107876,-0.297206 0.792545,0 1.535555,0.297206 0.74301,0.297202 1.287884,0.89161 l 2.72437,2.773906 q 0.594409,0.544873 0.866847,1.287884 0.272435,0.743009 0.272435,1.48602 0,0.7925441 -0.272435,1.5107876 -0.272438,0.7182441 -0.866847,1.3126519 L -9.7588271,18.179611 Z m 31.701768,-28.927866 -2.773902,-2.773904 z m -6.9842939,4.2103917 -1.3869525,-1.4364872 2.823439,2.8234393 z"
+       id="path1"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.049534;opacity:0.5" /></g></svg>

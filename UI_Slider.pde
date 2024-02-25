@@ -20,6 +20,7 @@ public class UI_Slider extends UI_Element {
 
     public UI_Slider(String Slider_Name, UI_Window Slider_ParentWindow, float Slider_Min_Value, float Slider_Max_Value, float Slider_Current_Value) {
 
+        this.Slider_Shape_Group.setName(Slider_Name + "Group");
         this.Slider_Name = Slider_Name;
         this.Slider_ParentWindow = Slider_ParentWindow;
 
@@ -32,7 +33,7 @@ public class UI_Slider extends UI_Element {
 
 
     public UI_Slider(String Slider_Name, UI_Window Slider_ParentWindow, String Slider_GroupName, float Slider_Min_Value, float Slider_Max_Value, float Slider_Current_Value) {
-
+        
         this.Slider_Name = Slider_Name;
         this.Slider_ParentWindow = Slider_ParentWindow;
         this.Slider_GroupName = Slider_GroupName;
@@ -104,10 +105,10 @@ public class UI_Slider extends UI_Element {
         float[] sliderShapeParams = this.Slider_Shape_Group.getChild("Slider_Shape_Base").getParams();
 
         this.Slider_Name_Position_X = sliderShapeParams[0] - sliderShapeParams[2] / 2 + textWidth(this.Slider_Name) / 2 + 10;
-        this.Slider_Name_Position_Y = sliderShapeParams[1] - (textAscent() - textDescent()) / 8;
+        this.Slider_Name_Position_Y = sliderShapeParams[1] - (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y;
 
         this.Slider_Value_Position_X = sliderShapeParams[0] + sliderShapeParams[2] / 2 - textWidth(nf(this.Slider_Current_Value, 0, 2)) / 2 - 10;
-        this.Slider_Value_Position_Y = sliderShapeParams[1] - (textAscent() - textDescent()) / 8;
+        this.Slider_Value_Position_Y = sliderShapeParams[1] - (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y;
 
 
 
@@ -192,6 +193,7 @@ public class UI_Slider extends UI_Element {
         
         this.Slider_Shape_Group.addChild(Slider_Shape);
     }
+
 /*
 ===================================== Slider Draw ==================================================
 */
@@ -212,7 +214,7 @@ public class UI_Slider extends UI_Element {
 ======================================= Toggle Getters and Setters =================================
 */  
     @Override   
-    public String getName() {
+    public String getElementName() {
         return this.Slider_Name;
     }
     @Override
@@ -233,6 +235,23 @@ public class UI_Slider extends UI_Element {
     @Override
     public boolean getState() {
         return false;
+    }
+
+    @Override
+    public void setValue(float value) {
+        this.Slider_Current_Value = constrain(value, this.Slider_Min_Value, this.Slider_Max_Value);
+        this.updateSliderShape();
+    }
+
+    @Override
+    public void incrementValue(float amount) {
+        this.Slider_Current_Value = constrain(this.Slider_Current_Value + amount, this.Slider_Min_Value, this.Slider_Max_Value);
+        this.updateSliderShape();
+    }
+
+    @Override
+    public void setState(boolean state) {
+        return;
     }
 
 }   

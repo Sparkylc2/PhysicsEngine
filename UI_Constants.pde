@@ -1,118 +1,172 @@
 public class UI_Constants {
-
-/*
-======================================== Global Constants ==========================================
-*/
+/*---------------------------------------- Color -------------------------------------------------*/
     public final int BLUE_UNSELECTED = color(2, 60, 89);
     public final int BLUE_SELECTED = color(0, 123, 185);
     public final int GRAY_600 = color(22, 23, 23);
     public final int GRAY_500 = color(34, 35, 36);
-    public final int GRAY_400 = color(42, 43, 43);
+    public final int GRAY_400 = color(44, 44, 47);
     public final int GRAY_300 = color(82, 82, 82);
     public final int GRAY_250 = color(107, 107, 107);
     public final int GRAY_200 = color(120, 120, 120);
-    public final int GRAY_100 = color(158, 158, 158);
-    public final int GRAY_PLACEHOLDER_TEXT = color(164, 164, 164);
-    public final int GRAY_UNSELECTED_TEXT = color(183, 183, 183);
-    public final int WHITE_TEXT = color(255, 255, 255);
+    public final int GRAY_150 = color(158, 158, 158);
+    public final int GRAY_100 = color(164, 164, 164);
+    public final int GRAY_50 = color(176, 176, 176);
+    public final int GRAY_25 = color(183, 183, 183);
+    public final int GRAY_10 = color(196, 196, 196);
+    public final int WHITE = color(255, 255, 255);
     public final int TRANSPARENT = color(0, 0, 0, 0);
 
-    public final PFont[] FONT = {createFont("Inter-Bold.ttf", 48), createFont("Inter-Medium.ttf", 48), createFont("Inter-Regular.ttf", 48)};
+/*---------------------------------------- Font -------------------------------------------------*/
+    public final PFont INTER_BOLD = createFont("Inter-Bold.ttf", 48);
+    public final PFont INTER_MEDIUM = createFont("Inter-Medium.ttf", 48);
+    public final PFont INTER_REGULAR = createFont("Inter-Regular.ttf", 48);
 
-    public final int WINDOW_TITLE_TEXT_SIZE = 18;
-    public final int WINDOW_TITLE_TEXT_COLOR = color(255, 255, 255);
+    public final PFont[] FONTS = {INTER_BOLD, INTER_MEDIUM, INTER_REGULAR};
 
-    public final int ELEMENT_TITLE_TEXT_SIZE = 16;
-    public final int ELEMENT_TITLE_TEXT_COLOR = color(255, 255, 255);
+/*------------------------------------------ Tab -------------------------------------------------*/
+    public final float TAB_WIDTH = 355;
+    public final float TAB_HEIGHT = 40; 
 
-    public final float STROKE_WEIGHT = 1.5;
+    public final float TAB_PADDING_Y = 12;
+    public final float TAB_POSITION_X = displayWidth / 2;
+    public final float TAB_POSITION_Y = TAB_PADDING_Y + TAB_HEIGHT / 2;
 
-    
-/*
-======================================== Tab Constants =============================================
-*/  
-
-
-    public final int TAB_BAR_SHAPE_WIDTH = 355;
-    public final int TAB_BAR_SHAPE_HEIGHT = 40;
-
-    public final float TAB_BAR_SHAPE_PADDING_Y = 12;
-    public final float TAB_BAR_SHAPE_CENTER_POSITION_X = width / 2;
-    public final float TAB_BAR_SHAPE_CENTER_POSITION_Y = TAB_BAR_SHAPE_PADDING_Y + TAB_BAR_SHAPE_HEIGHT / 2;
-
-    public final int TAB_BAR_SHAPE_ROUNDING = 15;
-
-/*
-======================================== Tab Selector Constants ====================================
-*/  
-    public final float TAB_SELECTOR_HEIGHT = 26;
-    public final float TAB_SELECTOR_CENTER_POSITION_Y = TAB_BAR_SHAPE_CENTER_POSITION_Y;
-
-    public final int TAB_SELECTOR_ROUNDING = 7;
-
-/*
-======================================== Tab Button Constants ====================================
-*/
-    public final float TAB_BUTTON_PADDING_X = 5;
-
-    public final float TAB_BUTTON_WIDTH = 37;
-    public final float TAB_BUTTON_HEIGHT = 37;
-
-    public final float TAB_BUTTON_POSITION_Y = TAB_BAR_SHAPE_CENTER_POSITION_Y;
-
-
-    public final float TAB_BUTTON_Q_POSITION_X = TAB_BAR_SHAPE_CENTER_POSITION_X - TAB_BAR_SHAPE_WIDTH/2 - TAB_BUTTON_WIDTH/2 - TAB_BUTTON_PADDING_X;
-    public final float TAB_BUTTON_E_POSITION_X = TAB_BAR_SHAPE_CENTER_POSITION_X + TAB_BAR_SHAPE_WIDTH/2 + TAB_BUTTON_WIDTH/2 + TAB_BUTTON_PADDING_X;
-
-    public final float TAB_BUTTON_TEXT_POSITION_Y = TAB_BAR_SHAPE_CENTER_POSITION_Y;
-
-    public final int TAB_BUTTON_ROUNDING = 15;
-
-/*
-======================================== Tab Text Constants ========================================
-*/  
+    public final int TAB_ROUNDING = 15;
+    public final int TAB_FILL = GRAY_600;
+    public final int TAB_STROKE = GRAY_400;
 
     public final int TAB_TEXT_SIZE = 16;
     public final String[] TAB_NAME = {"Settings", "Properties", "Creations", "Help"};
-    public final float TAB_TEXT_POSITION_Y = TAB_BAR_SHAPE_CENTER_POSITION_Y;
+    public final PFont TAB_TEXT_FONT = INTER_BOLD;
+
+    public final int TAB_TEXT_SELECTED_COLOR = WHITE;
+    public final int TAB_TEXT_UNSELECTED_COLOR = GRAY_50;
+
+    public final float TAB_STROKE_WEIGHT = 1.5;
 
 
+/*-------------------------------------- Tab Buttons ---------------------------------------------*/
+
+    public final float TAB_BUTTON_WIDTH = 40;
+    public final float TAB_BUTTON_HEIGHT = 40;
+
+    public final float TAB_BUTTON_PADDING_X = 5;
+    public final float TAB_BUTTON_POSITION_Y = TAB_POSITION_Y;
+
+    public final float TAB_BUTTON_Q_POSITION_X = TAB_POSITION_X - TAB_WIDTH / 2 - TAB_BUTTON_WIDTH / 2 - TAB_BUTTON_PADDING_X;
+    public final float TAB_BUTTON_E_POSITION_X = TAB_POSITION_X + TAB_WIDTH / 2 + TAB_BUTTON_WIDTH / 2 + TAB_BUTTON_PADDING_X;
+
+    public final int TAB_BUTTON_ROUNDING = 15;
+
+    public final int TAB_BUTTON_UNSELECTED_FILL = GRAY_600;
+    public final int TAB_BUTTON_UNSELECTED_STROKE = GRAY_400;
+
+    public final int TAB_BUTTON_SELECTED_FILL = GRAY_300;
+    public final int TAB_BUTTON_SELECTED_STROKE = GRAY_400;
+
+    public final float TAB_BUTTON_STROKE_WEIGHT = 1.5;
+
+    public final int TAB_BUTTON_TEXT_SIZE = 16;
+    public final PFont TAB_BUTTON_TEXT_FONT = INTER_REGULAR;
+    public final int TAB_BUTTON_TEXT_COLOR = GRAY_50;
+
+/*-------------------------------------- Tab Selector ---------------------------------------------*/
+    public final float TAB_SELECTOR_HEIGHT = 26;
+    public final float TAB_SELECTOR_POSITION_Y = TAB_POSITION_Y;
+    public final int TAB_SELECTOR_ROUNDING = 7;
+
+    public final int TAB_SELECTOR_FILL = BLUE_SELECTED;
+    public final boolean TAB_SELECTOR_STROKE = false;
 
 
-
-/*
-======================================== HotBar Constants ==========================================
-*/  
+/*-------------------------------------- HotBar ---------------------------------------------------*/
     public final int HOTBAR_SLOT_COUNT = 7;
-    public final float HOTBAR_TOTAL_SLOT_WIDTH;
 
-    public final float HOTBAR_SLOT_HEIGHT;
-    public final float HOTBAR_SLOT_WIDTH;
+    public final float HOTBAR_SLOT_WIDTH = 69;
+    public final float HOTBAR_SLOT_HEIGHT = 69;
 
-    public final float HOTBAR_CONTAINER_PADDING_PERCENTAGE_Y = 0.05f;
-    public final float HOTBAR_CONTAINER_PADDING_PERCENTAGE_X = 0.5f;
+    public final float HOTBAR_CONTAINER_WIDTH = 567;
+    public final float HOTBAR_CONTAINER_HEIGHT = 69;
 
-    public final float HOTBAR_CONTAINER_WIDTH_PERCENTAGE_OF_SCREEN_WIDTH = 0.4f;
-    public final float HOTBAR_CONTAINER_HEIGHT_PERCENTAGE_OF_SCREEN_HEIGHT = 0.075f;
+    public final float HOTBAR_TOTAL_SLOT_WIDTH = HOTBAR_SLOT_WIDTH * HOTBAR_SLOT_COUNT;
 
-    public final float HOTBAR_CONTAINER_WIDTH;
-    public final float HOTBAR_CONTAINER_HEIGHT;
+    public final float HOTBAR_CONTAINER_POSITION_X = displayWidth / 2;
+    public final float HOTBAR_CONTAINER_POSITION_Y = 802;
 
-    public final float HOTBAR_CONTAINER_CENTER_POSITION_X;
-    public final float HOTBAR_CONTAINER_CENTER_POSITION_Y;
-
-    public final float HOTBAR_TEXT_SIZE_PERCENTAGE_OF_HOTBAR_HEIGHT = 0.175f;
-    public final int HOTBAR_TEXT_SIZE;
-
-    public final float HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_WIDTH = 0.1f;
-    public final float HOTBAR_SLOT_TEXT_PADDING_X;
-
-    public final float HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_HEIGHT = 0.05f;
-    public final float HOTBAR_SLOT_TEXT_PADDING_Y;
-    
     public final int HOTBAR_SLOT_ROUNDING = 10;
 
+    public final int HOTBAR_SLOT_UNSELECTED_COLOR = GRAY_600;
+    public final int HOTBAR_SLOT_UNSELECTED_STROKE = GRAY_400;
 
+    public final int HOTBAR_SLOT_SELECTED_COLOR = BLUE_UNSELECTED;
+    public final int HOTBAR_SLOT_SELECTED_STROKE = BLUE_SELECTED;
+
+    public final float HOTBAR_STROKE_WEIGHT = 1.5;
+
+    public final int HOTBAR_TEXT_SIZE = 16;
+    public final float HOTBAR_TEXT_PADDING_X = 6;
+    public final float HOTBAR_TEXT_PADDING_Y = 6;
+    public final PFont HOTBAR_TEXT_FONT = INTER_BOLD;
+
+    public final int HOTBAR_LABEL_UNSELECTED_TEXT_COLOR = GRAY_50;
+    public final int HOTBAR_LABEL_SELECTED_TEXT_COLOR = WHITE;
+
+/*------------------------------------- Window ---------------------------------------------------*/
+
+/*
+======================================== Global Constants ==========================================
+*/
+
+
+    public final float GLOBAL_STROKE_WEIGHT = 1.5;
+    public final int GLOBAL_TEXT_ALIGN_FACTOR_Y;
+
+/*
+============================================= Text =================================================
+*/  
+
+/*
+    //We can try switching to a different font for the tab text when its selected
+    public final PFont TAB_UNSELECTED_LABEL_TEXT_FONT = FONT[2];
+    public final int TAB_UNSELECTED_LABEL_TEXT_SIZE = 16;
+    public final int TAB_UNSELECTED_LABEL_TEXT_COLOR = GRAY_50;
+
+    public final PFont TAB_SELECTED_LABEL_TEXT_FONT = FONT[0];
+    public final int TAB_SELECTED_LABEL_TEXT_SIZE = 16;
+    public final int TAB_SELECTED_LABEL_TEXT_COLOR = WHITE;
+
+    public final PFont TAB_BUTTON_UNSELECTED_LABEL_TEXT_FONT = FONT[2];
+    public final int TAB_BUTTON_UNSELECTED_LABEL_TEXT_SIZE = 16;
+    public final int TAB_BUTTON_UNSELECTED_LABEL_TEXT_COLOR = GRAY_50;
+
+    public final PFont TAB_BUTTON_SELECTED_LABEL_TEXT_FONT = FONT[1];
+    public final int TAB_BUTTON_SELECTED_LABEL_TEXT_SIZE = 16;
+    public final int TAB_BUTTON_SELECTED_LABEL_TEXT_COLOR = WHITE;
+
+    public final PFont HOTBAR_LABEL_UNSELECTED_TEXT_FONT = FONT[0];
+    public final int HOTBAR_LABEL_UNSELECTED_TEXT_SIZE = 16;
+    public final int HOTBAR_LABEL_UNSELECTED_TEXT_COLOR = GRAY_50;
+
+    public final PFont HOTBAR_LABEL_SELECTED_TEXT_FONT = FONT[0];
+    public final int HOTBAR_LABEL_SELECTED_TEXT_SIZE = 16;
+    public final int HOTBAR_LABEL_SELECTED_TEXT_COLOR = WHITE;
+
+    public final PFont WINDOW_TITLE_UNSELECTED_TEXT_FONT = FONT[0];
+    public final int WINDOW_TITLE_UNSELECTED_TEXT_SIZE = 18;
+    public final int WINDOW_TITLE_UNSELECTED_TEXT_COLOR = GRAY_50;
+
+    public final PFont WINDOW_TITLE_SELECTED_TEXT_FONT = FONT[0];
+    public final int WINDOW_TITLE_SELECTED_TEXT_SIZE = 18;
+    public final int WINDOW_TITLE_SELECTED_TEXT_COLOR = WHITE;
+
+    public final PFont ELEMENT_UNSELECTED_TEXT_FONT = FONT[2];
+    public final int ELEMENT_UNSELECTED_TEXT_SIZE = 16;
+    public final int ELEMENT_UNSELECTED_TEXT_COLOR = WHITE;
+
+    public final PFont ELEMENT_SELECTED_TEXT_FONT = FONT[2];
+    public final int ELEMENT_SELECTED_TEXT_SIZE = 16;
+    public final int ELEMENT_SELECTED_TEXT_COLOR = WHITE;
+*/
 
 
 /*
@@ -121,30 +175,23 @@ public class UI_Constants {
 
     public UI_Constants() {
 
+
+
     /*
     ======================================== Tab Initialization ====================================
     */
- 
+            if(System.getProperty("os.name").toLowerCase().contains("mac")) {
+                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/6;
+            } else if(System.getProperty("os.name").toLowerCase().contains("windows")){
+                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/8;
+            } else {
+                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/8;
+            }
 
         
-        /*
-        ======================================== HotBar Initialization =============================
-        */
-        this.HOTBAR_CONTAINER_WIDTH = width * this.HOTBAR_CONTAINER_WIDTH_PERCENTAGE_OF_SCREEN_WIDTH;
-        this.HOTBAR_CONTAINER_HEIGHT = height * this.HOTBAR_CONTAINER_HEIGHT_PERCENTAGE_OF_SCREEN_HEIGHT;
-
-        this.HOTBAR_CONTAINER_CENTER_POSITION_X = width * this.HOTBAR_CONTAINER_PADDING_PERCENTAGE_X;
-        this.HOTBAR_CONTAINER_CENTER_POSITION_Y = height * (1 - this.HOTBAR_CONTAINER_PADDING_PERCENTAGE_Y) - this.HOTBAR_CONTAINER_HEIGHT/2;
-
-        this.HOTBAR_SLOT_HEIGHT = this.HOTBAR_CONTAINER_HEIGHT;
-        this.HOTBAR_SLOT_WIDTH = this.HOTBAR_CONTAINER_HEIGHT;
-
-        this.HOTBAR_TOTAL_SLOT_WIDTH = this.HOTBAR_SLOT_WIDTH * this.HOTBAR_SLOT_COUNT;
-
-        this.HOTBAR_TEXT_SIZE = (int)(this.HOTBAR_CONTAINER_HEIGHT * this.HOTBAR_TEXT_SIZE_PERCENTAGE_OF_HOTBAR_HEIGHT);
-
-        this.HOTBAR_SLOT_TEXT_PADDING_X = this.HOTBAR_SLOT_WIDTH * this.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_WIDTH;
-        this.HOTBAR_SLOT_TEXT_PADDING_Y = this.HOTBAR_SLOT_HEIGHT * this.HOTBAR_SLOT_TEXT_PADDING_PERCENTAGE_OF_HOTBAR_SLOT_HEIGHT;
+    /*
+    ======================================== HotBar Initialization =============================
+    */
     }
 
 

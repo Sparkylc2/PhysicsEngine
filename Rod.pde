@@ -95,7 +95,7 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
                 this.velocityB.set(rigidbodyB.getVelocity());
 
                 this.direction.set(this.worldAnchorB.sub(this.worldAnchorA));
-
+                
                 this.displacement = direction.mag();
                 this.direction.normalize();
 
@@ -143,11 +143,11 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
         this.velocityB.set(0,0);    
 
         this.direction.set(this.worldAnchorB.sub(this.worldAnchorA));
-        displacement = direction.mag();
+        this.displacement = direction.mag();
         this.direction.normalize();
 
         this.relativeVelocity.set(this.velocityB.sub(this.velocityA));
-        dot = PVector.dot(relativeVelocity, this.direction);
+        this.dot = PVector.dot(relativeVelocity, this.direction);
 
         this.dampingForce.set(this.direction.copy().mult(-damping * dot));
 

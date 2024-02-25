@@ -1,2 +1,0 @@
-public class BT_InteractionHandler extends TabInteractionHandlerAbstract{
-}

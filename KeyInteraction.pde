@@ -4,49 +4,48 @@ void exit() {
 }
 
 public void keyPressed() {
-    KeyAndTabHandler.onKeyPressed(keyCode);
-    CurrentTabInteractionHandler.onKeyPressed();
+    KeyHandler.onKeyPressed(keyCode);
 
-
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_Q)) {
+    UI_Manager.onKeyPress(keyCode);
+    if(KeyHandler.isKeyDown(KeyEvent.VK_Q)) {
         UI_Manager.getTabBar().onQPressed();
     }
     
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_E)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_E)) {
         UI_Manager.getTabBar().onEPressed();
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_1)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_1)) {
         UI_Manager.getHotBar().setActiveSlotID(0);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_2)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_2)) {
         UI_Manager.getHotBar().setActiveSlotID(1);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_3)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_3)) {
         UI_Manager.getHotBar().setActiveSlotID(2);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_4)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_4)) {
         UI_Manager.getHotBar().setActiveSlotID(3);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_5)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_5)) {
         UI_Manager.getHotBar().setActiveSlotID(4);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_6)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_6)) {
         UI_Manager.getHotBar().setActiveSlotID(5);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
 
-    if(KeyAndTabHandler.isKeyDown(KeyEvent.VK_7)) {
+    if(KeyHandler.isKeyDown(KeyEvent.VK_7)) {
         UI_Manager.getHotBar().setActiveSlotID(6);
         UI_Manager.getTabBar().setActiveTabID(1);
     }
@@ -97,13 +96,13 @@ public void keyPressed() {
 }
 
 public void keyReleased() {  
-    KeyAndTabHandler.onKeyReleased(keyCode);
+    KeyHandler.onKeyReleased(keyCode);
 
-    if(!KeyAndTabHandler.isKeyDown(KeyEvent.VK_Q)) {
+    if(!KeyHandler.isKeyDown(KeyEvent.VK_Q)) {
         UI_Manager.getTabBar().onQReleased();
     }
 
-    if(!KeyAndTabHandler.isKeyDown(KeyEvent.VK_E)) {
+    if(!KeyHandler.isKeyDown(KeyEvent.VK_E)) {
         UI_Manager.getTabBar().onEReleased();
     }
 }

@@ -9,14 +9,14 @@ public class MouseObject {
     private float easing = 0.175f;
     private boolean mLeft, mRight, mCenter;
     private boolean isMouseDown = false;
+    private boolean mouseDownLeft = false;
+    private boolean mouseDownRight = false;
     private PVector mouseDownCoordinates = new PVector();
     private boolean isMouseUp = false;
     private PVector mouseUpCoordinates = new PVector();
 
 	private Rigidbody currentRigidbodyUnderMouse;
 
-
-	private boolean isMouseOverUI = false;
   	private boolean showCursorTrail = true;
   	private ArrayList<PVector> cursorTrailArrayList = new ArrayList<PVector>();
 
@@ -32,20 +32,7 @@ public class MouseObject {
     public void updateMouse() {
         this.updateMouseCoordinates();
         this.currentRigidbodyUnderMouse = this.getRigidbodyUnderMouse();
-        this.isMouseOverUI = this.IsMouseOverUI();
     }
-
-	public boolean IsMouseOverUI() {
-  		if(GUI_GROUP_POSITION_X < mouseX && mouseX < GUI_GROUP_POSITION_X + GUI_GLOBAL_GROUP_WIDTH &&  GUI_GROUP_POSITION_Y < mouseY && mouseY <  GUI_GROUP_POSITION_Y + GUI_GLOBAL_GROUP_HEIGHT) {
-            showCursorTrail = false;
-            cursor();
-    		return true;
-    	} else {
-            showCursorTrail = true;
-            //noCursor();
-    		return false;
-    	}
-	}
 
 
 	public Rigidbody getRigidbodyUnderMouse() {
@@ -85,6 +72,10 @@ public class MouseObject {
     public void updateMouseDownCoordinates() {
         this.isMouseDown = true;
         this.isMouseUp = false;
+
+        if(mouseButton == LEFT) {
+            this.mouseDownLeft = true;
+        }
         this.mouseDownCoordinates.set(PhysEngMath.WorldSnapController(this, this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
 
@@ -92,6 +83,11 @@ public class MouseObject {
         this.isMouseUp = true;
         this.isMouseDown = false;
         this.addSelectedRigidbody();
+
+        if(this.mouseDownLeft) {
+            this.mouseDownLeft = false;
+        }
+
         this.mouseUpCoordinates.set(PhysEngMath.WorldSnapController(this, this.currentRigidbodyUnderMouse, Camera.screenToWorld()));
     }
     
@@ -155,10 +151,6 @@ public class MouseObject {
         return this.mouseUpCoordinates;
     }
 
-	public boolean getIsMouseOverUI() {
-		return this.isMouseOverUI;
-	}
-
     public Rigidbody getCurrentRigidbodyUnderMouse() {
         return this.currentRigidbodyUnderMouse;
     }
@@ -177,5 +169,9 @@ public class MouseObject {
 
     public boolean getSnappingEnabled() {
         return this.snappingEnabled;
+    }
+
+    public boolean getIsMouseDownLeft() {
+        return this.mouseDownLeft;
     }
 }

@@ -13,8 +13,9 @@ public class UI_Toggle extends UI_Element {
     public PShape Toggle_Shape_Group = createShape(GROUP);
 
 
-    public UI_Toggle(String Toggle_Name, UI_Window Toggle_ParentWindow) {
+    public UI_Toggle(String Toggle_Name, UI_Window Toggle_ParentWindow, boolean Toggle_State) {
 
+        this.Toggle_Shape_Group.setName(this.Toggle_Name + "Group");
         this.Toggle_Name = Toggle_Name;
         this.Toggle_ParentWindow = Toggle_ParentWindow;
 
@@ -22,8 +23,10 @@ public class UI_Toggle extends UI_Element {
     }
 
 
-    public UI_Toggle(String Toggle_Name, UI_Window Toggle_ParentWindow, String Toggle_GroupName) {
+    public UI_Toggle(String Toggle_Name, UI_Window Toggle_ParentWindow, String Toggle_GroupName, boolean Toggle_State) {
 
+        this.Toggle_Shape_Group.setName(this.Toggle_Name + "Group");
+        
         this.Toggle_Name = Toggle_Name;
         this.Toggle_ParentWindow = Toggle_ParentWindow;
         this.Toggle_GroupName = Toggle_GroupName;
@@ -104,8 +107,13 @@ public class UI_Toggle extends UI_Element {
 
             Toggle_TickMark.setName("Toggle_Shape_TickMark");
             Toggle_TickMark.setFill(false);
-            Toggle_TickMark.setVisible(false);
-            Toggle_TickMark.setStroke(UI_Constants.GRAY_100);
+            Toggle_TickMark.setStroke(UI_Constants.GRAY_150);
+
+            if(this.Toggle_State) {
+                Toggle_TickMark.setVisible(true);
+            } else {
+                Toggle_TickMark.setVisible(false);
+            }
             Toggle_TickMark.setStrokeWeight(2);
 
         PShape Toggle_Shape_Base_Listener = UI_Constants.createElementListener(Toggle_Shape_Base);
@@ -126,7 +134,7 @@ public class UI_Toggle extends UI_Element {
 
         float[] TickboxParams = this.Toggle_Shape_Group.getChild("Toggle_Shape_TickBox").getParams();
         this.Toggle_Name_Position_X = TickboxParams[0] + TickboxParams[2] / 2 + 10 + textWidth(this.Toggle_Name) / 2 + 5;
-        this.Toggle_Name_Position_Y = this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").getParam(1) - (textAscent() - textDescent()) / 8;
+        this.Toggle_Name_Position_Y = this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").getParam(1) - (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y;
     }
 
     
@@ -189,7 +197,7 @@ public class UI_Toggle extends UI_Element {
 ======================================= Toggle Getters and Setters =================================
 */  
     @Override   
-    public String getName() {
+    public String getElementName() {
         return this.Toggle_Name;
     }
     @Override
@@ -208,8 +216,27 @@ public class UI_Toggle extends UI_Element {
     }
 
     @Override
+    public void setValue(float value) {
+        return;
+    }
+
+    @Override
+    public void incrementValue(float amount) {
+
+    }
+
+    @Override
     public boolean getState() {
         return this.Toggle_State;
+    }
+
+    @Override
+    public void setState(boolean state) {
+        if(state) {
+            this.onSelect();
+        } else {
+            this.onDeselect();
+        }
     }
 
 }   

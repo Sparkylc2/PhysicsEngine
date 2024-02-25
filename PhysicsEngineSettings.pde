@@ -1,11 +1,10 @@
-
 public void settings() {
     smooth(8);
-    if(System.getProperty("os.name").toLowerCase().contains("mac")) {
+    String os = System.getProperty("os.name").toLowerCase();
+    if(os.contains("mac")) {
         size(displayWidth, displayHeight - 125);
-    } else if(System.getProperty("os.name").toLowerCase().contains("windows")) {
-        size(displayWidth, displayHeight, FX2D);
-        fullScreen();
+    } else if(os.contains("windows")) {
+        fullScreen(FX2D);
     } else {
         throw new RuntimeException("OS not supported");
     }

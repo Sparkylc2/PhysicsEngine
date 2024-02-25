@@ -1,6 +1,7 @@
 public class UI_Window {
     
     public final String Window_Name;
+    public String HotBarSlotRepresentation;
     public PVector Window_Position = new PVector(500, 400);
     public final int Window_ID;
 
@@ -17,6 +18,7 @@ public class UI_Window {
     public final PVector Window_Form_Container_Size = new PVector(285, 407-35);
     public final PVector Window_Text_Position = new PVector();
     public float Window_Text_Width;
+    public final int Window_Text_Size = 18;
     public final float Window_Rounding = 7;
 
     /*
@@ -53,12 +55,15 @@ public class UI_Window {
 ============================================= Initialization =======================================
 */
     public void initializeWindow() {
-        textFont(UI_Constants.FONT[0]);
-        textSize(UI_Constants.WINDOW_TITLE_TEXT_SIZE);
+        textFont(UI_Constants.INTER_BOLD);
+        textSize(this.Window_Text_Size);
         textAlign(CENTER, CENTER);
 
         rectMode(CENTER);
         this.Window_Container = createShape(GROUP);
+
+        PShape Element_Group = createShape(GROUP);
+            Element_Group.setName("Element_Group");
 
         PShape Window_Text_Container = createShape(RECT, 0, -this.Window_Form_Container_Size.y / 2 - this.Window_Text_Container_Size.y / 2 + 0.5, 
                                                              this.Window_Text_Container_Size.x, 
@@ -95,7 +100,7 @@ public class UI_Window {
                 TickMark_LineOne.endShape();
                 TickMark_LineOne.setFill(false);
                 TickMark_LineOne.setStrokeWeight(2);
-                TickMark_LineOne.setStroke(UI_Constants.GRAY_UNSELECTED_TEXT);
+                TickMark_LineOne.setStroke(UI_Constants.GRAY_25);
 
             PShape TickMark_LineTwo = createShape();
                 TickMark_LineTwo.beginShape();
@@ -104,7 +109,7 @@ public class UI_Window {
                 TickMark_LineTwo.endShape();
                 TickMark_LineTwo.setFill(false);
                 TickMark_LineTwo.setStrokeWeight(2);
-                TickMark_LineTwo.setStroke(UI_Constants.GRAY_UNSELECTED_TEXT);
+                TickMark_LineTwo.setStroke(UI_Constants.GRAY_25);
             
             Window_Container_TickMark.addChild(TickMark_LineOne);
             Window_Container_TickMark.addChild(TickMark_LineTwo);
@@ -135,6 +140,7 @@ public class UI_Window {
         this.Window_Container.addChild(Window_Form_Container_Listener);
         this.Window_Container.addChild(Window_Text_Container_Listener);
         this.Window_Container.addChild(Window_Container_TickMark_Listener);
+        this.Window_Container.addChild(Element_Group);
 
         this.Window_Container.resetMatrix();
         this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
@@ -142,7 +148,7 @@ public class UI_Window {
 
 
         this.Window_Text_Width = textWidth(this.Window_Name);
-        this.Window_Text_Position.set(-this.Window_Text_Container_Size.x / 2 + textWidth(this.Window_Name) / 2 + 15, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2);
+        this.Window_Text_Position.set(-this.Window_Text_Container_Size.x / 2 + textWidth(this.Window_Name) / 2 + 15, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 + (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
     }
 
 /*
@@ -171,9 +177,13 @@ public class UI_Window {
     }
 
     public void drawText() {
-        fill(UI_Constants.WINDOW_TITLE_TEXT_COLOR);
-        textFont(UI_Constants.FONT[0]);
-        textSize(UI_Constants.WINDOW_TITLE_TEXT_SIZE);
+        if(this.isActiveWindow) {
+            fill(UI_Constants.WHITE);
+        } else {
+            fill(UI_Constants.GRAY_25);
+        }
+        textFont(UI_Constants.INTER_BOLD);
+        textSize(this.Window_Text_Size);
         textAlign(CENTER, CENTER);
 
         text(this.Window_Name, this.Window_Text_Position.x, this.Window_Text_Position.y);
@@ -181,6 +191,14 @@ public class UI_Window {
 
     public void drawShape() {
         shape(this.Window_Container, 0, 0);
+    }
+
+    public void interactionDraw() {
+
+    }
+
+    public void onSlotChange(int previousSlotID) {
+        
     }
 
 /*
@@ -194,6 +212,11 @@ public class UI_Window {
         this.isDragging = false;
         this.wasMousePressedOverWindow = false;
     }
+
+    public void interactionMouseRelease() {
+
+    }
+
 
     public boolean onMouseDrag() {
         if(!this.Window_Visibility) {
@@ -223,6 +246,10 @@ public class UI_Window {
         }
     }
 
+    public void interactionMouseDrag() {
+
+    }
+
     public boolean onMousePress() {
         if(!this.Window_Visibility) {
             return false;
@@ -232,8 +259,7 @@ public class UI_Window {
             if(this.isMouseOverWindow) {
                 this.wasMousePressedOverWindow = true;
                 this.checkWindowClose();
-                this.deselectAllWindows();
-                this.onWindowSelect();
+                this.onWindowSelectHotbarCaller();
                 this.onElementMousePress();
                 return true;
             } else {
@@ -244,6 +270,11 @@ public class UI_Window {
             return false;
         }
     }
+
+    public void interactionMousePress() {
+
+    }
+
 
     public void onElementMousePress() {
         for(UI_Element element : this.Window_Elements) {
@@ -292,9 +323,49 @@ public class UI_Window {
     }
 
     public void onWindowSelect() {
+        this.deselectAllWindows();
         this.isActiveWindow = true;
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
+    }
+
+
+    public void onWindowSelectHotbarCaller() {
+        this.deselectAllWindows();
+        this.isActiveWindow = true;
+        this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
+        this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
+
+        if(this.HotBarSlotRepresentation != null) {
+            switch(this.HotBarSlotRepresentation) {
+                case "Circle":
+                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(2);
+                    this.onWindowSelect();
+                    UI_Manager.bringToFront(this);
+                    break;
+                case "Rectangle":
+                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(3);
+                    this.onWindowSelect();
+                    UI_Manager.bringToFront(this);
+                    break;
+                case "Spring":
+                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(4);
+                    this.onWindowSelect();
+                    UI_Manager.bringToFront(this);
+                    break;
+                case "Rod":
+                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(5);
+                    this.onWindowSelect();
+                    UI_Manager.bringToFront(this);
+                    break;
+                case "Motor":
+                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(6);
+                    this.onWindowSelect();
+                    UI_Manager.bringToFront(this);
+                    break;
+            }
+        }
+
     }
 
     public void onWindowDeselect() {
@@ -305,9 +376,19 @@ public class UI_Window {
 
     public void onWindowClose() {
         this.Window_Visibility = false;
+        this.isMouseOverWindow = false;
+        this.isMouseOverWindowTextContainer = false;
+        this.isMouseOverWindowFormContainer = false;
+        this.wasMousePressedOverWindow = false;
+        this.isActiveWindow = false;
     }
 
     public void updateIsMouseOverWindow() {
+
+        if(!this.Window_Visibility) {
+            return;
+        }
+
         float x = mouseX - this.Window_Position.x;
         float y = mouseY - this.Window_Position.y;
 
@@ -336,8 +417,7 @@ public class UI_Window {
     public void checkWindowClose() {
         if(this.Window_Container.getChild("Window_Container_TickMark_Listener").contains(mouseX - this.Window_Position.x, mouseY - this.Window_Position.y)) {
             this.onWindowClose();
-        } else {
-        }
+        } 
     }
 
 
@@ -347,7 +427,18 @@ public class UI_Window {
 
     public void addElement(UI_Element element) {
         this.Window_Elements.add(element);
-        this.Window_Container.addChild(element.getShape());
+        this.Window_Container.getChild("Element_Group").addChild(element.getShape());
+    }
+
+    public void clearAllElements() {
+        for(UI_Element element : this.Window_Elements) {
+            this.Window_Container.getChild("Element_Group").removeChild(this.Window_Container.getChild("Element_Group").getChildIndex(element.getShape()));
+        }
+        this.Window_Elements.clear();
+    }
+
+    public void onKeyPress(int keyCode) {
+
     }
 /*
 ======================================== Getters & Setters =========================================
@@ -395,10 +486,29 @@ public class UI_Window {
     public PVector getWindowPosition() {
         return this.Window_Position;
     }
+
+    public UI_Element getElement(int index) {
+        return this.Window_Elements.get(index);
+    }
+
     public int getWindowElementArrayListSize() {
         return this.Window_Elements.size();
     }
+    
     public int getWindowID() {
         return this.Window_ID;
+    }
+
+    public UI_Element getElementByName(String elementName) {
+        for(UI_Element element : this.Window_Elements) {
+            if(element.getElementName().equals(elementName)) {
+                return element;
+            }
+        }
+        throw new IllegalArgumentException("Element with name " + elementName + " does not exist in window " + this.Window_Name);
+    }
+
+    public String getWindowName() {
+        return this.Window_Name;
     }
 }

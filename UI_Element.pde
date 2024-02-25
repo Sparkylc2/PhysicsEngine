@@ -38,18 +38,18 @@ public abstract class UI_Element {
     public String Element_Text = "Default Text";
     public String Element_Value_Text = "Default Value Text";
 
-    public PFont Element_Font = UI_Constants.FONT[2];
-    public int Element_Text_Size = UI_Constants.ELEMENT_TITLE_TEXT_SIZE;
-    public int Element_Text_Color = UI_Constants.ELEMENT_TITLE_TEXT_COLOR;
+    public PFont Element_Font = UI_Constants.INTER_REGULAR;
+    public int Element_Text_Size = 16;
+    public int Element_Text_Color = UI_Constants.WHITE;
 
     /*------------------------------- Colour -----------------------------------------------------*/
     public int Element_Base_Unselected_Color = UI_Constants.GRAY_500;
     public int Element_Base_Unselected_Stroke_Color = UI_Constants.GRAY_400;
 
     public int Element_Base_Selected_Color = UI_Constants.GRAY_300;
-    public int Element_Base_Selected_Stroke_Color = UI_Constants.GRAY_300;
+    public int Element_Base_Selected_Stroke_Color = UI_Constants.GRAY_500;
 
-    public float Element_Stroke_Weight = UI_Constants.STROKE_WEIGHT;
+    public float Element_Stroke_Weight = 1.5;
 
 
     public abstract void createElementBaseShape();
@@ -63,9 +63,12 @@ public abstract class UI_Element {
     public abstract void onDeselect();
 
     public abstract boolean getState();
+    public abstract void setState(boolean state);
     public abstract float getValue();
+    public abstract void setValue(float value);
+    public abstract void incrementValue(float amount);
     public abstract void drawText();
-    public abstract String getName();
+    public abstract String getElementName();
     public abstract String getGroupName();
     public abstract PShape getShape();
 }
