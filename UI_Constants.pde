@@ -91,7 +91,7 @@ public class UI_Constants {
     public final float HOTBAR_TOTAL_SLOT_WIDTH = HOTBAR_SLOT_WIDTH * HOTBAR_SLOT_COUNT;
 
     public final float HOTBAR_CONTAINER_POSITION_X = displayWidth / 2;
-    public final float HOTBAR_CONTAINER_POSITION_Y = 802;
+    public final float HOTBAR_CONTAINER_POSITION_Y;
 
     public final int HOTBAR_SLOT_ROUNDING = 10;
 
@@ -182,10 +182,13 @@ public class UI_Constants {
     */
             if(System.getProperty("os.name").toLowerCase().contains("mac")) {
                 GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/6;
+                HOTBAR_CONTAINER_POSITION_Y =  802;
             } else if(System.getProperty("os.name").toLowerCase().contains("windows")){
                 GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/8;
+                HOTBAR_CONTAINER_POSITION_Y = 990;
             } else {
                 GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/8;
+                HOTBAR_CONTAINER_POSITION_Y = 990;
             }
 
         

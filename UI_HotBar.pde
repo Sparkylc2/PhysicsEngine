@@ -7,6 +7,8 @@ public class UI_HotBar {
 
     private float[] SLOT_POSITION;
 
+    private float SCALE_FACTOR = width/1512f;
+
     private int activeSlotID;
 
 
@@ -85,6 +87,9 @@ public class UI_HotBar {
             this.HOT_SHAPE.addChild(SLOT_GROUP);
         }
 
+        this.HOT_SHAPE.translate(UI_Constants.HOTBAR_CONTAINER_POSITION_X, UI_Constants.HOTBAR_CONTAINER_POSITION_Y);
+        this.HOT_SHAPE.scale(SCALE_FACTOR); 
+        this.HOT_SHAPE.translate(-UI_Constants.HOTBAR_CONTAINER_POSITION_X, -UI_Constants.HOTBAR_CONTAINER_POSITION_Y);
         this.initializeText();
     }
 
@@ -214,6 +219,11 @@ public class UI_HotBar {
     }
 
     public void drawHotbarText() {
+        pushMatrix();
+        translate(UI_Constants.HOTBAR_CONTAINER_POSITION_X, UI_Constants.HOTBAR_CONTAINER_POSITION_Y);
+        scale(SCALE_FACTOR); 
+        translate(-UI_Constants.HOTBAR_CONTAINER_POSITION_X, -UI_Constants.HOTBAR_CONTAINER_POSITION_Y);
+
         textFont(UI_Constants.HOTBAR_TEXT_FONT);
         textAlign(CENTER, CENTER);
         textSize(UI_Constants.HOTBAR_TEXT_SIZE);
@@ -226,6 +236,7 @@ public class UI_HotBar {
             }
             text(i + 1, this.TEXT_POSITION_X[i], this.TEXT_POSITION_Y[i]);
         }
+        popMatrix();
     }
 
     
