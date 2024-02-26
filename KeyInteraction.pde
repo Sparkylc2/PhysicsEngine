@@ -63,7 +63,9 @@ public void keyPressed() {
     }
 
     if(key == ' ') {
-        IS_PAUSED = !IS_PAUSED;
+        if(!IS_PAUSED_LOCK) {
+            IS_PAUSED = !IS_PAUSED;
+        }
     }
     if(key == 'r') {
         rigidbodyList.clear();

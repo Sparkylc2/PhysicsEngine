@@ -8,9 +8,11 @@ public class MouseObjectResult {
 	public MouseObjectResult(Rigidbody selectedRigidbody, PVector coordinate) {
 
 		this.SelectedRigidbody = selectedRigidbody;
+        
 		if(this.SelectedRigidbody != null) {
 			this.SelectedRigidbodyPosition.set(selectedRigidbody.getPosition());
-            this.LocalCoordinate.set(PVector.sub(coordinate, this.SelectedRigidbodyPosition));
+            //this.LocalCoordinate.set(PVector.sub(coordinate, this.SelectedRigidbody.getPosition()));
+            this.LocalCoordinate.set(PhysEngMath.Transform(PVector.sub(coordinate, this.SelectedRigidbodyPosition), -this.SelectedRigidbody.getAngle()));
 		}
 		this.Coordinate.set(coordinate);
 	}
@@ -24,20 +26,12 @@ public class MouseObjectResult {
 		return this.Coordinate.copy();
 	}
 
-	public PVector getLocalCoordinate() {
-        if(this.SelectedRigidbody == null) {
-            return this.Coordinate.copy();
-        }
-
-		return this.LocalCoordinate.copy();
-	}
-
     public PVector getTransformedLocalCoordinate() {
         if(this.SelectedRigidbody == null) {
             return this.Coordinate.copy();
         }
         
-        return PhysEngMath.Transform(this.LocalCoordinate, -this.SelectedRigidbody.getAngle());
+        return this.LocalCoordinate.copy();
     }
 
 	public String toString() {

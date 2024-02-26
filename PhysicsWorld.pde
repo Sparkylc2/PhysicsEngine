@@ -7,6 +7,7 @@
 /*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
 
 public static boolean IS_PAUSED = false;
+public static boolean IS_PAUSED_LOCK = false;
 
 public static ArrayList<PVector> pointsOfContactList = new ArrayList<PVector>();
 

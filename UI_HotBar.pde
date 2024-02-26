@@ -118,6 +118,11 @@ public class UI_HotBar {
 
     public void onSlotChange(int slotID) {
         int previousSlotID = this.activeSlotID;
+
+        if(activeSlotID == slotID) {
+            return;
+        }
+
     if (this.activeSlotID != -1 && this.activeSlotID < 4) {
         this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
         this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
@@ -162,9 +167,10 @@ public class UI_HotBar {
     UI_Window window;
     switch(this.activeSlotID) {
         case 0:
+            UI_Manager.closeAllWindows();
             break;
         case 1:
-            break;
+            UI_Manager.closeAllWindows();
         case 2:
             window = UI_Manager.getWindowByName("Properties (rigidbody)");
 
@@ -205,6 +211,12 @@ public class UI_HotBar {
             //UI_Manager.repositionWindow(window);
             window.onWindowSelect();
             break;
+    }
+    
+
+    if(previousSlotID == 1) {
+        IS_PAUSED = false;
+        IS_PAUSED_LOCK = false;
     }
 }
 
