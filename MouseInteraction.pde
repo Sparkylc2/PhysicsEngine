@@ -23,7 +23,7 @@ public void mouseWheel(MouseEvent event) {
     if(UI_Manager.getIsOverWindows()) {
         return;
     }
-
+    
     float e = -event.getCount();
     Camera.zoom(pow(1.1f, e), mouseX, mouseY);
 }

@@ -9,7 +9,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
     public Spring mouseSpring = new Spring();
 /*
 ======================================= Element Values =============================================
-*/
+*/  
     private float prvSprngConst = 100;
     private float prvEqlbrmLng = 1;
     private float prvDamping = 0.5f;
@@ -19,7 +19,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
 
     private boolean prvJoint = false;
 
-    private boolean prvDrawMotor = false;
+    private boolean prvDrawMotor = true;
     private float prvMotorSpeed = 0;
 
     public UI_PropertiesForceWindow() {
@@ -37,59 +37,47 @@ public class UI_PropertiesForceWindow extends UI_Window {
 
     @Override
     public void onSlotChange(int previousSlotID) {
-        UI_Manager.bringToFront(this);
         this.onWindowSelect();
         
         if(!hasInit) {
             switch(UI_Manager.HOT_BAR.getActiveSlotID()) {
                 case 4:
                     this.onSpringActive();
+                    this.hasInit = true;
                     break;
                 case 5:
                     this.onRodActive();
+                    this.hasInit = true;
                     break;
                 case 6:
                     this.onMotorActive();
+                    this.hasInit = true;
                     break;
             }
+
+            this.Window_Visibility = true;
+
+            return;
         }
 
-        switch(previousSlotID) {
-            case 4:
-                this.prvSprngConst = this.getElementByName("Spring Constant").getValue();
-                this.prvEqlbrmLng = this.getElementByName("Equilibrium Length").getValue();
-                this.prvDamping = this.getElementByName("Damping").getValue();
-                this.prvLockYTrnsltn = this.getElementByName("Lock Y Translation").getState();
-                this.prvLockXTrnsltn = this.getElementByName("Lock X Translation").getState();
-                this.prvPrfctSprng = this.getElementByName("Perfect Spring").getState();
-                break;
-            case 5:
-                this.prvJoint = this.getElementByName("Joint").getState();
-                break;
-            case 6:
-                this.prvDrawMotor = this.getElementByName("Draw Motor").getState();
-                this.prvMotorSpeed = this.getElementByName("Motor Speed").getValue();
-                break;
-        }
         this.Window_Visibility = true;
-        
+
         switch(UI_Manager.HOT_BAR.getActiveSlotID()) {
             case 4:
-                this.clearAllElements();
                 this.onSpringActive();
                 break;
             case 5:
-                this.clearAllElements();
                 this.onRodActive();
                 break;
             case 6:
-                this.clearAllElements();
                 this.onMotorActive();
                 break;
         }
     }
 
     public void onSpringActive() {
+        this.savePrevElementStates();
+        this.clearAllElements();
         this.HotBarSlotRepresentation = "Spring";
         this.addElement(new UI_Slider("Spring Constant", (UI_Window)this, 0, 300, prvSprngConst));
         this.addElement(new UI_Slider("Equilibrium Length", (UI_Window)this, 0, 10, prvEqlbrmLng));
@@ -100,14 +88,42 @@ public class UI_PropertiesForceWindow extends UI_Window {
     }
 
     public void onRodActive() {
+        this.savePrevElementStates();
+        this.clearAllElements();
         this.HotBarSlotRepresentation = "Rod";
         this.addElement(new UI_Toggle("Joint", (UI_Window)this, prvJoint));
     }
 
     public void onMotorActive() {
+        this.savePrevElementStates();
+        this.clearAllElements();
         this.HotBarSlotRepresentation = "Motor";
         this.addElement(new UI_Toggle("Draw Motor", (UI_Window)this, prvDrawMotor));
-        this.addElement(new UI_Slider("Motor Speed", (UI_Window)this, -20, 20, 0));
+        this.addElement(new UI_Slider("Motor Speed", (UI_Window)this, -20, 20, prvMotorSpeed));
+    }
+
+    public void savePrevElementStates() {
+        if(!this.hasInit) {
+            return;
+        }
+
+        switch (this.HotBarSlotRepresentation) {
+            case "Spring":
+                this.prvSprngConst = this.getElementByName("Spring Constant").getValue();
+                this.prvEqlbrmLng = this.getElementByName("Equilibrium Length").getValue();
+                this.prvDamping = this.getElementByName("Damping").getValue();
+                this.prvLockYTrnsltn = this.getElementByName("Lock Y Translation").getState();
+                this.prvLockXTrnsltn = this.getElementByName("Lock X Translation").getState();
+                this.prvPrfctSprng = this.getElementByName("Perfect Spring").getState();
+                break;
+            case "Rod":
+                this.prvJoint = this.getElementByName("Joint").getState();
+                break;
+            case "Motor":
+                this.prvDrawMotor = this.getElementByName("Draw Motor").getState();
+                this.prvMotorSpeed = this.getElementByName("Motor Speed").getValue();
+                break;
+        }
     }
 /*
 ========================================= Force Drawing ============================================
@@ -117,7 +133,6 @@ public class UI_PropertiesForceWindow extends UI_Window {
         if(UI_Manager.getIsOverOrPressedWindows()) {
             return;
         }
-
         this.drawForces();
     }
 
@@ -137,6 +152,9 @@ public class UI_PropertiesForceWindow extends UI_Window {
         
         ArrayList<MouseObjectResult> mouseObjectResults = Mouse.getMouseObjectResults();
         if(mouseObjectResults.size() == 0 || mouseObjectResults.size() > 1) {
+            return;
+        } else if(mouseObjectResults.size() == 1 && UI_Manager.getIsPressedOverWindow()) {
+            mouseObjectResults.clear();
             return;
         }
         /*--------------------------------------------------------------------------------*/
@@ -183,9 +201,9 @@ public class UI_PropertiesForceWindow extends UI_Window {
     
         // Draw the rod
         strokeWeight(0.3f);
-        stroke(0); // Black
+        stroke(0, 0, 0, 166); // Black
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
-        stroke(255); // White
+        stroke(255, 255, 255, 166); // White
         strokeWeight(0.1f);
         line(worldAnchorA.x, worldAnchorA.y, worldAnchorB.x, worldAnchorB.y);
     
@@ -278,6 +296,11 @@ public class UI_PropertiesForceWindow extends UI_Window {
 */  
     @Override
     public void interactionMousePress() {
+        if(UI_Manager.hasWindowBeenInteractedWith) {
+            System.out.println("Cant click");
+            return;
+        }
+
         if(UI_Manager.getIsOverOrPressedWindows() || mouseButton != LEFT){
             return;
         }
@@ -294,7 +317,12 @@ public class UI_PropertiesForceWindow extends UI_Window {
     }
     @Override
     public void interactionMouseRelease() {
-        if(UI_Manager.getIsOverOrPressedWindows() || mouseButton != LEFT) {
+        if(UI_Manager.getIsOverOrPressedWindows()) {
+            return;
+        }
+
+        if(UI_Manager.hasWindowBeenInteractedWith) {
+            Mouse.getMouseObjectResults().clear();
             return;
         }
 
@@ -304,7 +332,10 @@ public class UI_PropertiesForceWindow extends UI_Window {
             return;
         } 
 
-        this.createForces();
+        if(mouseButton == LEFT) {
+            this.createForces();
+            return;
+        }
     }
 
 
@@ -313,7 +344,6 @@ public class UI_PropertiesForceWindow extends UI_Window {
 
 
     public void createForces() {
-        
         /*---------------------------------- Checks --------------------------------------*/
         int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
         if(activeSlotID != 4 && activeSlotID != 5 && activeSlotID != 6 && !Mouse.getIsMouseDownLeft()) {
@@ -447,6 +477,9 @@ public class UI_PropertiesForceWindow extends UI_Window {
                 mouseSpring.setEquilibriumLength(0.2);  
                 rigidbody.addForceToForceRegistry(mouseSpring);
                 this.MOUSE_SPRING_ADDED = true;
+                UI_PropertiesRigidbodyWindow win = (UI_PropertiesRigidbodyWindow)UI_Manager.getWindowByName("Properties (rigidbody)");
+                win.wasMouseSpringAdded = true;
+                
             } 
         }
     }
@@ -456,6 +489,9 @@ public class UI_PropertiesForceWindow extends UI_Window {
             mouseSpring.getRigidbodyA().removeForceFromForceRegistry(mouseSpring);
             mouseSpring.setRigidbodyA(null);
             this.MOUSE_SPRING_ADDED = false;
+            //UI_PropertiesRigidbodyWindow win = (UI_PropertiesRigidbodyWindow)UI_Manager.getWindowByName("Properties (rigidbody)");
+            //win.MOUSE_SPRING_ADDED = false;
+
         }
     }
 

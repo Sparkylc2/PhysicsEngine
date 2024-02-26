@@ -1,5 +1,8 @@
 public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
+
+
+    public boolean wasMouseSpringAdded = false;
     private boolean hasInit = false;
 
     private float prvBdyDnsty = 1;
@@ -29,49 +32,26 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
     @Override
     public void onSlotChange(int previousSlotID) { 
-        UI_Manager.bringToFront(this);
         this.onWindowSelect();
         
         if(!hasInit) {
             switch(UI_Manager.HOT_BAR.getActiveSlotID()) {
                 case 2:
                     this.onCircleActive();
+                    this.hasInit = true;
                     break;
                 case 3:
                     this.onRectangleActive();
+                    this.hasInit = true;
                     break;
             }
         }
 
-        switch(previousSlotID) {
-            case 2:
-                this.prvBdyRds = this.getElementByName("Radius").getValue();
-                this.prvBdyDnsty = this.getElementByName("Density").getValue();
-                this.prvBdyRsttn = this.getElementByName("Restitution").getValue();
-                this.prvSttc = this.getElementByName("Static").getState();
-                this.prvFxRttn = this.getElementByName("Fixed Rotation").getState();
-                this.prvFxPstn = this.getElementByName("Fixed Position").getState();
-                this.prvBdyAngl = this.getElementByName("Angle").getValue();
-                break;
-            case 3:
-                this.prvBdyWdth = this.getElementByName("Width").getValue();
-                this.prvBdyHght = this.getElementByName("Height").getValue();
-                this.prvBdyDnsty = this.getElementByName("Density").getValue();
-                this.prvBdyRsttn = this.getElementByName("Restitution").getValue();
-                this.prvSttc = this.getElementByName("Static").getState();
-                this.prvFxRttn = this.getElementByName("Fixed Rotation").getState();
-                this.prvFxPstn = this.getElementByName("Fixed Position").getState();
-                this.prvBdyAngl = this.getElementByName("Angle").getValue();
-                break;
-            }
-
             switch(UI_Manager.HOT_BAR.getActiveSlotID()) {
                 case 2:
-                    this.clearAllElements();
                     this.onCircleActive();
                     break;
                 case 3:
-                    this.clearAllElements();
                     this.onRectangleActive();
                     break;
             }
@@ -81,6 +61,8 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
     }
 
     public void onCircleActive() {
+        this.savePrevElementStates();
+        this.clearAllElements();
         this.HotBarSlotRepresentation = "Circle";
         this.addElement(new UI_Slider("Density", (UI_Window)this, MIN_BODY_DENSITY, MAX_BODY_DENSITY, prvBdyDnsty));
         this.addElement(new UI_Slider("Restitution", (UI_Window)this, 0, 1, prvBdyRsttn));
@@ -92,6 +74,8 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
     } 
 
     public void onRectangleActive() {
+        this.savePrevElementStates();
+        this.clearAllElements();
         this.HotBarSlotRepresentation = "Rectangle";
         this.addElement(new UI_Slider("Density", (UI_Window)this, MIN_BODY_DENSITY, MAX_BODY_DENSITY, prvBdyDnsty));
         this.addElement(new UI_Slider("Restitution", (UI_Window)this, 0, 1, prvBdyRsttn));
@@ -102,6 +86,36 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
         this.addElement(new UI_Toggle("Fixed Position", (UI_Window)this, "Staticity", prvFxPstn));
         this.addElement(new UI_Slider("Angle", (UI_Window)this, -360, 360, prvBdyAngl));
     }
+
+
+
+    public void savePrevElementStates() {
+        if(!this.hasInit) {
+            return;
+        }
+
+        switch (this.HotBarSlotRepresentation) {
+            case "Circle":
+                this.prvBdyRds = this.getElementByName("Radius").getValue();
+                this.prvBdyDnsty = this.getElementByName("Density").getValue();
+                this.prvBdyRsttn = this.getElementByName("Restitution").getValue();
+                this.prvSttc = this.getElementByName("Static").getState();
+                this.prvFxRttn = this.getElementByName("Fixed Rotation").getState();
+                this.prvFxPstn = this.getElementByName("Fixed Position").getState();
+                this.prvBdyAngl = this.getElementByName("Angle").getValue();
+                break;
+            case "Rectangle":
+                this.prvBdyWdth = this.getElementByName("Width").getValue();
+                this.prvBdyHght = this.getElementByName("Height").getValue();
+                this.prvBdyDnsty = this.getElementByName("Density").getValue();
+                this.prvBdyRsttn = this.getElementByName("Restitution").getValue();
+                this.prvSttc = this.getElementByName("Static").getState();
+                this.prvFxRttn = this.getElementByName("Fixed Rotation").getState();
+                this.prvFxPstn = this.getElementByName("Fixed Position").getState();
+                this.prvBdyAngl = this.getElementByName("Angle").getValue();
+                break;
+        }
+    }
 /*
 ========================================= Rigidbody Drawing ========================================
 */ 
@@ -111,28 +125,26 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
             return;
         }
         
-        if(mouseButton == LEFT) {
-            this.drawVelocityLine();
+        int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
+
+        if(activeSlotID == 2 || activeSlotID == 3) {
+            if(mouseButton == LEFT) {
+                this.drawVelocityLine();
+            }
+            this.drawRigidbody(activeSlotID);
+            return;
         }
-        
-        this.drawRigidbody();
     }
 
 
 
 
 
-    public void drawRigidbody() {
-        /*--------------------------------- Checks ---------------------------------*/
-        int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
-        if(activeSlotID != 2 && activeSlotID != 3) {
-            return;
-        }
-        /*---------------------------------------------------------------------------*/
+    public void drawRigidbody(int activeSlotID) {
 
         float angle = radians(this.getElementByName("Angle").getValue());
         PVector position = new PVector();
-            if(Mouse.getIsMouseDownLeft() == true) {
+            if(Mouse.getIsMouseDownLeft() == true && !this.wasMouseSpringAdded) {
                 position.set(PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), 
                                                                           Mouse.getMouseCoordinates(), 
                                                                           MIN_MOUSE_VELOCITY_MAG, 
@@ -141,6 +153,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
             } else {
                 position.set(Mouse.getMouseCoordinates());
             }
+
 
         if(activeSlotID == 2) {
             this.drawCircle(position, angle);
@@ -189,13 +202,23 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 */
     @Override
     public void interactionMouseRelease() {
+        if(UI_Manager.hasWindowBeenInteractedWith) {
+            return;
+        }
+
         if(UI_Manager.getIsOverOrPressedWindows()) {
             return;
         }
-        
-        if(mouseButton == LEFT) {
-            this.createRigidbody();
+
+
+        int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
+        if(activeSlotID == 2 || activeSlotID == 3) {
+            if(mouseButton == LEFT && !this.wasMouseSpringAdded) {
+                this.createRigidbody(activeSlotID);
+                return;
+            }
         }
+        this.wasMouseSpringAdded = false;
     }
 
 
@@ -204,19 +227,15 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
 
 
-    public void createRigidbody() {
+    public void createRigidbody(int activeSlotID) {
         /*--------------------------------- Checks ---------------------------------*/
-        int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
-        if(activeSlotID != 2 && activeSlotID != 3) {
-            return;
-        }
-
         if(Mouse.getRigidbodyUnderMouse() != null) {
             return;
         }
         /*---------------------------------------------------------------------------*/
 
-        if(activeSlotID == 2) {
+
+        if(activeSlotID == 2) { 
             this.createCircle();
         } else if(activeSlotID == 3) {
             this.createRectangle();
@@ -235,7 +254,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
                                                                   new PVector(0, 0, 0),
                                                                   new PVector(255, 255, 255));
 
-            if(!UI_Manager.getIsOverOrPressedWindows()) {
+            if(!UI_Manager.getIsOverOrPressedWindows() && !this.wasMouseSpringAdded) {
                 PVector velocity = PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), 
                                                                                 Mouse.getMouseCoordinates(), 
                                                                                 MIN_MOUSE_VELOCITY_MAG, 
@@ -253,6 +272,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
             rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
 
             AddBodyToBodyEntityList(rigidbody);
+            this.wasMouseSpringAdded = false;
             return;
     }
 
@@ -267,7 +287,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
                                                               0.1,
                                                               new PVector(0, 0, 0),
                                                               new PVector(255, 255, 255));
-        if(!UI_Manager.getIsOverOrPressedWindows()){
+        if(!UI_Manager.getIsOverOrPressedWindows() && !this.wasMouseSpringAdded){
             PVector velocity = PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), 
                                                                             Mouse.getMouseCoordinates(), 
                                                                             MIN_MOUSE_VELOCITY_MAG, 
@@ -285,6 +305,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
         rigidbody.addForceToForceRegistry(new Gravity(rigidbody));
 
         AddBodyToBodyEntityList(rigidbody);
+        this.wasMouseSpringAdded = false;
         return;
     }
 
@@ -294,8 +315,12 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 ========================================= Rigidbody Drawing ========================================
 */
     public void drawVelocityLine() {
-        int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
-        if(activeSlotID != 2 && activeSlotID != 3) {
+
+        if(!Mouse.getIsMouseDownLeft()) {
+            return;
+        }
+
+        if(this.wasMouseSpringAdded) {
             return;
         }
 

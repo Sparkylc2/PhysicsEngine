@@ -154,90 +154,55 @@ public class UI_HotBar {
         }
     }
 
+    UI_Window window;
     switch(this.activeSlotID) {
         case 0:
             break;
         case 1:
             break;
         case 2:
-            UI_Window rigidbodyWindow = UI_Manager.getWindowByName("Properties (rigidbody)");
+            window = UI_Manager.getWindowByName("Properties (rigidbody)");
 
-            rigidbodyWindow.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(rigidbodyWindow);
-            rigidbodyWindow.onWindowSelect();
+            window.onSlotChange(previousSlotID);
+            UI_Manager.bringToFront(window);
+            //UI_Manager.repositionWindow(window);
+            window.onWindowSelect();
             break;
         case 3:
-            UI_Window rigidbodyWindowb = UI_Manager.getWindowByName("Properties (rigidbody)");
+            window = UI_Manager.getWindowByName("Properties (rigidbody)");
 
-            rigidbodyWindowb.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(rigidbodyWindowb);
-            rigidbodyWindowb.onWindowSelect();
+            window.onSlotChange(previousSlotID);
+            UI_Manager.bringToFront(window);
+            //UI_Manager.repositionWindow(window);
+            window.onWindowSelect();
             break;
         case 4:
-            UI_Window forcesWindow = UI_Manager.getWindowByName("Properties (forces)");
-            forcesWindow.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(forcesWindow);
-            forcesWindow.onWindowSelect();
+            window = UI_Manager.getWindowByName("Properties (forces)");
+
+            window.onSlotChange(previousSlotID);
+            UI_Manager.bringToFront(window);
+            //UI_Manager.repositionWindow(window);
+            window.onWindowSelect();
             break;
         case 5:
-            UI_Window forcesWindowb = UI_Manager.getWindowByName("Properties (forces)");
-            forcesWindowb.onSlotChange(previousSlotID);
+            window = UI_Manager.getWindowByName("Properties (forces)");
+
+            window.onSlotChange(previousSlotID);
+            UI_Manager.bringToFront(window);
+            //UI_Manager.repositionWindow(window);
+            window.onWindowSelect();
             break;
         case 6:
-            UI_Window forcesWindowc = UI_Manager.getWindowByName("Properties (forces)");
+            window = UI_Manager.getWindowByName("Properties (forces)");
 
-            forcesWindowc.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(forcesWindowc);
-            forcesWindowc.onWindowSelect();
+            window.onSlotChange(previousSlotID);
+            UI_Manager.bringToFront(window);
+            //UI_Manager.repositionWindow(window);
+            window.onWindowSelect();
             break;
     }
 }
 
-
-
-    public void onSlotChangeWindowCaller(int slotID) {
-        int previousSlotID = this.activeSlotID;
-    if (this.activeSlotID != -1 && this.activeSlotID < 4) {
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(1).setVisible(true);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(2).setVisible(false);
-    } else {
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
-    }
-
-    if(slotID == -1) {
-        this.activeSlotID = -1;
-        return;
-    } else {
-        this.activeSlotID = slotID;
-    }
-
-    if(this.activeSlotID < 4) {
-        this.HOT_SHAPE.getChild(slotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_SELECTED_COLOR);
-        this.HOT_SHAPE.getChild(slotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_SELECTED_STROKE);
-        this.HOT_SHAPE.getChild(slotID).getChild(1).setVisible(false);
-        this.HOT_SHAPE.getChild(slotID).getChild(2).setVisible(true);
-    } else {
-        this.HOT_SHAPE.getChild(slotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_SELECTED_COLOR);
-        this.HOT_SHAPE.getChild(slotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_SELECTED_STROKE);
-    }   
-
-    boolean resetMouseObject = 
-                            ((previousSlotID == 4 || previousSlotID == 5 || previousSlotID == 6) && (this.activeSlotID != 4 && this.activeSlotID != 5 && this.activeSlotID != 6))
-                            ||
-                            ((previousSlotID == 2 || previousSlotID == 3) && (this.activeSlotID != 2 && this.activeSlotID != 3))
-                            ;
-
-    if(resetMouseObject) {
-        Mouse.getMouseObjectResults().clear();
-        UI_PropertiesForceWindow window = (UI_PropertiesForceWindow) UI_Manager.getWindowByName("Properties (forces)");
-        if(window.MOUSE_SPRING_ADDED) {
-            window.removeMouseSpring();
-        }
-    }
-}
 /*
 =========================================== Drawing ================================================
 */

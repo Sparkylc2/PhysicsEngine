@@ -6,6 +6,14 @@ public class UI_Manager {
 
     public boolean dragging = false;
 
+
+
+    public boolean hasWindowBeenInteractedWith = false;
+    public float timeWindowBeenInteractedWith;
+
+    public boolean isMouseOverWindow = false;
+    public boolean wasMousePressedOverWindow = false;
+
     public void init() {
         UI_Constants = new UI_Constants();
         this.TAB_BAR = new UI_TabBar();
@@ -14,15 +22,40 @@ public class UI_Manager {
         this.WINDOWS.add((UI_Window) new UI_PropertiesRigidbodyWindow());
         this.WINDOWS.add((UI_Window) new UI_PropertiesForceWindow());
 
-        this.WINDOWS.get(0).Window_Visibility = false;
-        this.WINDOWS.get(1).Window_Visibility = false;
+        for(UI_Window window : WINDOWS) {
+            window.setWindowVisibility(false);
+        }
     }
 
     public void draw() {
+        if(hasWindowBeenInteractedWith) {
+            if(millis() - timeWindowBeenInteractedWith > 100) {
+                this.hasWindowBeenInteractedWith = false;
+                this.timeWindowBeenInteractedWith = 0;
+            }
+        }   
+
         this.TAB_BAR.draw();
         this.HOT_BAR.draw();
+
         for(UI_Window window : this.WINDOWS) {
                 window.draw();
+        }
+
+        for(UI_Window window : this.WINDOWS) {
+            if(window.isMouseOverWindow) {
+                this.isMouseOverWindow = true;
+                return;
+            } else {
+                this.isMouseOverWindow = false;
+            }
+
+            if(window.wasMousePressedOverWindow) {
+                this.wasMousePressedOverWindow = true;
+                return;
+            } else {
+                this.wasMousePressedOverWindow = false;
+            }
         }
     }
 
@@ -37,19 +70,21 @@ public class UI_Manager {
             this.WINDOWS.get(i).interactionMousePress();
 
             if(this.WINDOWS.get(i).onMousePress()) {
-                this.WINDOWS.add(this.WINDOWS.remove(i));
+                this.timeWindowBeenInteractedWith = millis();
+                this.hasWindowBeenInteractedWith = true;
                 return;
-            }
+            } 
         }
     }
 
     public void onMouseDrag() {
         for(int i = this.WINDOWS.size() - 1; i >= 0; i--) {
-        
+
             this.WINDOWS.get(i).interactionMouseDrag();
 
             if(this.WINDOWS.get(i).onMouseDrag()) {
-                this.WINDOWS.add(this.WINDOWS.remove(i));
+                this.timeWindowBeenInteractedWith = millis();
+                this.hasWindowBeenInteractedWith = true;
                 return;
             }
         }
@@ -57,9 +92,8 @@ public class UI_Manager {
 
     public void onMouseRelease() {
         for(UI_Window window : this.WINDOWS) {
-            window.interactionMouseRelease();
-            
             window.onMouseRelease();
+            window.interactionMouseRelease();
         }
     }
 
@@ -77,6 +111,20 @@ public class UI_Manager {
         }
     }
     
+
+    public void repositionWindow(UI_Window window) {
+        for(UI_Window win : UI_Manager.WINDOWS) {
+            if(window == win) {
+                continue;
+            }
+
+            if(win.getWindowPosition().x < displayWidth / 2) {
+                window.setWindowPosition(new PVector(displayWidth * (3/4), displayHeight/3));
+            } else {
+                window.setWindowPosition(new PVector(displayWidth * (1/4), displayHeight/3));
+            }
+        }
+    }
 
 /*
 ====================================== Getters and Setters =========================================
@@ -111,21 +159,15 @@ public class UI_Manager {
     }
 
     public boolean getIsOverWindows() {
-        for(UI_Window window : this.WINDOWS) {
-            if(window.isMouseOverWindow) {
-                return true;
-            }
-        }
-        return false;
+        return this.isMouseOverWindow;
     }
 
     public boolean getIsOverOrPressedWindows() {
-        for(UI_Window window : this.WINDOWS) {
-            if(window.isMouseOverWindow || window.wasMousePressedOverWindow) {
-                return true;
-            }
-        }
-        return false;
+        return this.isMouseOverWindow || this.wasMousePressedOverWindow;
+    }
+
+    public boolean getIsPressedOverWindow() {
+        return this.wasMousePressedOverWindow;
     }
     public ArrayList<UI_Window> getWindows() {
         return this.WINDOWS;

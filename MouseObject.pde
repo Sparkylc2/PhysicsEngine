@@ -15,6 +15,10 @@ public class MouseObject {
     private boolean isMouseUp = false;
     private PVector mouseUpCoordinates = new PVector();
 
+
+    private boolean isMouseOverUI = false;
+    private boolean wasMousePressedOverWindow = false;
+
 	private Rigidbody currentRigidbodyUnderMouse;
 
   	private boolean showCursorTrail = true;
@@ -33,7 +37,6 @@ public class MouseObject {
         this.updateMouseCoordinates();
         this.currentRigidbodyUnderMouse = this.getRigidbodyUnderMouse();
     }
-
 
 	public Rigidbody getRigidbodyUnderMouse() {
         PVector mouseCoordinates = Camera.screenToWorld();

@@ -208,6 +208,11 @@ public class UI_Window {
         if(!this.Window_Visibility) {
             return;
         }
+
+        if(this.wasMousePressedOverWindow) {
+            Mouse.getMouseObjectResults().clear();
+        }
+
         this.onElementMouseRelease();
         this.isDragging = false;
         this.wasMousePressedOverWindow = false;
@@ -259,10 +264,16 @@ public class UI_Window {
             if(this.isMouseOverWindow) {
                 this.wasMousePressedOverWindow = true;
                 this.checkWindowClose();
+
+                if(!this.Window_Visibility) {
+                    return true;
+                }
+
                 this.onWindowSelectHotbarCaller();
                 this.onElementMousePress();
                 return true;
             } else {
+                this.wasMousePressedOverWindow = false;
                 this.onWindowDeselect();
                 return false;
             }
@@ -325,6 +336,7 @@ public class UI_Window {
     public void onWindowSelect() {
         this.deselectAllWindows();
         this.isActiveWindow = true;
+        UI_Manager.bringToFront(this);
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
     }
@@ -333,35 +345,31 @@ public class UI_Window {
     public void onWindowSelectHotbarCaller() {
         this.deselectAllWindows();
         this.isActiveWindow = true;
+        UI_Manager.bringToFront(this);
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
 
         if(this.HotBarSlotRepresentation != null) {
             switch(this.HotBarSlotRepresentation) {
                 case "Circle":
-                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(2);
+                    UI_Manager.HOT_BAR.onSlotChange(2);
                     this.onWindowSelect();
-                    UI_Manager.bringToFront(this);
                     break;
                 case "Rectangle":
-                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(3);
+                    UI_Manager.HOT_BAR.onSlotChange(3);
                     this.onWindowSelect();
-                    UI_Manager.bringToFront(this);
                     break;
                 case "Spring":
-                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(4);
+                    UI_Manager.HOT_BAR.onSlotChange(4);
                     this.onWindowSelect();
-                    UI_Manager.bringToFront(this);
                     break;
                 case "Rod":
-                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(5);
+                    UI_Manager.HOT_BAR.onSlotChange(5);
                     this.onWindowSelect();
-                    UI_Manager.bringToFront(this);
                     break;
                 case "Motor":
-                    UI_Manager.HOT_BAR.onSlotChangeWindowCaller(6);
+                    UI_Manager.HOT_BAR.onSlotChange(6);
                     this.onWindowSelect();
-                    UI_Manager.bringToFront(this);
                     break;
             }
         }
@@ -510,5 +518,23 @@ public class UI_Window {
 
     public String getWindowName() {
         return this.Window_Name;
+    }
+
+    public void setWindowPosition(PVector position) {
+        this.Window_Position.set(position);
+        this.Window_Container.resetMatrix();
+        this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
+        this.Window_Container.scale(this.Window_Scale);
+    }
+
+    public void setWindowPositionX(float posX) {
+        this.Window_Position.set(new PVector(posX, this.Window_Position.y));
+        this.Window_Container.resetMatrix();
+        this.Window_Container.translate(this.Window_Position.x, this.Window_Position.y);
+        this.Window_Container.scale(this.Window_Scale);
+    }
+
+    public void setWindowVisibility(boolean Window_Visibility) {
+        this.Window_Visibility = Window_Visibility;
     }
 }

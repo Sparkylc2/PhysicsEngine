@@ -19,6 +19,8 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_Name = Toggle_Name;
         this.Toggle_ParentWindow = Toggle_ParentWindow;
 
+        this.Toggle_State = Toggle_State;
+
         this.initializeToggle();
     }
 
@@ -30,6 +32,8 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_Name = Toggle_Name;
         this.Toggle_ParentWindow = Toggle_ParentWindow;
         this.Toggle_GroupName = Toggle_GroupName;
+
+        this.Toggle_State = Toggle_State;
 
         this.initializeToggle();
     }
@@ -109,11 +113,6 @@ public class UI_Toggle extends UI_Element {
             Toggle_TickMark.setFill(false);
             Toggle_TickMark.setStroke(UI_Constants.GRAY_150);
 
-            if(this.Toggle_State) {
-                Toggle_TickMark.setVisible(true);
-            } else {
-                Toggle_TickMark.setVisible(false);
-            }
             Toggle_TickMark.setStrokeWeight(2);
 
         PShape Toggle_Shape_Base_Listener = UI_Constants.createElementListener(Toggle_Shape_Base);
@@ -123,6 +122,12 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_Shape_Group.addChild(Toggle_TickBox);
         this.Toggle_Shape_Group.addChild(Toggle_Shape_Base_Listener);
         this.Toggle_Shape_Group.addChild(Toggle_TickMark);
+
+        if(this.Toggle_State) {
+            this.onSelect();
+        } else {
+            this.onDeselect();
+        }
 
     }
 
