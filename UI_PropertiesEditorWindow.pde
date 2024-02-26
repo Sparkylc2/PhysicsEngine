@@ -5,7 +5,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     private Rigidbody rigidbodyToEdit = null;
 
 
-    private boolean inEditMode = false;
+    public boolean inEditMode = false;
 
 
     public UI_PropertiesEditorWindow() {
@@ -94,6 +94,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         }
         if(UI_Manager.HOT_BAR.getActiveSlotID() != 1) {
             this.inEditMode = false;
+            this.Window_Visibility = false;
             return;
         }
 

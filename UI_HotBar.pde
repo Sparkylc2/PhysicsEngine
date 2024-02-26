@@ -215,6 +215,9 @@ public class UI_HotBar {
     
 
     if(previousSlotID == 1) {
+        UI_PropertiesEditorWindow win = (UI_PropertiesEditorWindow)UI_Manager.getWindowByName("Properties Editor (rigidbody)");
+        win.Window_Visibility = false;
+        win.inEditMode = false;
         IS_PAUSED = false;
         IS_PAUSED_LOCK = false;
     }
