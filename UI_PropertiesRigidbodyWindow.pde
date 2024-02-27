@@ -1,7 +1,5 @@
 public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
-
-
     public boolean wasMouseSpringAdded = false;
     private boolean hasInit = false;
 
@@ -33,7 +31,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
     @Override
     public void onSlotChange(int previousSlotID) { 
         this.onWindowSelect();
-        
+
         if(!hasInit) {
             switch(UI_Manager.HOT_BAR.getActiveSlotID()) {
                 case 2:
@@ -55,7 +53,6 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
                     this.onRectangleActive();
                     break;
             }
-
         this.Window_Visibility = true;
         
     }
@@ -86,8 +83,6 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
         this.addElement(new UI_Toggle("Fixed Position", (UI_Window)this, "Staticity", prvFxPstn));
         this.addElement(new UI_Slider("Angle", (UI_Window)this, -360, 360, prvBdyAngl));
     }
-
-
 
     public void savePrevElementStates() {
         if(!this.hasInit) {
@@ -254,7 +249,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
                                                                   new PVector(0, 0, 0),
                                                                   new PVector(255, 255, 255));
 
-            if(!UI_Manager.getIsOverOrPressedWindows() && !this.wasMouseSpringAdded) {
+            if(!UI_Manager.getIsOverOrPressedWindows() && !this.wasMouseSpringAdded || !this.getElementByName("Fixed Position").getState()) {
                 PVector velocity = PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), 
                                                                                 Mouse.getMouseCoordinates(), 
                                                                                 MIN_MOUSE_VELOCITY_MAG, 
@@ -287,7 +282,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
                                                               0.1,
                                                               new PVector(0, 0, 0),
                                                               new PVector(255, 255, 255));
-        if(!UI_Manager.getIsOverOrPressedWindows() && !this.wasMouseSpringAdded){
+        if(!UI_Manager.getIsOverOrPressedWindows() && !this.wasMouseSpringAdded && !this.getElementByName("Fixed Position").getState()){
             PVector velocity = PhysEngMath.MouseVelocityCalculationAndClamp(Mouse.getMouseDownCoordinates(), 
                                                                             Mouse.getMouseCoordinates(), 
                                                                             MIN_MOUSE_VELOCITY_MAG, 

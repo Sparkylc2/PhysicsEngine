@@ -21,6 +21,7 @@ public class UI_Manager {
         this.WINDOWS = new ArrayList<UI_Window>();
         this.WINDOWS.add((UI_Window) new UI_PropertiesRigidbodyWindow());
         this.WINDOWS.add((UI_Window) new UI_PropertiesForceWindow());
+        this.WINDOWS.add((UI_Window) new UI_PropertiesEditorWindow());
 
         for(UI_Window window : WINDOWS) {
             window.setWindowVisibility(false);
@@ -66,14 +67,40 @@ public class UI_Manager {
     }
 
     public void onMousePress() {
+        
+        boolean windowVisibilityChange = false;
+        boolean isVisibilityChangeActiveWindow = false;
+        UI_Window activeWindow = this.getActiveWindow();
+
         for(int i = this.WINDOWS.size() - 1; i >= 0; i--) {
             this.WINDOWS.get(i).interactionMousePress();
 
+            boolean isWindowVisibleBefore = this.WINDOWS.get(i).Window_Visibility;
+            boolean isWindowVisibleAfter;
+
             if(this.WINDOWS.get(i).onMousePress()) {
+                isWindowVisibleAfter = this.WINDOWS.get(i).Window_Visibility;
+
+                if(activeWindow != null) {
+                    if(isWindowVisibleBefore != isWindowVisibleAfter) {
+                        if(this.WINDOWS.get(i) == activeWindow) {
+                            isVisibilityChangeActiveWindow = true;
+                        }
+                    windowVisibilityChange = true;
+                    }
+                }
+                
                 this.timeWindowBeenInteractedWith = millis();
                 this.hasWindowBeenInteractedWith = true;
-                return;
+
+                if(!windowVisibilityChange) {
+                    return;
+                }
             } 
+        }
+
+        if(windowVisibilityChange && !isVisibilityChangeActiveWindow && activeWindow != null) {
+            activeWindow.onWindowSelectHotbarCaller();
         }
     }
 
@@ -91,7 +118,8 @@ public class UI_Manager {
     }
 
     public void onMouseRelease() {
-        for(UI_Window window : this.WINDOWS) {
+        ArrayList<UI_Window> windowsCopy = new ArrayList<>(this.WINDOWS);
+        for(UI_Window window : windowsCopy) {
             window.onMouseRelease();
             window.interactionMouseRelease();
         }
@@ -177,5 +205,11 @@ public class UI_Manager {
     }
     public void setActiveTabID(int id) {
         this.TAB_BAR.setActiveTabID(id);
+    }
+
+    public void closeAllWindows() {
+        for(UI_Window window : this.WINDOWS) {
+            window.Window_Visibility = false;
+        }
     }
 }
