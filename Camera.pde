@@ -42,9 +42,7 @@ public class Camera {
     }
 
     public void resetTransform() {
-        translate(position.x, position.y);
-        scale(1/zoom);
-        translate(-width/2, -height/2);
+        popMatrix();
     }
   
     public PVector screenToWorld(float x, float y) {

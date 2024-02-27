@@ -193,13 +193,6 @@ public class UI_Window {
         shape(this.Window_Container, 0, 0);
     }
 
-    public void interactionDraw() {
-
-    }
-
-    public void onSlotChange(int previousSlotID) {
-        
-    }
 
 /*
 ============================================= Interaction ==========================================
@@ -351,6 +344,10 @@ public class UI_Window {
 
         if(this.HotBarSlotRepresentation != null) {
             switch(this.HotBarSlotRepresentation) {
+                case "Editor":
+                    UI_Manager.HOT_BAR.onSlotChange(1);
+                    this.onWindowSelect();
+                    break;
                 case "Circle":
                     UI_Manager.HOT_BAR.onSlotChange(2);
                     this.onWindowSelect();
@@ -537,4 +534,20 @@ public class UI_Window {
     public void setWindowVisibility(boolean Window_Visibility) {
         this.Window_Visibility = Window_Visibility;
     }
+
+
+
+
+    public void interactionDraw() {
+
+    }
+
+    public void interactionMouseClick() {
+
+    }
+
+    public void onSlotChange(int previousSlotID) {
+        
+    }
+
 }

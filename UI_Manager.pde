@@ -66,6 +66,10 @@ public class UI_Manager {
         }
     }
 
+
+/*
+======================================= Mouse Interaction =======================================
+*/
     public void onMousePress() {
         
         boolean windowVisibilityChange = false;
@@ -125,6 +129,15 @@ public class UI_Manager {
         }
     }
 
+    public void onMouseClick() {
+        ArrayList<UI_Window> windowsCopy = new ArrayList<>(this.WINDOWS);
+        for(UI_Window window : windowsCopy) {
+            window.interactionMouseClick();
+        }
+    }
+/*
+================================================================================================
+*/
     public void bringToFront(UI_Window window) {
         this.WINDOWS.add(this.WINDOWS.remove(this.WINDOWS.indexOf(window)));
     }
@@ -209,7 +222,7 @@ public class UI_Manager {
 
     public void closeAllWindows() {
         for(UI_Window window : this.WINDOWS) {
-            window.Window_Visibility = false;
+            window.onWindowClose();
         }
     }
 }

@@ -297,11 +297,10 @@ public class UI_PropertiesForceWindow extends UI_Window {
     @Override
     public void interactionMousePress() {
         if(UI_Manager.hasWindowBeenInteractedWith) {
-            System.out.println("Cant click");
             return;
         }
 
-        if(UI_Manager.getIsOverOrPressedWindows() || mouseButton != LEFT){
+        if(UI_Manager.getIsOverOrPressedWindows()){
             return;
         }
 
@@ -310,7 +309,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
 
     @Override
     public void interactionMouseDrag() {
-        if(this.MOUSE_SPRING_ADDED && Mouse.getIsMouseDownLeft()) {
+        if(this.MOUSE_SPRING_ADDED) {
             PVector mouseCoordinates = Mouse.getMouseCoordinates();
             mouseSpring.setAnchorPoint(mouseCoordinates);
         }
@@ -332,11 +331,10 @@ public class UI_PropertiesForceWindow extends UI_Window {
             return;
         } 
 
-        if(mouseButton == LEFT) {
-            this.createForces();
-            return;
-        }
+        this.createForces();
+        return;
     }
+
 
 
 
@@ -462,7 +460,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
 ========================================= Mouse Spring ==============================================
 */
     public void addMouseSpring() {
-        if(KeyHandler.isKeyDown(KeyEvent.VK_SHIFT) && Mouse.getIsMouseDownLeft() && !this.MOUSE_SPRING_ADDED) {
+        if(KeyHandler.isKeyDown(KeyEvent.VK_SHIFT) && !this.MOUSE_SPRING_ADDED) {
             Rigidbody rigidbody = Mouse.getCurrentRigidbodyUnderMouse();
 
             if(rigidbody != null){

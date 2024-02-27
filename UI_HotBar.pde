@@ -68,22 +68,18 @@ public class UI_HotBar {
 
                 SLOT.setStrokeWeight(UI_Constants.HOTBAR_STROKE_WEIGHT);
 
-                if(i < 4) {
-                    PShape SLOT_ICON_SELECTED = loadShape("HotbarSlot" + (i + 1) + "Selected.svg");
-                        SLOT_ICON_SELECTED.setName("SLOT_ICON_SELECTED");
-                        SLOT_ICON_SELECTED.translate(xPos, yPos);
+                PShape SLOT_ICON_SELECTED = loadShape("HotbarSlot" + (i + 1) + "Selected.svg");
+                    SLOT_ICON_SELECTED.setName("SLOT_ICON_SELECTED");
+                    SLOT_ICON_SELECTED.translate(xPos, yPos);
 
-                    PShape SLOT_ICON = loadShape("HotbarSlot" + (i + 1) + ".svg");
-                        SLOT_ICON.setName("SLOT_ICON");
-                        SLOT_ICON.translate(xPos, yPos);
+                PShape SLOT_ICON = loadShape("HotbarSlot" + (i + 1) + ".svg");
+                    SLOT_ICON.setName("SLOT_ICON");
+                    SLOT_ICON.translate(xPos, yPos);
 
-                    SLOT_GROUP.addChild(SLOT);
-                    SLOT_GROUP.addChild(SLOT_ICON);
-                    SLOT_GROUP.addChild(SLOT_ICON_SELECTED);
+                SLOT_GROUP.addChild(SLOT);
+                SLOT_GROUP.addChild(SLOT_ICON);
+                SLOT_GROUP.addChild(SLOT_ICON_SELECTED);
 
-                } else {
-                    SLOT_GROUP.addChild(SLOT);
-                }
             this.HOT_SHAPE.addChild(SLOT_GROUP);
         }
 
@@ -123,105 +119,91 @@ public class UI_HotBar {
             return;
         }
 
-    if (this.activeSlotID != -1 && this.activeSlotID < 4) {
         this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
         this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
         this.HOT_SHAPE.getChild(this.activeSlotID).getChild(1).setVisible(true);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(2).setVisible(false);
-    } else {
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
-    }
 
-    if(slotID == -1) {
-        this.activeSlotID = -1;
-        return;
-    } else {
+        if(slotID == -1) {
+            this.activeSlotID = -1;
+            return;
+        } 
+
         this.activeSlotID = slotID;
-    }
-
-    if(this.activeSlotID < 4) {
+    
         this.HOT_SHAPE.getChild(slotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_SELECTED_COLOR);
         this.HOT_SHAPE.getChild(slotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_SELECTED_STROKE);
         this.HOT_SHAPE.getChild(slotID).getChild(1).setVisible(false);
-        this.HOT_SHAPE.getChild(slotID).getChild(2).setVisible(true);
-    } else {
-        this.HOT_SHAPE.getChild(slotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_SELECTED_COLOR);
-        this.HOT_SHAPE.getChild(slotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_SELECTED_STROKE);
-    }   
-
-    boolean resetMouseObject = 
+    
+        boolean resetMouseObject = 
                             ((previousSlotID == 4 || previousSlotID == 5 || previousSlotID == 6) && (this.activeSlotID != 4 && this.activeSlotID != 5 && this.activeSlotID != 6))
                             ||
                             ((previousSlotID == 2 || previousSlotID == 3) && (this.activeSlotID != 2 && this.activeSlotID != 3))
                             ;
 
-    if(resetMouseObject) {
-        Mouse.getMouseObjectResults().clear();
-        UI_PropertiesForceWindow window = (UI_PropertiesForceWindow) UI_Manager.getWindowByName("Properties (forces)");
-        if(window.MOUSE_SPRING_ADDED) {
-            window.removeMouseSpring();
+        if(resetMouseObject) {
+            Mouse.getMouseObjectResults().clear();
+            UI_PropertiesForceWindow window = (UI_PropertiesForceWindow) UI_Manager.getWindowByName("Properties (forces)");
+            if(window.MOUSE_SPRING_ADDED) {
+                window.removeMouseSpring();
+            }
         }
-    }
-
-    UI_Window window;
-    switch(this.activeSlotID) {
-        case 0:
-            UI_Manager.closeAllWindows();
-            break;
-        case 1:
-            UI_Manager.closeAllWindows();
-        case 2:
-            window = UI_Manager.getWindowByName("Properties (rigidbody)");
-
-            window.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(window);
-            //UI_Manager.repositionWindow(window);
-            window.onWindowSelect();
-            break;
-        case 3:
-            window = UI_Manager.getWindowByName("Properties (rigidbody)");
-
-            window.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(window);
-            //UI_Manager.repositionWindow(window);
-            window.onWindowSelect();
-            break;
-        case 4:
-            window = UI_Manager.getWindowByName("Properties (forces)");
-
-            window.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(window);
-            //UI_Manager.repositionWindow(window);
-            window.onWindowSelect();
-            break;
-        case 5:
-            window = UI_Manager.getWindowByName("Properties (forces)");
-
-            window.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(window);
-            //UI_Manager.repositionWindow(window);
-            window.onWindowSelect();
-            break;
-        case 6:
-            window = UI_Manager.getWindowByName("Properties (forces)");
-
-            window.onSlotChange(previousSlotID);
-            UI_Manager.bringToFront(window);
-            //UI_Manager.repositionWindow(window);
-            window.onWindowSelect();
-            break;
-    }
     
 
-    if(previousSlotID == 1) {
-        UI_PropertiesEditorWindow win = (UI_PropertiesEditorWindow)UI_Manager.getWindowByName("Properties Editor (rigidbody)");
-        win.Window_Visibility = false;
-        win.inEditMode = false;
-        IS_PAUSED = false;
-        IS_PAUSED_LOCK = false;
+        UI_Window window;
+        switch(this.activeSlotID) {
+            case 0:
+                UI_Manager.closeAllWindows();
+                break;
+            case 1:
+                UI_Manager.closeAllWindows();
+                break;
+            case 2:
+                window = UI_Manager.getWindowByName("Properties (rigidbody)");
+    
+                window.onSlotChange(previousSlotID);
+                UI_Manager.bringToFront(window);
+                //UI_Manager.repositionWindow(window);
+                window.onWindowSelect();
+                break;
+            case 3:
+                window = UI_Manager.getWindowByName("Properties (rigidbody)");
+    
+                window.onSlotChange(previousSlotID);
+                UI_Manager.bringToFront(window);
+                //UI_Manager.repositionWindow(window);
+                window.onWindowSelect();
+                break;
+            case 4:
+                window = UI_Manager.getWindowByName("Properties (forces)");
+    
+                window.onSlotChange(previousSlotID);
+                UI_Manager.bringToFront(window);
+                //UI_Manager.repositionWindow(window);
+                window.onWindowSelect();
+                break;
+            case 5:
+                window = UI_Manager.getWindowByName("Properties (forces)");
+    
+                window.onSlotChange(previousSlotID);
+                UI_Manager.bringToFront(window);
+                //UI_Manager.repositionWindow(window);
+                window.onWindowSelect();
+                break;
+            case 6:
+                window = UI_Manager.getWindowByName("Properties (forces)");
+    
+                window.onSlotChange(previousSlotID);
+                UI_Manager.bringToFront(window);
+                //UI_Manager.repositionWindow(window);
+                window.onWindowSelect();
+                break;
+        }
+        
+    
+        if(previousSlotID == 1) {
+            UI_Manager.getWindowByName("Properties Editor (rigidbody)").onWindowClose();
+        }
     }
-}
 
 /*
 =========================================== Drawing ================================================

@@ -1,5 +1,5 @@
 public KeyHandler KeyHandler = new KeyHandler();
-
+public DashedLines dash;
 public Camera Camera = new Camera();
 public MouseObject Mouse = new MouseObject();
 public FrameTimeUtility FrameTimeUtility = new FrameTimeUtility();

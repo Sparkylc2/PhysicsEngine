@@ -1,34 +1,19 @@
 
 public void setup() {
+
     if(System.getProperty("os.name").toLowerCase().contains("mac")) {
         windowMove(0, 22);
     }
     textFont(createFont("InterDisplay-SemiBold.ttf", 128, true), 10);
+    dash = new DashedLines(this);
+    dash.pattern(1, 0.5);
 /*--------------------- Timing Utilities ---------------------*/
     FrameTimeUtility.init();
-/*------------------------------------------------------------*/
-
-
-/*
---------------------- OS Screen Setup ------------------------*/
-
-
-    // Rest of your setup code...
-
-   //size(1500, 1000, FX2D);
-    //size(1250, 800);
-    //size(1920, 1080);
-    //fullScreen();
     frameRate(300);
 /*--------------------- Camera Utilities ---------------------*/
     Camera = new Camera();
-    
-/*------------------------------------------------------------*/
-
 /*---------------------------- UI ----------------------------*/
     UI_Manager.init();
-/*------------------------------------------------------------*/
-
 /*-------------------------- Rigidbodies ------------------------*/
     rigidbodyList = new ArrayList<Rigidbody>();
 /*------------------------------------------------------------*/

@@ -123,9 +123,11 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
         int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
 
         if(activeSlotID == 2 || activeSlotID == 3) {
+            
             if(mouseButton == LEFT) {
                 this.drawVelocityLine();
             }
+
             this.drawRigidbody(activeSlotID);
             return;
         }
@@ -208,7 +210,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
         int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
         if(activeSlotID == 2 || activeSlotID == 3) {
-            if(mouseButton == LEFT && !this.wasMouseSpringAdded) {
+            if(!this.wasMouseSpringAdded) {
                 this.createRigidbody(activeSlotID);
                 return;
             }
@@ -311,7 +313,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 */
     public void drawVelocityLine() {
 
-        if(!Mouse.getIsMouseDownLeft()) {
+        if(mouseButton != LEFT) {
             return;
         }
 

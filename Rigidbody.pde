@@ -896,6 +896,19 @@ public boolean containsPolygon(float x, float y) {
       this.aabbUpdateRequired = true;
       this.position.set(position);
     }
+
+    public void addPosition(PVector difference) {
+      this.transformUpdateRequired = true;
+      this.aabbUpdateRequired = true;
+      this.position.add(difference);
+    }
+
+    public void addPosition(float x, float y) {
+      this.transformUpdateRequired = true;
+      this.aabbUpdateRequired = true;
+      this.position.add(x, y);
+    }
+
     public PVector getVelocity() {
       return this.linearVelocity;
     }

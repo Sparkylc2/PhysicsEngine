@@ -17,6 +17,10 @@ public void mouseReleased() {
 }
 
 public void mouseClicked() {
+    if(mouseButton == LEFT) {
+        UI_Manager.onMouseClick();
+        return;
+    }
 } 
 
 public void mouseWheel(MouseEvent event) {
