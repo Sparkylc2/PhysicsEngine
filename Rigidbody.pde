@@ -749,6 +749,43 @@ public boolean containsPolygon(float x, float y) {
   ==================================================================================================
   */
   
+
+  public void copy(Rigidbody rigidbody) {
+    
+    this.ID = UUID.randomUUID().toString();
+    this.position.set(rigidbody.position);
+    this.linearVelocity.set(rigidbody.linearVelocity);
+    this.angle = rigidbody.angle;
+    this.angularVelocity = rigidbody.angularVelocity;
+    this.ShapeType = rigidbody.ShapeType;
+    this.Mass = rigidbody.Mass;
+    this.InvMass = rigidbody.InvMass;
+    this.Density = rigidbody.Density;
+    this.Restitution = rigidbody.Restitution;
+    this.Area = rigidbody.Area;
+    this.Radius = rigidbody.Radius;
+    this.Width = rigidbody.Width;
+    this.Height = rigidbody.Height;
+    this.coefficientOfStaticFriction = rigidbody.coefficientOfStaticFriction;
+    this.coefficientOfKineticFriction = rigidbody.coefficientOfKineticFriction;
+
+    this.Vertices = rigidbody.Vertices;
+    this.transformedVertices = new PVector[rigidbody.Vertices.length];
+
+    this.strokeWeight = rigidbody.strokeWeight;
+    this.strokeColour = rigidbody.strokeColour;
+    this.fillColour = rigidbody.fillColour;
+    this.isStatic = rigidbody.isStatic;
+    this.isTranslationallyStatic = rigidbody.isTranslationallyStatic;
+    this.isRotationallyStatic = rigidbody.isRotationallyStatic;
+    this.isVisible = rigidbody.isVisible;
+    this.isCollidable = rigidbody.isCollidable;
+
+    this.aabbUpdateRequired = true;
+    this.transformUpdateRequired = true;
+
+  }
+
   public float getMass() {
     return this.Mass;
   }

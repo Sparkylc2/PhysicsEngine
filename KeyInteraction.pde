@@ -73,28 +73,32 @@ public void keyPressed() {
         softbodyList.clear();
     }
     if(keyCode == BACKSPACE || keyCode == DELETE) {
+        UI_PropertiesEditorWindow propertiesEditor = (UI_PropertiesEditorWindow) UI_Manager.getWindowByName("Properties Editor (rigidbody)");
+        ArrayList<Rigidbody> rigidbodiesToDelete = propertiesEditor.selectedRigidbodies;
 
-        Rigidbody rigidbody = Mouse.getRigidbodyUnderMouse();
-        if(rigidbody != null) {
-            ArrayList<ForceRegistry> forceRegistry = rigidbody.getForceRegistry();
-            for(ForceRegistry force : forceRegistry) {
-                Rigidbody rigidbodyA = force.getRigidbodyA();
-                Rigidbody rigidbodyB = force.getRigidbodyB();
-
-                if((rigidbodyA == null && rigidbodyB != null) || (rigidbodyA != null && rigidbodyB == null)) {
+        if(rigidbodiesToDelete.size() != 0) {
+            for(Rigidbody rigidbody : rigidbodiesToDelete) {
+                ArrayList<ForceRegistry> forceRegistry = rigidbody.getForceRegistry();
+                for(ForceRegistry force : forceRegistry) {
+                    Rigidbody rigidbodyA = force.getRigidbodyA();
+                    Rigidbody rigidbodyB = force.getRigidbodyB();
+                    if((rigidbodyA == null && rigidbodyB != null) || (rigidbodyA != null && rigidbodyB == null)) {
+                        ALL_FORCES_ARRAYLIST.remove(force);
+                    } else if(rigidbodyA != rigidbody && rigidbodyA != null) {
+                        rigidbodyA.removeForceFromForceRegistry(force);
+                    } else if(rigidbodyB != rigidbody && rigidbodyB != null) {
+                        rigidbodyB.removeForceFromForceRegistry(force);
+                    }
+    
                     ALL_FORCES_ARRAYLIST.remove(force);
-                } else if(rigidbodyA != rigidbody && rigidbodyA != null) {
-                    rigidbodyA.removeForceFromForceRegistry(force);
-                } else if(rigidbodyB != rigidbody && rigidbodyB != null) {
-                    rigidbodyB.removeForceFromForceRegistry(force);
                 }
-
-                ALL_FORCES_ARRAYLIST.remove(force);
+                rigidbodyList.remove(rigidbody);
             }
-            rigidbodyList.remove(rigidbody);
+            if(propertiesEditor.selectedRigidbodiesOnClick()) {
+                return;
+            }
         }
     }
-
 }
 
 public void keyReleased() {  

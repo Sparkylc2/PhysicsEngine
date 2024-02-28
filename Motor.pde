@@ -40,9 +40,12 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 @Override
 public void draw() {
 
-if(!drawMotorForce) {
-    return;
-}
+    if(!drawMotorForce) {
+        return;
+    }
+    if(PhysEngMath.Equals(this.targetAngularVelocity, 0)) {
+        return;
+    }
     PVector position = this.rigidbody.getPosition();
     boolean isClockwise = targetAngularVelocity > 0;
 

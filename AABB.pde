@@ -32,11 +32,54 @@ public class AABB {
     dash.rect(Min.x, Min.y, Max.x, Max.y);
   }
   
+
   
-    public void shiftAABB(PVector amount) {
-      this.Min.add(amount);
-      this.Max.add(amount);
+  public void shiftAABB(PVector amount) {
+    this.Min.add(amount);
+    this.Max.add(amount);
+  }
+
+
+  public float calculateArea() {
+    return abs((Max.x - Min.x) * (Max.y - Min.y));
+  }
+
+  public void recalculateMaxAndMin(ArrayList<Rigidbody> rigidbodies) {
+    float minX = Float.MAX_VALUE;
+    float minY = Float.MAX_VALUE;
+    float maxX = -Float.MAX_VALUE;
+    float maxY = -Float.MAX_VALUE;
+
+
+    float prcnt = 0.125f;
+
+    for (Rigidbody rb : rigidbodies) {
+      PVector rbMin = rb.GetAABB().getMin();
+      PVector rbMax = rb.GetAABB().getMax();
+
+      if (rbMin.x < minX) {
+        minX = rbMin.x;
+      }
+      if (rbMin.y < minY) {
+        minY = rbMin.y;
+      }
+      if (rbMax.x > maxX) {
+        maxX = rbMax.x;
+      }
+      if (rbMax.y > maxY) {
+        maxY = rbMax.y;
+      }
     }
+
+    float prcntPad = max(abs(maxX - minX) * prcnt, abs(maxY - minY) * prcnt);
+    
+    Min.x = minX - prcntPad;
+    Min.y = minY - prcntPad;
+    Max.x = maxX + prcntPad;
+    Max.y = maxY + prcntPad;
+  }
+
+
 /*
 ====================================================================================================
 ==============================================GETTERS & SETTERS=====================================

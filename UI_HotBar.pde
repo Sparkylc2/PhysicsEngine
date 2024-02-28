@@ -242,7 +242,7 @@ public class UI_HotBar {
 /*
 ====================================== Getters & Setters ===========================================
 */  
-
+    
     public void setActiveSlotID(int slotID) {
         this.onSlotChange(slotID);
     }

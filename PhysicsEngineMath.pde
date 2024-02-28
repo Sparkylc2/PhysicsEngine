@@ -20,6 +20,7 @@ public static class PhysEngMath {
         }
   }
 
+
 public static float fastInverseSq(PVector vector) {
     return fastInverseSq(vector.x * vector.x + vector.y * vector.y);
 }
