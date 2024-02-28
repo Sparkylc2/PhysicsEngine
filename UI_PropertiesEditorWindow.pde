@@ -9,7 +9,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     private ArrayList<Rigidbody> rigidbodiesToCopy = new ArrayList<Rigidbody>();
 
 
-
+    private float mouseDownTime;
     public boolean inEditMode = false;
 
     private boolean inDragSelectMode = false;
@@ -278,7 +278,6 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     public void dragSelect() {
         this.inDragSelectMode = false;
         this.dragBox = new AABB(Mouse.getMouseDownCoordinates(), Mouse.getMouseCoordinates(), true);
-
         if(this.dragBox.calculateArea() < 0.1) {
             this.dragBox = null;
             IS_PAUSED = false;
@@ -301,8 +300,8 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
         for(Rigidbody rigidbody : rigidbodyList) {
             if(Collisions.IntersectAABB(dragBox,rigidbody.GetAABB())) {
-                this.selectedRigidbodies.add(rigidbody);
                 rigidbody.setStrokeColour(255, 0, 0);
+                this.selectedRigidbodies.add(rigidbody);
             }
         }
 
@@ -430,6 +429,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
     @Override
     public void interactionMousePress() {
+        this.mouseDownTime = millis();
         /*----------------- Checks ----------------*/
         if(UI_Manager.hasWindowBeenInteractedWith) {
             return;
@@ -449,21 +449,13 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     }
     @Override
     public void interactionMouseRelease() {
-        /*----------------- Checks ----------------*/
-        if(UI_Manager.hasWindowBeenInteractedWith) {
-            return;
-        }
-        if(UI_Manager.getIsOverOrPressedWindows()) {
-            return;
-        }
-        if(UI_Manager.HOT_BAR.getActiveSlotID() != 1) {
-            return;
-        } 
-        /*----------------------------------------*/
+        this.mouseDownTime = -1;
+        /*----------------- Resets ----------------*/
         this.vertexIndexToDrag = -1;
         this.circleVertexToDrag = false;
 
         this.isSelectionBeingDragged = false;
+        /*----------------------------------------*/
 
         //Drag select makes inDragSelectMode false
         if(this.inDragSelectMode) {
@@ -512,6 +504,9 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         if(UI_Manager.HOT_BAR.getActiveSlotID() != 1) {
             return;
         } 
+        if(millis() - this.mouseDownTime > 200) {
+            return;
+        }
         /*----------------------------------------*/
 
         if(this.enterEditModeOnClick()) {
@@ -579,7 +574,6 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     public void enterDragSelect() {
         this.inDragSelectMode = true;
         this.inEditMode = false;
-
         this.clearSelectedRigidbodies();
         this.dragBox = null;
         IS_PAUSED = true;
