@@ -5,8 +5,8 @@ public class UI_PropertiesForceWindow extends UI_Window {
     private boolean hasInit = false;
 
 
-    public boolean MOUSE_SPRING_ADDED;
-    public Spring mouseSpring = new Spring();
+    private boolean MOUSE_SPRING_ADDED;
+    private Spring mouseSpring = new Spring();
 /*
 ======================================= Element Values =============================================
 */  
@@ -475,8 +475,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
                 mouseSpring.setEquilibriumLength(0.2);  
                 rigidbody.addForceToForceRegistry(mouseSpring);
                 this.MOUSE_SPRING_ADDED = true;
-                UI_PropertiesRigidbodyWindow win = (UI_PropertiesRigidbodyWindow)UI_Manager.getWindowByName("Properties (rigidbody)");
-                win.wasMouseSpringAdded = true;
+                UI_Manager.getPropertiesRigidbodyWindow().setMouseSpringAdded(true);
                 
             } 
         }
@@ -487,9 +486,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
             mouseSpring.getRigidbodyA().removeForceFromForceRegistry(mouseSpring);
             mouseSpring.setRigidbodyA(null);
             this.MOUSE_SPRING_ADDED = false;
-            //UI_PropertiesRigidbodyWindow win = (UI_PropertiesRigidbodyWindow)UI_Manager.getWindowByName("Properties (rigidbody)");
-            //win.MOUSE_SPRING_ADDED = false;
-
+            UI_Manager.getPropertiesRigidbodyWindow().setMouseSpringAdded(false);
         }
     }
 

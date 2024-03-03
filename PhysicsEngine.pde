@@ -4,7 +4,7 @@ public void setup() {
     if(System.getProperty("os.name").toLowerCase().contains("mac")) {
         windowMove(0, 22);
     }
-    textFont(createFont("InterDisplay-SemiBold.ttf", 128, true), 10);
+    textFont(createFont(sketchPath() + "/data/fonts/InterDisplay-SemiBold.ttf", 128, true), 10);
     dash = new DashedLines(this);
     dash.pattern(1, 0.5);
 /*--------------------- Timing Utilities ---------------------*/
@@ -64,15 +64,14 @@ public void setup() {
 
 public void draw() {
     FrameTimeUtility.calculateFrameTime();
-
         Camera.onFrameStart();
             /*--------------------- Main Methods ---------------------*/
             UI_Manager.interactionDraw();
+            
             Step(FrameTimeUtility.DT, SUB_STEP_COUNT);
         
             /*--------------------------------------------------------*/
-        
-        //gui.checkGUIRepositioning();
+    
         Camera.onFrameEnd();
         UI_Manager.draw();
     
@@ -81,21 +80,3 @@ public void draw() {
 }
 
 
-/*
-public void controlEvent(ControlEvent theEvent) {
-    if(theEvent.isTab()) {
-        switch(theEvent.getTab().getId()) {
-            case 0:
-                CurrentTabInteractionHandler = RT_InteractionHandler;
-                CurrentTabInteractionHandler.VisibilityResponse();
-                this.Mouse.clearMouseObjectResults();
-                break;
-            case 1:
-                CurrentTabInteractionHandler = FT_InteractionHandler;
-                CurrentTabInteractionHandler.VisibilityResponse();
-                this.Mouse.clearMouseObjectResults();
-                break;
-        }
-    }
-}
-*/

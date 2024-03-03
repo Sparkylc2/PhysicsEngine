@@ -14,9 +14,8 @@ public class UI_Toggle extends UI_Element {
 
 
     public UI_Toggle(String Toggle_Name, UI_Window Toggle_ParentWindow, boolean Toggle_State) {
-
-        this.Toggle_Shape_Group.setName(this.Toggle_Name + "Group");
         this.Toggle_Name = Toggle_Name;
+        this.Toggle_Shape_Group.setName(this.Toggle_Name + "Group");
         this.Toggle_ParentWindow = Toggle_ParentWindow;
 
         this.Toggle_State = Toggle_State;

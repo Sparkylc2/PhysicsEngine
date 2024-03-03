@@ -1,21 +1,27 @@
 public class UI_PropertiesEditorWindow extends UI_Window {
 
 
+    private String OS = System.getProperty("os.name").toLowerCase();
+    private boolean mac = false;
 
     private Rigidbody rigidbodyToEdit = null;
 
-    public ArrayList<Rigidbody> selectedRigidbodies = new ArrayList<Rigidbody>();
+    private ArrayList<Rigidbody> selectedRigidbodies = new ArrayList<Rigidbody>();
 
     private ArrayList<Rigidbody> rigidbodiesToCopy = new ArrayList<Rigidbody>();
 
 
     private float mouseDownTime;
-    public boolean inEditMode = false;
+    private boolean inEditMode = false;
 
     private boolean inDragSelectMode = false;
     private boolean isSelectionBeingDragged = false;
     private AABB dragBox = null;
     private PVector initialDragPosition = new PVector();
+
+
+    private boolean inCopySelectMode = false;
+    private PVector initialCopyMousePosition = new PVector();
 
     private int vertexIndexToDrag = -1;
     private boolean circleVertexToDrag = false;
@@ -35,6 +41,9 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
     public UI_PropertiesEditorWindow() {
         super("Properties Editor (rigidbody)", 2);
+        if(OS.contains("mac")) {
+            this.mac = true;
+        }
         this.initialize();
     }
 
@@ -42,7 +51,6 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 ========================================= UI Elements  =============================================
 */
     public void initialize() {
-
     }
 
 
@@ -89,6 +97,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
         if(this.inEditMode) {
             this.elementChangeListener();
+            this.selectLock();
         }
 
         if(UI_Manager.getIsOverOrPressedWindows()) {
@@ -113,6 +122,11 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         if(this.dragBox != null && this.dragBox.calculateArea() > 0.1) {
             this.dragBox.drawAABB();
             return;
+        }
+
+        if(this.inCopySelectMode) {
+            this.drawCopiedRigidbodies();
+            this.updateCopiedRigidbodyPosition();
         }
     }
 
@@ -164,6 +178,48 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         dash.rect(start.x, start.y, end.x, end.y);
     }
 
+    public void drawCopiedRigidbodies() {
+        if(this.inCopySelectMode) {
+            for(Rigidbody rigidbody: this.rigidbodiesToCopy) {
+                ShapeType shapeType = rigidbody.getShapeType();
+                if(shapeType == ShapeType.BOX || shapeType == ShapeType.POLYGON) {
+                    this.drawPolygon(rigidbody);
+                } else if(shapeType == ShapeType.CIRCLE) {
+                    this.drawCircle(rigidbody);
+                }
+            }
+        }
+    }
+
+
+    public void drawPolygon(Rigidbody rigidbody) {
+        PVector[] vertices = rigidbody.getVertices();
+        fill(255, 255, 255, 166);
+        stroke(0, 0, 0, 166);
+        pushMatrix();
+        translate(rigidbody.getPosition().x, rigidbody.getPosition().y);
+        rotate(rigidbody.getAngle());
+        beginShape();
+        for(PVector vertex : vertices) {
+            vertex(vertex.x, vertex.y);
+        }
+        endShape(CLOSE);
+        popMatrix();
+    }
+
+
+    public void drawCircle(Rigidbody rigidbody) {
+        fill(255, 255, 255, 166);
+        stroke(0, 0, 0, 166);
+        PVector position = rigidbody.getPosition();
+        float radius = rigidbody.getRadius();
+
+        pushMatrix();
+        translate(position.x, position.y);
+        ellipse(0, 0, radius * 2, radius * 2);
+        popMatrix();
+    }
+
 /*
 ========================================= Vertex Methods ========================================
 */
@@ -172,7 +228,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         PVector[] rigidbodyVertices = this.rigidbodyToEdit.GetTransformedVertices();
 
         for(int i = 0; i < rigidbodyVertices.length; i++) {
-            if(PVector.sub(Mouse.getMouseCoordinates(), rigidbodyVertices[i]).magSq() < radius) {
+            if(PVector.sub(Camera.screenToWorld(), rigidbodyVertices[i]).magSq() < radius) {
                 return i;
             }
         }
@@ -181,7 +237,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
     public boolean selectCircleVertex(float radius) {
         PVector vertex = PhysEngMath.Transform(new PVector(this.rigidbodyToEdit.getRadius(), 0), this.rigidbodyToEdit.getPosition(), this.rigidbodyToEdit.getAngle());
-        if(PVector.sub(Mouse.getMouseCoordinates(), vertex).magSq() < radius) {
+        if(PVector.sub(Camera.screenToWorld(), vertex).magSq() < radius) {
             return true;
         } else {
             return false;
@@ -258,11 +314,10 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
         newRigidbodyVertices[newRigidbodyVertices.length - 1] = vertex;
 
-        if(this.checkConvexity(newRigidbodyVertices)) {
+        if(this.checkConvexity(PhysEngMath.OrderVerticesClockwise(newRigidbodyVertices))) {
             this.rigidbodyToEdit.updatePolygon(newRigidbodyVertices);
             return true;
         }
-
         return false;
     } 
 
@@ -504,8 +559,10 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         if(UI_Manager.HOT_BAR.getActiveSlotID() != 1) {
             return;
         } 
-        if(millis() - this.mouseDownTime > 200) {
-            return;
+        if(!this.mac) {
+            if(millis() - this.mouseDownTime > 300) {
+                return;
+            }
         }
         /*----------------------------------------*/
 
@@ -521,6 +578,9 @@ public class UI_PropertiesEditorWindow extends UI_Window {
             return;
         }
 
+        if(this.copiedRigidbodiesOnClick()) {
+            return;
+        }
     }
 
 
@@ -549,6 +609,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         this.inEditMode = true;
         this.inDragSelectMode = false;
         this.dragBox = null;
+        this.vertexIndexToDrag = -1;
         this.clearSelectedRigidbodies();
         this.onEditorActive();
     }
@@ -561,7 +622,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
 
     public boolean selectedRigidbodiesOnClick() {
-        if(this.selectedRigidbodies.size() != 0) {
+        if(this.selectedRigidbodies.size() != 0 && !this.inCopySelectMode) {
             IS_PAUSED_LOCK = false;
             IS_PAUSED = false;
             this.clearSelectedRigidbodies();
@@ -571,9 +632,82 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         return false;
     }
 
+
+
+    public void updateCopiedRigidbodyPosition() {
+        if(this.inCopySelectMode) {
+            for(Rigidbody rigidbody : this.rigidbodiesToCopy) {
+                rigidbody.addPosition(PVector.sub(Camera.screenToWorld(), this.initialCopyMousePosition));
+            }
+            this.initialCopyMousePosition.set(Camera.screenToWorld());
+        }
+    }
+
+    public void updateCopiedPosRelToAABBCenterToMouse() {
+
+        if(this.dragBox == null) {
+            throw new RuntimeException("DragBox is null");
+        }
+
+        PVector AABBCenter = this.dragBox.calculateCenter();
+        PVector difference = PVector.sub(Camera.screenToWorld(), AABBCenter);
+
+        for(Rigidbody rigidbody : this.rigidbodiesToCopy) {
+            rigidbody.addPosition(difference);
+        }
+    }
+
+    public void selectedRigidbodiesOnCopy() {
+
+        if(this.selectedRigidbodies.size() != 0 && this.dragBox != null) {
+            for(Rigidbody rigidbody : this.selectedRigidbodies) {
+                Rigidbody copiedRigidbody = new Rigidbody();
+                copiedRigidbody.copy(rigidbody);
+                this.rigidbodiesToCopy.add(copiedRigidbody);
+            }
+
+            this.updateCopiedPosRelToAABBCenterToMouse();
+
+            this.inCopySelectMode = true;
+            this.inDragSelectMode = false;
+            this.inEditMode = false;
+            this.vertexIndexToDrag = -1;
+            this.clearSelectedRigidbodies();
+            this.dragBox = null;
+            this.initialCopyMousePosition.set(Camera.screenToWorld());
+        }
+    }
+
+    public boolean copiedRigidbodiesOnClick() {
+        if(this.inCopySelectMode) {
+            this.inCopySelectMode = false;
+            this.onWindowClose();
+            return true;
+        } 
+        return false;
+    }
+
+    public void copiedRigidbodiesOnPaste() {
+        ArrayList<Rigidbody> newCopyList = new ArrayList<Rigidbody>();
+
+        for(Rigidbody rigidbody : this.rigidbodiesToCopy) {
+            Rigidbody newRigidbody = new Rigidbody();
+            newRigidbody.copy(rigidbody);
+            newCopyList.add(newRigidbody);
+            AddBodyToBodyEntityList(rigidbody);
+        }
+
+        this.clearCopiedRigidbodies();
+
+        this.inCopySelectMode = true;
+        this.rigidbodiesToCopy = newCopyList;
+        this.initialCopyMousePosition.set(Camera.screenToWorld());
+    }
+
     public void enterDragSelect() {
         this.inDragSelectMode = true;
         this.inEditMode = false;
+        this.vertexIndexToDrag = -1;
         this.clearSelectedRigidbodies();
         this.dragBox = null;
         IS_PAUSED = true;
@@ -587,6 +721,13 @@ public class UI_PropertiesEditorWindow extends UI_Window {
             rigidbody.setStrokeColour(0, 0, 0);
         }
         this.selectedRigidbodies.clear();
+    }
+
+    public void clearCopiedRigidbodies() {
+        for(Rigidbody rigidbody : this.rigidbodiesToCopy) {
+            rigidbody.setStrokeColour(0, 0, 0);
+        }
+        this.rigidbodiesToCopy.clear();
     }
 
 /*
@@ -608,12 +749,33 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         this.vertexIndexToDrag = -1;
         this.circleVertexToDrag = false;
 
-        this.rigidbodiesToCopy.clear();
+        this.rigidbodyToEdit = null;
 
-
+        this.clearCopiedRigidbodies();
         this.clearSelectedRigidbodies();
+        Mouse.getMouseObjectResults().clear();
         IS_PAUSED = false;
         IS_PAUSED_LOCK = false;
+        VERTEX_SNAP_RADIUS = 0.25f;
+    }
+
+    public void onWindowCloseNoPause() {
+        this.Window_Visibility = false;
+        this.isMouseOverWindow = false;
+        this.isMouseOverWindowTextContainer = false;
+        this.isMouseOverWindowFormContainer = false;
+        this.wasMousePressedOverWindow = false;
+        this.isActiveWindow = false;
+
+        this.dragBox = null;
+        this.inEditMode = false;
+        this.inDragSelectMode = false;
+        this.vertexIndexToDrag = -1;
+        this.circleVertexToDrag = false;
+
+        this.rigidbodiesToCopy.clear();
+
+        this.clearSelectedRigidbodies();
         VERTEX_SNAP_RADIUS = 0.25f;
         this.rigidbodyToEdit = null;
     }
@@ -629,8 +791,11 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     }
 
 
-
-
+    public void selectLock() {
+        this.isActiveWindow = true;
+        this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
+        this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
+    }
 
     
 /*
@@ -658,8 +823,29 @@ public class UI_PropertiesEditorWindow extends UI_Window {
             case KeyEvent.VK_ENTER:
                 this.onWindowClose();
                 break;
-
+            case KeyEvent.VK_C: 
+                if(KeyHandler.isKeyDown(KeyEvent.VK_CONTROL)) {
+                    this.selectedRigidbodiesOnCopy();
+                }
+                break;
+            case KeyEvent.VK_V:
+                if(KeyHandler.isKeyDown(KeyEvent.VK_CONTROL)) {
+                    this.copiedRigidbodiesOnPaste();
+                }
+                break;
         }
+    }
+
+    /*
+    ========================================= Getters & Setters ========================================
+    */
+
+    public boolean getInEditMode() {
+        return this.inEditMode;
+    }
+
+    public ArrayList<Rigidbody> getSelectedRigidbodies() {
+        return this.selectedRigidbodies;
     }
 }
 

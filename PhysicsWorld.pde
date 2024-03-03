@@ -6,6 +6,9 @@
 */
 /*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
 
+
+public static boolean IS_TEXTFIELD_ACTIVE = false;
+
 public static boolean IS_PAUSED = false;
 public static boolean IS_PAUSED_LOCK = false;
 
@@ -102,7 +105,7 @@ public void Step(float dt, int totalIterations) {
         /*-----------------Related to Timekeeping Debugging -----------------*/
         FrameTimeUtility.updateSubWorldStepTime();
         /*-------------------------------------------------------------------*/
-}
+    }
     /*-----------------Related to Timekeeping Debugging -----------------*/
     FrameTimeUtility.updateTotalWorldStepTime();
     /*-------------------------------------------------------------------*/
@@ -429,7 +432,6 @@ public void BroadPhaseStep() {
         AABB rigidbodyA_AABB = rigidbodyA.GetAABB();
         
         
-        
         for (int j = i + 1; j < rigidbodyList.size(); j++) {
             Rigidbody rigidbodyB = rigidbodyList.get(j);
             AABB rigidbodyB_AABB = rigidbodyB.GetAABB();
@@ -490,7 +492,6 @@ public void StepBodies(float dt, int totalIterations) {
         return;
     }
     
-
     for(Rigidbody rigidbody : rigidbodyList) {
 
         if(rigidbody.getIsStatic() ) {

@@ -1,6 +1,6 @@
 public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
-    public boolean wasMouseSpringAdded = false;
+    private boolean wasMouseSpringAdded = false;
     private boolean hasInit = false;
 
     private float prvBdyDnsty = 1;
@@ -405,4 +405,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
     }
 
+    public void setMouseSpringAdded(boolean wasMouseSpringAdded) {
+        this.wasMouseSpringAdded = wasMouseSpringAdded;
+    }
 }

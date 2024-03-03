@@ -27,12 +27,10 @@ public class Shape {
 
 /*
 ====================================================================================================
-==================================-=== Drawing Methods =============================================
+====================================== Drawing Methods =============================================
 ====================================================================================================
 */
   public void drawRigidbodies() {
-    boolean inEditMode = false;//editor.getInEditMode();
-    Rigidbody selectedRigidbody = null; //editor.getSelectedRigidbody();
 
     for(int body = 0; body < rigidbodyList.size(); body++) {
 
@@ -41,7 +39,7 @@ public class Shape {
           if (rigidbody.getShapeType() == ShapeType.CIRCLE) {
             drawCircle(rigidbody.getPosition(), rigidbody.getRadius(),
                       rigidbody.getAngle(), rigidbody.getStrokeWeight(), rigidbody.getFillColour(),
-                       rigidbody.getStrokeColour(), inEditMode);
+                       rigidbody.getStrokeColour(), false);
           }
 
           if (rigidbody.getShapeType() == ShapeType.BOX) {

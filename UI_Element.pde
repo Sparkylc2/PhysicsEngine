@@ -26,7 +26,7 @@ public abstract class UI_Element {
     public int Element_Tickbox_Width = 23;
     public int Element_Tickbox_Height = 23;
 
-    public int Element_Rounding = 3;
+    public int Element_Rounding = 5;
 
     /*------------------------------- Position ---------------------------------------------------*/
     /*

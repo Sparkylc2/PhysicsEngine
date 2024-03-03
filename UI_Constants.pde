@@ -17,9 +17,9 @@ public class UI_Constants {
     public final int TRANSPARENT = color(0, 0, 0, 0);
 
 /*---------------------------------------- Font -------------------------------------------------*/
-    public final PFont INTER_BOLD = createFont("Inter-Bold.ttf", 48);
-    public final PFont INTER_MEDIUM = createFont("Inter-Medium.ttf", 48);
-    public final PFont INTER_REGULAR = createFont("Inter-Regular.ttf", 48);
+    public final PFont INTER_BOLD = createFont(sketchPath() + "/data/fonts/Inter-Bold.ttf", 48);
+    public final PFont INTER_MEDIUM = createFont(sketchPath() + "/data/fonts/Inter-Medium.ttf", 48);
+    public final PFont INTER_REGULAR = createFont(sketchPath() + "/data/fonts/Inter-Regular.ttf", 48);
 
     public final PFont[] FONTS = {INTER_BOLD, INTER_MEDIUM, INTER_REGULAR};
 

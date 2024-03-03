@@ -68,11 +68,11 @@ public class UI_HotBar {
 
                 SLOT.setStrokeWeight(UI_Constants.HOTBAR_STROKE_WEIGHT);
 
-                PShape SLOT_ICON_SELECTED = loadShape("HotbarSlot" + (i + 1) + "Selected.svg");
+                PShape SLOT_ICON_SELECTED = loadShape(sketchPath() + "/data/icons/HotbarSlot" + (i + 1) + "Selected.svg");
                     SLOT_ICON_SELECTED.setName("SLOT_ICON_SELECTED");
                     SLOT_ICON_SELECTED.translate(xPos, yPos);
 
-                PShape SLOT_ICON = loadShape("HotbarSlot" + (i + 1) + ".svg");
+                PShape SLOT_ICON = loadShape(sketchPath() + "/data/icons/HotbarSlot" + (i + 1) + ".svg");
                     SLOT_ICON.setName("SLOT_ICON");
                     SLOT_ICON.translate(xPos, yPos);
 
@@ -115,13 +115,12 @@ public class UI_HotBar {
     public void onSlotChange(int slotID) {
         int previousSlotID = this.activeSlotID;
 
-        if(activeSlotID == slotID) {
-            return;
+        if(previousSlotID != -1) {
+            this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
+            this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
+            this.HOT_SHAPE.getChild(this.activeSlotID).getChild(1).setVisible(true);
+            this.HOT_SHAPE.getChild(this.activeSlotID).getChild(2).setVisible(false);
         }
-
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_UNSELECTED_COLOR);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_UNSELECTED_STROKE);
-        this.HOT_SHAPE.getChild(this.activeSlotID).getChild(1).setVisible(true);
 
         if(slotID == -1) {
             this.activeSlotID = -1;
@@ -133,6 +132,9 @@ public class UI_HotBar {
         this.HOT_SHAPE.getChild(slotID).getChild(0).setFill(UI_Constants.HOTBAR_SLOT_SELECTED_COLOR);
         this.HOT_SHAPE.getChild(slotID).getChild(0).setStroke(UI_Constants.HOTBAR_SLOT_SELECTED_STROKE);
         this.HOT_SHAPE.getChild(slotID).getChild(1).setVisible(false);
+        this.HOT_SHAPE.getChild(slotID).getChild(2).setVisible(true);
+
+
     
         boolean resetMouseObject = 
                             ((previousSlotID == 4 || previousSlotID == 5 || previousSlotID == 6) && (this.activeSlotID != 4 && this.activeSlotID != 5 && this.activeSlotID != 6))
@@ -142,7 +144,7 @@ public class UI_HotBar {
 
         if(resetMouseObject) {
             Mouse.getMouseObjectResults().clear();
-            UI_PropertiesForceWindow window = (UI_PropertiesForceWindow) UI_Manager.getWindowByName("Properties (forces)");
+            UI_PropertiesForceWindow window = UI_Manager.getPropertiesForceWindow();
             if(window.MOUSE_SPRING_ADDED) {
                 window.removeMouseSpring();
             }
@@ -158,23 +160,31 @@ public class UI_HotBar {
                 UI_Manager.closeAllWindows();
                 break;
             case 2:
-                window = UI_Manager.getWindowByName("Properties (rigidbody)");
-    
+                if(previousSlotID == -1) {
+                    UI_Manager.closeAllWindows();
+                }
+
+                window = UI_Manager.getPropertiesRigidbodyWindow();
                 window.onSlotChange(previousSlotID);
                 UI_Manager.bringToFront(window);
                 //UI_Manager.repositionWindow(window);
                 window.onWindowSelect();
                 break;
             case 3:
-                window = UI_Manager.getWindowByName("Properties (rigidbody)");
-    
+                if(previousSlotID == -1) {
+                    UI_Manager.closeAllWindows();
+                }
+                window = UI_Manager.getPropertiesRigidbodyWindow();
                 window.onSlotChange(previousSlotID);
                 UI_Manager.bringToFront(window);
                 //UI_Manager.repositionWindow(window);
                 window.onWindowSelect();
                 break;
             case 4:
-                window = UI_Manager.getWindowByName("Properties (forces)");
+                if(previousSlotID == -1) {
+                    UI_Manager.closeAllWindows();
+                }
+                window = UI_Manager.getPropertiesForceWindow();
     
                 window.onSlotChange(previousSlotID);
                 UI_Manager.bringToFront(window);
@@ -182,7 +192,10 @@ public class UI_HotBar {
                 window.onWindowSelect();
                 break;
             case 5:
-                window = UI_Manager.getWindowByName("Properties (forces)");
+                if(previousSlotID == -1) {
+                    UI_Manager.closeAllWindows();
+                }
+                window = UI_Manager.getPropertiesForceWindow();
     
                 window.onSlotChange(previousSlotID);
                 UI_Manager.bringToFront(window);
@@ -190,8 +203,10 @@ public class UI_HotBar {
                 window.onWindowSelect();
                 break;
             case 6:
-                window = UI_Manager.getWindowByName("Properties (forces)");
-    
+                if(previousSlotID == -1) {
+                    UI_Manager.closeAllWindows();
+                }
+                window = UI_Manager.getPropertiesForceWindow();
                 window.onSlotChange(previousSlotID);
                 UI_Manager.bringToFront(window);
                 //UI_Manager.repositionWindow(window);
@@ -201,7 +216,7 @@ public class UI_HotBar {
         
     
         if(previousSlotID == 1) {
-            UI_Manager.getWindowByName("Properties Editor (rigidbody)").onWindowClose();
+            UI_Manager.getPropertiesEditorWindow().onWindowClose();
         }
     }
 

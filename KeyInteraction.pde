@@ -1,103 +1,123 @@
 @Override
-void exit() {
- java.lang.System.exit(0);
+public void exit() {
+    java.lang.System.exit(0);
 }
 
 public void keyPressed() {
     KeyHandler.onKeyPressed(keyCode);
 
+    
     UI_Manager.onKeyPress(keyCode);
+    UI_Manager.getPropertiesEditorWindow().onKeyPress(keyCode);
+
+    if(UI_Manager.getTabBar().getActiveTabID() == 2) {
+        if(IS_TEXTFIELD_ACTIVE && UI_Manager.getCreationWindow().getTextField() != null) {
+            UI_Manager.getCreationWindow().getTextField().keyPress(key, keyCode);
+            return;
+        } else if (IS_TEXTFIELD_ACTIVE && UI_Manager.getCreationWindow().getFileButtonToRenameTextField() != null) {
+            UI_Manager.getCreationWindow().getFileButtonToRenameTextField().keyPress(key, keyCode);
+            return;
+        }
+    }
+
     if(KeyHandler.isKeyDown(KeyEvent.VK_Q)) {
         UI_Manager.getTabBar().onQPressed();
+        return;
     }
     
     if(KeyHandler.isKeyDown(KeyEvent.VK_E)) {
         UI_Manager.getTabBar().onEPressed();
+        return;
     }
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_1)) {
         UI_Manager.getHotBar().setActiveSlotID(0);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_2)) {
         UI_Manager.getHotBar().setActiveSlotID(1);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_3)) {
         UI_Manager.getHotBar().setActiveSlotID(2);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_4)) {
         UI_Manager.getHotBar().setActiveSlotID(3);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_5)) {
         UI_Manager.getHotBar().setActiveSlotID(4);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
+
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_6)) {
         UI_Manager.getHotBar().setActiveSlotID(5);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
 
     if(KeyHandler.isKeyDown(KeyEvent.VK_7)) {
         UI_Manager.getHotBar().setActiveSlotID(6);
         UI_Manager.getTabBar().setActiveTabID(1);
+        return;
     }
 
-    if(keyCode == ESC) {
-        exit();
-    }
+    // if(keyCode == ESC) {
+    //     exit();
+    //     return;
+    // }
     
     if(keyCode == ENTER) {
         Mouse.getMouseObjectResults().clear();
+        return;
     }
 
     if(keyCode == TAB) {
         Mouse.setSnappingEnabled(!Mouse.getSnappingEnabled());
+        return;
     }
 
     if(key == ' ') {
         if(!IS_PAUSED_LOCK) {
             IS_PAUSED = !IS_PAUSED;
         }
+        return;
     }
     if(key == 'r') {
         rigidbodyList.clear();
         ALL_FORCES_ARRAYLIST.clear();
         softbodyList.clear();
+        return;
     }
     if(keyCode == BACKSPACE || keyCode == DELETE) {
-        UI_PropertiesEditorWindow propertiesEditor = (UI_PropertiesEditorWindow) UI_Manager.getWindowByName("Properties Editor (rigidbody)");
-        ArrayList<Rigidbody> rigidbodiesToDelete = propertiesEditor.selectedRigidbodies;
-
+        ArrayList<Rigidbody> rigidbodiesToDelete = UI_Manager.getPropertiesEditorWindow().getSelectedRigidbodies();
         if(rigidbodiesToDelete.size() != 0) {
             for(Rigidbody rigidbody : rigidbodiesToDelete) {
-                ArrayList<ForceRegistry> forceRegistry = rigidbody.getForceRegistry();
-                for(ForceRegistry force : forceRegistry) {
-                    Rigidbody rigidbodyA = force.getRigidbodyA();
-                    Rigidbody rigidbodyB = force.getRigidbodyB();
-                    if((rigidbodyA == null && rigidbodyB != null) || (rigidbodyA != null && rigidbodyB == null)) {
-                        ALL_FORCES_ARRAYLIST.remove(force);
-                    } else if(rigidbodyA != rigidbody && rigidbodyA != null) {
-                        rigidbodyA.removeForceFromForceRegistry(force);
-                    } else if(rigidbodyB != rigidbody && rigidbodyB != null) {
-                        rigidbodyB.removeForceFromForceRegistry(force);
-                    }
-    
-                    ALL_FORCES_ARRAYLIST.remove(force);
-                }
-                rigidbodyList.remove(rigidbody);
+                rigidbody.delete();
             }
-            if(propertiesEditor.selectedRigidbodiesOnClick()) {
+
+            if(UI_Manager.getPropertiesEditorWindow().selectedRigidbodiesOnClick()) {
+                return;
+            }
+        } else {
+            Rigidbody rigidbodyToDelete = Mouse.getCurrentRigidbodyUnderMouse();
+            if(rigidbodyToDelete != null) {
+                rigidbodyToDelete.delete();
                 return;
             }
         }
+        return;
     }
 }
 

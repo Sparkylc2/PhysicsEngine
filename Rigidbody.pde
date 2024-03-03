@@ -142,7 +142,9 @@ public class Rigidbody {
     vertices[1] = new PVector(right, top);
     vertices[2] = new PVector(right, bottom);
     vertices[3] = new PVector(left, bottom);
-    return vertices;
+
+
+    return PhysEngMath.OrderVerticesClockwise(vertices);
   }
   
   public PVector[] GetTransformedVertices() {
@@ -468,11 +470,6 @@ public void updatePolygon(PVector[] newVertices) {
 
     newVertices = PhysEngMath.OrderVerticesClockwise(newVertices);
 
-    if(!this.validatePolygonVertices(newVertices)){
-      System.out.println("Vertices Invalid");
-      return;
-    }
-
     this.Vertices = newVertices;
     this.transformedVertices = new PVector[this.Vertices.length];
     PVector newCOM = calculateCentroid(this.Vertices);
@@ -742,13 +739,26 @@ public boolean containsPolygon(float x, float y) {
 
     }
 
-  
+
+
   /*
-  ==================================================================================================
-  ==================================READ-ONLY FIELDS================================================
-  ==================================================================================================
+  ============================================= Methods =======================================================
   */
-  
+
+  public void delete() {
+    for(ForceRegistry force : this.forceRegistry) {
+      Rigidbody rigidbodyA = force.getRigidbodyA();
+      Rigidbody rigidbodyB = force.getRigidbodyB();
+      ALL_FORCES_ARRAYLIST.remove(force);
+
+      if((rigidbodyA != null && rigidbodyA != this)) {
+        rigidbodyA.removeForceFromForceRegistry(force);
+      } else if(rigidbodyB != null && rigidbodyB != this) {
+        rigidbodyB.removeForceFromForceRegistry(force);
+      } 
+    }
+    rigidbodyList.remove(this);
+  }
 
   public void copy(Rigidbody rigidbody) {
     
@@ -770,7 +780,8 @@ public boolean containsPolygon(float x, float y) {
     this.coefficientOfKineticFriction = rigidbody.coefficientOfKineticFriction;
 
     this.Vertices = rigidbody.Vertices;
-    this.transformedVertices = new PVector[rigidbody.Vertices.length];
+    this.transformedVertices = rigidbody.transformedVertices;
+
 
     this.strokeWeight = rigidbody.strokeWeight;
     this.strokeColour = rigidbody.strokeColour;

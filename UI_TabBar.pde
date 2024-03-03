@@ -139,6 +139,7 @@ public class UI_TabBar {
 
     public void handleActiveTabIDChangesFromKeyPress(int newActiveTabID) {
         this.activeTabID = (newActiveTabID < 0) ? UI_Constants.TAB_NAME.length - 1 : (newActiveTabID >= UI_Constants.TAB_NAME.length) ? 0 : newActiveTabID;
+        this.updateWindows();
         this.updateTabSelector();
     }
     public void onQPressed() {
@@ -167,6 +168,27 @@ public class UI_TabBar {
     public void updateTabSelector() {
         this.TAB_SHAPE.getChild("TAB_SELECTOR_GROUP").removeChild(0);
         this.TAB_SHAPE.getChild("TAB_SELECTOR_GROUP").addChild(this.TAB_SELECTOR[this.activeTabID]);
+    }
+
+
+    public void updateWindows() {
+        switch(this.activeTabID) {
+            case 0:
+                UI_Manager.closeAllWindows();
+                break;
+            case 1:
+                UI_Manager.closeAllWindows();
+                UI_Manager.getHotBar().onSlotChange(UI_Manager.getHotBar().getActiveSlotID());
+                break;
+            case 2:
+                UI_Manager.closeAllWindows();
+                UI_Manager.getCreationWindow().open();
+                break;
+            case 3:
+                UI_Manager.closeAllWindows();
+                break;
+        }
+
     }
 
 

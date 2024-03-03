@@ -1,0 +1,145 @@
+[
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "857af683-82af-4a1c-8022-b52adbe06666"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -10,
+        "y": -5.333519458770752
+      },
+      "velocity": {
+        "x": 0,
+        "y": 2.3262345790863037
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -2,
+          "y": -0.5
+        },
+        {
+          "x": 2,
+          "y": -0.5
+        },
+        {
+          "x": 2,
+          "y": 0.5
+        },
+        {
+          "x": -2,
+          "y": 0.5
+        }
+      ],
+      "width": 4,
+      "radius": 0,
+      "height": 1
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "89358677-7937-4198-be4d-aa8bc24d4dad"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": 2.5
+        },
+        {
+          "x": -500,
+          "y": 2.5
+        }
+      ],
+      "width": 1000,
+      "radius": 0,
+      "height": 5
+    },
+    "staticity": {
+      "isStatic": true,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  []
+]

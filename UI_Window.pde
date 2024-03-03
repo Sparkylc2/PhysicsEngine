@@ -21,6 +21,8 @@ public class UI_Window {
     public final int Window_Text_Size = 18;
     public final float Window_Rounding = 7;
 
+    public boolean hasCloseButton = true;
+
     /*
     Elements
     */
@@ -47,6 +49,16 @@ public class UI_Window {
     public UI_Window(String Window_Name, int Window_ID) {
         this.Window_Name = Window_Name;
         this.Window_ID = Window_ID;
+        this.initializeWindow();
+    }
+
+    public UI_Window(String Window_Name, int Window_ID, PVector Window_Container_Size, PVector Window_Text_Container_Size, PVector Window_Form_Container_Size, boolean hasCloseButton) {
+        this.Window_Name = Window_Name;
+        this.Window_ID = Window_ID;
+        this.Window_Container_Size.set(Window_Container_Size);
+        this.Window_Text_Container_Size.set(Window_Text_Container_Size);
+        this.Window_Form_Container_Size.set(Window_Form_Container_Size);
+        this.hasCloseButton = hasCloseButton;
         this.initializeWindow();
     }
 
@@ -114,13 +126,7 @@ public class UI_Window {
             Window_Container_TickMark.addChild(TickMark_LineOne);
             Window_Container_TickMark.addChild(TickMark_LineTwo);
 
-        PShape Window_Container_Listener = UI_Constants.createElementListener(Window_Container_Stroke);
-                Window_Container_Listener.setName("Window_Container_Listener");
-        PShape Window_Form_Container_Listener = UI_Constants.createElementListener(Window_Form_Container);
-                Window_Form_Container_Listener.setName("Window_Form_Container_Listener");
-        PShape Window_Text_Container_Listener = UI_Constants.createElementListener(Window_Text_Container);
-                Window_Text_Container_Listener.setName("Window_Text_Container_Listener");
-        PShape Window_Container_TickMark_Listener = createShape();
+            PShape Window_Container_TickMark_Listener = createShape();
                 Window_Container_TickMark_Listener.beginShape();
                     Window_Container_TickMark_Listener.vertex(this.Window_Text_Container_Size.x / 2 - 29, Window_Text_Container.getParam(1) - 6);
                     Window_Container_TickMark_Listener.vertex(this.Window_Text_Container_Size.x / 2 - 17, Window_Text_Container.getParam(1) - 6);
@@ -129,17 +135,31 @@ public class UI_Window {
                 Window_Container_TickMark_Listener.endShape(CLOSE);
                 Window_Container_TickMark_Listener.setName("Window_Container_TickMark_Listener");
                 Window_Container_TickMark_Listener.setFill(false);
-                Window_Container_TickMark_Listener.setStroke(false);
+                Window_Container_TickMark_Listener.setStroke(false);   
+
+        PShape Window_Container_Listener = UI_Constants.createElementListener(Window_Container_Stroke);
+                Window_Container_Listener.setName("Window_Container_Listener");
+        PShape Window_Form_Container_Listener = UI_Constants.createElementListener(Window_Form_Container);
+                Window_Form_Container_Listener.setName("Window_Form_Container_Listener");
+        PShape Window_Text_Container_Listener = UI_Constants.createElementListener(Window_Text_Container);
+                Window_Text_Container_Listener.setName("Window_Text_Container_Listener");
             
         this.Window_Container.addChild(Window_Form_Container);
         this.Window_Container.addChild(Window_Text_Container);
         this.Window_Container.addChild(Window_Container_Stroke);
-        this.Window_Container.addChild(Window_Container_TickMark);
+        
+        if(this.hasCloseButton) {
+             this.Window_Container.addChild(Window_Container_TickMark);
+        }
 
         this.Window_Container.addChild(Window_Container_Listener);
         this.Window_Container.addChild(Window_Form_Container_Listener);
         this.Window_Container.addChild(Window_Text_Container_Listener);
-        this.Window_Container.addChild(Window_Container_TickMark_Listener);
+
+        if(this.hasCloseButton) {
+            this.Window_Container.addChild(Window_Container_TickMark_Listener);
+        }
+
         this.Window_Container.addChild(Element_Group);
 
         this.Window_Container.resetMatrix();
@@ -281,16 +301,19 @@ public class UI_Window {
 
 
     public void onElementMousePress() {
-        for(UI_Element element : this.Window_Elements) {
+        ArrayList<UI_Element> copyList = new ArrayList<UI_Element>(this.Window_Elements);
+        for(UI_Element element : copyList) {
             if(!element.onMousePress()) {
                 continue;
             }
 
             if(element instanceof UI_Toggle) {
-                handleToggleElement((UI_Toggle)element);
+                this.handleToggleElement((UI_Toggle)element);
             } else if(element instanceof UI_Slider) {
                 element.onSelect();
-            }
+            } else if(element instanceof UI_FileButton) {
+                this.handleFileButtonElement((UI_FileButton)element);
+            } 
         }
     }
 
@@ -300,6 +323,15 @@ public class UI_Window {
         } else {
             deselectGroupElements(toggleElement.getGroupName(), toggleElement);
             toggleElement.onSelect();
+        }
+    }
+
+    private void handleFileButtonElement(UI_FileButton fileButtonElement) {
+        if(fileButtonElement.getState()) {
+            fileButtonElement.onDeselect();
+        } else {
+            deselectGroupElements(fileButtonElement.getGroupName(), fileButtonElement);
+            fileButtonElement.onSelect();
         }
     }
 
@@ -321,7 +353,8 @@ public class UI_Window {
     }
 
     public void onElementMouseRelease() {
-        for(UI_Element element : this.Window_Elements) {
+        ArrayList<UI_Element> copyList = new ArrayList<UI_Element>(this.Window_Elements);
+        for(UI_Element element : copyList) {
             element.onMouseRelease();
         }
     }
@@ -420,9 +453,11 @@ public class UI_Window {
     }
 
     public void checkWindowClose() {
-        if(this.Window_Container.getChild("Window_Container_TickMark_Listener").contains(mouseX - this.Window_Position.x, mouseY - this.Window_Position.y)) {
-            this.onWindowClose();
-        } 
+        if(this.hasCloseButton) {
+            if(this.Window_Container.getChild("Window_Container_TickMark_Listener").contains(mouseX - this.Window_Position.x, mouseY - this.Window_Position.y)) {
+                this.onWindowClose();
+            }  
+        }
     }
 
 
@@ -499,6 +534,10 @@ public class UI_Window {
     public int getWindowElementArrayListSize() {
         return this.Window_Elements.size();
     }
+
+    public ArrayList<UI_Element> getWindowElements() {
+        return this.Window_Elements;
+    }
     
     public int getWindowID() {
         return this.Window_ID;
@@ -511,6 +550,15 @@ public class UI_Window {
             }
         }
         throw new IllegalArgumentException("Element with name " + elementName + " does not exist in window " + this.Window_Name);
+    }
+
+    public UI_Element getElementByNameNullReturn(String elementName) {
+        for(UI_Element element : this.Window_Elements) {
+            if(element.getElementName().equals(elementName)) {
+                return element;
+            }
+        }
+       return null;
     }
 
     public String getWindowName() {

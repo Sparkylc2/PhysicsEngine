@@ -1,12 +1,16 @@
 public class UI_Manager {
     
-    public UI_TabBar TAB_BAR;
-    public UI_HotBar HOT_BAR;
-    public ArrayList<UI_Window> WINDOWS;
+    private UI_TabBar TAB_BAR;
+    private UI_HotBar HOT_BAR;
+
+    private UI_PropertiesRigidbodyWindow propertiesRigidbodyWindow;
+    private UI_PropertiesForceWindow propertiesForceWindow;
+    private UI_PropertiesEditorWindow propertiesEditorWindow;
+    private UI_CreationWindow creationWindow;
+
+    private ArrayList<UI_Window> WINDOWS;
 
     public boolean dragging = false;
-
-
 
     public boolean hasWindowBeenInteractedWith = false;
     public float timeWindowBeenInteractedWith;
@@ -19,14 +23,22 @@ public class UI_Manager {
         this.TAB_BAR = new UI_TabBar();
         this.HOT_BAR = new UI_HotBar();
         this.WINDOWS = new ArrayList<UI_Window>();
-        this.WINDOWS.add((UI_Window) new UI_PropertiesRigidbodyWindow());
-        this.WINDOWS.add((UI_Window) new UI_PropertiesForceWindow());
-        this.WINDOWS.add((UI_Window) new UI_PropertiesEditorWindow());
+
+        this.propertiesRigidbodyWindow = new UI_PropertiesRigidbodyWindow();
+        this.propertiesForceWindow = new UI_PropertiesForceWindow();
+        this.propertiesEditorWindow = new UI_PropertiesEditorWindow();
+        this.creationWindow = new UI_CreationWindow();
+
+        this.WINDOWS.add((UI_Window)this.propertiesRigidbodyWindow);
+        this.WINDOWS.add((UI_Window)this.propertiesForceWindow);
+        this.WINDOWS.add((UI_Window)this.propertiesEditorWindow);
+        this.WINDOWS.add((UI_Window)this.creationWindow);
 
         for(UI_Window window : WINDOWS) {
             window.setWindowVisibility(false);
         }
     }
+
 
     public void draw() {
         if(hasWindowBeenInteractedWith) {
@@ -65,6 +77,7 @@ public class UI_Manager {
             window.interactionDraw();
         }
     }
+
 
 
 /*
@@ -112,7 +125,7 @@ public class UI_Manager {
         for(int i = this.WINDOWS.size() - 1; i >= 0; i--) {
 
             this.WINDOWS.get(i).interactionMouseDrag();
-
+            
             if(this.WINDOWS.get(i).onMouseDrag()) {
                 this.timeWindowBeenInteractedWith = millis();
                 this.hasWindowBeenInteractedWith = true;
@@ -167,6 +180,13 @@ public class UI_Manager {
         }
     }
 
+
+    public void closeAllWindows() {
+        for(UI_Window window : this.WINDOWS) {
+            window.onWindowClose();
+        }
+    }
+
 /*
 ====================================== Getters and Setters =========================================
 */
@@ -190,13 +210,34 @@ public class UI_Manager {
         return this.WINDOWS.get(id);
     }
 
-    public UI_Window getWindowByName(String name) {
-        for(UI_Window window : this.WINDOWS) {
-            if(window.getWindowName().equals(name)) {
-                return window;
-            }
-        }
-        throw new IllegalArgumentException("No window with name: " + name);
+    // public UI_Window getWindowByName(String name) {
+    //     for(UI_Window window : this.WINDOWS) {
+    //         if(window.getWindowName().equals(name)) {
+    //             return window;
+    //         }
+    //     }
+    //     throw new IllegalArgumentException("No window with name: " + name);
+    // }
+
+
+    public UI_PropertiesRigidbodyWindow getPropertiesRigidbodyWindow() {
+        return this.propertiesRigidbodyWindow;
+    }
+
+    public UI_PropertiesForceWindow getPropertiesForceWindow() {
+        return this.propertiesForceWindow;
+    }
+
+    public UI_PropertiesEditorWindow getPropertiesEditorWindow() {
+        return this.propertiesEditorWindow;
+    }
+
+    public UI_CreationWindow getCreationWindow() {
+        return this.creationWindow;
+    }
+
+    public ArrayList<UI_Window> getWindows() {
+        return this.WINDOWS;
     }
 
     public boolean getIsOverWindows() {
@@ -210,19 +251,11 @@ public class UI_Manager {
     public boolean getIsPressedOverWindow() {
         return this.wasMousePressedOverWindow;
     }
-    public ArrayList<UI_Window> getWindows() {
-        return this.WINDOWS;
-    }
+
     public int getActiveTabID() {
         return this.TAB_BAR.getActiveTabID();
     }
     public void setActiveTabID(int id) {
         this.TAB_BAR.setActiveTabID(id);
-    }
-
-    public void closeAllWindows() {
-        for(UI_Window window : this.WINDOWS) {
-            window.onWindowClose();
-        }
     }
 }
