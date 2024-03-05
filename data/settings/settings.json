@@ -1,0 +1,18 @@
+{
+  "Show Frame Stats": true,
+  "Show AABBs": false,
+  "ScrollSensitivity": "Medium",
+  "SimulationQuality": "High",
+  "VisualQuality": "High",
+  "TextQuality": "High",
+  "Show Collision Points": false,
+  "Default": {
+    "Show Frame Stats": false,
+    "Show AABBs": false,
+    "ScrollSensitivity": "Medium",
+    "SimulationQuality": "Medium",
+    "VisualQuality": "High",
+    "TextQuality": "High",
+    "Show Collision Points": false
+  }
+}

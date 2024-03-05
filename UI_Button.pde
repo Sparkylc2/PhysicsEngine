@@ -53,13 +53,6 @@ public class UI_Button extends UI_Element {
         float buttonShapeWidth = this.Element_Width;
         float buttonShapeHeight = this.Element_Height;
 
-        // if(this.Button_Name.equals("Load Level")) {
-        //     this.Element_Width = 304;
-        //     this.Element_Height = 31;
-        //     buttonShapeWidth = this.Element_Width;
-        //     buttonShapeHeight = this.Element_Height;
-
-        //} else 
 
         if(this.Button_Name.equals("Save Level")) {
             this.Element_Width = 304;
@@ -68,7 +61,6 @@ public class UI_Button extends UI_Element {
             buttonShapeHeight = this.Element_Height;
             buttonShapeX = 0;
             buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 16;
-
         } else if (this.Button_Name.equals("Rename Level")) {
             this.Element_Width = 304;
             this.Element_Height = 31;
@@ -76,7 +68,15 @@ public class UI_Button extends UI_Element {
             buttonShapeHeight = this.Element_Height;
             buttonShapeX = 0;
             buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 16;
-        }else if(this.Button_Name.equals("Prev Page") || this.Button_Name.equals("Delete Level")) {
+        } else if(this.Button_Name.equals("Reset to defaults")){
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 20;
+        } else if(this.Button_Name.equals("Prev Page") || this.Button_Name.equals("Delete Level")) {
             buttonShapeX = -this.Button_ParentWindow.getWindowFormContainerWidth() / 2 + this.Element_Width / 2 + 17;
         } else if(this.Button_Name.equals("Next Page") || this.Button_Name.equals("Load Level")) {
             buttonShapeX = this.Button_ParentWindow.getWindowFormContainerWidth() / 2 - this.Element_Width / 2 - 17;
@@ -87,7 +87,7 @@ public class UI_Button extends UI_Element {
             buttonShapeHeight = this.Element_Height;
             buttonShapeX = 0;
             buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 16;
-        }
+        } 
 
 
 
@@ -168,6 +168,10 @@ public class UI_Button extends UI_Element {
         } else if(this.Button_Name.equals("Rename Level") && this.Button_State) {
             UI_CreationWindow creationWindow = (UI_CreationWindow) this.Button_ParentWindow;
                 creationWindow.onRenameLevelSelect();
+            this.onDeselect();
+        } else if(this.Button_Name.equals("Reset to defaults") && this.Button_State) {
+            UI_SettingsWindow settingsWindow = (UI_SettingsWindow) this.Button_ParentWindow;
+                settingsWindow.qualitySettings.resetSettings();
             this.onDeselect();
         }
     }

@@ -175,6 +175,7 @@ public class UI_TabBar {
         switch(this.activeTabID) {
             case 0:
                 UI_Manager.closeAllWindows();
+                UI_Manager.getSettingsWindow().open();
                 break;
             case 1:
                 UI_Manager.closeAllWindows();

@@ -3,7 +3,7 @@ public DashedLines dash;
 public Camera Camera = new Camera();
 public MouseObject Mouse = new MouseObject();
 public FrameTimeUtility FrameTimeUtility = new FrameTimeUtility();
-
+public UI_QualitySettings playTimeTracker;
 
 
 public Rigidbody RigidbodyGenerator = new Rigidbody();

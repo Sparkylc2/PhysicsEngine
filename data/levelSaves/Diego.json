@@ -14,19 +14,19 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "BOX"},
-    "RigidbodyID": {"ID": "857af683-82af-4a1c-8022-b52adbe06666"},
+    "RigidbodyID": {"ID": "76210b68-0ba5-432d-b951-68a53d1b56bc"},
     "densityAndRestitution": {
       "density": 1,
       "restitution": 0.5
     },
     "positionAndVelocity": {
       "position": {
-        "x": -10,
-        "y": -4.596726894378662
+        "x": -13.268497467041016,
+        "y": -5.666379451751709
       },
       "velocity": {
-        "x": 0,
-        "y": 0.2794627845287323
+        "x": -1.878894567489624,
+        "y": -1.6753361225128174
       }
     },
     "visibilityAndCollidability": {
@@ -34,8 +34,8 @@
       "visibility": true
     },
     "angleAndAngularVelocity": {
-      "angle": 0,
-      "angularVelocity": 0
+      "angle": 1.5564955901936628E-7,
+      "angularVelocity": 2.433435781767912E-7
     },
     "geometry": {
       "vertices": [
@@ -85,7 +85,7 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "BOX"},
-    "RigidbodyID": {"ID": "89358677-7937-4198-be4d-aa8bc24d4dad"},
+    "RigidbodyID": {"ID": "4cccd5f8-36b3-4851-bd60-a7b2dbba2ca6"},
     "densityAndRestitution": {
       "density": 1,
       "restitution": 0.5

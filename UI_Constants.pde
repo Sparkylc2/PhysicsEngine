@@ -17,9 +17,13 @@ public class UI_Constants {
     public final int TRANSPARENT = color(0, 0, 0, 0);
 
 /*---------------------------------------- Font -------------------------------------------------*/
-    public final PFont INTER_BOLD = createFont(sketchPath() + "/data/fonts/Inter-Bold.ttf", 48);
-    public final PFont INTER_MEDIUM = createFont(sketchPath() + "/data/fonts/Inter-Medium.ttf", 48);
-    public final PFont INTER_REGULAR = createFont(sketchPath() + "/data/fonts/Inter-Regular.ttf", 48);
+    public final PFont INTER_BOLD = createFont(sketchPath() + "/data/fonts/Inter-Bold.ttf", 48, TEXT_SMOOTHING);
+    public final PFont INTER_MEDIUM = createFont(sketchPath() + "/data/fonts/Inter-Medium.ttf", 48, TEXT_SMOOTHING);
+    public final PFont INTER_REGULAR = createFont(sketchPath() + "/data/fonts/Inter-Regular.ttf", 48, TEXT_SMOOTHING);
+
+    // public final PFont INTER_BOLD = createFont(sketchPath() + "/data/fonts/Inter-Bold.ttf", 48, this.SMOOTHING);
+    // public final PFont INTER_MEDIUM = createFont(sketchPath() + "/data/fonts/Inter-Medium.ttf", 48, this.SMOOTHING);
+    // public final PFont INTER_REGULAR = createFont(sketchPath() + "/data/fonts/Inter-Regular.ttf", 48, this.SMOOTHING);
 
     public final PFont[] FONTS = {INTER_BOLD, INTER_MEDIUM, INTER_REGULAR};
 
@@ -29,6 +33,7 @@ public class UI_Constants {
 
     public final float TAB_PADDING_Y = 12;
     public final float TAB_POSITION_X = displayWidth / 2;
+
     public final float TAB_POSITION_Y = TAB_PADDING_Y + TAB_HEIGHT / 2;
 
     public final int TAB_ROUNDING = 15;
@@ -91,6 +96,7 @@ public class UI_Constants {
     public final float HOTBAR_TOTAL_SLOT_WIDTH = HOTBAR_SLOT_WIDTH * HOTBAR_SLOT_COUNT;
 
     public final float HOTBAR_CONTAINER_POSITION_X = displayWidth / 2;
+
     public final float HOTBAR_CONTAINER_POSITION_Y;
 
     public final int HOTBAR_SLOT_ROUNDING = 10;
@@ -122,60 +128,10 @@ public class UI_Constants {
     public final int GLOBAL_TEXT_ALIGN_FACTOR_Y;
 
 /*
-============================================= Text =================================================
-*/  
-
-/*
-    //We can try switching to a different font for the tab text when its selected
-    public final PFont TAB_UNSELECTED_LABEL_TEXT_FONT = FONT[2];
-    public final int TAB_UNSELECTED_LABEL_TEXT_SIZE = 16;
-    public final int TAB_UNSELECTED_LABEL_TEXT_COLOR = GRAY_50;
-
-    public final PFont TAB_SELECTED_LABEL_TEXT_FONT = FONT[0];
-    public final int TAB_SELECTED_LABEL_TEXT_SIZE = 16;
-    public final int TAB_SELECTED_LABEL_TEXT_COLOR = WHITE;
-
-    public final PFont TAB_BUTTON_UNSELECTED_LABEL_TEXT_FONT = FONT[2];
-    public final int TAB_BUTTON_UNSELECTED_LABEL_TEXT_SIZE = 16;
-    public final int TAB_BUTTON_UNSELECTED_LABEL_TEXT_COLOR = GRAY_50;
-
-    public final PFont TAB_BUTTON_SELECTED_LABEL_TEXT_FONT = FONT[1];
-    public final int TAB_BUTTON_SELECTED_LABEL_TEXT_SIZE = 16;
-    public final int TAB_BUTTON_SELECTED_LABEL_TEXT_COLOR = WHITE;
-
-    public final PFont HOTBAR_LABEL_UNSELECTED_TEXT_FONT = FONT[0];
-    public final int HOTBAR_LABEL_UNSELECTED_TEXT_SIZE = 16;
-    public final int HOTBAR_LABEL_UNSELECTED_TEXT_COLOR = GRAY_50;
-
-    public final PFont HOTBAR_LABEL_SELECTED_TEXT_FONT = FONT[0];
-    public final int HOTBAR_LABEL_SELECTED_TEXT_SIZE = 16;
-    public final int HOTBAR_LABEL_SELECTED_TEXT_COLOR = WHITE;
-
-    public final PFont WINDOW_TITLE_UNSELECTED_TEXT_FONT = FONT[0];
-    public final int WINDOW_TITLE_UNSELECTED_TEXT_SIZE = 18;
-    public final int WINDOW_TITLE_UNSELECTED_TEXT_COLOR = GRAY_50;
-
-    public final PFont WINDOW_TITLE_SELECTED_TEXT_FONT = FONT[0];
-    public final int WINDOW_TITLE_SELECTED_TEXT_SIZE = 18;
-    public final int WINDOW_TITLE_SELECTED_TEXT_COLOR = WHITE;
-
-    public final PFont ELEMENT_UNSELECTED_TEXT_FONT = FONT[2];
-    public final int ELEMENT_UNSELECTED_TEXT_SIZE = 16;
-    public final int ELEMENT_UNSELECTED_TEXT_COLOR = WHITE;
-
-    public final PFont ELEMENT_SELECTED_TEXT_FONT = FONT[2];
-    public final int ELEMENT_SELECTED_TEXT_SIZE = 16;
-    public final int ELEMENT_SELECTED_TEXT_COLOR = WHITE;
-*/
-
-
-/*
 ======================================== Initialization ============================================
 */  
 
     public UI_Constants() {
-
-
 
     /*
     ======================================== Tab Initialization ====================================
@@ -196,7 +152,6 @@ public class UI_Constants {
     ======================================== HotBar Initialization =============================
     */
     }
-
 
     public PShape createElementListener(PShape Element_Shape) {
         float[] Element_Params = Element_Shape.getParams();

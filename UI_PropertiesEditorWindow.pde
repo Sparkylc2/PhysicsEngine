@@ -95,6 +95,18 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     @Override
     public void interactionDraw() {
 
+        if(this.rigidbodyToEdit != null) {
+            System.out.println("Vertices: ");
+            for(PVector vertex : this.rigidbodyToEdit.getVertices()) {
+                System.out.print(vertex + " ");
+            }
+            System.out.println();
+            System.out.println("Transformed Vertices: ");
+            for(PVector vertex : this.rigidbodyToEdit.GetTransformedVertices()) {
+                System.out.print(vertex + " ");
+            }
+        }
+
         if(this.inEditMode) {
             this.elementChangeListener();
             this.selectLock();
@@ -322,10 +334,23 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     } 
 
 
+    // public void deleteVertex(int index) {
+    //     PVector[] vertices = this.rigidbodyToEdit.getVertices();
+    //     PVector[] newVertices = new PVector[vertices.length - 1];
+
+    //     ArrayList<PVector> vertexList = new ArrayList<PVector>(Arrays.asList(this.rigidbodyToEdit.getVertices()));
+    //     vertexList.remove(index);
+    //     this.rigidbodyToEdit.updatePolygon(vertexList.toArray(new PVector[vertexList.size()]));
+    // }
+
     public void deleteVertex(int index) {
-        ArrayList<PVector> vertexList = new ArrayList<PVector>(Arrays.asList(this.rigidbodyToEdit.getVertices()));
-        vertexList.remove(index);
-        this.rigidbodyToEdit.updatePolygon(vertexList.toArray(new PVector[vertexList.size()]));
+        PVector[] original = this.rigidbodyToEdit.getVertices();
+        PVector[] newVertices = new PVector[original.length - 1];
+        System.arraycopy(original, 0, newVertices, 0, index);
+        System.arraycopy(original, index + 1, newVertices, index, original.length - index-1);
+        // this.rigidbodyToEdit.updatePolygon(newVertices);
+        this.rigidbodyToEdit.setVertices(newVertices);
+        this.rigidbodyToEdit.setTransformedVertices(newVertices);
     }
 
 

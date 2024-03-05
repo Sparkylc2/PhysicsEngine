@@ -6,7 +6,7 @@ public void exit() {
 public void keyPressed() {
     KeyHandler.onKeyPressed(keyCode);
 
-    
+
     UI_Manager.onKeyPress(keyCode);
     UI_Manager.getPropertiesEditorWindow().onKeyPress(keyCode);
 
@@ -73,10 +73,10 @@ public void keyPressed() {
         return;
     }
 
-    // if(keyCode == ESC) {
-    //     exit();
-    //     return;
-    // }
+    if(keyCode == ESC) {
+        exit();
+        return;
+    }
     
     if(keyCode == ENTER) {
         Mouse.getMouseObjectResults().clear();

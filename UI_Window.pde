@@ -313,6 +313,8 @@ public class UI_Window {
                 element.onSelect();
             } else if(element instanceof UI_FileButton) {
                 this.handleFileButtonElement((UI_FileButton)element);
+            } else if(element instanceof UI_TickSlider) {
+                element.onSelect();
             } 
         }
     }
@@ -467,7 +469,9 @@ public class UI_Window {
 
     public void addElement(UI_Element element) {
         this.Window_Elements.add(element);
-        this.Window_Container.getChild("Element_Group").addChild(element.getShape());
+        if(element.getShape() != null) {
+            this.Window_Container.getChild("Element_Group").addChild(element.getShape());
+        }
     }
 
     public void clearAllElements() {

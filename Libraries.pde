@@ -13,3 +13,17 @@ import javax.swing.JFrame;
 import processing.awt.*;
 import garciadelcastillo.dashedlines.*;
 import processing.svg.*;
+import java.nio.*;
+import java.nio.file.*;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.HashSet;
+import java.util.Set;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Timer;
+import java.util.TimerTask;
+

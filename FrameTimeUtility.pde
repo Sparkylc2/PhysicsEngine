@@ -1,5 +1,6 @@
 public class FrameTimeUtility {
 
+    private int simulationStartTime;
     private int currentFrameTime;
     private int lastFrameTime;
 
@@ -30,6 +31,9 @@ public class FrameTimeUtility {
 
 
     public void displayTimings() {
+        if(!DRAW_STATS) {
+            return;
+        }
         if(millis() - systemTime >= 200) {
             this.totalStepTime = calculateAverageTime(this.totalWorldStepTime, this.totalSampleCount);
             this.subStepTime = calculateAverageTime(this.subWorldStepTime, this.subSampleCount);
@@ -45,7 +49,10 @@ public class FrameTimeUtility {
             this.fps = frameRate;
             this.displayTimeStep = this.DT;
         }
-    
+
+        textFont(UI_Constants.INTER_REGULAR);
+        textSize(15);
+        textAlign(LEFT, CENTER);
         stroke(255);
         fill(255);
         text("Total Step Time: " + totalStepTime, 10, 40);
@@ -53,22 +60,35 @@ public class FrameTimeUtility {
         text("Body Count: " + bodyCount, 10, 80);
         text("FPS: " + fps, 10, 100);
         text("dt: " + displayTimeStep, 10, 120);
+        text("Simulation Length: " + (float)(millis() - this.simulationStartTime) / 1000, 10, 140);
     }
 
 
     public void startTotalWorldStepTime() {
+        if(!DRAW_STATS) {
+            return;
+        }
         this.totalWorldStepTimeStart = System.nanoTime();
     }
     public void updateTotalWorldStepTime() {
+        if(!DRAW_STATS) {
+            return;
+        }
         this.totalSampleCount++;
         this.totalWorldStepTime += System.nanoTime() - totalWorldStepTimeStart;
     }
     
     public void startSubWorldStepTime() {
+        if(!DRAW_STATS) {
+            return;
+        }
         this.subWorldStepTimeStart = System.nanoTime();
     }
 
     public void updateSubWorldStepTime() {
+        if(!DRAW_STATS) {
+            return;
+        }
         this.subSampleCount++;
         this.subWorldStepTime += System.nanoTime() - subWorldStepTimeStart;
     }
@@ -91,15 +111,26 @@ public class FrameTimeUtility {
     }
 
     public void init() {
+        if(!DRAW_STATS) {
+            return;
+        }
+        this.simulationStartTime = millis();
         this.lastFrameTime = millis();
     }
 
     public void calculateFrameTime() {
+        if(!DRAW_STATS) {
+            return;
+        }
         this.currentFrameTime = millis();
         this.DT = (float)(this.currentFrameTime - this.lastFrameTime) / 1000.0F;
     }
 
     public void updateFrameTime() {
+        if(!DRAW_STATS) {
+            return;
+        }
+
         this.lastFrameTime = this.currentFrameTime;
     }
 }

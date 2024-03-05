@@ -1119,4 +1119,7 @@ public boolean containsPolygon(float x, float y) {
         this.isCollidable = isCollidable;
     }
 
+    public void setTransformedVertices(PVector[] transformedVertices) {
+        this.transformedVertices = transformedVertices;
+    }
 }

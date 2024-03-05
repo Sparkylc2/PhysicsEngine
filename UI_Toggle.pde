@@ -7,8 +7,14 @@ public class UI_Toggle extends UI_Element {
     public float Toggle_Name_Position_X;
     public float Toggle_Name_Position_Y;
 
+
+    public float Toggle_Position_X = -1;
+    public float Toggle_Position_Y = -1;
+
     public String Toggle_GroupName = null;
     public boolean Toggle_State;
+
+    public float Toggle_Scale = -1;
 
     public PShape Toggle_Shape_Group = createShape(GROUP);
 
@@ -19,6 +25,20 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_ParentWindow = Toggle_ParentWindow;
 
         this.Toggle_State = Toggle_State;
+
+        this.initializeToggle();
+    }
+
+    public UI_Toggle(String Toggle_Name, UI_Window Toggle_ParentWindow, float Toggle_Position_X, float Toggle_Position_Y, boolean Toggle_State, float Toggle_Scale) {
+        this.Toggle_Name = Toggle_Name;
+        this.Toggle_Shape_Group.setName(this.Toggle_Name + "Group");
+        this.Toggle_ParentWindow = Toggle_ParentWindow;
+
+        this.Toggle_Scale = Toggle_Scale;
+        this.Toggle_State = Toggle_State;
+
+        this.Toggle_Position_X = Toggle_Position_X;
+        this.Toggle_Position_Y = Toggle_Position_Y;
 
         this.initializeToggle();
     }
@@ -65,20 +85,33 @@ public class UI_Toggle extends UI_Element {
         float toggleTickboxWidth;
         float toggleTickboxHeight;
 
-        if(numElements == 0) {
-            toggleShapeX = 0;
-            toggleShapeY = -this.Toggle_ParentWindow.getWindowFormContainerHeight() / 2 + this.Element_Container_Top_Padding_Y + this.Element_Height / 2;
-            toggleShapeWidth = this.Element_Width;
-            toggleShapeHeight = this.Element_Height;
+        if(this.Toggle_Position_X == -1 && this.Toggle_Position_Y == -1) {
+            if(numElements == 0) {
+                toggleShapeX = 0;
+                toggleShapeY = -this.Toggle_ParentWindow.getWindowFormContainerHeight() / 2 + this.Element_Container_Top_Padding_Y + this.Element_Height / 2;
+                toggleShapeWidth = this.Element_Width;
+                toggleShapeHeight = this.Element_Height;
 
-            toggleTickboxX = toggleShapeX - toggleShapeWidth / 2 + this.Element_Tickbox_Padding_X + this.Element_Tickbox_Width / 2;
-            toggleTickboxY = toggleShapeY;
-            toggleTickboxWidth = this.Element_Tickbox_Width;
-            toggleTickboxHeight = this.Element_Tickbox_Height;
-            
+                toggleTickboxX = toggleShapeX - toggleShapeWidth / 2 + this.Element_Tickbox_Padding_X + this.Element_Tickbox_Width / 2;
+                toggleTickboxY = toggleShapeY;
+                toggleTickboxWidth = this.Element_Tickbox_Width;
+                toggleTickboxHeight = this.Element_Tickbox_Height;
+                
+            } else {
+                toggleShapeX = 0;
+                toggleShapeY = (this.Element_Height - this.Toggle_ParentWindow.getWindowFormContainerHeight()) /2 + (this.Element_Height + this.Element_Element_Padding_Y) * numElements + this.Element_Container_Top_Padding_Y;
+                toggleShapeWidth = this.Element_Width;
+                toggleShapeHeight = this.Element_Height;
+
+                toggleTickboxX = toggleShapeX - toggleShapeWidth / 2 + this.Element_Tickbox_Padding_X + this.Element_Tickbox_Width / 2;
+                toggleTickboxY = toggleShapeY;
+                toggleTickboxWidth = this.Element_Tickbox_Width;
+                toggleTickboxHeight = this.Element_Tickbox_Height;
+
+            }
         } else {
-            toggleShapeX = 0;
-            toggleShapeY = (this.Element_Height - this.Toggle_ParentWindow.getWindowFormContainerHeight()) /2 + (this.Element_Height + this.Element_Element_Padding_Y) * numElements + this.Element_Container_Top_Padding_Y;
+            toggleShapeX = this.Toggle_Position_X;
+            toggleShapeY = this.Toggle_Position_Y;
             toggleShapeWidth = this.Element_Width;
             toggleShapeHeight = this.Element_Height;
 
@@ -86,7 +119,6 @@ public class UI_Toggle extends UI_Element {
             toggleTickboxY = toggleShapeY;
             toggleTickboxWidth = this.Element_Tickbox_Width;
             toggleTickboxHeight = this.Element_Tickbox_Height;
-
         }
 
         PShape Toggle_Shape_Base = createShape(RECT, toggleShapeX, toggleShapeY, toggleShapeWidth, toggleShapeHeight, this.Element_Rounding);
@@ -128,6 +160,10 @@ public class UI_Toggle extends UI_Element {
             this.onDeselect();
         }
 
+        if(this.Toggle_Scale != -1) {
+            this.Toggle_Shape_Group.resetMatrix();
+            this.Toggle_Shape_Group.scale(this.Toggle_Scale);
+        }
     }
 
     @Override 
@@ -148,8 +184,8 @@ public class UI_Toggle extends UI_Element {
 */  
     @Override
     public boolean onMousePress() {
-        float x = mouseX - this.Toggle_ParentWindow.getWindowPosition().x;
-        float y = mouseY - this.Toggle_ParentWindow.getWindowPosition().y;
+        float x = (mouseX - this.Toggle_ParentWindow.getWindowPosition().x) / this.Toggle_Scale;
+        float y = (mouseY - this.Toggle_ParentWindow.getWindowPosition().y) / this.Toggle_Scale;
 
         return this.Toggle_Shape_Group.getChild("Toggle_Shape_Base_Listener").contains(x, y);
     }
@@ -192,7 +228,14 @@ public class UI_Toggle extends UI_Element {
         textSize(this.Element_Text_Size);
         textAlign(CENTER, CENTER);
 
-        text(this.Toggle_Name, this.Toggle_Name_Position_X, this.Toggle_Name_Position_Y);
+        if(this.Toggle_Scale != -1) {
+            pushMatrix();
+            scale(this.Toggle_Scale);
+            text(this.Toggle_Name, this.Toggle_Name_Position_X, this.Toggle_Name_Position_Y);
+            popMatrix();
+        } else {
+            text(this.Toggle_Name, this.Toggle_Name_Position_X, this.Toggle_Name_Position_Y);
+        }
 
     }
 

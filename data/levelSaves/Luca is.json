@@ -14,7 +14,7 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "BOX"},
-    "RigidbodyID": {"ID": "857af683-82af-4a1c-8022-b52adbe06666"},
+    "RigidbodyID": {"ID": "6d26cd09-137d-4893-b7e9-bb5e2a1ad469"},
     "densityAndRestitution": {
       "density": 1,
       "restitution": 0.5
@@ -22,11 +22,11 @@
     "positionAndVelocity": {
       "position": {
         "x": -10,
-        "y": -4.928474426269531
+        "y": -3.8671693801879883
       },
       "velocity": {
         "x": 0,
-        "y": -0.5155975222587585
+        "y": 1.5166263580322266
       }
     },
     "visibilityAndCollidability": {
@@ -85,7 +85,7 @@
       "strokeWeight": 0.05000000074505806
     },
     "shapeType": {"shapeType": "BOX"},
-    "RigidbodyID": {"ID": "89358677-7937-4198-be4d-aa8bc24d4dad"},
+    "RigidbodyID": {"ID": "d8c86286-c326-4ed9-a929-8dfb28bc64aa"},
     "densityAndRestitution": {
       "density": 1,
       "restitution": 0.5

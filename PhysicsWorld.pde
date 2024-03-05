@@ -56,9 +56,13 @@ public final int MAX_ITERATIONS = 1024;
 
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
-public int SUB_STEP_COUNT = 128;
+public static int SUB_STEP_COUNT = 128;
 public boolean DRAW_CONTACT_POINTS = false;
 public boolean DRAW_AABBS = false;
+public boolean DRAW_STATS = false;
+
+public float SCROLL_SENSITIVITY = 1.1f;
+public boolean TEXT_SMOOTHING = false;
 
 
 public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);

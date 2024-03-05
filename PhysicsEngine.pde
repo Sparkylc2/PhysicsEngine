@@ -12,6 +12,8 @@ public void setup() {
     frameRate(300);
 /*--------------------- Camera Utilities ---------------------*/
     Camera = new Camera();
+    playTimeTracker = new UI_QualitySettings();
+    playTimeTracker.startPlaytimeTracking();
 /*---------------------------- UI ----------------------------*/
     UI_Manager.init();
 /*-------------------------- Rigidbodies ------------------------*/

@@ -29,7 +29,7 @@ public void mouseWheel(MouseEvent event) {
     }
     
     float e = -event.getCount();
-    Camera.zoom(pow(1.1f, e), mouseX, mouseY);
+    Camera.zoom(pow(SCROLL_SENSITIVITY, e), mouseX, mouseY);
 }
 
 public void mouseDragged() {
