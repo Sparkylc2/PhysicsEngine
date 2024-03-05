@@ -99,7 +99,6 @@ public void Step(float dt, int totalIterations) {
         FrameTimeUtility.startSubWorldStepTime();
         /*-------------------------------------------------------------------*/
         
-        
         this.collisionPairs.clear();
 
         StepBodies(dt, totalIterations);

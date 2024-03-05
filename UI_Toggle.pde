@@ -184,10 +184,17 @@ public class UI_Toggle extends UI_Element {
 */  
     @Override
     public boolean onMousePress() {
-        float x = (mouseX - this.Toggle_ParentWindow.getWindowPosition().x) / this.Toggle_Scale;
-        float y = (mouseY - this.Toggle_ParentWindow.getWindowPosition().y) / this.Toggle_Scale;
+        if(this.Toggle_Scale != -1) {
+            float x = (mouseX - this.Toggle_ParentWindow.getWindowPosition().x) / this.Toggle_Scale;
+            float y = (mouseY - this.Toggle_ParentWindow.getWindowPosition().y) / this.Toggle_Scale;
 
-        return this.Toggle_Shape_Group.getChild("Toggle_Shape_Base_Listener").contains(x, y);
+            return this.Toggle_Shape_Group.getChild("Toggle_Shape_Base_Listener").contains(x, y);
+        } else {
+            float x = (mouseX - this.Toggle_ParentWindow.getWindowPosition().x);
+            float y = (mouseY - this.Toggle_ParentWindow.getWindowPosition().y);
+
+            return this.Toggle_Shape_Group.getChild("Toggle_Shape_Base_Listener").contains(x, y);
+        }
     }
 
     @Override 

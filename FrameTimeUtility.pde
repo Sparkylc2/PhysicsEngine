@@ -111,26 +111,16 @@ public class FrameTimeUtility {
     }
 
     public void init() {
-        if(!DRAW_STATS) {
-            return;
-        }
         this.simulationStartTime = millis();
         this.lastFrameTime = millis();
     }
 
     public void calculateFrameTime() {
-        if(!DRAW_STATS) {
-            return;
-        }
         this.currentFrameTime = millis();
         this.DT = (float)(this.currentFrameTime - this.lastFrameTime) / 1000.0F;
     }
 
     public void updateFrameTime() {
-        if(!DRAW_STATS) {
-            return;
-        }
-
         this.lastFrameTime = this.currentFrameTime;
     }
 }

@@ -1,9 +1,9 @@
 {
-  "Show Frame Stats": true,
+  "Show Frame Stats": false,
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
   "SimulationQuality": "High",
-  "VisualQuality": "High",
+  "VisualQuality": "Low",
   "TextQuality": "High",
   "Show Collision Points": false,
   "Default": {

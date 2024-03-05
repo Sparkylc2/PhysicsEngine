@@ -96,15 +96,15 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     public void interactionDraw() {
 
         if(this.rigidbodyToEdit != null) {
-            System.out.println("Vertices: ");
-            for(PVector vertex : this.rigidbodyToEdit.getVertices()) {
-                System.out.print(vertex + " ");
-            }
-            System.out.println();
-            System.out.println("Transformed Vertices: ");
-            for(PVector vertex : this.rigidbodyToEdit.GetTransformedVertices()) {
-                System.out.print(vertex + " ");
-            }
+            // System.out.println("Vertices: ");
+            // for(PVector vertex : this.rigidbodyToEdit.getVertices()) {
+            //     System.out.print(vertex + " ");
+            // }
+            // System.out.println();
+            // System.out.println("Transformed Vertices: ");
+            // for(PVector vertex : this.rigidbodyToEdit.GetTransformedVertices()) {
+            //     System.out.print(vertex + " ");
+            // }
         }
 
         if(this.inEditMode) {
@@ -529,7 +529,6 @@ public class UI_PropertiesEditorWindow extends UI_Window {
     }
     @Override
     public void interactionMouseRelease() {
-        this.mouseDownTime = -1;
         /*----------------- Resets ----------------*/
         this.vertexIndexToDrag = -1;
         this.circleVertexToDrag = false;
@@ -585,7 +584,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
             return;
         } 
         if(!this.mac) {
-            if(millis() - this.mouseDownTime > 300) {
+            if(millis() - this.mouseDownTime > 100) {
                 return;
             }
         }
