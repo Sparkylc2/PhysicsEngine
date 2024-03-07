@@ -1,5 +1,5 @@
 {
-  "Show Frame Stats": false,
+  "Show Frame Stats": true,
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
   "SimulationQuality": "Medium",

@@ -1,4 +1,5 @@
 
+boolean firstFrame = false;
 public void setup() {
 
     if(System.getProperty("os.name").toLowerCase().contains("mac")) {

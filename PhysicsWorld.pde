@@ -6,7 +6,6 @@
 */
 /*------------------------------------ NEVER CHANGE THIS -----------------------------------------*/
 
-
 public static boolean IS_TEXTFIELD_ACTIVE = false;
 
 public static boolean IS_PAUSED = false;
@@ -57,6 +56,7 @@ public final int MAX_ITERATIONS = 1024;
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
 public static int SUB_STEP_COUNT = 128;
+
 public boolean DRAW_CONTACT_POINTS = false;
 public boolean DRAW_AABBS = false;
 public boolean DRAW_STATS = false;
@@ -80,7 +80,6 @@ public static float VERTEX_SNAP_RADIUS = 0.25f;
 ===================================  PHYSICS ENGINE METHODS  =======================================
 ====================================================================================================
 */
-
 
 //Iterations for substeps for each frame
 public void Step(float dt, int totalIterations) {
@@ -496,7 +495,6 @@ public void StepBodies(float dt, int totalIterations) {
     }
     
     for(Rigidbody rigidbody : rigidbodyList) {
-
         if(rigidbody.getIsStatic() ) {
             continue;
         }

@@ -1,6 +1,5 @@
 public class UI_HotBar {
 
-
     private PShape HOT_SHAPE;
     private float[] TEXT_POSITION_X;
     private float[] TEXT_POSITION_Y;
@@ -12,17 +11,16 @@ public class UI_HotBar {
     private int activeSlotID;
 
 
-    /*
-    ======================================== Forces ================================================
-    */
-
+ 
     public UI_HotBar() {
         this.initializeHotbar();
-    }
+    }   
 
     public void draw() {
         this.drawHotbar();
     }
+
+
 
 
 /*
@@ -30,16 +28,14 @@ public class UI_HotBar {
 */
     public void initializeHotbar() {
         rectMode(CENTER);
-
         this.SLOT_POSITION = new float[UI_Constants.HOTBAR_SLOT_COUNT];
         this.TEXT_POSITION_X = new float[UI_Constants.HOTBAR_SLOT_COUNT];
         this.TEXT_POSITION_Y = new float[UI_Constants.HOTBAR_SLOT_COUNT];
 
 
         this.HOT_SHAPE = createShape(GROUP);
-            this.HOT_SHAPE.setName("HOTBAR");
+        this.HOT_SHAPE.setName("HOTBAR");
     
-
         float totalPadding = UI_Constants.HOTBAR_CONTAINER_WIDTH - UI_Constants.HOTBAR_TOTAL_SLOT_WIDTH;
 
         float padding = totalPadding / (UI_Constants.HOTBAR_SLOT_COUNT + 1);
@@ -116,9 +112,6 @@ public class UI_HotBar {
 */
 
     public void onSlotChange(int slotID) {
-        if(UI_Manager.getTabBar().getActiveTabID() == 0) {
-            slotID = -1;
-        }
         int previousSlotID = this.activeSlotID;
 
         if(previousSlotID != -1) {
@@ -218,7 +211,6 @@ public class UI_HotBar {
                 break;
         }
         
-    
         if(previousSlotID == 1) {
             UI_Manager.getPropertiesEditorWindow().onWindowClose();
         }
@@ -242,7 +234,6 @@ public class UI_HotBar {
     public void drawHotbar() {
         shape(this.HOT_SHAPE);
         this.drawHotbarText();
-
     }
 
     public void drawHotbarText() {
@@ -272,7 +263,6 @@ public class UI_HotBar {
 /*
 ====================================== Getters & Setters ===========================================
 */  
-    
     public void setActiveSlotID(int slotID) {
         this.onSlotChange(slotID);
     }

@@ -26,7 +26,7 @@ public class UI_Manager {
         this.TAB_BAR = new UI_TabBar();
         this.HOT_BAR = new UI_HotBar();
         this.WINDOWS = new ArrayList<UI_Window>();
-
+        
         this.propertiesRigidbodyWindow = new UI_PropertiesRigidbodyWindow();
         this.propertiesForceWindow = new UI_PropertiesForceWindow();
         this.propertiesEditorWindow = new UI_PropertiesEditorWindow();
@@ -42,6 +42,7 @@ public class UI_Manager {
         for(UI_Window window : WINDOWS) {
             window.setWindowVisibility(false);
         }
+        
     }
 
 

@@ -8,7 +8,7 @@ public class UI_TabBar {
     private float TEXT_POSITION_Y;
     private float BUTTON_TEXT_POSITION_Y;
     private float SCALE_FACTOR = width/1512f;
-    private int activeTabID = 0;
+    private int activeTabID = 3;
 
 
 

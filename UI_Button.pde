@@ -11,6 +11,7 @@ public class UI_Button extends UI_Element {
 
     public PShape Button_Shape_Group = createShape(GROUP);
 
+
     public UI_Button (String Button_Name, UI_Window Button_ParentWindow, boolean Button_State) {
         this.Button_Name = Button_Name;
         this.Button_State = Button_State;
@@ -209,7 +210,6 @@ public class UI_Button extends UI_Element {
         textFont(this.Element_Font);
         textSize(this.Element_Text_Size);
         textAlign(CENTER, CENTER);
-
         text(this.Button_Name, this.Button_Name_Position_X, this.Button_Name_Position_Y);
 
     }

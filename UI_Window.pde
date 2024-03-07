@@ -70,7 +70,6 @@ public class UI_Window {
         textFont(UI_Constants.INTER_BOLD);
         textSize(this.Window_Text_Size);
         textAlign(CENTER, CENTER);
-
         rectMode(CENTER);
         this.Window_Container = createShape(GROUP);
 
@@ -169,26 +168,29 @@ public class UI_Window {
 
         this.Window_Text_Width = textWidth(this.Window_Name);
         this.Window_Text_Position.set(-this.Window_Text_Container_Size.x / 2 + textWidth(this.Window_Name) / 2 + 15, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 + (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
+
     }
 
 /*
 ============================================= Draw =================================================
 */  
+
+
     public void draw() {
         if(!this.Window_Visibility) {
             return;
         }
-
-        this.drawShape();
+        shape(this.Window_Container, 0, 0);
         pushMatrix();
         translate(this.Window_Position.x, this.Window_Position.y);
         scale(this.Window_Scale);
             this.drawText();
             this.drawElementText();
         popMatrix();
-
         this.updateIsMouseOverWindow();
     }
+
+
 
     public void drawElementText() {
         for(UI_Element element : this.Window_Elements) {
@@ -205,12 +207,7 @@ public class UI_Window {
         textFont(UI_Constants.INTER_BOLD);
         textSize(this.Window_Text_Size);
         textAlign(CENTER, CENTER);
-
         text(this.Window_Name, this.Window_Text_Position.x, this.Window_Text_Position.y);
-    }
-
-    public void drawShape() {
-        shape(this.Window_Container, 0, 0);
     }
 
 
@@ -306,7 +303,6 @@ public class UI_Window {
             if(!element.onMousePress()) {
                 continue;
             }
-
             if(element instanceof UI_Toggle) {
                 this.handleToggleElement((UI_Toggle)element);
             } else if(element instanceof UI_Slider) {
@@ -376,7 +372,7 @@ public class UI_Window {
         UI_Manager.bringToFront(this);
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
-
+        
         if(this.HotBarSlotRepresentation != null) {
             switch(this.HotBarSlotRepresentation) {
                 case "Editor":
