@@ -8,6 +8,8 @@ public class UI_Slider extends UI_Element {
     public float Slider_Value_Position_X;
     public float Slider_Value_Position_Y;
 
+    fuck
+
     public float Slider_Min_Value;
     public float Slider_Max_Value;
     public float Slider_Current_Value;
