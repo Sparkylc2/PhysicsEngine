@@ -1,23 +1,22 @@
 public class UI_QualitySettings {
 
-    public JSONObject settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
+    public JSONObject settings;
+    public JSONObject timePlayed;
 
-    private int startTimeSecond;
-    private int startTimeMinute;
-    private int startTimeHour;
-
-    private int endTimeSecond;
-    private int endTimeMinute;
-    private int endTimeHour;
+    private long startTime;
 
     private Timer playtimeTimer = new Timer();
 
 
     public UI_QualitySettings() {
+        this.loadJSON("settings");
+        this.loadJSON("timePlayed");
 
     }
 
     public UI_QualitySettings(boolean init) {
+        this.loadJSON("settings");
+        this.loadJSON("timePlayed");
         if(init) {
             this.init();
         } 
@@ -28,37 +27,37 @@ public class UI_QualitySettings {
 ====================================== Timing ===============================
 */
     public void startPlaytimeTracking() {
-        this.startTimeSecond = second();
-        this.startTimeMinute = minute();
-        this.startTimeHour = hour();
-
-        // Schedule a timer task to periodically update playtime
-        playtimeTimer.scheduleAtFixedRate(new TimerTask() {
+        this.startTime = System.currentTimeMillis();
+        
+        this.playtimeTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 updatePlaytime();
             }
-        }, 0, 1000);  // Update playtime every second (adjust as needed)
-    }
-
-    public void savePlaytimeToFile() {
-        JSONObject timePlayed = loadJSONObject(sketchPath() + "/data/settings/timePlayed.json");
-
-        timePlayed.setInt("TimePlayedSeconds", timePlayed.getInt("TimePlayedSeconds") + this.endTimeSecond - this.startTimeSecond);
-        timePlayed.setInt("TimePlayedMinutes", timePlayed.getInt("TimePlayedMinutes") + this.endTimeMinute - this.startTimeMinute);
-        timePlayed.setInt("TimePlayedHours", timePlayed.getInt("TimePlayedHours") + this.endTimeHour - this.startTimeHour);
-        saveJSONObject(timePlayed, sketchPath() + "/data/settings/timePlayed.json");
-
-        this.startTimeSecond = second();
-        this.startTimeMinute = minute();
-        this.startTimeHour = hour();
+        }, 60000, 60000); 
     }
 
     public void updatePlaytime() {
-        this.endTimeSecond = second();
-        this.endTimeMinute = minute();
-        this.endTimeHour = hour();
-        savePlaytimeToFile();
+        int totalPlayTimeMinutes = this.timePlayed.getInt("TimePlayedMinutes") + 1;
+        int totalPlayTimeHours = this.timePlayed.getInt("TimePlayedHours");
+
+        if(totalPlayTimeMinutes >= 60) {
+            totalPlayTimeHours += 1;
+            totalPlayTimeMinutes = 0;
+        }
+
+        String timePlayed = "Time Played: " + totalPlayTimeHours + "h " + totalPlayTimeMinutes + "m";
+        
+        this.timePlayed.setInt("TimePlayedMinutes", totalPlayTimeMinutes);
+        this.timePlayed.setInt("TimePlayedHours", totalPlayTimeHours);
+        this.timePlayed.setString("TimePlayed", timePlayed);
+
+        if(UI_Manager.getSettingsWindow() != null) {
+            UI_Manager.getSettingsWindow().currentTimePlayed = timePlayed;
+        }
+
+        saveJSONObject(this.timePlayed, sketchPath() + "/data/settings/timePlayed.json");
+        this.timePlayed = loadJSONObject(sketchPath() + "/data/settings/timePlayed.json");
     }
 
 /*
@@ -86,6 +85,17 @@ public class UI_QualitySettings {
         settings.setJSONObject("Default", def);
 
         saveJSONObject(settings, sketchPath() + "/data/settings/settings.json");
+        this.settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
+    }
+
+    public void createDefaultTimePlayedFile() {
+        JSONObject timePlayed = new JSONObject();
+            timePlayed.setInt("TimePlayedMinutes", 0);
+            timePlayed.setInt("TimePlayedHours", 0);
+            timePlayed.setString("TimePlayed", "Time Played: 0h 0m");
+
+        saveJSONObject(timePlayed, sketchPath() + "/data/settings/timePlayed.json");
+        this.timePlayed = loadJSONObject(sketchPath() + "/data/settings/timePlayed.json");
     }
 
     public void init() {
@@ -161,6 +171,7 @@ public class UI_QualitySettings {
         boolean Show_Collision_Points = defaultSettings.getBoolean("Show Collision Points");
 
         saveSettings(VisualQuality, SimulationQuality, TextQuality, ScrollSensitivity, Show_Frame_Stats, Show_AABBs, Show_Collision_Points);
+        this.settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
 
     }
 
@@ -186,6 +197,8 @@ public class UI_QualitySettings {
         settings.setJSONObject("Default", def);
 
         saveJSONObject(settings, sketchPath() + "/data/settings/settings.json");
+
+        this.settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
     }
 
 
@@ -237,17 +250,14 @@ public class UI_QualitySettings {
 
     private void setLowVisualQuality() {
         noSmooth();
-        pixelDensity(1);
     }
 
     private void setMediumVisualQuality() {
         smooth(2);
-        pixelDensity(1);
     }
 
     private void setHighVisualQuality() {
         smooth(3);
-        pixelDensity(displayDensity());
     }
 
     private void setLowScrollSensitivity() {
@@ -272,5 +282,59 @@ public class UI_QualitySettings {
         TEXT_SMOOTHING = true;
     }
 
+    private void loadJSON(String name) {
+        String directoryPath = dataPath("settings");
+        createPath(directoryPath);
+
+        if(name.equals("settings")) {
+            loadSettingsJSON();
+        } else if(name.equals("timePlayed")) {
+            loadTimePlayedJSON();
+        } else {
+            throw new IllegalArgumentException("Invalid JSON file name");
+        }
+    }
+
+    private void loadSettingsJSON() {
+        String filePath = sketchPath() + "/data/settings/settings.json";
+
+        JSONObject settings;
+
+        try {
+            settings = loadJSONObject(filePath);
+            this.settings = settings;
+        } catch(Exception e) {
+            createDefaultSettingsFile();
+            settings = loadJSONObject(filePath);
+            this.settings = settings;
+        }
+    }
+
+    private void loadTimePlayedJSON() {
+        String filePath = sketchPath() + "/data/settings/timePlayed.json";
+        JSONObject timePlayed;
+        try {
+            timePlayed = loadJSONObject(filePath);
+            this.timePlayed = timePlayed;
+        } catch(Exception e) {
+            createDefaultTimePlayedFile();
+            timePlayed = loadJSONObject(filePath);
+            this.timePlayed = timePlayed;
+        }
+    }
+
+
+
+    public int getPixelDensity() {
+        if(this.settings.getString("VisualQuality").equals("Low")) {
+            return 1;
+        } else if(this.settings.getString("VisualQuality").equals("Medium")) {
+            return 1;
+        } else if(this.settings.getString("VisualQuality").equals("High")) {
+            return displayDensity();
+        } else {
+            throw new IllegalArgumentException("Invalid visual quality setting");
+        }
+    }
     
 }

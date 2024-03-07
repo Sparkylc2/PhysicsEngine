@@ -153,7 +153,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
         ArrayList<MouseObjectResult> mouseObjectResults = Mouse.getMouseObjectResults();
         if(mouseObjectResults.size() == 0 || mouseObjectResults.size() > 1) {
             return;
-        } else if(mouseObjectResults.size() == 1 && UI_Manager.getIsPressedOverWindow()) {
+        } else if(mouseObjectResults.size() == 1 && (UI_Manager.getIsPressedOverWindow())) {
             mouseObjectResults.clear();
             return;
         }
@@ -476,6 +476,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
                 rigidbody.addForceToForceRegistry(mouseSpring);
                 this.MOUSE_SPRING_ADDED = true;
                 UI_Manager.getPropertiesRigidbodyWindow().setMouseSpringAdded(true);
+                UI_Manager.getPropertiesEditorWindow().setMouseSpringAdded(true);
                 
             } 
         }
@@ -486,7 +487,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
             mouseSpring.getRigidbodyA().removeForceFromForceRegistry(mouseSpring);
             mouseSpring.setRigidbodyA(null);
             this.MOUSE_SPRING_ADDED = false;
-            UI_Manager.getPropertiesRigidbodyWindow().setMouseSpringAdded(false);
+            UI_Manager.getPropertiesEditorWindow().setMouseSpringAdded(false);
         }
     }
 

@@ -2,8 +2,8 @@
   "Show Frame Stats": false,
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
-  "SimulationQuality": "High",
-  "VisualQuality": "Low",
+  "SimulationQuality": "Medium",
+  "VisualQuality": "Medium",
   "TextQuality": "High",
   "Show Collision Points": false,
   "Default": {

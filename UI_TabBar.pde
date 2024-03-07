@@ -3,6 +3,7 @@ public class UI_TabBar {
 
     private PShape TAB_SHAPE;
     private PShape[] TAB_SELECTOR;
+    private PShape[] TAB_SELECTOR_LISTENERS;
     private float[] TEXT_POSITION;
     private float TEXT_POSITION_Y;
     private float BUTTON_TEXT_POSITION_Y;
@@ -38,6 +39,7 @@ public class UI_TabBar {
 
         this.TEXT_POSITION = new float[UI_Constants.TAB_NAME.length];
         this.TAB_SELECTOR = new PShape[UI_Constants.TAB_NAME.length];
+        this.TAB_SELECTOR_LISTENERS = new PShape[UI_Constants.TAB_NAME.length];
 
 
         PShape TAB_SHAPE = createShape(RECT, UI_Constants.TAB_POSITION_X, 
@@ -71,11 +73,9 @@ public class UI_TabBar {
             E.setFill(UI_Constants.TAB_BUTTON_UNSELECTED_FILL);
             E.setStroke(UI_Constants.TAB_BUTTON_UNSELECTED_STROKE);
             E.setStrokeWeight(UI_Constants.TAB_BUTTON_STROKE_WEIGHT);
-
-
+        
         PShape TAB_SELECTOR_GROUP = createShape(GROUP);
             TAB_SELECTOR_GROUP.setName("TAB_SELECTOR_GROUP");
-
 
 
         this.TAB_SHAPE = createShape(GROUP);
@@ -120,6 +120,8 @@ public class UI_TabBar {
 
 
             this.TAB_SELECTOR[i] = TabSelectorShape;
+            this.TAB_SELECTOR_LISTENERS[i] = UI_Constants.createElementListener(TabSelectorShape);
+
             this.TEXT_POSITION[i] = (textPositionX);
 
             x += textWidth(text) + padding;
@@ -139,6 +141,11 @@ public class UI_TabBar {
 
     public void handleActiveTabIDChangesFromKeyPress(int newActiveTabID) {
         this.activeTabID = (newActiveTabID < 0) ? UI_Constants.TAB_NAME.length - 1 : (newActiveTabID >= UI_Constants.TAB_NAME.length) ? 0 : newActiveTabID;
+        this.updateWindows();
+        this.updateTabSelector();
+    }
+    public void handleActiveTabIDChange(int newActiveTabID) {
+        this.activeTabID = newActiveTabID;
         this.updateWindows();
         this.updateTabSelector();
     }
@@ -192,6 +199,17 @@ public class UI_TabBar {
 
     }
 
+
+    public boolean onMousePress() {
+        for(int i = 0; i < this.TAB_SELECTOR_LISTENERS.length; i++) {
+            if(this.TAB_SELECTOR_LISTENERS[i].contains(mouseX, mouseY)) {
+                this.handleActiveTabIDChange(i);
+                return true;
+            }
+        }
+        return false;
+
+    }
 
 
 /*

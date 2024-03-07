@@ -586,5 +586,34 @@ public static CollisionResult PointSegmentDistance(PVector point, PVector lineSe
     float distanceSquared = PVector.sub(point, closestPoint).magSq();
 
     return physicsEngine.new CollisionResult(distanceSquared, closestPoint);
-}
+    }
+
+/*
+====================================================================================================
+========================================= LINE INTERSECTION ========================================
+====================================================================================================
+*/
+
+    public static PVector CalculateLineIntersection(PVector p1, PVector p2, PVector p3, PVector p4) {
+        float denominator = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
+
+        if (denominator == 0) {
+            return null; // The lines are parallel
+        }
+
+        float intersectX = ((p1.x * p2.y - p1.y * p2.x) * (p3.x - p4.x) - (p1.x - p2.x) * (p3.x * p4.y - p3.y * p4.x)) / denominator;
+        float intersectY = ((p1.x * p2.y - p1.y * p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x * p4.y - p3.y * p4.x)) / denominator;
+
+        return new PVector(intersectX, intersectY);
+    }
+
+    public static boolean IsPointInLineSegment(PVector point, PVector lineStart, PVector lineEnd) {
+        float lineLength = PVector.dist(lineStart, lineEnd);
+        float totalDist = PVector.dist(lineStart, point) + PVector.dist(point, lineEnd);
+
+        // Allow for a small error due to floating point precision
+        float epsilon = 0.0001f;
+
+        return Math.abs(totalDist - lineLength) < epsilon;
+    }
 } 

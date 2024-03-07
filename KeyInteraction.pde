@@ -9,7 +9,7 @@ public void keyPressed() {
 
     UI_Manager.onKeyPress(keyCode);
     UI_Manager.getPropertiesEditorWindow().onKeyPress(keyCode);
-
+    
     if(UI_Manager.getTabBar().getActiveTabID() == 2) {
         if(IS_TEXTFIELD_ACTIVE && UI_Manager.getCreationWindow().getTextField() != null) {
             UI_Manager.getCreationWindow().getTextField().keyPress(key, keyCode);
@@ -89,34 +89,18 @@ public void keyPressed() {
     }
 
     if(key == ' ') {
+        UI_Manager.getPropertiesEditorWindow().PAUSE_STATE_ON_OPEN = !IS_PAUSED;
+
         if(!IS_PAUSED_LOCK) {
             IS_PAUSED = !IS_PAUSED;
         }
         return;
     }
+
     if(key == 'r') {
         rigidbodyList.clear();
         ALL_FORCES_ARRAYLIST.clear();
         softbodyList.clear();
-        return;
-    }
-    if(keyCode == BACKSPACE || keyCode == DELETE) {
-        ArrayList<Rigidbody> rigidbodiesToDelete = UI_Manager.getPropertiesEditorWindow().getSelectedRigidbodies();
-        if(rigidbodiesToDelete.size() != 0) {
-            for(Rigidbody rigidbody : rigidbodiesToDelete) {
-                rigidbody.delete();
-            }
-
-            if(UI_Manager.getPropertiesEditorWindow().selectedRigidbodiesOnClick()) {
-                return;
-            }
-        } else {
-            Rigidbody rigidbodyToDelete = Mouse.getCurrentRigidbodyUnderMouse();
-            if(rigidbodyToDelete != null) {
-                rigidbodyToDelete.delete();
-                return;
-            }
-        }
         return;
     }
 }

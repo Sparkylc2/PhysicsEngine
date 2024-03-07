@@ -209,7 +209,7 @@ public class UI_Toggle extends UI_Element {
     
 
     @Override
-    public void onSelect() {
+    public void     onSelect() {
         this.Toggle_State = true;
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setStroke(this.Element_Base_Selected_Stroke_Color);
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setFill(this.Element_Base_Selected_Color);

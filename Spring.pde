@@ -85,6 +85,7 @@ public class Spring implements ForceRegistry {
                 this.direction.set(worldAnchorB.sub(worldAnchorA));
                 displacement = direction.mag();
 
+
                 if(!isPerfectSpring){                                                                                    
                     totalForceMagnitude = (displacement - this.springLength * this.equilibriumLength) * this.springConstant;
                     direction.normalize();

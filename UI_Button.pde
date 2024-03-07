@@ -75,7 +75,7 @@ public class UI_Button extends UI_Element {
             buttonShapeWidth = this.Element_Width;
             buttonShapeHeight = this.Element_Height;
             buttonShapeX = 0;
-            buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 20;
+            buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 32.5;
         } else if(this.Button_Name.equals("Prev Page") || this.Button_Name.equals("Delete Level")) {
             buttonShapeX = -this.Button_ParentWindow.getWindowFormContainerWidth() / 2 + this.Element_Width / 2 + 17;
         } else if(this.Button_Name.equals("Next Page") || this.Button_Name.equals("Load Level")) {
@@ -171,7 +171,7 @@ public class UI_Button extends UI_Element {
             this.onDeselect();
         } else if(this.Button_Name.equals("Reset to defaults") && this.Button_State) {
             UI_SettingsWindow settingsWindow = (UI_SettingsWindow) this.Button_ParentWindow;
-                settingsWindow.qualitySettings.resetSettings();
+            settingsWindow.onResetButtonPressed();
             this.onDeselect();
         }
     }

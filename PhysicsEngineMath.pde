@@ -245,7 +245,7 @@ public static PVector SnapController(MouseObject Mouse, Rigidbody rigidbody, PVe
             }
 
         } else if(rigidbody.getShapeType() == ShapeType.CIRCLE) {
-            if(PVector.sub(point, rigidbody.getPosition()).magSq() < rigidbody.getRadius()/2) {
+            if(PVector.sub(point, rigidbody.getPosition()).magSq() < rigidbody.getRadius() / 2) {
                 return new PVector();
             } else {
                 return point.sub(rigidbody.getPosition()).normalize().mult(rigidbody.getRadius()).copy();

@@ -1,5 +1,6 @@
 public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
+    private boolean allowVelocityLine = false;
     private boolean wasMouseSpringAdded = false;
     private boolean hasInit = false;
 
@@ -123,11 +124,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
         int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
 
         if(activeSlotID == 2 || activeSlotID == 3) {
-            
-            if(mouseButton == LEFT) {
-                this.drawVelocityLine();
-            }
-
+            this.drawVelocityLine();
             this.drawRigidbody(activeSlotID);
             return;
         }
@@ -196,7 +193,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
 /*
 ========================================= Rigidbody Creation =======================================
-*/
+*/  
     @Override
     public void interactionMouseRelease() {
         if(UI_Manager.hasWindowBeenInteractedWith) {
@@ -207,8 +204,8 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
             return;
         }
 
-
         int activeSlotID = UI_Manager.HOT_BAR.getActiveSlotID();
+
         if(activeSlotID == 2 || activeSlotID == 3) {
             if(!this.wasMouseSpringAdded) {
                 this.createRigidbody(activeSlotID);
@@ -312,11 +309,9 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 ========================================= Rigidbody Drawing ========================================
 */
     public void drawVelocityLine() {
-
-        if(mouseButton != LEFT) {
+        if(mouseButton != LEFT || !mousePressed) {
             return;
         }
-
         if(this.wasMouseSpringAdded) {
             return;
         }

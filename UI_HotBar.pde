@@ -57,6 +57,8 @@ public class UI_HotBar {
             PShape SLOT = createShape(RECT, xPos, yPos, UI_Constants.HOTBAR_SLOT_WIDTH, 
                                                         UI_Constants.HOTBAR_SLOT_HEIGHT, 
                                                         UI_Constants.HOTBAR_SLOT_ROUNDING);
+            PShape SLOT_LISTENER = UI_Constants.createElementListener(SLOT);
+                SLOT_LISTENER.setName("SLOT_LISTENER");
 
                 if(i == this.activeSlotID) {
                     SLOT.setFill(UI_Constants.HOTBAR_SLOT_SELECTED_COLOR);
@@ -79,6 +81,7 @@ public class UI_HotBar {
                 SLOT_GROUP.addChild(SLOT);
                 SLOT_GROUP.addChild(SLOT_ICON);
                 SLOT_GROUP.addChild(SLOT_ICON_SELECTED);
+                SLOT_GROUP.addChild(SLOT_LISTENER);
 
             this.HOT_SHAPE.addChild(SLOT_GROUP);
         }
@@ -113,6 +116,9 @@ public class UI_HotBar {
 */
 
     public void onSlotChange(int slotID) {
+        if(UI_Manager.getTabBar().getActiveTabID() == 0) {
+            slotID = -1;
+        }
         int previousSlotID = this.activeSlotID;
 
         if(previousSlotID != -1) {
@@ -135,12 +141,10 @@ public class UI_HotBar {
         this.HOT_SHAPE.getChild(slotID).getChild(2).setVisible(true);
 
 
-    
-        boolean resetMouseObject = 
-                            ((previousSlotID == 4 || previousSlotID == 5 || previousSlotID == 6) && (this.activeSlotID != 4 && this.activeSlotID != 5 && this.activeSlotID != 6))
-                            ||
-                            ((previousSlotID == 2 || previousSlotID == 3) && (this.activeSlotID != 2 && this.activeSlotID != 3))
-                            ;
+
+        boolean resetMouseObject = (4 <= previousSlotID && previousSlotID <= 6) && (this.activeSlotID < 4 || this.activeSlotID > 6)
+                                    || (1 <= previousSlotID && previousSlotID <= 3) && (this.activeSlotID < 1 || this.activeSlotID > 3);
+
 
         if(resetMouseObject) {
             Mouse.getMouseObjectResults().clear();
@@ -185,7 +189,7 @@ public class UI_HotBar {
                     UI_Manager.closeAllWindows();
                 }
                 window = UI_Manager.getPropertiesForceWindow();
-    
+
                 window.onSlotChange(previousSlotID);
                 UI_Manager.bringToFront(window);
                 //UI_Manager.repositionWindow(window);
@@ -218,6 +222,17 @@ public class UI_HotBar {
         if(previousSlotID == 1) {
             UI_Manager.getPropertiesEditorWindow().onWindowClose();
         }
+    }
+
+
+    public boolean onMousePress() {
+        for(int i = 0; i < UI_Constants.HOTBAR_SLOT_COUNT; i++) {
+            if(this.HOT_SHAPE.getChild(i).getChild("SLOT_LISTENER").contains(mouseX, mouseY)) {
+                this.setActiveSlotID(i);
+                return true;
+            }
+        }
+        return false;
     }
 
 /*

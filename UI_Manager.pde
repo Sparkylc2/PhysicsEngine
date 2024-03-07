@@ -11,6 +11,8 @@ public class UI_Manager {
 
     private ArrayList<UI_Window> WINDOWS;
 
+
+
     public boolean dragging = false;
 
     public boolean hasWindowBeenInteractedWith = false;
@@ -87,7 +89,16 @@ public class UI_Manager {
 ======================================= Mouse Interaction =======================================
 */
     public void onMousePress() {
-        
+        if(this.HOT_BAR.onMousePress()) {
+            this.timeWindowBeenInteractedWith = millis();
+            this.hasWindowBeenInteractedWith = true;
+        }
+
+        if(this.TAB_BAR.onMousePress()) {
+            this.timeWindowBeenInteractedWith = millis();
+            this.hasWindowBeenInteractedWith = true;
+        }
+
         boolean windowVisibilityChange = false;
         boolean isVisibilityChangeActiveWindow = false;
         UI_Window activeWindow = this.getActiveWindow();

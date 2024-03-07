@@ -10,6 +10,8 @@ public class UI_SettingsWindow extends UI_Window {
     private boolean currentShowAABBs = qualitySettings.settings.getBoolean("Show AABBs");
     private boolean currentShowCollisionPoints = qualitySettings.settings.getBoolean("Show Collision Points");
 
+    public String currentTimePlayed = qualitySettings.timePlayed.getString("TimePlayed");
+
     private UI_TickSlider Simulation_Quality;
     private UI_TickSlider Visual_Quality;
     private UI_TickSlider Scroll_Sensitivity;
@@ -35,7 +37,7 @@ public class UI_SettingsWindow extends UI_Window {
 
     public UI_SettingsWindow() {
         super("Settings", 4, new PVector(713, 700), new PVector(713, 47), new PVector(713, 653), false);
-        this.setWindowPosition(new PVector(displayWidth/2, displayHeight/2));
+        this.setWindowPosition(new PVector(displayWidth/2, displayHeight/2 - 35));
         textFont(UI_Constants.INTER_BOLD);
         textSize(25);
         textAlign(CENTER, CENTER);
@@ -124,11 +126,18 @@ public class UI_SettingsWindow extends UI_Window {
         } else {
             fill(UI_Constants.GRAY_25);
         }
+
         textFont(UI_Constants.INTER_BOLD);
         textSize(25);
         textAlign(CENTER, CENTER);
 
         text(this.Window_Name, this.Window_Text_Position.x, this.Window_Text_Position.y);
+        textFont(UI_Constants.INTER_REGULAR);
+        textSize(13);
+        textLeading(13* 1.286f);
+        textAlign(CENTER, CENTER);
+        fill(UI_Constants.GRAY_25);
+        text(this.currentTimePlayed, 0, this.Window_Form_Container_Size.y / 2 - 17.5);
     }
 
 
@@ -162,7 +171,17 @@ public class UI_SettingsWindow extends UI_Window {
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
     }
-
+    
+    public void onResetButtonPressed() {
+        this.Simulation_Quality.setValue(0.5f);
+        this.Visual_Quality.setValue(0.5f);
+        this.Scroll_Sensitivity.setValue(0.5f);
+        this.Text_Quality.setValue(0.9f);
+        this.Show_Frame_Stats.setState(false);
+        this.Show_AABBs.setState(false);
+        this.Show_Collision_Points.setState(false);
+        this.qualitySettings.createDefaultSettingsFile();
+    }
 
     @Override
     public boolean onMouseDrag() {
