@@ -37,18 +37,19 @@ import java.io.IOException;
 public class PhysicsEngine extends PApplet {
 
 
-boolean firstFrame = false;
 public void setup() {
-
     if(System.getProperty("os.name").toLowerCase().contains("mac")) {
         windowMove(0, 22);
     }
+    hint(ENABLE_STROKE_PURE);
     textFont(createFont(sketchPath() + "/data/fonts/InterDisplay-SemiBold.ttf", 128, true), 10);
     dash = new DashedLines(this);
     dash.pattern(1, 0.5f);
 /*--------------------- Timing Utilities ---------------------*/
     FrameTimeUtility.init();
-    frameRate(300);
+
+    //MAYBE DO SOMETHING TO CHECK WHICH FRAME RATE TO USE
+    frameRate(100);
 /*--------------------- Camera Utilities ---------------------*/
     Camera = new Camera();
     playTimeTracker = new UI_QualitySettings();
@@ -62,42 +63,22 @@ public void setup() {
 
     Rigidbody floor = RigidbodyGenerator.CreateBoxBody(1000f, 5f, 1f, 0.5f, true, true, 0.05f, new PVector(0,0,0), new PVector(255,255,255));
     Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
-    //Rigidbody test = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
-    //Rigidbody spinningBody = RigidbodyGenerator.CreateCircleBody(1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
-
-
 
     floor.SetInitialPosition(new PVector(0, 10));
-    //test.SetInitialPosition(new PVector(-10, -5));
     springBody.setVelocity(new PVector(0,20));
     springBody.SetInitialPosition(new PVector(-10, -5));
-    //spinningBody.SetInitialPosition(new PVector(0, -5));
 
-    //spinningBody.setIsTranslationallyStatic(true);
-
-
-    //Rod rod = new Rod(springBody, test, new PVector(), new PVector());
     Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
     Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
-
-    //rod.setIsJoint(true);
-
-
-    //springBody.addForceToForceRegistry(rod);
-    //test.addForceToForceRegistry(rod); 
 
     springBody.addForceToForceRegistry(springLeft);
     springBody.addForceToForceRegistry(springRight);
 
-    //test.addForceToForceRegistry(new Gravity(test));
     springBody.addForceToForceRegistry(new Gravity(springBody));
-    //spinningBody.addForceToForceRegistry(new Gravity(spinningBody));
-    //springBody.setIsTranslationallyStatic(true);
 
     AddBodyToBodyEntityList(springBody);
-    //AddBodyToBodyEntityList(test);
     AddBodyToBodyEntityList(floor);
-    //AddBodyToBodyEntityList(spinningBody);
+
 
 }
 
@@ -1299,6 +1280,7 @@ public class FrameTimeUtility {
         if(!DRAW_STATS) {
             return;
         }
+        this.fps = frameRate;
         if(millis() - systemTime >= 200) {
             this.totalStepTime = calculateAverageTime(this.totalWorldStepTime, this.totalSampleCount);
             this.subStepTime = calculateAverageTime(this.subWorldStepTime, this.subSampleCount);
@@ -2784,9 +2766,10 @@ public static PVector WorldSnapController(MouseObject Mouse, Rigidbody rigidbody
 
 public void settings() {
     String os = System.getProperty("os.name").toLowerCase();
-    UI_QualitySettings qualitySettings = new UI_QualitySettings(false);
+    UI_QualitySettings qualitySettings = new UI_QualitySettings(true);
+
     if(os.contains("mac")) {
-        size(displayWidth, displayHeight - 125);
+        size(displayWidth, displayHeight - 125, FX2D);
         pixelDensity(qualitySettings.getPixelDensity());
     } else if(os.contains("windows")) {
         fullScreen(FX2D);
@@ -3342,7 +3325,6 @@ public void ClearBodyEntityList() {
                                         
                                         
 public KeyHandler KeyHandler = new KeyHandler();
-
 public DashedLines dash;
 public Camera Camera = new Camera();
 public MouseObject Mouse = new MouseObject();
@@ -4881,6 +4863,7 @@ public class Shape {
   }
   
   public void draw() {
+    
     background(16, 18, 19);
     drawRigidbodies();
   /*---------------------------------Collision Point Debugging--------------------------------------*/
@@ -7071,7 +7054,7 @@ public class UI_CreationWindow extends UI_Window {
 =================================================================================================
 */
 }
-public abstract class UI_Element { 
+public abstract class UI_Element {
 
     /*--------------------------------- Padding --------------------------------------------------*/
 
@@ -8636,10 +8619,14 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         if(this.mouseSpringAdded) {
             return;
         }
-        if(!this.mac) {
-            if(millis() - this.mouseDownTime > 100) {
-                return;
-            }
+        // if(!this.mac) {
+        //     if(millis() - this.mouseDownTime > 100) {
+        //         return;
+        //     }
+        // }
+        
+        if(millis() - this.mouseDownTime > 100) {
+            return;
         }
         /*----------------------------------------*/
 
@@ -10151,6 +10138,35 @@ public class UI_QualitySettings {
         DRAW_STATS = Show_Frame_Stats;
     }
 
+    public void updateSettings() {
+        switch(this.settings.getString("SimulationQuality")) {
+            case "Low":
+                setLowSimulationQuality();
+                break;
+            case "Medium":
+                setMediumSimulationQuality();
+                break;
+            case "High":
+                setHighSimulationQuality();
+                break;
+        }
+        switch(this.settings.getString("ScrollSensitivity")) {
+            case "Low":
+                setLowScrollSensitivity();
+                break;
+            case "Medium":
+                setMediumScrollSensitivity();
+                break;
+            case "High":
+                setHighScrollSensitivity();
+                break;
+        }
+
+        DRAW_CONTACT_POINTS = this.settings.getBoolean("Show Collision Points");
+        DRAW_AABBS = this.settings.getBoolean("Show AABBs");
+        DRAW_STATS = this.settings.getBoolean("Show Frame Stats");
+    }
+
 
 
 /*
@@ -10181,7 +10197,7 @@ public class UI_QualitySettings {
     }
 
     private void setLowScrollSensitivity() {
-        SCROLL_SENSITIVITY = 0.8f;
+        SCROLL_SENSITIVITY = 1.05f;
     }
 
     private void setMediumScrollSensitivity() {
@@ -10198,7 +10214,6 @@ public class UI_QualitySettings {
     }
 
     private void setHighTextQuality() {
-        hint(ENABLE_STROKE_PURE);
         TEXT_SMOOTHING = true;
     }
 
@@ -10410,7 +10425,6 @@ public class UI_SettingsWindow extends UI_Window {
         UI_Manager.bringToFront(this);
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
-        // this.initializeCreationsWindow();
     }
 
 
@@ -10466,7 +10480,7 @@ public class UI_Slider extends UI_Element {
     public float Slider_Name_Position_Y;
     public float Slider_Value_Position_X;
     public float Slider_Value_Position_Y;
-    
+
     public float Slider_Min_Value;
     public float Slider_Max_Value;
     public float Slider_Current_Value;
@@ -11307,12 +11321,16 @@ public class UI_TextField extends UI_Element {
                     return true;
                 }
             } else {
-                boolean isKeyCapitalLetter = ( Key >= 'A' && Key <= 'Z');
-                boolean isKeySmallLetter = (Key >= 'a' && Key <= 'z');
+                boolean isKeyLetter = (Character.toLowerCase(Key) >= 'a' && Character.toLowerCase(Key) <= 'z');
                 boolean isKeyNumber = (Key >= '0' && Key <= '9');
 
-                if(isKeyCapitalLetter || isKeySmallLetter || isKeyNumber) {
-                    this.addText(Key);
+
+                if(isKeyLetter || isKeyNumber) {
+                    if(KeyHandler.isKeyDown(KeyEvent.VK_SHIFT)) {
+                        this.addText(Character.toUpperCase(Key));
+                    } else {
+                        this.addText(Character.toLowerCase(Key));
+                    }
                 }
             }
         }

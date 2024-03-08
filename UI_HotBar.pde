@@ -8,7 +8,7 @@ public class UI_HotBar {
 
     private float SCALE_FACTOR = width/1512f;
 
-    private int activeSlotID;
+    private int activeSlotID = 0;
 
 
  
@@ -46,6 +46,9 @@ public class UI_HotBar {
             float xPos = startX + i * (padding + UI_Constants.HOTBAR_SLOT_WIDTH) + UI_Constants.HOTBAR_SLOT_WIDTH / 2;
             float yPos = UI_Constants.HOTBAR_CONTAINER_POSITION_Y;
 
+            float slotXPos = xPos - UI_Constants.HOTBAR_SLOT_WIDTH / 2;
+            float slotYPos = yPos - UI_Constants.HOTBAR_SLOT_HEIGHT / 2;
+
             SLOT_POSITION[i] = xPos;
 
             PShape SLOT_GROUP = createShape(GROUP);
@@ -68,11 +71,16 @@ public class UI_HotBar {
 
                 PShape SLOT_ICON_SELECTED = loadShape(sketchPath() + "/data/icons/HotbarSlot" + (i + 1) + "Selected.svg");
                     SLOT_ICON_SELECTED.setName("SLOT_ICON_SELECTED");
-                    SLOT_ICON_SELECTED.translate(xPos, yPos);
+                    SLOT_ICON_SELECTED.translate(slotXPos, slotYPos);
+                    SLOT_ICON_SELECTED.setVisible(false);
+
+                if(i == this.activeSlotID) {
+                    SLOT_ICON_SELECTED.setVisible(true);
+                }
 
                 PShape SLOT_ICON = loadShape(sketchPath() + "/data/icons/HotbarSlot" + (i + 1) + ".svg");
                     SLOT_ICON.setName("SLOT_ICON");
-                    SLOT_ICON.translate(xPos, yPos);
+                    SLOT_ICON.translate(slotXPos, slotYPos);
 
                 SLOT_GROUP.addChild(SLOT);
                 SLOT_GROUP.addChild(SLOT_ICON);

@@ -369,13 +369,9 @@ public void ResolveCollisionRotationAndFriction(CollisionManifold contact) {
         PVector tangent = PVector.sub(relativeVelocity, PVector.mult(normal, relativeVelocity.dot(normal)));
 
         if(PhysEngMath.Equals(tangent, new PVector())) {
-
             continue;
-
         } else {
-
             tangent.normalize();
-
         }
 
         float raPerpDotT = raPerp.dot(tangent);

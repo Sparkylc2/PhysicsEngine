@@ -161,12 +161,16 @@ public class UI_TextField extends UI_Element {
                     return true;
                 }
             } else {
-                boolean isKeyCapitalLetter = ( Key >= 'A' && Key <= 'Z');
-                boolean isKeySmallLetter = (Key >= 'a' && Key <= 'z');
+                boolean isKeyLetter = (Character.toLowerCase(Key) >= 'a' && Character.toLowerCase(Key) <= 'z');
                 boolean isKeyNumber = (Key >= '0' && Key <= '9');
 
-                if(isKeyCapitalLetter || isKeySmallLetter || isKeyNumber) {
-                    this.addText(Key);
+
+                if(isKeyLetter || isKeyNumber) {
+                    if(KeyHandler.isKeyDown(KeyEvent.VK_SHIFT)) {
+                        this.addText(Character.toUpperCase(Key));
+                    } else {
+                        this.addText(Character.toLowerCase(Key));
+                    }
                 }
             }
         }

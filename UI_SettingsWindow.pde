@@ -150,7 +150,6 @@ public class UI_SettingsWindow extends UI_Window {
         UI_Manager.bringToFront(this);
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
-        // this.initializeCreationsWindow();
     }
 
 

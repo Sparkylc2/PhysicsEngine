@@ -125,7 +125,7 @@ public class UI_Constants {
 
 
     public final float GLOBAL_STROKE_WEIGHT = 1.5;
-    public final int GLOBAL_TEXT_ALIGN_FACTOR_Y;
+    public final float GLOBAL_TEXT_ALIGN_FACTOR_Y;
 
 /*
 ======================================== Initialization ============================================
@@ -137,13 +137,20 @@ public class UI_Constants {
     ======================================== Tab Initialization ====================================
     */
             if(System.getProperty("os.name").toLowerCase().contains("mac")) {
-                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/6;
+                if(g.getClass().getSimpleName().equals("PGraphicsFX2D")) {
+                    frameRate(100);
+                } else {
+                    frameRate(500);
+                }
+                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/6f;
                 HOTBAR_CONTAINER_POSITION_Y =  802;
             } else if(System.getProperty("os.name").toLowerCase().contains("windows")){
-                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/8;
+                frameRate(500);
+                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/6f;
                 HOTBAR_CONTAINER_POSITION_Y = 990;
             } else {
-                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/8;
+                frameRate(500);
+                GLOBAL_TEXT_ALIGN_FACTOR_Y = 1/6f;
                 HOTBAR_CONTAINER_POSITION_Y = 990;
             }
 

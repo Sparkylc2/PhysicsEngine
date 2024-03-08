@@ -34,6 +34,7 @@ public class FrameTimeUtility {
         if(!DRAW_STATS) {
             return;
         }
+        
         if(millis() - systemTime >= 200) {
             this.totalStepTime = calculateAverageTime(this.totalWorldStepTime, this.totalSampleCount);
             this.subStepTime = calculateAverageTime(this.subWorldStepTime, this.subSampleCount);

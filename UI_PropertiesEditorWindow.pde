@@ -663,10 +663,14 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         if(this.mouseSpringAdded) {
             return;
         }
-        if(!this.mac) {
-            if(millis() - this.mouseDownTime > 100) {
-                return;
-            }
+        // if(!this.mac) {
+        //     if(millis() - this.mouseDownTime > 100) {
+        //         return;
+        //     }
+        // }
+        
+        if(millis() - this.mouseDownTime > 100) {
+            return;
         }
         /*----------------------------------------*/
 

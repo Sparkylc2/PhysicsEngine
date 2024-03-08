@@ -11,6 +11,7 @@ public class Shape {
   }
   
   public void draw() {
+    
     background(16, 18, 19);
     drawRigidbodies();
   /*---------------------------------Collision Point Debugging--------------------------------------*/

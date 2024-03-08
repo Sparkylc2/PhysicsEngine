@@ -231,6 +231,35 @@ public class UI_QualitySettings {
         DRAW_STATS = Show_Frame_Stats;
     }
 
+    public void updateSettings() {
+        switch(this.settings.getString("SimulationQuality")) {
+            case "Low":
+                setLowSimulationQuality();
+                break;
+            case "Medium":
+                setMediumSimulationQuality();
+                break;
+            case "High":
+                setHighSimulationQuality();
+                break;
+        }
+        switch(this.settings.getString("ScrollSensitivity")) {
+            case "Low":
+                setLowScrollSensitivity();
+                break;
+            case "Medium":
+                setMediumScrollSensitivity();
+                break;
+            case "High":
+                setHighScrollSensitivity();
+                break;
+        }
+
+        DRAW_CONTACT_POINTS = this.settings.getBoolean("Show Collision Points");
+        DRAW_AABBS = this.settings.getBoolean("Show AABBs");
+        DRAW_STATS = this.settings.getBoolean("Show Frame Stats");
+    }
+
 
 
 /*
@@ -261,7 +290,7 @@ public class UI_QualitySettings {
     }
 
     private void setLowScrollSensitivity() {
-        SCROLL_SENSITIVITY = 0.8f;
+        SCROLL_SENSITIVITY = 1.05f;
     }
 
     private void setMediumScrollSensitivity() {
@@ -278,7 +307,6 @@ public class UI_QualitySettings {
     }
 
     private void setHighTextQuality() {
-        hint(ENABLE_STROKE_PURE);
         TEXT_SMOOTHING = true;
     }
 
