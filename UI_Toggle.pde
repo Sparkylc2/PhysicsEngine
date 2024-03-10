@@ -267,12 +267,20 @@ public class UI_Toggle extends UI_Element {
 
     @Override 
     public float getValue() {
-        return 0;
+        if(this.Toggle_State) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public void setValue(float value) {
-        return;
+        if(PhysEngMath.Equals(value, 1f)) {
+            this.onSelect();
+        } else {
+            this.onDeselect();
+        }
     }
 
     @Override
@@ -282,9 +290,6 @@ public class UI_Toggle extends UI_Element {
 
     @Override
     public boolean getState() {
-        if(this.Toggle_Name.equals("Fixed Position")) {
-            System.out.println(this.Toggle_State);
-        }
         return this.Toggle_State;
     }
 

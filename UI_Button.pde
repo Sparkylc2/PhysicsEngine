@@ -208,6 +208,12 @@ public class UI_Button extends UI_Element {
 
     @Override 
     public void onMouseRelease() {
+        if(this.Button_ParentWindow instanceof UI_HelpWindow && this.Button_State) {
+            UI_HelpWindow helpWindow = (UI_HelpWindow) this.Button_ParentWindow;
+            helpWindow.onButtonPress(this.Button_Name);
+            this.onDeselect();
+        }
+
         if(this.Button_Name.equals("Prev Page") && this.Button_State) {
             UI_CreationWindow creationWindow = (UI_CreationWindow) this.Button_ParentWindow;
                 creationWindow.onFileDecrement();

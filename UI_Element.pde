@@ -1,4 +1,4 @@
-public abstract class UI_Element extends PThread{
+public abstract class UI_Element{
 
     /*--------------------------------- Padding --------------------------------------------------*/
 

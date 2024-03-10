@@ -167,7 +167,10 @@ public class UI_Window {
 
 
         this.Window_Text_Width = textWidth(this.Window_Name);
-        this.Window_Text_Position.set(-this.Window_Text_Container_Size.x / 2 + textWidth(this.Window_Name) / 2 + 15, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 + (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
+
+        textFont(UI_Constants.INTER_BOLD);
+        textSize(this.Window_Text_Size);
+        this.Window_Text_Position.set(-this.Window_Text_Container_Size.x / 2 + textWidth(this.Window_Name) / 2 + 15, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 - (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
 
     }
 
@@ -472,6 +475,9 @@ public class UI_Window {
 
     public void clearAllElements() {
         for(UI_Element element : this.Window_Elements) {
+            if(element.getShape() == null) {
+                continue;
+            }
             this.Window_Container.getChild("Element_Group").removeChild(this.Window_Container.getChild("Element_Group").getChildIndex(element.getShape()));
         }
         this.Window_Elements.clear();
@@ -480,6 +486,7 @@ public class UI_Window {
     public void onKeyPress(int keyCode) {
 
     }
+
 /*
 ======================================== Getters & Setters =========================================
 */

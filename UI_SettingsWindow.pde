@@ -107,6 +107,11 @@ public class UI_SettingsWindow extends UI_Window {
             this.Visual_Quality = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, currentVisualQuality, this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 125, 3);
             this.Scroll_Sensitivity = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, currentScrollSensitivity, -this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 275, 3);
             this.Text_Quality = new UI_TickSlider(new String[]{"Low", "High"}, (UI_Window)this, currentTextQuality, this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 275, 3);
+            
+            this.Simulation_Quality.TickSlider_Name = "Simulation Quality";
+            this.Visual_Quality.TickSlider_Name = "Visual Quality";
+            this.Scroll_Sensitivity.TickSlider_Name = "Scroll Sensitivity";
+
             this.addElement(this.Simulation_Quality);
             this.addElement(this.Visual_Quality);
             this.addElement(this.Scroll_Sensitivity);
@@ -197,6 +202,7 @@ public class UI_SettingsWindow extends UI_Window {
         if(UI_Manager.getTabBar().getActiveTabID() == 0) {
             this.lockSelected();
             this.checkWindowElements();
+            UI_Manager.closeAllWindows(this);
         }   
     }
 
@@ -217,6 +223,9 @@ public class UI_SettingsWindow extends UI_Window {
         this.Show_Frame_Stats.setState(false);
         this.Show_AABBs.setState(false);
         this.Show_Collision_Points.setState(false);
+        this.Coeff_Static_Friction.setValue(0.8f);
+        this.Coeff_Kinetic_Friction.setValue(0.3f);
+        this.Gravity.setValue(9.81f);
         this.qualitySettings.createDefaultSettingsFile();
     }
 
@@ -231,6 +240,8 @@ public class UI_SettingsWindow extends UI_Window {
         }
         return false;
     }
+
+
 
 }
   

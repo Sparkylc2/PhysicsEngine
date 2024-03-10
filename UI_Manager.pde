@@ -205,6 +205,14 @@ public class UI_Manager {
         }
     }
 
+    public void closeAllWindows(UI_Window window) {
+        for(UI_Window win : this.WINDOWS) {
+            if(win != window) {
+                win.onWindowClose();
+            }
+        }
+    }
+
 /*
 ====================================== Getters and Setters =========================================
 */

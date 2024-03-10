@@ -74,7 +74,7 @@ public class UI_QualitySettings {
             settings.setBoolean("Show Collision Points", false);
             settings.setFloat("CoefficientOfStaticFriction", 0.8f);
             settings.setFloat("CoefficientOfKineticFriction", 0.3f);
-            settings.setFloat("Gravity", 9.8f);
+            settings.setFloat("Gravity", 9.81f);
 
         saveJSONObject(settings, sketchPath() + "/data/settings/settings.json");
         this.settings = settings;

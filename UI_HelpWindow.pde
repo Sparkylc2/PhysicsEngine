@@ -58,6 +58,8 @@ public class UI_HelpWindow extends UI_Window {
     };
 
 
+    private float initialYPadding = 40;
+    private float padding = 15;
 
 
     public UI_HelpWindow() {
@@ -67,7 +69,7 @@ public class UI_HelpWindow extends UI_Window {
         textSize(25);
         textAlign(CENTER, CENTER);
         this.Window_Text_Width = textWidth(this.Window_Name);
-        this.Window_Text_Position.set(0, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 + (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
+        this.Window_Text_Position.set(0, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 - (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
     }   
 
 
@@ -100,13 +102,105 @@ public class UI_HelpWindow extends UI_Window {
         this.addElement(new UI_Button("Creations", this, false));
     }
 
+
     public void switchToNavigationAndControlsScene() {
         this.clearAllElements();
+        //30px required per new row of text
+        // public UI_Text(String Text_Name, UI_Window Text_ParentWindow, PVector Text_Position, PVector Text_BoxDimensions, int Text_AlignMode, int Text_Size, int Text_Color, boolean Text_ShowName, PFont Text_Font) {
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.NavigationAndControlsTexts[0], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[1], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[2], 3, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[3], 2, 1.2)};
+
+        for(int i = 0; i < this.NavigationAndControlsTexts.length; i++) {
+            this.addElement(new UI_Text(this.NavigationAndControlsTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
+
+        this.addElement(new UI_Button("Back", this, false));
+    }
+
+    public void switchToPenAndPropertiesScene() {
+        this.clearAllElements();
+
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.PenToolAndPropertiesEditorTexts[0], 6, 1.2), this.calculateTextBoxHeight(this.PenToolAndPropertiesEditorTexts[1], 3, 1.2), this.calculateTextBoxHeight(this.PenToolAndPropertiesEditorTexts[2], 3, 1.2)};
+
+        for(int i = 0; i < this.PenToolAndPropertiesEditorTexts.length; i++) {
+            this.addElement(new UI_Text(this.PenToolAndPropertiesEditorTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
+        this.addElement(new UI_Button("Back", this, false));
+    }
+
+    public void switchToRigidbodyToolsScene() {
+        this.clearAllElements();
+
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.RigidbodyToolsTexts[0], 2, 1.2), this.calculateTextBoxHeight(this.RigidbodyToolsTexts[1], 1, 1.2), this.calculateTextBoxHeight(this.RigidbodyToolsTexts[2], 1, 1.2), this.calculateTextBoxHeight(this.RigidbodyToolsTexts[3], 5, 1.2), this.calculateTextBoxHeight(this.RigidbodyToolsTexts[4], 2, 1.2), this.calculateTextBoxHeight(this.RigidbodyToolsTexts[5], 4, 1.2)};
+        for(int i = 0; i < this.RigidbodyToolsTexts.length; i++) {
+            this.addElement(new UI_Text(this.RigidbodyToolsTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
+        this.addElement(new UI_Button("Back", this, false));
+    }
+
+    public void switchToForcesToolsScene() {
+        this.clearAllElements();
+
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.ForceToolsTexts[0], 2, 1.2), this.calculateTextBoxHeight(this.ForceToolsTexts[1], 2, 1.2), this.calculateTextBoxHeight(this.ForceToolsTexts[2], 3, 1.2), this.calculateTextBoxHeight(this.ForceToolsTexts[3], 2, 1.2), this.calculateTextBoxHeight(this.ForceToolsTexts[4], 4, 1.2), this.calculateTextBoxHeight(this.ForceToolsTexts[5], 3, 1.2)};
+        for(int i = 0; i < this.ForceToolsTexts.length; i++) {
+            this.addElement(new UI_Text(this.ForceToolsTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
+        this.addElement(new UI_Button("Back", this, false));
+    }
+
+    public void switchToSettingsScene() {
+        this.clearAllElements();
+
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.SettingsTexts[0], 3, 1.2), this.calculateTextBoxHeight(this.SettingsTexts[1], 6, 1.2), this.calculateTextBoxHeight(this.SettingsTexts[2], 3, 1.2)};
+        for(int i = 0; i < this.SettingsTexts.length; i++) {
+            this.addElement(new UI_Text(this.SettingsTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
+        this.addElement(new UI_Button("Back", this, false));
+    }
+
+    public void switchToCreationsScene() {
+        this.clearAllElements();
+
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.CreationsTexts[0], 4, 1.2), this.calculateTextBoxHeight(this.CreationsTexts[1], 2, 1.2), this.calculateTextBoxHeight(this.CreationsTexts[2], 3, 1.2)};
+
+        for(int i = 0; i < this.CreationsTexts.length; i++) {
+            this.addElement(new UI_Text(this.CreationsTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
         this.addElement(new UI_Button("Back", this, false));
     }
 
 
-
+    public void onButtonPress(String name) {
+        switch (name) {
+            case "Navigation & Controls":
+                this.activeSelectionID = 0;
+                this.switchToNavigationAndControlsScene();
+                break;
+            case "Pen tool & Properties editor":
+                this.activeSelectionID = 1;
+                this.switchToPenAndPropertiesScene();
+                break;
+            case "Rigidbody tools":
+                this.activeSelectionID = 2;
+                this.switchToRigidbodyToolsScene();
+                break;
+            case "Force tools":
+                this.activeSelectionID = 3;
+                this.switchToForcesToolsScene();
+                break;
+            case "Settings":
+                this.activeSelectionID = 4;
+                this.switchToSettingsScene();
+                break;
+            case "Creations":
+                this.activeSelectionID = 5;
+                this.switchToCreationsScene();
+                break;
+            case "Back":
+                this.activeSelectionID = -1;
+                this.switchToSelectionScene();
+                break;
+        }
+    }
     public void open() {
         this.deselectAllWindows();
         this.isActiveWindow = true;
@@ -115,6 +209,7 @@ public class UI_HelpWindow extends UI_Window {
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.BLUE_SELECTED);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
         this.switchToSelectionScene();
+
     }
 
 
@@ -123,8 +218,22 @@ public class UI_HelpWindow extends UI_Window {
     public void interactionDraw() {
         if(UI_Manager.getTabBar().getActiveTabID() == 3) {
             this.lockSelected();
+            UI_Manager.closeAllWindows(this);
         }   
     }
+
+    @Override
+    public boolean onMouseDrag() {
+        if(!this.Window_Visibility) {
+            return false;
+        }
+        if(mousePressed && this.isMouseOverWindowFormContainer) {
+            this.onElementMouseDrag();
+            return true;
+        }
+        return false;
+    }
+
 
 
     public void lockSelected() {
@@ -135,5 +244,28 @@ public class UI_HelpWindow extends UI_Window {
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.BLUE_UNSELECTED);
     }
 
+
+    public float calculateTextBoxHeight(String text, int numLines, float lineSpacing) {
+        textFont(UI_Constants.INTER_REGULAR);
+        textSize(20);
+        float lineHeight = textAscent() + textDescent();
+        float textBoxHeight = (lineHeight * lineSpacing) * numLines; //+ 2 * padding;
+        return textBoxHeight;
+
+        // return 20*lineSpacing*numLines;
+    }
+
+    public float calculateTextBoxWidth(String text, int padding, int numTextBoxes) {
+        float textBoxWidth = (width - 2 * padding) / numTextBoxes;
+        return textBoxWidth;
+    }
+
+    public PVector calculateTextBoxPosition(int index, float[] textBoxHeights, float padding) {
+        float yPosition = -this.Window_Form_Container_Size.y / 2 + initialYPadding;
+        for (int i = 0; i < index; i++) {
+            yPosition += textBoxHeights[i] + padding;
+        }
+        return new PVector(-this.Window_Form_Container_Size.x / 2 + 40, yPosition);
+    }
 }
   

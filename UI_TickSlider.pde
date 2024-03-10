@@ -2,6 +2,7 @@ public class UI_TickSlider extends UI_Element {
 
     private UI_Window TickSlider_ParentWindow;
 
+    public String TickSlider_Name;
     private String[] TickSlider_Names;
 
     private float[] TickSlider_Names_Position_X;
