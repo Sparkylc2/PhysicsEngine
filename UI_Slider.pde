@@ -12,6 +12,8 @@ public class UI_Slider extends UI_Element {
     public float Slider_Max_Value;
     public float Slider_Current_Value;
 
+
+    public float scale = -1;
     public String Slider_GroupName = null;
 
     public boolean mouseOverSliderOnMouseDown = false;
@@ -68,10 +70,37 @@ public class UI_Slider extends UI_Element {
         float sliderShapeWidth;
         float sliderShapeHeight;
 
+        if(this.Slider_Name.equals("Coeff. of static friction")) {
+            this.scale = 1.1;
+            sliderShapeX = -this.Slider_ParentWindow.getWindowFormContainerDimensions().x / 4f - (280f / 2f) + (this.Element_Width * scale / 2f);
+            sliderShapeY = -this.Slider_ParentWindow.getWindowFormContainerDimensions().y / 2f + 390;
 
-        if(numElements == 0) {
+            // this.Element_Width = 310f;
+            // this.Element_Height = 34f;
+            sliderShapeWidth = this.Element_Width;
+            sliderShapeHeight = this.Element_Height;
+        } else if(this.Slider_Name.equals("Coeff. of kinetic friction")) {
+            this.scale = 1.1;
+            sliderShapeX = -this.Slider_ParentWindow.getWindowFormContainerDimensions().x / 4f - 280f / 2f + (this.Element_Width * scale / 2f);
+            sliderShapeY = -this.Slider_ParentWindow.getWindowFormContainerDimensions().y / 2f + 440;
+
+            // this.Element_Width = 310f;
+            // this.Element_Height = 34f;
+            sliderShapeWidth = this.Element_Width;
+            sliderShapeHeight = this.Element_Height;
+        } else if(this.Slider_Name.equals("Gravity")) {
+            this.scale = 1.1;
+            sliderShapeX = -this.Slider_ParentWindow.getWindowFormContainerDimensions().x / 4f - 280f / 2 + (this.Element_Width * scale / 2f);
+            sliderShapeY = -this.Slider_ParentWindow.getWindowFormContainerDimensions().y / 2f + 490;
+
+            // this.Element_Width = 310f;
+            // this.Element_Height = 34f;
+            sliderShapeWidth = this.Element_Width;
+            sliderShapeHeight = this.Element_Height;
+        } else if(numElements == 0) {
             sliderShapeX = 0;
             sliderShapeY = -this.Slider_ParentWindow.getWindowFormContainerHeight() / 2 + this.Element_Container_Top_Padding_Y + this.Element_Height / 2;
+
             sliderShapeWidth = this.Element_Width;
             sliderShapeHeight = this.Element_Height;
 
@@ -87,6 +116,9 @@ public class UI_Slider extends UI_Element {
             Slider_Shape_Base.setStrokeWeight(this.Element_Stroke_Weight);
             Slider_Shape_Base.setFill(this.Element_Base_Unselected_Color);
             Slider_Shape_Base.setStroke(this.Element_Base_Unselected_Stroke_Color);
+            if(this.scale != -1) {
+                Slider_Shape_Base.scale(this.scale);
+            }
 
         PShape Slider_Shape_Base_Listener = UI_Constants.createElementListener(Slider_Shape_Base);
             Slider_Shape_Base_Listener.setName("Slider_Shape_Base_Listener");
@@ -131,9 +163,15 @@ public class UI_Slider extends UI_Element {
 */  
     @Override
     public boolean onMousePress() {
-        float x = mouseX - this.Slider_ParentWindow.getWindowPosition().x;
-        float y = mouseY - this.Slider_ParentWindow.getWindowPosition().y;
-        return this.Slider_Shape_Group.getChild("Slider_Shape_Base_Listener").contains(x, y);
+        if(this.scale != -1) {
+            float x = (mouseX - this.Slider_ParentWindow.getWindowPosition().x) / this.scale;
+            float y = (mouseY - this.Slider_ParentWindow.getWindowPosition().y) / this.scale;
+            return this.Slider_Shape_Group.getChild("Slider_Shape_Base_Listener").contains(x, y);
+        } else {
+            float x = mouseX - this.Slider_ParentWindow.getWindowPosition().x;
+            float y = mouseY - this.Slider_ParentWindow.getWindowPosition().y;
+            return this.Slider_Shape_Group.getChild("Slider_Shape_Base_Listener").contains(x, y);
+        }
     }
 
     @Override
@@ -180,7 +218,10 @@ public class UI_Slider extends UI_Element {
             Slider_Shape.setStrokeWeight(this.Element_Stroke_Weight);
             Slider_Shape.setFill(this.Element_Base_Selected_Color);
             Slider_Shape.setStroke(this.Element_Base_Selected_Stroke_Color);
-        
+            if(this.scale != -1) {
+                Slider_Shape.scale(this.scale);
+            }
+
         this.Slider_Shape_Group.addChild(Slider_Shape);
     }
 
@@ -200,6 +241,9 @@ public class UI_Slider extends UI_Element {
             Slider_Shape.setStrokeWeight(this.Element_Stroke_Weight);
             Slider_Shape.setFill(this.Element_Base_Selected_Color);
             Slider_Shape.setStroke(this.Element_Base_Selected_Stroke_Color);
+        if(this.scale != -1) {
+            Slider_Shape.scale(this.scale);
+        }
         
         this.Slider_Shape_Group.addChild(Slider_Shape);
 
@@ -217,9 +261,16 @@ public class UI_Slider extends UI_Element {
         textFont(this.Element_Font);
         textSize(this.Element_Text_Size);
         textAlign(CENTER, CENTER);
-        text(this.Slider_Name, this.Slider_Name_Position_X, this.Slider_Name_Position_Y);
-        text(nf(this.Slider_Current_Value, 0, 2), this.Slider_Value_Position_X, this.Slider_Value_Position_Y);
-
+        if(this.scale != -1) {
+            pushMatrix();
+            scale(this.scale);
+            text(this.Slider_Name, this.Slider_Name_Position_X, this.Slider_Name_Position_Y);
+            text(nf(this.Slider_Current_Value, 0, 2), this.Slider_Value_Position_X, this.Slider_Value_Position_Y);
+            popMatrix();
+        } else {
+            text(this.Slider_Name, this.Slider_Name_Position_X, this.Slider_Name_Position_Y);
+            text(nf(this.Slider_Current_Value, 0, 2), this.Slider_Value_Position_X, this.Slider_Value_Position_Y);
+        }
     }
 
 

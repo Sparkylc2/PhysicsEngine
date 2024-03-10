@@ -1,18 +1,12 @@
 {
-  "Show Frame Stats": false,
+  "Show Frame Stats": true,
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
-  "SimulationQuality": "Medium",
-  "VisualQuality": "Medium",
+  "SimulationQuality": "High",
+  "CoefficientOfStaticFriction": 1,
+  "CoefficientOfKineticFriction": 1,
+  "VisualQuality": "Low",
   "TextQuality": "High",
   "Show Collision Points": false,
-  "Default": {
-    "Show Frame Stats": false,
-    "Show AABBs": false,
-    "ScrollSensitivity": "Medium",
-    "SimulationQuality": "Medium",
-    "VisualQuality": "High",
-    "TextQuality": "High",
-    "Show Collision Points": false
-  }
+  "Gravity": 50
 }

@@ -11,7 +11,6 @@ public class UI_QualitySettings {
     public UI_QualitySettings() {
         this.loadJSON("settings");
         this.loadJSON("timePlayed");
-
     }
 
     public UI_QualitySettings(boolean init) {
@@ -36,6 +35,7 @@ public class UI_QualitySettings {
             }
         }, 60000, 60000); 
     }
+
 
     public void updatePlaytime() {
         int totalPlayTimeMinutes = this.timePlayed.getInt("TimePlayedMinutes") + 1;
@@ -65,15 +65,6 @@ public class UI_QualitySettings {
 */  
     public void createDefaultSettingsFile() {
         JSONObject settings = new JSONObject();
-            JSONObject def = new JSONObject();
-                def.setString("VisualQuality", "High");
-                def.setString("SimulationQuality", "Medium");
-                def.setString("TextQuality", "High");
-                def.setString("ScrollSensitivity", "Medium");
-                def.setBoolean("Show Frame Stats", false);
-                def.setBoolean("Show AABBs", false);
-                def.setBoolean("Show Collision Points", false);
-
             settings.setString("VisualQuality", "High");
             settings.setString("SimulationQuality", "Medium");
             settings.setString("TextQuality", "High");
@@ -81,12 +72,14 @@ public class UI_QualitySettings {
             settings.setBoolean("Show Frame Stats", false);
             settings.setBoolean("Show AABBs", false);
             settings.setBoolean("Show Collision Points", false);
-
-        settings.setJSONObject("Default", def);
+            settings.setFloat("CoefficientOfStaticFriction", 0.8f);
+            settings.setFloat("CoefficientOfKineticFriction", 0.3f);
+            settings.setFloat("Gravity", 9.8f);
 
         saveJSONObject(settings, sketchPath() + "/data/settings/settings.json");
-        this.settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
+        this.settings = settings;
     }
+
 
     public void createDefaultTimePlayedFile() {
         JSONObject timePlayed = new JSONObject();
@@ -95,140 +88,97 @@ public class UI_QualitySettings {
             timePlayed.setString("TimePlayed", "Time Played: 0h 0m");
 
         saveJSONObject(timePlayed, sketchPath() + "/data/settings/timePlayed.json");
-        this.timePlayed = loadJSONObject(sketchPath() + "/data/settings/timePlayed.json");
+        this.timePlayed = timePlayed;
     }
 
     public void init() {
-        String VisualQuality = settings.getString("VisualQuality");
-        String SimulationQuality = settings.getString("SimulationQuality");
-        String TextQuality = settings.getString("TextQuality");
-        String ScrollSensitivity = settings.getString("ScrollSensitivity");
+        try {
+            String VisualQuality = settings.getString("VisualQuality");
+            String SimulationQuality = settings.getString("SimulationQuality");
+            String TextQuality = settings.getString("TextQuality");
+            String ScrollSensitivity = settings.getString("ScrollSensitivity");
 
-        boolean Show_Frame_Stats = settings.getBoolean("Show Frame Stats");
-        boolean Show_AABBs = settings.getBoolean("Show AABBs");
-        boolean Show_Collision_Points = settings.getBoolean("Show Collision Points");
+            boolean Show_Frame_Stats = settings.getBoolean("Show Frame Stats");
+            boolean Show_AABBs = settings.getBoolean("Show AABBs");
+            boolean Show_Collision_Points = settings.getBoolean("Show Collision Points");
 
-        switch (VisualQuality) {
-            case "Low":
-                this.setLowVisualQuality();
-                break;
-            case "Medium":
-                this.setMediumVisualQuality();
-                break;
-            case "High":
-                this.setHighVisualQuality();
-                break;
+            float CoefficientOfStaticFriction = settings.getFloat("CoefficientOfStaticFriction");
+            float CoefficientOfKineticFriction = settings.getFloat("CoefficientOfKineticFriction");
+            float Gravity = settings.getFloat("Gravity");
+
+            switch (VisualQuality) {
+                case "Low":
+                    this.setLowVisualQuality();
+                    break;
+                case "Medium":
+                    this.setMediumVisualQuality();
+                    break;
+                case "High":
+                    this.setHighVisualQuality();
+                    break;
+            }
+
+            switch (SimulationQuality) {
+                case "Low":
+                    this.setLowSimulationQuality();
+                    break;
+                case "Medium":
+                    this.setMediumSimulationQuality();
+                    break;
+                case "High":
+                    this.setHighSimulationQuality();
+                    break;
+            }
+
+            switch(ScrollSensitivity) {
+                case "Low":
+                    this.setLowScrollSensitivity();
+                    break;
+                case "Medium":
+                    this.setMediumScrollSensitivity();
+                    break;
+                case "High":
+                    this.setHighScrollSensitivity();
+                    break;
+            }
+
+            switch(TextQuality) {
+                case "Low":
+                    this.setLowTextQuality();
+                    break;
+                case "High":
+                    this.setHighTextQuality();
+            }
+
+            DRAW_CONTACT_POINTS = Show_Collision_Points;;
+            DRAW_AABBS = Show_AABBs;
+            DRAW_STATS = Show_Frame_Stats;
+            COEFFICIENT_OF_STATIC_FRICTION = CoefficientOfStaticFriction;
+            COEFFICIENT_OF_KINETIC_FRICTION = CoefficientOfKineticFriction;
+            GRAVITY_MAG = Gravity;
+            GRAVITY_VECTOR.set(0, GRAVITY_MAG);
+        } catch (Exception e) {
+            this.createDefaultSettingsFile();
+            this.init();
         }
-
-        switch (SimulationQuality) {
-            case "Low":
-                this.setLowSimulationQuality();
-                break;
-            case "Medium":
-                this.setMediumSimulationQuality();
-                break;
-            case "High":
-                this.setHighSimulationQuality();
-                break;
-        }
-
-        switch(ScrollSensitivity) {
-            case "Low":
-                this.setLowScrollSensitivity();
-                break;
-            case "Medium":
-                this.setMediumScrollSensitivity();
-                break;
-            case "High":
-                this.setHighScrollSensitivity();
-                break;
-        }
-
-        switch(TextQuality) {
-            case "Low":
-                this.setLowTextQuality();
-                break;
-            case "High":
-                this.setHighTextQuality();
-        }
-
-        DRAW_CONTACT_POINTS = Show_Collision_Points;;
-        DRAW_AABBS = Show_AABBs;
-        DRAW_STATS = Show_Frame_Stats;
     }
 
-    public void resetSettings() {
-        JSONObject settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
-        JSONObject defaultSettings = settings.getJSONObject("Default");
-
-        String VisualQuality = defaultSettings.getString("VisualQuality");
-        String SimulationQuality = defaultSettings.getString("SimulationQuality");
-        String TextQuality = defaultSettings.getString("TextQuality");
-        String ScrollSensitivity = defaultSettings.getString("ScrollSensitivity");
-
-        boolean Show_Frame_Stats = defaultSettings.getBoolean("Show Frame Stats");
-        boolean Show_AABBs = defaultSettings.getBoolean("Show AABBs");
-        boolean Show_Collision_Points = defaultSettings.getBoolean("Show Collision Points");
-
-        saveSettings(VisualQuality, SimulationQuality, TextQuality, ScrollSensitivity, Show_Frame_Stats, Show_AABBs, Show_Collision_Points);
-        this.settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
-
+    public void saveSetting(String entry, String value) {
+        this.settings.setString(entry, value);
+        this.updateSettings();
+        saveJSONObject(this.settings, sketchPath() + "/data/settings/settings.json");
     }
 
-    public void saveSettings(String VisualQuality, String SimulationQuality, String TextQuality, String ScrollSensitivity, boolean Show_Frame_Stats, boolean Show_AABBs, boolean Show_Collision_Points) {
-        JSONObject settings = new JSONObject();
-        JSONObject def = new JSONObject();
-            def.setString("VisualQuality", "High");
-            def.setString("SimulationQuality", "Medium");
-            def.setString("TextQuality", "High");
-            def.setString("ScrollSensitivity", "Medium");
-            def.setBoolean("Show Frame Stats", false);
-            def.setBoolean("Show AABBs", false);
-            def.setBoolean("Show Collision Points", false);
-
-        settings.setString("VisualQuality", VisualQuality);
-        settings.setString("SimulationQuality", SimulationQuality);
-        settings.setString("TextQuality", TextQuality);
-        settings.setString("ScrollSensitivity", ScrollSensitivity);
-        settings.setBoolean("Show Frame Stats", Show_Frame_Stats);
-        settings.setBoolean("Show AABBs", Show_AABBs);
-        settings.setBoolean("Show Collision Points", Show_Collision_Points);
-
-        settings.setJSONObject("Default", def);
-
-        saveJSONObject(settings, sketchPath() + "/data/settings/settings.json");
-
-        this.settings = loadJSONObject(sketchPath() + "/data/settings/settings.json");
+    public void saveSetting(String entry, boolean value) {
+        this.settings.setBoolean(entry, value);
+        this.updateSettings();
+        saveJSONObject(this.settings, sketchPath() + "/data/settings/settings.json");
     }
 
-
-    public void updateSettings(String SimulationQuality, String ScrollSensitivity, boolean Show_Frame_Stats, boolean Show_AABBs, boolean Show_Collision_Points) {
-        switch(SimulationQuality) {
-            case "Low":
-                setLowSimulationQuality();
-                break;
-            case "Medium":
-                setMediumSimulationQuality();
-                break;
-            case "High":
-                setHighSimulationQuality();
-                break;
-        }
-        switch(ScrollSensitivity) {
-            case "Low":
-                setLowScrollSensitivity();
-                break;
-            case "Medium":
-                setMediumScrollSensitivity();
-                break;
-            case "High":
-                setHighScrollSensitivity();
-                break;
-        }
-
-        DRAW_CONTACT_POINTS = Show_Collision_Points;;
-        DRAW_AABBS = Show_AABBs;
-        DRAW_STATS = Show_Frame_Stats;
+    public void saveSetting(String entry, float value) {
+        this.settings.setFloat(entry, value);
+        this.updateSettings();
+        saveJSONObject(this.settings, sketchPath() + "/data/settings/settings.json");
     }
 
     public void updateSettings() {
@@ -258,6 +208,11 @@ public class UI_QualitySettings {
         DRAW_CONTACT_POINTS = this.settings.getBoolean("Show Collision Points");
         DRAW_AABBS = this.settings.getBoolean("Show AABBs");
         DRAW_STATS = this.settings.getBoolean("Show Frame Stats");
+
+        COEFFICIENT_OF_KINETIC_FRICTION = this.settings.getFloat("CoefficientOfKineticFriction");
+        COEFFICIENT_OF_STATIC_FRICTION = this.settings.getFloat("CoefficientOfStaticFriction");
+        GRAVITY_MAG = this.settings.getFloat("Gravity");
+        GRAVITY_VECTOR.set(0, GRAVITY_MAG);
     }
 
 
@@ -332,7 +287,7 @@ public class UI_QualitySettings {
             settings = loadJSONObject(filePath);
             this.settings = settings;
         } catch(Exception e) {
-            createDefaultSettingsFile();
+            this.createDefaultSettingsFile();
             settings = loadJSONObject(filePath);
             this.settings = settings;
         }
@@ -345,7 +300,7 @@ public class UI_QualitySettings {
             timePlayed = loadJSONObject(filePath);
             this.timePlayed = timePlayed;
         } catch(Exception e) {
-            createDefaultTimePlayedFile();
+            this.createDefaultTimePlayedFile();
             timePlayed = loadJSONObject(filePath);
             this.timePlayed = timePlayed;
         }

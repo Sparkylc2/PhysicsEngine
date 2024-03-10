@@ -77,11 +77,70 @@ public class UI_Button extends UI_Element {
             buttonShapeHeight = this.Element_Height;
             buttonShapeX = 0;
             buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 32.5;
+        } else if(this.Button_Name.equals("Back")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = this.Button_ParentWindow.getWindowFormContainerHeight() / 2 - this.Element_Height / 2 - 32.5;
         } else if(this.Button_Name.equals("Prev Page") || this.Button_Name.equals("Delete Level")) {
             buttonShapeX = -this.Button_ParentWindow.getWindowFormContainerWidth() / 2 + this.Element_Width / 2 + 17;
         } else if(this.Button_Name.equals("Next Page") || this.Button_Name.equals("Load Level")) {
             buttonShapeX = this.Button_ParentWindow.getWindowFormContainerWidth() / 2 - this.Element_Width / 2 - 17;
-        } else if(numElements == 2) {
+        } else if(this.Button_Name.equals("Navigation & Controls")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = -this.Button_ParentWindow.getWindowFormContainerHeight() / 2 + this.Element_Height / 2f + 40;
+        } else if(this.Button_Name.equals("Pen tool & Properties editor")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = -this.Button_ParentWindow.getWindowFormContainerHeight() / 2 + 1*(this.Element_Height + 30) + this.Element_Height / 2 + 40;
+        } else if(this.Button_Name.equals("Rigidbody tools")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = -this.Button_ParentWindow.getWindowFormContainerHeight() / 2 + 2*(this.Element_Height + 30) + this.Element_Height / 2 + 40;
+
+        } else if(this.Button_Name.equals("Force tools")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = -this.Button_ParentWindow.getWindowFormContainerHeight() / 2 + 3*(this.Element_Height + 30) + this.Element_Height / 2 + 40;
+
+        } else if(this.Button_Name.equals("Settings")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = -this.Button_ParentWindow.getWindowFormContainerHeight() / 2 + 4*(this.Element_Height + 30) + this.Element_Height / 2 + 40;
+        } else if(this.Button_Name.equals("Creations")) {
+            this.Element_Width = 650;
+            this.Element_Height = 54;
+            this.Element_Text_Size = 22;
+            buttonShapeWidth = this.Element_Width;
+            buttonShapeHeight = this.Element_Height;
+            buttonShapeX = 0;
+            buttonShapeY = -this.Button_ParentWindow.getWindowFormContainerHeight() / 2 + 5*(this.Element_Height + 30) + this.Element_Height / 2 + 40;
+        }
+        else if(numElements == 2) {
             this.Element_Width = 304;
             this.Element_Height = 31;
             buttonShapeWidth = this.Element_Width;

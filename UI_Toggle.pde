@@ -214,6 +214,7 @@ public class UI_Toggle extends UI_Element {
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setStroke(this.Element_Base_Selected_Stroke_Color);
         this.Toggle_Shape_Group.getChild("Toggle_Shape_Base").setFill(this.Element_Base_Selected_Color);
         this.Toggle_Shape_Group.getChild("Toggle_Shape_TickMark").setVisible(true);
+
     }
 
     @Override
@@ -281,6 +282,9 @@ public class UI_Toggle extends UI_Element {
 
     @Override
     public boolean getState() {
+        if(this.Toggle_Name.equals("Fixed Position")) {
+            System.out.println(this.Toggle_State);
+        }
         return this.Toggle_State;
     }
 

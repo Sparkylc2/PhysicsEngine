@@ -56,17 +56,24 @@ public final int MAX_ITERATIONS = 1024;
 public PVector BACKGROUND_COLOUR = new PVector(16, 18, 19);
 
 public static int SUB_STEP_COUNT = 128;
+public float SCROLL_SENSITIVITY = 1.1f;
+
 
 public boolean DRAW_CONTACT_POINTS = false;
 public boolean DRAW_AABBS = false;
 public boolean DRAW_STATS = false;
-
-public float SCROLL_SENSITIVITY = 1.1f;
 public boolean TEXT_SMOOTHING = false;
 
 
-public final PVector GRAVITY_VECTOR = new PVector(0, 9.81f, 0);
-public final float GRAVITY_MAG = 9.81f;
+public PVector GRAVITY_VECTOR = new PVector(0, 9.81f);
+public float GRAVITY_MAG = 9.81f;
+
+public float COEFFICIENT_OF_STATIC_FRICTION = 0.8f;
+public float COEFFICIENT_OF_KINETIC_FRICTION = 0.3f;
+
+
+
+
 
 public ArrayList<ForceRegistry> ALL_FORCES_ARRAYLIST = new ArrayList<ForceRegistry>();
 

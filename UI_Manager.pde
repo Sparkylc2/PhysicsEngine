@@ -8,6 +8,7 @@ public class UI_Manager {
     private UI_PropertiesEditorWindow propertiesEditorWindow;
     private UI_CreationWindow creationWindow;
     private UI_SettingsWindow settingsWindow;
+    private UI_HelpWindow helpWindow;
 
     private ArrayList<UI_Window> WINDOWS;
 
@@ -32,12 +33,14 @@ public class UI_Manager {
         this.propertiesEditorWindow = new UI_PropertiesEditorWindow();
         this.creationWindow = new UI_CreationWindow();
         this.settingsWindow = new UI_SettingsWindow();
+        this.helpWindow = new UI_HelpWindow();
 
         this.WINDOWS.add((UI_Window)this.propertiesRigidbodyWindow);
         this.WINDOWS.add((UI_Window)this.propertiesForceWindow);
         this.WINDOWS.add((UI_Window)this.propertiesEditorWindow);
         this.WINDOWS.add((UI_Window)this.creationWindow);
         this.WINDOWS.add((UI_Window)this.settingsWindow);
+        this.WINDOWS.add((UI_Window)this.helpWindow);
 
         for(UI_Window window : WINDOWS) {
             window.setWindowVisibility(false);
@@ -253,6 +256,10 @@ public class UI_Manager {
 
     public UI_SettingsWindow getSettingsWindow() {
         return this.settingsWindow;
+    }
+
+    public UI_HelpWindow getHelpWindow() {
+        return this.helpWindow;
     }
 
     public ArrayList<UI_Window> getWindows() {

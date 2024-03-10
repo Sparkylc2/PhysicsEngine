@@ -1,16 +1,7 @@
 public class UI_SettingsWindow extends UI_Window {
 
     public UI_QualitySettings qualitySettings = new UI_QualitySettings(false);
-    private String currentSimulationQuality = qualitySettings.settings.getString("SimulationQuality");
-    private String currentVisualQuality = qualitySettings.settings.getString("VisualQuality");
-    private String currentScrollSensitivity = qualitySettings.settings.getString("ScrollSensitivity");
-    private String currentTextQuality = qualitySettings.settings.getString("TextQuality");
-
-    private boolean currentShowFrameStats = qualitySettings.settings.getBoolean("Show Frame Stats");
-    private boolean currentShowAABBs = qualitySettings.settings.getBoolean("Show AABBs");
-    private boolean currentShowCollisionPoints = qualitySettings.settings.getBoolean("Show Collision Points");
-
-    public String currentTimePlayed = qualitySettings.timePlayed.getString("TimePlayed");
+    public String currentTimePlayed;
 
     private UI_TickSlider Simulation_Quality;
     private UI_TickSlider Visual_Quality;
@@ -21,16 +12,24 @@ public class UI_SettingsWindow extends UI_Window {
     private UI_Toggle Show_AABBs;
     private UI_Toggle Show_Collision_Points;
 
+    private UI_Slider Coeff_Static_Friction;
+    private UI_Slider Coeff_Kinetic_Friction;
+    private UI_Slider Gravity;
+
     private UI_Button Reset_To_Defaults;
 
-    private String prvSimulationQuality = currentSimulationQuality;
-    private String prvVisualQuality = currentVisualQuality;
-    private String prvScrollSensitivity = currentScrollSensitivity;
-    private String prvTextQuality = currentTextQuality;
+    private String prvSimulationQuality;
+    private String prvVisualQuality;
+    private String prvScrollSensitivity;
+    private String prvTextQuality;
 
-    private boolean prvShowFrameStats = currentShowFrameStats;
-    private boolean prvShowAABBs = currentShowAABBs;
-    private boolean prvShowCollisionPoints = currentShowCollisionPoints;
+    private boolean prvShowFrameStats;
+    private boolean prvShowAABBs;
+    private boolean prvShowCollisionPoints;
+
+    private float prvCoeffStaticFriction;
+    private float prvCoeffKineticFriction;
+    private float prvGravity;
 
 
 
@@ -42,80 +41,119 @@ public class UI_SettingsWindow extends UI_Window {
         textSize(25);
         textAlign(CENTER, CENTER);
         this.Window_Text_Width = textWidth(this.Window_Name);
-        this.Window_Text_Position.set(0, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 + (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
+        this.Window_Text_Position.set(0, -(this.Window_Form_Container_Size.y + this.Window_Text_Container_Size.y) / 2 - (textAscent() - textDescent()) * UI_Constants.GLOBAL_TEXT_ALIGN_FACTOR_Y);
 
         this.initializeSettingsWindow();
     }
 
     public void initializeSettingsWindow() {
-        /*
-        Text
-        */
-        this.addElement(new UI_Text("Simulation Quality", (UI_Window)this, -this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 50, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
-        this.addElement(new UI_Text("Visual Quality", (UI_Window)this, this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 50, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
-        this.addElement(new UI_Text("Scroll Sensitivity", (UI_Window)this, -this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 200, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
-        this.addElement(new UI_Text("Text Quality", (UI_Window)this, this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 200, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
-        this.addElement(new UI_Text("Debugging", (UI_Window)this, 0, -this.Window_Form_Container_Size.y / 2 + 350, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
-        /*
-        Toggles
-        */
+        this.currentTimePlayed = qualitySettings.timePlayed.getString("TimePlayed");
+        try {
+            String currentSimulationQuality = qualitySettings.settings.getString("SimulationQuality");
+            String currentVisualQuality = qualitySettings.settings.getString("VisualQuality");
+            String currentScrollSensitivity = qualitySettings.settings.getString("ScrollSensitivity");
+            String currentTextQuality = qualitySettings.settings.getString("TextQuality");   
+            boolean currentShowFrameStats = qualitySettings.settings.getBoolean("Show Frame Stats");
+            boolean currentShowAABBs = qualitySettings.settings.getBoolean("Show AABBs");
+            boolean currentShowCollisionPoints = qualitySettings.settings.getBoolean("Show Collision Points");
+            float currentCoeffStaticFriction = qualitySettings.settings.getFloat("CoefficientOfStaticFriction");
+            float currentCoeffKineticFriction = qualitySettings.settings.getFloat("CoefficientOfKineticFriction");
+            float currentGravity = qualitySettings.settings.getFloat("Gravity");
 
-        this.Show_Frame_Stats = new UI_Toggle("Show Frame Stats", (UI_Window)this, 0, -this.Window_Form_Container_Size.y / 2 + 390, this.currentShowFrameStats, 1.22);
-        this.Show_AABBs = new UI_Toggle("Show AABB's", (UI_Window)this, 0, -this.Window_Form_Container_Size.y / 2 + 440, this.currentShowAABBs, 1.22);
-        this.Show_Collision_Points = new UI_Toggle("Show Collision Points", (UI_Window)this, 0, -this.Window_Form_Container_Size.y / 2 + 490, this.currentShowCollisionPoints, 1.22);
-        this.addElement(this.Show_Frame_Stats);
-        this.addElement(this.Show_AABBs);
-        this.addElement(this.Show_Collision_Points);
+            this.prvSimulationQuality = currentSimulationQuality;
+            this.prvVisualQuality = currentVisualQuality;
+            this.prvScrollSensitivity = currentScrollSensitivity;
+            this.prvTextQuality = currentTextQuality;
+            this.prvShowFrameStats = !currentShowFrameStats;
+            this.prvShowAABBs = !currentShowAABBs;
+            this.prvShowCollisionPoints = currentShowCollisionPoints;
+            this.prvCoeffStaticFriction = currentCoeffStaticFriction;
+            this.prvCoeffKineticFriction = currentCoeffKineticFriction;
+            this.prvGravity = currentGravity;
 
-        /*
-        Sliders
-        */
-        this.Simulation_Quality = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, this.currentSimulationQuality, -this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 125, 3);
-        this.Visual_Quality = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, this.currentVisualQuality, this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 125, 3);
-        this.Scroll_Sensitivity = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, this.currentScrollSensitivity, -this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 275, 3);
-        this.Text_Quality = new UI_TickSlider(new String[]{"Low", "High"}, (UI_Window)this, this.currentTextQuality, this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 275, 3);
-        this.addElement(this.Simulation_Quality);
-        this.addElement(this.Visual_Quality);
-        this.addElement(this.Scroll_Sensitivity);
-        this.addElement(this.Text_Quality);
+            /*
+            Text
+            */
+            this.addElement(new UI_Text("Simulation Quality", (UI_Window)this, -this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 50, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
+            this.addElement(new UI_Text("Visual Quality", (UI_Window)this, this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 50, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
+            this.addElement(new UI_Text("Scroll Sensitivity", (UI_Window)this, -this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 200, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
+            this.addElement(new UI_Text("Text Quality", (UI_Window)this, this.Window_Form_Container_Size.x / 4, -this.Window_Form_Container_Size.y / 2 + 200, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
+            this.addElement(new UI_Text("Debugging", (UI_Window)this, 0, -this.Window_Form_Container_Size.y / 2 + 350, 0, 25, UI_Constants.GRAY_25, true, UI_Constants.INTER_BOLD));
+            /*
+            Toggles
+            */  
 
-        /*
-        Button
-        */
-        this.Reset_To_Defaults = new UI_Button("Reset to defaults", this, false);
-        this.addElement(this.Reset_To_Defaults);
+            float scale = 1.1f;
+
+            float showFrameStatsPosX = this.Window_Form_Container_Size.x / 4f + (280f / 2f) - (265f * scale / 2f);
+            float showFrameStatsPosY = -this.Window_Form_Container_Size.y / 2f + 390;
+            float showAABBsPosX = this.Window_Form_Container_Size.x / 4f + 280f / 2f - (265f * scale / 2f);
+            float showAABBsPosY = -this.Window_Form_Container_Size.y / 2f + 440;
+            float showCollisionPointsPosX = this.Window_Form_Container_Size.x / 4f +  280f / 2 - (265f * scale / 2f);
+            float showCollisionPointsPosY = -this.Window_Form_Container_Size.y / 2f + 490;
+
+
+            this.Show_Frame_Stats = new UI_Toggle("Show Frame Stats", (UI_Window)this, showFrameStatsPosX, showFrameStatsPosY, currentShowFrameStats, scale);
+            this.Show_AABBs = new UI_Toggle("Show AABB's", (UI_Window)this, showAABBsPosX, showAABBsPosY, currentShowAABBs, scale);
+            this.Show_Collision_Points = new UI_Toggle("Show Collision Points", (UI_Window)this, showCollisionPointsPosX, showCollisionPointsPosY, currentShowCollisionPoints, scale);
+            this.addElement(this.Show_Frame_Stats);
+            this.addElement(this.Show_AABBs);
+            this.addElement(this.Show_Collision_Points);
+
+            /*
+            Sliders
+            */
+            this.Simulation_Quality = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, currentSimulationQuality, -this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 125, 3);
+            this.Visual_Quality = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, currentVisualQuality, this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 125, 3);
+            this.Scroll_Sensitivity = new UI_TickSlider(new String[]{"Low", "Medium", "High"}, (UI_Window)this, currentScrollSensitivity, -this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 275, 3);
+            this.Text_Quality = new UI_TickSlider(new String[]{"Low", "High"}, (UI_Window)this, currentTextQuality, this.Window_Form_Container_Size.x / 4,  -this.Window_Form_Container_Size.y / 2 + 275, 3);
+            this.addElement(this.Simulation_Quality);
+            this.addElement(this.Visual_Quality);
+            this.addElement(this.Scroll_Sensitivity);
+            this.addElement(this.Text_Quality);
+
+
+            this.Coeff_Static_Friction = new UI_Slider("Coeff. of static friction", this, 0, 1, currentCoeffStaticFriction);
+            this.Coeff_Kinetic_Friction = new UI_Slider("Coeff. of kinetic friction", this, 0, 1, currentCoeffKineticFriction);
+            this.Gravity = new UI_Slider("Gravity", this, 0, 50, currentGravity);
+
+            this.addElement(this.Coeff_Static_Friction);
+            this.addElement(this.Coeff_Kinetic_Friction);
+            this.addElement(this.Gravity);
+
+            /*
+            Button
+            */
+            this.Reset_To_Defaults = new UI_Button("Reset to defaults", this, false);
+            this.addElement(this.Reset_To_Defaults);
+        } catch (Exception e) {
+            this.qualitySettings.createDefaultSettingsFile();
+            this.initializeSettingsWindow();
+        }
+
     }
 
     public void checkWindowElements() {
         if(this.Simulation_Quality.getElementName() != this.prvSimulationQuality) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
+            this.qualitySettings.saveSetting("SimulationQuality", this.Simulation_Quality.getElementName());
             this.prvSimulationQuality = this.Simulation_Quality.getElementName();
         } else if(this.Visual_Quality.getElementName() != this.prvVisualQuality) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
+            this.qualitySettings.saveSetting("VisualQuality", this.Visual_Quality.getElementName());
             this.prvVisualQuality = this.Visual_Quality.getElementName();
         } else if(this.Text_Quality.getElementName() != this.prvVisualQuality) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
+            this.qualitySettings.saveSetting("TextQuality", this.Text_Quality.getElementName());
             this.prvTextQuality = this.Text_Quality.getElementName();
         } else if(this.Scroll_Sensitivity.getElementName() != this.prvScrollSensitivity) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
+            this.qualitySettings.saveSetting("ScrollSensitivity", this.Scroll_Sensitivity.getElementName());
             this.prvScrollSensitivity = this.Scroll_Sensitivity.getElementName();
-        } else if(this.Show_Frame_Stats.getState() != this.prvShowFrameStats) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.prvShowFrameStats = this.Show_Frame_Stats.getState();
-        } else if(this.Show_AABBs.getState() != this.prvShowAABBs) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.prvShowAABBs = this.Show_AABBs.getState();
-        } else if(this.Show_Collision_Points.getState() != this.prvShowCollisionPoints) {
-            this.qualitySettings.saveSettings(this.Visual_Quality.getElementName(), this.Simulation_Quality.getElementName(), this.Text_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.qualitySettings.updateSettings(this.Simulation_Quality.getElementName(), this.Scroll_Sensitivity.getElementName(), this.Show_Frame_Stats.getState(), this.Show_AABBs.getState(), this.Show_Collision_Points.getState());
-            this.prvShowCollisionPoints = this.Show_Collision_Points.getState();
         }
+
+        this.qualitySettings.saveSetting("Show Frame Stats", this.Show_Frame_Stats.getState());
+        this.qualitySettings.saveSetting("Show AABBs", this.Show_AABBs.getState());
+        this.qualitySettings.saveSetting("Show Collision Points", this.Show_Collision_Points.getState());
+        this.qualitySettings.saveSetting("CoefficientOfStaticFriction", this.Coeff_Static_Friction.getValue());
+        this.qualitySettings.saveSetting("CoefficientOfKineticFriction", this.Coeff_Kinetic_Friction.getValue());
+        this.qualitySettings.saveSetting("Gravity", this.Gravity.getValue());
     }
         
 

@@ -82,8 +82,8 @@ public class Rigidbody {
     this.Width = width;
     this.Height = height;
 
-    this.coefficientOfStaticFriction = 0.8f;
-    this.coefficientOfKineticFriction = 0.3f;
+    this.coefficientOfStaticFriction = COEFFICIENT_OF_STATIC_FRICTION;
+    this.coefficientOfKineticFriction = COEFFICIENT_OF_KINETIC_FRICTION;
   
 
     this.ShapeType = shapeType;

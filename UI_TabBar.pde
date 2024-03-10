@@ -194,6 +194,7 @@ public class UI_TabBar {
                 break;
             case 3:
                 UI_Manager.closeAllWindows();
+                UI_Manager.getHelpWindow().open();
                 break;
         }
 
