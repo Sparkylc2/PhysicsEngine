@@ -18,7 +18,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
 
     public UI_PropertiesRigidbodyWindow() {
-        super("Properties (rigidbody)", 0);
+        super("Properties (rigidbody)", 0, new PVector(2 * width / 3, 1.5 * height / 3));
         this.initialize();
     }
 
@@ -26,7 +26,6 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 ========================================= UI Elements  =============================================
 */
     public void initialize() {
-
     }
 
     @Override
@@ -223,7 +222,7 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
 
     public void createRigidbody(int activeSlotID) {
         /*--------------------------------- Checks ---------------------------------*/
-        if(Mouse.getRigidbodyUnderMouse() != null) {
+        if(Mouse.getRigidbodyUnderMouse() != null && !IS_PAUSED) {
             return;
         }
         /*---------------------------------------------------------------------------*/
@@ -335,6 +334,20 @@ public class UI_PropertiesRigidbodyWindow extends UI_Window {
         boolean shiftDown = KeyHandler.isKeyDown(KeyEvent.VK_SHIFT);
 
         switch(keyCode) {
+            case KeyEvent.VK_Z:
+                if(shiftDown) {
+                    this.getElementByName("Angle").incrementValue(-10f);
+                } else {
+                    this.getElementByName("Angle").incrementValue(-5f);
+                }
+                break;
+            case KeyEvent.VK_C:
+                if(shiftDown) {
+                    this.getElementByName("Angle").incrementValue(10f);
+                } else {
+                    this.getElementByName("Angle").incrementValue(5f);
+                }
+                break;
             case KeyEvent.VK_A:
                 if(activeSlotID == 2) {
                     if(shiftDown) {

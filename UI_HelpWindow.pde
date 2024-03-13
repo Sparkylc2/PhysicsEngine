@@ -15,8 +15,11 @@ public class UI_HelpWindow extends UI_Window {
     private String[] NavigationAndControlsTexts = new String[] {
         "-To navigate between tabs, you can either press on an individual tab, or press Q or E to switch to the next or previous tab",
         "-To navigate between different hotbar slots, you can press the number keys between 1 & 7, each corresponding to a different slot",
-        "-Pressing the WASD keys while having one of the properties windows open will either increment or decrement one of the first two sliders. Hold shift to increase the increment or decrement",
-        "-Press CTRL-C while in edit mode and having a selection active to copy the selection, and press CTRL-V to paste the selection"
+        "-Pressing WASD or ZX keys while having a properties window open increments and decrements the dimensional sliders and angle sliders. Hold shift to increase the increment or decrement",
+        "-Press CTRL-C while in edit mode and having a selection active to copy the selection, and press CTRL-V to paste the selection",
+        "-Press RIGHT-CLICK and drag to pan the camera, and scroll to zoom in and out",
+        "-Pressing the SPACEBAR will pause or unpause the simulation",
+        "-Pressing TAB disables or enables cursor snapping"
     };
 
 
@@ -107,7 +110,7 @@ public class UI_HelpWindow extends UI_Window {
         this.clearAllElements();
         //30px required per new row of text
         // public UI_Text(String Text_Name, UI_Window Text_ParentWindow, PVector Text_Position, PVector Text_BoxDimensions, int Text_AlignMode, int Text_Size, int Text_Color, boolean Text_ShowName, PFont Text_Font) {
-        float[] textBoxHeights = {this.calculateTextBoxHeight(this.NavigationAndControlsTexts[0], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[1], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[2], 3, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[3], 2, 1.2)};
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.NavigationAndControlsTexts[0], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[1], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[2], 3, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[3], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[4], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[5], 1, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[6], 1, 1.2)};
 
         for(int i = 0; i < this.NavigationAndControlsTexts.length; i++) {
             this.addElement(new UI_Text(this.NavigationAndControlsTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));

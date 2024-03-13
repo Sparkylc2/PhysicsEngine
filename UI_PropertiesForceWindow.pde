@@ -23,7 +23,7 @@ public class UI_PropertiesForceWindow extends UI_Window {
     private float prvMotorSpeed = 0;
 
     public UI_PropertiesForceWindow() {
-        super("Properties (forces)", 1);
+        super("Properties (forces)", 1, new PVector(width/4, 1.5 * height / 3));
         initialize();
     }
 

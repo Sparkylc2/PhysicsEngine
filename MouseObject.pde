@@ -6,6 +6,8 @@ public class MouseObject {
 	private PVector mouseCoordinates = new PVector();
     private PVector previousMouseCoordinates = new PVector();
 
+
+    private Rigidbody initialSelectedRigidbody = null;
     private float easing = 0.175f;
     private boolean mLeft, mRight, mCenter;
     private boolean isMouseDown = false;
@@ -41,25 +43,38 @@ public class MouseObject {
 	public Rigidbody getRigidbodyUnderMouse() {
         PVector mouseCoordinates = Camera.screenToWorld();
     	for (Rigidbody rigidbody : rigidbodyList) {
+            if(this.initialSelectedRigidbody == rigidbody) {
+                continue;
+            }
+
             if(!Collisions.IntersectAABBWithPoint(rigidbody.GetAABB(), mouseCoordinates)) {
            		continue;
             }
-            if (rigidbody.contains(mouseCoordinates.x, mouseCoordinates.y)) {
+            if(rigidbody.contains(mouseCoordinates.x, mouseCoordinates.y)) {
+                if(this.initialSelectedRigidbody != null) {
+                    rigidbodyList.remove(this.initialSelectedRigidbody);
+                    rigidbodyList.add(0, this.initialSelectedRigidbody);
+                }
            		return rigidbody;
             }
     	}
+
     	return null;
 	}	
-
 
 	public void addSelectedRigidbody() {
 		if(this.interactionResults.size() > 2) {
             this.interactionResults.clear();
+            this.initialSelectedRigidbody = null;
 		}
+
 		this.interactionResults.add(new MouseObjectResult(this.currentRigidbodyUnderMouse, this.mouseCoordinates));
+        this.initialSelectedRigidbody = this.currentRigidbodyUnderMouse;
+        
         if(this.interactionResults.size() == 2) {
             if(this.interactionResults.get(0).getSelectedRigidbody() == null && this.interactionResults.get(1).getSelectedRigidbody() == null) {
                 this.interactionResults.clear();
+                this.initialSelectedRigidbody = null;
             }
         }
 

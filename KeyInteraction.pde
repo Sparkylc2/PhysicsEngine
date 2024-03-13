@@ -89,11 +89,10 @@ public void keyPressed() {
     }
 
     if(key == ' ') {
-        UI_Manager.getPropertiesEditorWindow().PAUSE_STATE_ON_OPEN = !IS_PAUSED;
-
         if(!IS_PAUSED_LOCK) {
             IS_PAUSED = !IS_PAUSED;
         }
+                UI_Manager.getPropertiesEditorWindow().PAUSE_STATE_ON_OPEN = IS_PAUSED;
         return;
     }
 

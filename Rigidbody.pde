@@ -145,6 +145,10 @@ public class Rigidbody {
   }
   
   public PVector[] GetTransformedVertices() {
+    if(this.ShapeType == ShapeType.CIRCLE) {
+        return this.transformedVertices;
+    }
+
     if (this.transformUpdateRequired) {
 
       for (int i = 0; i < this.Vertices.length; i++) {

@@ -46,16 +46,36 @@ public class UI_Window {
     /*
     For Testing
     */
+
     public UI_Window(String Window_Name, int Window_ID) {
         this.Window_Name = Window_Name;
         this.Window_ID = Window_ID;
         this.initializeWindow();
     }
 
+     public UI_Window(String Window_Name, int Window_ID, PVector Window_Position) {
+        this.Window_Name = Window_Name;
+        this.Window_ID = Window_ID;
+        this.Window_Position.set(Window_Position);
+        this.initializeWindow();
+    }
+
+
     public UI_Window(String Window_Name, int Window_ID, PVector Window_Container_Size, PVector Window_Text_Container_Size, PVector Window_Form_Container_Size, boolean hasCloseButton) {
         this.Window_Name = Window_Name;
         this.Window_ID = Window_ID;
         this.Window_Container_Size.set(Window_Container_Size);
+        this.Window_Text_Container_Size.set(Window_Text_Container_Size);
+        this.Window_Form_Container_Size.set(Window_Form_Container_Size);
+        this.hasCloseButton = hasCloseButton;
+        this.initializeWindow();
+    }
+
+    public UI_Window(String Window_Name, int Window_ID, PVector Window_Container_Size, PVector Window_Text_Container_Size, PVector Window_Form_Container_Size, PVector Window_Position, boolean hasCloseButton) {
+        this.Window_Name = Window_Name;
+        this.Window_ID = Window_ID;
+        this.Window_Container_Size.set(Window_Container_Size);
+        this.Window_Position.set(Window_Position);
         this.Window_Text_Container_Size.set(Window_Text_Container_Size);
         this.Window_Form_Container_Size.set(Window_Form_Container_Size);
         this.hasCloseButton = hasCloseButton;
@@ -408,6 +428,16 @@ public class UI_Window {
     }
 
     public void onWindowDeselect() {
+        int activeSlotID = UI_Manager.getHotBar().getActiveSlotID();
+        if(this instanceof UI_PropertiesForceWindow) {
+            if(activeSlotID == 4 || activeSlotID == 5 || activeSlotID == 6) {
+                return;
+            }
+        } else if(this instanceof UI_PropertiesRigidbodyWindow) {
+            if(activeSlotID == 2 || activeSlotID == 3) {
+                return;
+            }
+        }
         this.isActiveWindow = false;
         this.Window_Container.getChild("Window_Container_Stroke").setStroke(UI_Constants.GRAY_400);
         this.Window_Container.getChild("Window_Text_Container").setFill(UI_Constants.GRAY_500);

@@ -43,7 +43,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
 
     public UI_PropertiesEditorWindow() {
-        super("Properties Editor (rigidbody)", 2);
+        super("Properties Editor (rigidbody)", 2, new PVector(width / 3, height / 2));
         if(OS.contains("mac")) {
             this.mac = true;
         }
@@ -669,7 +669,7 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         //     }
         // }
         
-        if(millis() - this.mouseDownTime > 100) {
+        if(millis() - this.mouseDownTime > 150) {
             return;
         }
         /*----------------------------------------*/
@@ -820,6 +820,17 @@ public class UI_PropertiesEditorWindow extends UI_Window {
         IS_PAUSED_LOCK = true;
     }
 
+    public void endDragSelectMode() {
+        this.inDragSelectMode = false;
+        this.inEditMode = false;
+        this.vertexIndexToDrag = -1;
+        this.clearSelectedRigidbodies();
+        this.dragBox = null;
+        IS_PAUSED = this.PAUSE_STATE_ON_OPEN;
+        IS_PAUSED_LOCK = false;
+    }
+
+
     public void clearSelectedRigidbodies() {
         for(Rigidbody rigidbody : this.selectedRigidbodies) {
             rigidbody.setStrokeColour(0, 0, 0);
@@ -903,21 +914,23 @@ public class UI_PropertiesEditorWindow extends UI_Window {
 
     public void rigidbodyDeletion() {
         if(this.selectedRigidbodies.size() == 0) {
-            Rigidbody rigidbodyToDelete = Mouse.getCurrentRigidbodyUnderMouse();
+            // Rigidbody rigidbodyToDelete = Mouse.getCurrentRigidbodyUnderMouse();
 
-            if(rigidbodyToDelete == null) {
-                return;
-            }
+            // if(rigidbodyToDelete == null) {
+            //     return;
+            // }
 
-            this.selectedRigidbodies.remove(rigidbodyToDelete);
-            rigidbodyToDelete.delete();
+            // this.selectedRigidbodies.remove(rigidbodyToDelete);
+            // rigidbodyToDelete.delete();
+
+            return;
 
         } else {
             for(Rigidbody rigidbody : this.selectedRigidbodies) {
                 rigidbody.delete();
             }
             this.selectedRigidbodies.clear();
-            this.enterDragSelect();
+            this.endDragSelectMode();
         }
 
     }

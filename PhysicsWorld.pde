@@ -128,7 +128,10 @@ public void Step(float dt, int totalIterations) {
 */
 
 public void SeperateBodies(Rigidbody rigidbodyA, Rigidbody rigidbodyB, PVector minimumTranslationVector) {
-    
+    if(IS_PAUSED) {
+        return;
+    }
+
     if (rigidbodyA.getIsStatic() || rigidbodyA.getIsTranslationallyStatic()) {
         
         rigidbodyB.Move(minimumTranslationVector);
@@ -466,6 +469,8 @@ public void BroadPhaseStep() {
 }
 
 public void NarrowPhaseStep() {
+
+
     for (int i = 0; i < collisionPairs.size(); i++)
     {
         ArrayList<Integer> pair = collisionPairs.get(i);
