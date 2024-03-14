@@ -2,7 +2,7 @@
   "Show Frame Stats": false,
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
-  "SimulationQuality": "Medium",
+  "SimulationQuality": "High",
   "CoefficientOfStaticFriction": 0.800000011920929,
   "CoefficientOfKineticFriction": 0.30000001192092896,
   "VisualQuality": "Medium",

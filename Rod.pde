@@ -150,8 +150,6 @@ public PVector getForce(Rigidbody rigidbody, PVector position) {
 
         this.dampingForce.set(this.direction.copy().mult(-damping * dot));
 
-        this.dampingForce.set(this.direction.copy().mult(-damping * PVector.dot(relativeVelocity, this.direction)));
-
         this.force.add(this.direction.mult(this.stiffness * (displacement - this.length)));
         this.force.add(this.dampingForce);
         
