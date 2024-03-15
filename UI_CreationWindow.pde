@@ -432,7 +432,6 @@ public class UI_CreationWindow extends UI_Window {
 
 			JSONObject forceJSON = forcesArray.getJSONObject(i);
 
-            System.out.println(forceJSON.getString("ForceType"));
 			if(forceJSON.getString("ForceType").equals("Spring")){
 				spring = this.deserializeSpring(forceJSON);
 			} else if (forceJSON.getString("ForceType").equals("Rod")) {
@@ -667,7 +666,6 @@ public class UI_CreationWindow extends UI_Window {
 					PVector localAnchorB = this.deserialize2DPVector(rodJSON.getJSONObject("localAnchorB"));
 
 					Rod rod = new Rod(rigidbodyA, rigidbodyB, localAnchorA, localAnchorB);
-					System.out.println(rodJSON.getFloat("length"));
 					rod.setLength(rodJSON.getFloat("length"));
 					rod.setDamping(rodJSON.getFloat("damping"));
 					rod.setIsJoint(rodJSON.getBoolean("isJoint"));

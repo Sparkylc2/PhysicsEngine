@@ -1,3 +1,5 @@
+// Softbody softbody = new Softbody(new PVector(10, -20), 0, 2, 2);
+// Softbody softbody2 = new Softbody(new PVector(-10, -20), 0, 2, 2);
 
 public void setup() {
     if(System.getProperty("os.name").toLowerCase().contains("mac")) {
@@ -13,7 +15,7 @@ public void setup() {
     textFont(createFont(sketchPath() + "/data/fonts/InterDisplay-SemiBold.ttf", 128, true), 10);
     dash = new DashedLines(this);
     dash.pattern(1, 0.5);
-/*--------------------- Timing Utilities ---------------------*/
+/*--------------------- Timing Utilities ---------------------*/ 
     FrameTimeUtility.init();
 
     //MAYBE DO SOMETHING TO CHECK WHICH FRAME RATE TO USE
@@ -30,23 +32,26 @@ public void setup() {
 
 
     Rigidbody floor = RigidbodyGenerator.CreateBoxBody(1000f, 5f, 1f, 0.5f, true, true, 0.05f, new PVector(0,0,0), new PVector(255,255,255));
-    Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
+    // Rigidbody springBody = RigidbodyGenerator.CreateBoxBody(4f, 1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
 
     floor.SetInitialPosition(new PVector(0, 10));
-    springBody.setVelocity(new PVector(0,20));
-    springBody.SetInitialPosition(new PVector(-10, -5));
+    // springBody.setVelocity(new PVector(0,20));
+    // springBody.SetInitialPosition(new PVector(-10, -5));
 
-    Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
-    Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
+    // Spring springLeft = new Spring(springBody, new PVector(2,0), new PVector(-8, -10));
+    // Spring springRight = new Spring(springBody, new PVector(-2,0), new PVector(-12, -10));
 
-    springBody.addForceToForceRegistry(springLeft);
-    springBody.addForceToForceRegistry(springRight);
+    // springBody.addForceToForceRegistry(springLeft);
+    // springBody.addForceToForceRegistry(springRight);
 
-    springBody.addForceToForceRegistry(new Gravity(springBody));
+    // springBody.addForceToForceRegistry(new Gravity(springBody));
 
-    AddBodyToBodyEntityList(springBody);
+    // AddBodyToBodyEntityList(springBody);
     AddBodyToBodyEntityList(floor);
 
+
+    // softbody.CreateBoxSoftbody();
+    // softbody2.CreateBoxSoftbody();
 
 }
 

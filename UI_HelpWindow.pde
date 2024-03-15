@@ -3,7 +3,8 @@ public class UI_HelpWindow extends UI_Window {
 
 
     private int activeSelectionID = -1;
-    private String[] WindowTitles = new String[] {"Navigation & Controls", 
+    private String[] WindowTitles = new String[] {"FAQ",
+                                                  "Navigation & Controls", 
                                                   "Pen tool & Properties editor",
                                                   "Rigidbody tools",
                                                   "Force tools",
@@ -60,6 +61,15 @@ public class UI_HelpWindow extends UI_Window {
         "-Once more than 5 levels have been saved, a new page will be added. Press the \"Prev Page\" and \"Next Page\" buttons to alternate between level pages",
     };
 
+    private String[] FAQTexts = new String[] {
+        "How do I place forces?",
+        "-In order to place a force, at least one of its ends needs to be parented to a rigidbody. Just click on a body and then empty space, or click on two bodies one after another",
+        "How do I use the mouse spring?",
+        "-To use the mouse spring, just press shift while over a rigidbody and drag. This will cause a spring to be attached to your mouse, and the body you clicked on",
+        "Why are my rods vibrating?",
+        "-Honestly, no clue, its very difficult to create rods in physics simulations without using more complex methods than what I am capable of, so the rods will stay broken",
+    };
+
 
     private float initialYPadding = 40;
     private float padding = 15;
@@ -97,6 +107,7 @@ public class UI_HelpWindow extends UI_Window {
 
     public void switchToSelectionScene() {
         this.clearAllElements();
+        this.addElement(new UI_Button("FAQ", this, false));
         this.addElement(new UI_Button("Navigation & Controls", this, false));
         this.addElement(new UI_Button("Pen tool & Properties editor", this, false));
         this.addElement(new UI_Button("Rigidbody tools", this, false));
@@ -106,10 +117,17 @@ public class UI_HelpWindow extends UI_Window {
     }
 
 
+    public void switchToFAQScene() {
+        this.clearAllElements();
+        float[] textBoxHeights = {this.calculateTextBoxHeight(this.FAQTexts[0], 1, 1.2), this.calculateTextBoxHeight(this.FAQTexts[1], 4, 1.2), this.calculateTextBoxHeight(this.FAQTexts[2], 1, 1.2), this.calculateTextBoxHeight(this.FAQTexts[3], 4, 1.2), this.calculateTextBoxHeight(this.FAQTexts[4], 1, 1.2), this.calculateTextBoxHeight(this.FAQTexts[5], 4, 1.2)};
+        for(int i = 0; i < this.FAQTexts.length; i++) {
+            this.addElement(new UI_Text(this.FAQTexts[i], this, this.calculateTextBoxPosition(i, textBoxHeights, padding), new PVector(633, textBoxHeights[i]), 3, 20, UI_Constants.WHITE, true, UI_Constants.INTER_REGULAR));
+        }
+        this.addElement(new UI_Button("Back", this, false));
+    }
+
     public void switchToNavigationAndControlsScene() {
         this.clearAllElements();
-        //30px required per new row of text
-        // public UI_Text(String Text_Name, UI_Window Text_ParentWindow, PVector Text_Position, PVector Text_BoxDimensions, int Text_AlignMode, int Text_Size, int Text_Color, boolean Text_ShowName, PFont Text_Font) {
         float[] textBoxHeights = {this.calculateTextBoxHeight(this.NavigationAndControlsTexts[0], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[1], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[2], 3, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[3], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[4], 2, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[5], 1, 1.2), this.calculateTextBoxHeight(this.NavigationAndControlsTexts[6], 1, 1.2)};
 
         for(int i = 0; i < this.NavigationAndControlsTexts.length; i++) {
@@ -174,28 +192,32 @@ public class UI_HelpWindow extends UI_Window {
 
     public void onButtonPress(String name) {
         switch (name) {
-            case "Navigation & Controls":
+            case "FAQ":
                 this.activeSelectionID = 0;
+                this.switchToFAQScene();
+                break;
+            case "Navigation & Controls":
+                this.activeSelectionID = 1;
                 this.switchToNavigationAndControlsScene();
                 break;
             case "Pen tool & Properties editor":
-                this.activeSelectionID = 1;
+                this.activeSelectionID = 2;
                 this.switchToPenAndPropertiesScene();
                 break;
             case "Rigidbody tools":
-                this.activeSelectionID = 2;
+                this.activeSelectionID = 3;
                 this.switchToRigidbodyToolsScene();
                 break;
             case "Force tools":
-                this.activeSelectionID = 3;
+                this.activeSelectionID = 4;
                 this.switchToForcesToolsScene();
                 break;
             case "Settings":
-                this.activeSelectionID = 4;
+                this.activeSelectionID = 5;
                 this.switchToSettingsScene();
                 break;
             case "Creations":
-                this.activeSelectionID = 5;
+                this.activeSelectionID = 6;
                 this.switchToCreationsScene();
                 break;
             case "Back":

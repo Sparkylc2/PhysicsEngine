@@ -103,6 +103,8 @@ private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB)
 
     particleA.addForceToForceRegistry(spring);
     particleB.addForceToForceRegistry(spring);
+
+    ALL_FORCES_ARRAYLIST.add(spring);
 }
 
     public void updateSoftbody() {
@@ -110,7 +112,8 @@ private void addSpringBetweenParticles(Rigidbody particleA, Rigidbody particleB)
     }
 
     public void draw() {
-        
+        fill(255);
+        stroke(0);
         beginShape();
         for (int column = 0; column < numColumnParticles; column++) {
           PVector pos = softBodyParticles[0][column].getPosition();

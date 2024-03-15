@@ -1,5 +1,5 @@
 {
-  "Show Frame Stats": false,
+  "Show Frame Stats": true,
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
   "SimulationQuality": "Medium",
@@ -8,5 +8,5 @@
   "VisualQuality": "Medium",
   "TextQuality": "High",
   "Show Collision Points": false,
-  "Gravity": 9.8100004196167
+  "Gravity": 9.811321258544922
 }

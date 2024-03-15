@@ -504,13 +504,20 @@ public class UI_Window {
     }
 
     public void clearAllElements() {
-        for(UI_Element element : this.Window_Elements) {
-            if(element.getShape() == null) {
-                continue;
-            }
-            this.Window_Container.getChild("Element_Group").removeChild(this.Window_Container.getChild("Element_Group").getChildIndex(element.getShape()));
-        }
+        this.Window_Container.removeChild(this.Window_Container.getChildIndex(this.Window_Container.getChild("Element_Group")));
         this.Window_Elements.clear();
+
+        PShape Element_Group = createShape(GROUP);
+            Element_Group.setName("Element_Group");
+
+        this.Window_Container.addChild(Element_Group);
+        // for(UI_Element element : this.Window_Elements) {
+        //     if(element.getShape() == null) {
+        //         continue;
+        //     }
+        //     this.Window_Container.getChild("Element_Group").removeChild(this.Window_Container.getChild("Element_Group").getChildIndex(element.getShape()));
+        // }
+        // this.Window_Elements.clear();
     }
 
     public void onKeyPress(int keyCode) {
