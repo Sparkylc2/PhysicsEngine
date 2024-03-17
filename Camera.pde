@@ -10,8 +10,8 @@ public class Camera {
   
 
     public Camera() {
-        position = new PVector(-50, -50);
-        targetPosition = new PVector(-50, -50);
+        position = new PVector(0, -20);
+        targetPosition = new PVector(0, -20);
         zoom = 10f;
         targetZoom = 10f;
 

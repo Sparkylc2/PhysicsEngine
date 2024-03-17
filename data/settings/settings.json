@@ -3,10 +3,10 @@
   "Show AABBs": false,
   "ScrollSensitivity": "Medium",
   "SimulationQuality": "Medium",
-  "CoefficientOfStaticFriction": 0.800000011920929,
-  "CoefficientOfKineticFriction": 0.30000001192092896,
+  "CoefficientOfStaticFriction": 0,
+  "CoefficientOfKineticFriction": 0,
   "VisualQuality": "Medium",
   "TextQuality": "High",
   "Show Collision Points": false,
-  "Gravity": 9.811321258544922
+  "Gravity": 100
 }

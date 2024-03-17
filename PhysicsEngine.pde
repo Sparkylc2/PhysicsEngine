@@ -50,6 +50,18 @@ public void setup() {
     AddBodyToBodyEntityList(floor);
 
 
+    Rigidbody box = RigidbodyGenerator.CreateBoxBody(1f, 1f, 1f, 0.5f, false, true, 0.05f, new PVector(0, 0, 0), new PVector(255, 255, 255));
+    box.SetInitialPosition(new PVector(7, 7));
+
+    //Equilibrium length is 2
+    Spring testSpring = new Spring(box, new PVector(0,0), new PVector(0, 7));
+    testSpring.setSpringConstant(50);
+    testSpring.setEquilibriumLength(0.5);
+    testSpring.setPerfectSpring(true);
+
+    box.addForceToForceRegistry(testSpring);
+    AddBodyToBodyEntityList(box);
+    IS_PAUSED = true;
     // softbody.CreateBoxSoftbody();
     // softbody2.CreateBoxSoftbody();
 

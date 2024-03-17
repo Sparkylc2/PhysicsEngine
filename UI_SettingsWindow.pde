@@ -120,7 +120,7 @@ public class UI_SettingsWindow extends UI_Window {
 
             this.Coeff_Static_Friction = new UI_Slider("Coeff. of static friction", this, 0, 1, currentCoeffStaticFriction);
             this.Coeff_Kinetic_Friction = new UI_Slider("Coeff. of kinetic friction", this, 0, 1, currentCoeffKineticFriction);
-            this.Gravity = new UI_Slider("Gravity", this, 0, 50, currentGravity);
+            this.Gravity = new UI_Slider("Gravity", this, 0, 100, currentGravity);
 
             this.addElement(this.Coeff_Static_Friction);
             this.addElement(this.Coeff_Kinetic_Friction);
