@@ -1,0 +1,12 @@
+{
+  "Show Frame Stats": true,
+  "Show AABBs": false,
+  "ScrollSensitivity": "Medium",
+  "SimulationQuality": "Medium",
+  "CoefficientOfStaticFriction": 0.652830183506012,
+  "CoefficientOfKineticFriction": 0.6075471639633179,
+  "VisualQuality": "Medium",
+  "TextQuality": "High",
+  "Show Collision Points": false,
+  "Gravity": 9.811321258544922
+}

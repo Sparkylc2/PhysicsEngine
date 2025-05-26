@@ -1,0 +1,3347 @@
+[
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "217d3f43-9068-478e-95ae-ced47732b779"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": 2.5
+        },
+        {
+          "x": -500,
+          "y": 2.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": true,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "217d3f43-9068-478e-95ae-ced47732b779"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": 2.5
+        },
+        {
+          "x": -500,
+          "y": 2.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": true,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "217d3f43-9068-478e-95ae-ced47732b779"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": 2.5
+        },
+        {
+          "x": -500,
+          "y": 2.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": true,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "2763e754-e703-4763-b641-a2989ee331cd"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -31.902034759521484,
+        "y": 0.9738906025886536
+      },
+      "velocity": {
+        "x": 3.0378451347351074,
+        "y": -0.00727047398686409
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.0037103842478245497,
+      "angularVelocity": -0.008746834471821785
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -2,
+          "y": -3
+        },
+        {
+          "x": 2,
+          "y": -3
+        },
+        {
+          "x": 2,
+          "y": 3
+        },
+        {
+          "x": -2,
+          "y": 3
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "eedde6c0-13ef-4570-ba22-1a50fc1267db"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": 2.5
+        },
+        {
+          "x": -500,
+          "y": 2.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": true,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "e7493fe7-0e53-4758-b773-9345b66e0bbd"},
+    "densityAndRestitution": {
+      "density": 0.5760188698768616,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -11.0821533203125,
+        "y": 2.1892175674438477
+      },
+      "velocity": {
+        "x": 3.8026602268218994,
+        "y": 0.6836382150650024
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.003568792250007391,
+      "angularVelocity": 0.007109912112355232
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -8.63973331451416,
+          "y": -3.2837798595428467
+        },
+        {
+          "x": 3.7410175800323486,
+          "y": -3.254251480102539
+        },
+        {
+          "x": 11.455961227416992,
+          "y": 1.761168122291565
+        },
+        {
+          "x": 11.455961227416992,
+          "y": 2.7611701488494873
+        },
+        {
+          "x": -8.544036865234375,
+          "y": 2.7611701488494873
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -71.93427276611328,
+        "y": 4.419870853424072
+      },
+      "velocity": {
+        "x": 3.111409902572632,
+        "y": -0.04857131838798523
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.008117958903312683,
+      "angularVelocity": 3.0607247026637197E-4
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": 0.5
+        },
+        {
+          "x": -10,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "beddacf0-29b6-4f28-b56f-f455eb1d98cf"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -64.03187561035156,
+        "y": 0.9821797609329224
+      },
+      "velocity": {
+        "x": 3.0948092937469482,
+        "y": -0.03640872240066528
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.008929623290896416,
+      "angularVelocity": -0.003943569026887417
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -2.505000114440918,
+          "y": -3
+        },
+        {
+          "x": 2.505000114440918,
+          "y": -3
+        },
+        {
+          "x": 2.505000114440918,
+          "y": 3
+        },
+        {
+          "x": -2.505000114440918,
+          "y": 3
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "e894f570-45b5-4d51-8f15-a168b79ed776"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -78.99162292480469,
+        "y": 0.8600791096687317
+      },
+      "velocity": {
+        "x": 3.0995895862579346,
+        "y": -0.028879385441541672
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.00906940083950758,
+      "angularVelocity": -0.0030887601897120476
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -2.505000114440918,
+          "y": -3
+        },
+        {
+          "x": 2.505000114440918,
+          "y": -3
+        },
+        {
+          "x": 2.505000114440918,
+          "y": 3
+        },
+        {
+          "x": -2.505000114440918,
+          "y": 3
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "3accf4c3-ca0a-4eb4-bf39-49cd9520d6e8"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -45.471282958984375,
+        "y": 3.072871685028076
+      },
+      "velocity": {
+        "x": 3.314906358718872,
+        "y": -0.13752411305904388
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -0.005777053534984589,
+      "angularVelocity": -0.024987945333123207
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -4.5,
+          "y": -0.5
+        },
+        {
+          "x": 4.5,
+          "y": -0.5
+        },
+        {
+          "x": 4.5,
+          "y": 0.5
+        },
+        {
+          "x": -4.5,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "a2629de4-cc50-4c72-a286-159d5186a478"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -17.31375503540039,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 5.294765949249268,
+        "y": -0.001546527724713087
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 285.4471435546875,
+      "angularVelocity": 3.4352643489837646
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "6f54421c-80b1-4e3f-a3f8-ee593b683b46"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -14.536710739135742,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 4.050163269042969,
+        "y": -9.996079606935382E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 311.67779541015625,
+      "angularVelocity": 3.24186635017395
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "4aba447c-7248-4843-b376-39ec625ee9ee"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -11.596953392028809,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 3.42010760307312,
+        "y": -0.00161609030328691
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 317.4252014160156,
+      "angularVelocity": 2.9691407680511475
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "65dd41d8-81fe-48dd-8b4f-75a5b4cff321"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -1.0885077714920044,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 2.0524487495422363,
+        "y": -0.0024097803980112076
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 315.1878967285156,
+      "angularVelocity": 1.647255778312683
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "89eee64d-d53a-4f45-b1ee-be941269ab63"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -31.137998580932617,
+        "y": 4.478274822235107
+      },
+      "velocity": {
+        "x": 3.0686910152435303,
+        "y": -0.013155588880181313
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.0024633195716887712,
+      "angularVelocity": -0.008771523833274841
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": 0.5
+        },
+        {
+          "x": -10,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -51.155052185058594,
+        "y": 4.104374885559082
+      },
+      "velocity": {
+        "x": 3.3406636714935303,
+        "y": 0.00418603653088212
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -0.004642349202185869,
+      "angularVelocity": -0.024979058653116226
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": 0.5
+        },
+        {
+          "x": -10,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "35933965-aa26-4b3b-a743-35b571c54489"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -92.52950286865234,
+        "y": 4.153900146484375
+      },
+      "velocity": {
+        "x": 3.5001471042633057,
+        "y": -0.2472793012857437
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -0.011763490736484528,
+      "angularVelocity": -0.051905449479818344
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": -0.5
+        },
+        {
+          "x": 10,
+          "y": 0.5
+        },
+        {
+          "x": -10,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "0ca4c340-85ae-49a8-bd6e-0e8f8fb3c87b"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -23.174148559570312,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 1.54569673538208,
+        "y": -0.0033375234343111515
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 200.2683868408203,
+      "angularVelocity": 1.2284492254257202
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "429e4e65-2358-40e9-b2c0-d7e11d622473"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -38.45085144042969,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 3.86401104927063,
+        "y": 6.7148357629776E-6
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 201.331787109375,
+      "angularVelocity": 3.1017208099365234
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b6742684-d6f6-4ef0-a2e7-c3345c78783f"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -43.04599380493164,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 3.754347324371338,
+        "y": -2.3959687678143382E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 202.32421875,
+      "angularVelocity": 2.9462039470672607
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "573ff601-691a-4816-9e73-060c36cc1eef"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -58.490230560302734,
+        "y": 6.247363567352295
+      },
+      "velocity": {
+        "x": 3.9622364044189453,
+        "y": -0.2472526580095291
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 205.7274932861328,
+      "angularVelocity": 2.449033737182617
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "b4d1855a-e12f-49ce-aae2-112e1a2ca5f0"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -64.0167007446289,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 4.278815269470215,
+        "y": 0.004731438588351011
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 202.4584197998047,
+      "angularVelocity": 3.411005973815918
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "7f49755c-c412-4e4b-b79a-5b6de34cf142"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -79.13955688476562,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 4.024652481079102,
+        "y": 1.947807613760233E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 204.32835388183594,
+      "angularVelocity": 3.2258896827697754
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "896d8a6a-f149-4595-bb74-7a6521e1752d"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -84.38311767578125,
+        "y": 6.249989986419678
+      },
+      "velocity": {
+        "x": 4.079624652862549,
+        "y": -0.004255741834640503
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 209.1516876220703,
+      "angularVelocity": 3.3420755863189697
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "1142f8b1-7eaa-42bc-8e8a-bbda8da9029c"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -99.80584716796875,
+        "y": 6.25
+      },
+      "velocity": {
+        "x": 3.4078361988067627,
+        "y": -4.968820139765739E-4
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 185.0436553955078,
+      "angularVelocity": 2.731416702270508
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "cc3493aa-d5ad-4464-8477-6ea16e746a42"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -25.22981834411621,
+        "y": 0.9901430606842041
+      },
+      "velocity": {
+        "x": 3.0391435623168945,
+        "y": -0.066171795129776
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.0038022601511329412,
+      "angularVelocity": -0.00847187265753746
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -2,
+          "y": -3
+        },
+        {
+          "x": 2,
+          "y": -3
+        },
+        {
+          "x": 2,
+          "y": 3
+        },
+        {
+          "x": -2,
+          "y": 3
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "ee97586d-6572-44ba-a261-e43c27356495"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -38.15767288208008,
+        "y": 0.9606168270111084
+      },
+      "velocity": {
+        "x": 3.037705421447754,
+        "y": 0.047733113169670105
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.0026412904262542725,
+      "angularVelocity": -0.008833182975649834
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -2,
+          "y": -3
+        },
+        {
+          "x": 2,
+          "y": -3
+        },
+        {
+          "x": 2,
+          "y": 3
+        },
+        {
+          "x": -2,
+          "y": 3
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "6dc1ca37-ad46-4016-8e58-8fb89c2b4fa7"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -54.991329193115234,
+        "y": 3.1173665523529053
+      },
+      "velocity": {
+        "x": 3.315700054168701,
+        "y": 0.10116273909807205
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -0.0035741091705858707,
+      "angularVelocity": -0.024916352704167366
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -4.5,
+          "y": -0.5
+        },
+        {
+          "x": 4.5,
+          "y": -0.5
+        },
+        {
+          "x": 4.5,
+          "y": 0.5
+        },
+        {
+          "x": -4.5,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "411bf2b4-30d7-4aab-98b4-59c5d1daab35"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -50.590091705322266,
+        "y": 2.097071886062622
+      },
+      "velocity": {
+        "x": 3.2902004718780518,
+        "y": -0.008769417181611061
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": -0.004586989991366863,
+      "angularVelocity": -0.0249599888920784
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -4.5,
+          "y": -0.5
+        },
+        {
+          "x": 4.5,
+          "y": -0.5
+        },
+        {
+          "x": 4.5,
+          "y": 0.5
+        },
+        {
+          "x": -4.5,
+          "y": 0.5
+        }
+      ],
+      "width": 1290,
+      "radius": 0,
+      "height": 857
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "cb19f3f8-bf3a-40e5-a14d-e28e4c8c16f6"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -74.66714477539062,
+        "y": 2.6476171016693115
+      },
+      "velocity": {
+        "x": 4.187326431274414,
+        "y": -0.04408933222293854
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.20640647411346436,
+      "angularVelocity": 0.8732782006263733
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "66bb0ed5-fcc1-487d-89fd-8f5c435bf455"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -71.7798080444336,
+        "y": 2.6710636615753174
+      },
+      "velocity": {
+        "x": 4.22060489654541,
+        "y": -0.042018380016088486
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.7163987755775452,
+      "angularVelocity": 0.8697863817214966
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "137f098a-e45d-47d5-a692-8d4275ea4cfa"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -67.96698760986328,
+        "y": 2.7020130157470703
+      },
+      "velocity": {
+        "x": 4.235095024108887,
+        "y": -0.04345410689711571
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 1.340062141418457,
+      "angularVelocity": 0.855691134929657
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "22bb65f2-ec2f-485c-8530-a08daebd12ce"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -69.86026763916016,
+        "y": 1.069382905960083
+      },
+      "velocity": {
+        "x": 4.208721160888672,
+        "y": -0.02143269032239914
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0.5838686227798462,
+      "angularVelocity": -0.8847310543060303
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.10000000149011612
+    },
+    "shapeType": {"shapeType": "CIRCLE"},
+    "RigidbodyID": {"ID": "fc4390b2-c1a9-4b97-98b1-8454ed2699d9"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": -73.20703887939453,
+        "y": 0.6182317733764648
+      },
+      "velocity": {
+        "x": 4.145718574523926,
+        "y": -0.06057104468345642
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 1.3652619123458862,
+      "angularVelocity": -0.9021973013877869
+    },
+    "geometry": {
+      "vertices": [],
+      "width": 0,
+      "radius": 1.25,
+      "height": 0
+    },
+    "staticity": {
+      "isStatic": false,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.6075471639633179,
+      "coeffOfStaticFriction": 0.652830183506012
+    }
+  },
+  [
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 3.077805757522583,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "1142f8b1-7eaa-42bc-8e8a-bbda8da9029c",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -5.7220458984375E-6,
+        "y": -6.67572021484375E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -10.000003814697266,
+        "y": 0.4999988079071045
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.5701687335968018,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "1142f8b1-7eaa-42bc-8e8a-bbda8da9029c",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.9073486328125E-5,
+        "y": -5.245208740234375E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -7.374668121337891,
+        "y": 0.5000007152557373
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 7.6385817527771,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "1142f8b1-7eaa-42bc-8e8a-bbda8da9029c",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -3.814697265625E-6,
+        "y": -1.4781951904296875E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 3.814697265625E-6,
+        "y": -4.76837158203125E-7
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 8.349072456359863,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "896d8a6a-f149-4595-bb74-7a6521e1752d",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 7.62939453125E-6,
+        "y": 3.337860107421875E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 5.91278076171875E-5,
+        "y": 2.574920654296875E-5
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.5100278854370117,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "896d8a6a-f149-4595-bb74-7a6521e1752d",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.25885009765625E-4,
+        "y": -5.7220458984375E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 9.999994277954102,
+        "y": 0.5000007152557373
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.6136614084243774,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "896d8a6a-f149-4595-bb74-7a6521e1752d",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.9073486328125E-5,
+        "y": -1.4781951904296875E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 8.056879043579102,
+        "y": 0.4999988079071045
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 3.0777993202209473,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "7f49755c-c412-4e4b-b79a-5b6de34cf142",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -7.62939453125E-6,
+        "y": 1.9073486328125E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -9.999992370605469,
+        "y": 0.5000009536743164
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.5700209140777588,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "7f49755c-c412-4e4b-b79a-5b6de34cf142",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -7.62939453125E-6,
+        "y": -1.9073486328125E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -7.351806640625,
+        "y": 0.4999990463256836
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 7.638575553894043,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "7f49755c-c412-4e4b-b79a-5b6de34cf142",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 7.62939453125E-6,
+        "y": -9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 7.62939453125E-6,
+        "y": 1.1920928955078125E-6
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.6135464906692505,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "b4d1855a-e12f-49ce-aae2-112e1a2ca5f0",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -1.9073486328125E-5,
+        "y": -3.337860107421875E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 8.079418182373047,
+        "y": 0.4999990463256836
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.510127544403076,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "b4d1855a-e12f-49ce-aae2-112e1a2ca5f0",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 7.62939453125E-6,
+        "y": -9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 10.000007629394531,
+        "y": 0.5000009536743164
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 8.349114418029785,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "b4d1855a-e12f-49ce-aae2-112e1a2ca5f0",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 7.62939453125E-6,
+        "y": -7.62939453125E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 2.288818359375E-5,
+        "y": 7.867813110351562E-6
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 3.0777575969696045,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "573ff601-691a-4816-9e73-060c36cc1eef",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -3.0517578125E-5,
+        "y": -1.2874603271484375E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -9.999977111816406,
+        "y": 0.5000042915344238
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.5710028409957886,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "573ff601-691a-4816-9e73-060c36cc1eef",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -7.62939453125E-6,
+        "y": -9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -7.297454833984375,
+        "y": 0.49999189376831055
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 7.638553142547607,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "573ff601-691a-4816-9e73-060c36cc1eef",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 7.62939453125E-6,
+        "y": -5.7220458984375E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -1.52587890625E-5,
+        "y": -4.76837158203125E-7
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 8.34912109375,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "b6742684-d6f6-4ef0-a2e7-c3345c78783f",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -5.340576171875E-5,
+        "y": -2.3365020751953125E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -1.52587890625E-5,
+        "y": -6.341934204101562E-5
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.510133981704712,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "b6742684-d6f6-4ef0-a2e7-c3345c78783f",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": 9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 10.000015258789062,
+        "y": 0.49997520446777344
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.613458275794983,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "b6742684-d6f6-4ef0-a2e7-c3345c78783f",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 7.62939453125E-5,
+        "y": -9.298324584960938E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 8.0810546875,
+        "y": 0.5000009536743164
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 3.0777463912963867,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "429e4e65-2358-40e9-b2c0-d7e11d622473",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -4.57763671875E-5,
+        "y": -2.47955322265625E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -9.999984741210938,
+        "y": 0.5000014305114746
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.5700244903564453,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "429e4e65-2358-40e9-b2c0-d7e11d622473",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -1.52587890625E-5,
+        "y": -8.106231689453125E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -7.358222961425781,
+        "y": 0.4999990463256836
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 7.638575553894043,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "429e4e65-2358-40e9-b2c0-d7e11d622473",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -1.52587890625E-5,
+        "y": -3.814697265625E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -1.52587890625E-5,
+        "y": -4.76837158203125E-7
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.5101451873779297,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "0ca4c340-85ae-49a8-bd6e-0e8f8fb3c87b",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -7.62939453125E-5,
+        "y": -2.86102294921875E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 9.999984741210938,
+        "y": 0.5000009536743164
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 8.349114418029785,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "0ca4c340-85ae-49a8-bd6e-0e8f8fb3c87b",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": -1.6689300537109375E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 3.814697265625E-5,
+        "y": 3.0040740966796875E-5
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.6135146617889404,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "0ca4c340-85ae-49a8-bd6e-0e8f8fb3c87b",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -6.103515625E-5,
+        "y": -3.9577484130859375E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 8.072929382324219,
+        "y": 0.4999990463256836
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 0.7212160229682922,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 10.00001049041748,
+        "y": -0.4999995529651642
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -10.00001049041748,
+        "y": -0.4999995231628418
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 0.7261647582054138,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "35933965-aa26-4b3b-a743-35b571c54489",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 10.000008583068848,
+        "y": 0.4999972879886627
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -10.000009536743164,
+        "y": 0.4999988079071045
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 0.8581234812736511,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -9.999994277954102,
+        "y": -0.5000003576278687
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 9.999994277954102,
+        "y": -0.500000536441803
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 0.8580667972564697,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -10.000005722045898,
+        "y": 0.49999916553497314
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 10.00001049041748,
+        "y": 0.4999992847442627
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 0.5802328586578369,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 9.999982833862305,
+        "y": -0.5000007152557373
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -10.000016212463379,
+        "y": -0.4999994933605194
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 0.5801283717155457,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "3681f5bf-9c1f-44fb-8e23-6b80497ab563",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 10.000017166137695,
+        "y": 0.4999993145465851
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -9.999987602233887,
+        "y": 0.49999937415122986
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.4844468832015991,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 9.99998664855957,
+        "y": 0.49999919533729553
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -8.544021606445312,
+        "y": 2.761168956756592
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.463646411895752,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "89eee64d-d53a-4f45-b1ee-be941269ab63",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 9.999987602233887,
+        "y": -0.5000006556510925
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -8.55731201171875,
+        "y": 1.923447847366333
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.985379695892334,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "65dd41d8-81fe-48dd-8b4f-75a5b4cff321",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": 9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 11.45594596862793,
+        "y": 2.7611804008483887
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 6.817692279815674,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "65dd41d8-81fe-48dd-8b4f-75a5b4cff321",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": -2.193450927734375E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 3.348142623901367,
+        "y": 2.761168956756592
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.376868486404419,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "65dd41d8-81fe-48dd-8b4f-75a5b4cff321",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": -5.7220458984375E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 10.00300407409668,
+        "y": 2.7611708641052246
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 4.099652290344238,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "4aba447c-7248-4843-b376-39ec625ee9ee",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": 9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 3.2761058807373047,
+        "y": 2.7611708641052246
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.2714916467666626,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "4aba447c-7248-4843-b376-39ec625ee9ee",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.52587890625E-5,
+        "y": -9.5367431640625E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -0.6176237463951111,
+        "y": 2.761171340942383
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.2522846460342407,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "6f54421c-80b1-4e3f-a3f8-ee593b683b46",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.525978950667195E-5,
+        "y": -9.375470426675747E-7
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -3.466005802154541,
+        "y": 2.761171579360962
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.2595289945602417,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "a2629de4-cc50-4c72-a286-159d5186a478",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 3.14215685648378E-5,
+        "y": -3.1549701816402376E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -6.242831230163574,
+        "y": 2.76116943359375
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.730013370513916,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "a2629de4-cc50-4c72-a286-159d5186a478",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "6f54421c-80b1-4e3f-a3f8-ee593b683b46",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -1.5225750757963397E-5,
+        "y": -1.384434199280804E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -2.2885147700435482E-5,
+        "y": -2.8852116429334274E-6
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.840369462966919,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "4aba447c-7248-4843-b376-39ec625ee9ee",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "6f54421c-80b1-4e3f-a3f8-ee593b683b46",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -1.5238984815368894E-5,
+        "y": 4.361335413705092E-6
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 1.525777315691812E-5,
+        "y": 9.698005669633858E-7
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 2.6875219345092773,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "a2629de4-cc50-4c72-a286-159d5186a478",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e7493fe7-0e53-4758-b773-9345b66e0bbd",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 1.4541956261382438E-6,
+        "y": 3.06651127175428E-5
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -8.544075012207031,
+        "y": 2.7611682415008545
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.0024796724319458,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "e894f570-45b5-4d51-8f15-a168b79ed776",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": 2.504969596862793,
+        "y": 3.000000238418579
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -4.321269989013672,
+        "y": 0.5000001192092896
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.0002200603485107,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "e894f570-45b5-4d51-8f15-a168b79ed776",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -2.504965305328369,
+        "y": 2.999999761581421
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": -9.288803100585938,
+        "y": 0.49999964237213135
+      }
+    },
+    {
+      "ForceType": "Spring",
+      "lockTranslationToYAxis": false,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "springLength": 1.0013651847839355,
+      "springConstant": 99.05661010742188,
+      "damping": 0.5,
+      "rigidbodyAID": "beddacf0-29b6-4f28-b56f-f455eb1d98cf",
+      "isTwoBodySpring": true,
+      "rigidbodyBID": "e3688a82-a576-4ae0-a0ce-100d6c95f6df",
+      "drawSpring": true,
+      "lockTranslationToXAxis": false,
+      "equilibriumLength": 1,
+      "localAnchorA": {
+        "x": -2.5049636363983154,
+        "y": 3
+      },
+      "isPerfectSpring": false,
+      "localAnchorB": {
+        "x": 5.0446038246154785,
+        "y": 0.4999995231628418
+      }
+    },
+    {
+      "ForceType": "Motor",
+      "localAnchor": {
+        "x": 1.25,
+        "y": 0
+      },
+      "rigidbodyID": "a2629de4-cc50-4c72-a286-159d5186a478",
+      "targetAngularVelocity": 8,
+      "drawMotorForce": true,
+      "drawMotor": false
+    },
+    {
+      "ForceType": "Motor",
+      "localAnchor": {
+        "x": 1.25,
+        "y": 0
+      },
+      "rigidbodyID": "6f54421c-80b1-4e3f-a3f8-ee593b683b46",
+      "targetAngularVelocity": 8,
+      "drawMotorForce": true,
+      "drawMotor": false
+    },
+    {
+      "ForceType": "Motor",
+      "localAnchor": {
+        "x": 1.25,
+        "y": 0
+      },
+      "rigidbodyID": "4aba447c-7248-4843-b376-39ec625ee9ee",
+      "targetAngularVelocity": 8,
+      "drawMotorForce": true,
+      "drawMotor": false
+    },
+    {
+      "ForceType": "Motor",
+      "localAnchor": {
+        "x": 1.25,
+        "y": 0
+      },
+      "rigidbodyID": "65dd41d8-81fe-48dd-8b4f-75a5b4cff321",
+      "targetAngularVelocity": 8,
+      "drawMotorForce": true,
+      "drawMotor": false
+    }
+  ]
+]
