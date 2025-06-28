@@ -110,6 +110,7 @@ public class Rigidbody {
     } else {
         this.Vertices = null;
         this.transformedVertices = null;
+        
     }
     
     //Sets InvMass for static objects to 0

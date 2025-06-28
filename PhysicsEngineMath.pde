@@ -32,7 +32,7 @@ public static float fastInverseSq (float number) {
     int i = Float.floatToIntBits(x);
     i = 0x5f3759df - (i >> 1);
     x = Float.intBitsToFloat(i);
-    for (int it = 0; it < 2; it++) { // Reduced iterations for float
+    for (int it = 0; it < 2; it++) {
         x = x * (1.5f - xhalf * x * x);
     }
     x *= number;
