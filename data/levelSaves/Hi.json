@@ -1,0 +1,74 @@
+[
+  {
+    "drawingProperties": {
+      "strokeColour": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "fillColour": {
+        "x": 255,
+        "y": 255,
+        "z": 255
+      },
+      "strokeWeight": 0.05000000074505806
+    },
+    "shapeType": {"shapeType": "BOX"},
+    "RigidbodyID": {"ID": "eedde6c0-13ef-4570-ba22-1a50fc1267db"},
+    "densityAndRestitution": {
+      "density": 1,
+      "restitution": 0.5
+    },
+    "positionAndVelocity": {
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "visibilityAndCollidability": {
+      "collidability": true,
+      "visibility": true
+    },
+    "angleAndAngularVelocity": {
+      "angle": 0,
+      "angularVelocity": 0
+    },
+    "geometry": {
+      "vertices": [
+        {
+          "x": -500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": -2.5
+        },
+        {
+          "x": 500,
+          "y": 2.5
+        },
+        {
+          "x": -500,
+          "y": 2.5
+        }
+      ],
+      "width": 1512,
+      "radius": 0,
+      "height": 982
+    },
+    "staticity": {
+      "isStatic": true,
+      "isTranslationallyStatic": false,
+      "isRotationallyStatic": false
+    },
+    "friction": {
+      "coeffOfKineticFriction": 0.30000001192092896,
+      "coeffOfStaticFriction": 0.800000011920929
+    }
+  },
+  []
+]
